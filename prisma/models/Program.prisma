@@ -1,0 +1,19 @@
+
+model Program {
+  id                  String    @id @default(uuid())
+  userId              String
+  programName         String
+  datetime            String
+  programDescription  String
+  priority            String
+  deadline            String
+  progress            Int?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  // Relations
+  client              Client    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects            Project[]
+
+  @@map("programs")
+}

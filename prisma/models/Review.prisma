@@ -1,0 +1,16 @@
+
+
+model Review {
+  id            String        @id @default(uuid())
+  projectId     String
+  taskAssignId  String?
+  status        ProjectStatus
+  managerId     String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  project       Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}

@@ -1,0 +1,46 @@
+
+// Tags model
+model Tag {
+  clientId    String   @id
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@map("tags")
+}
+
+// ReferredPerson model
+model ReferredPerson {
+  id            String   @id @default(uuid())
+  name          String
+  userId        String
+  email         String?
+  phoneNumber   Int?
+  aboutThere    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  client        Client   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("referred_persons")
+}
+
+// RequestToAddProjectMember model
+model RequestToAddProjectMember {
+  id          String   @id @default(uuid())
+  clientId    String?
+  projectId   String
+  managerId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  manager     Manager  @relation(fields: [managerId], references: [id], onDelete: Cascade)
+
+  @@map("request_to_add_project_members")
+}

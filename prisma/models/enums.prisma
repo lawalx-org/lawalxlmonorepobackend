@@ -1,0 +1,77 @@
+enum Role {
+  VIEWER
+  EMPLOYEE
+  SUPPORTER
+  MANAGER
+  ADMIN
+  CLIENT
+  SUPERADMIN
+}
+
+enum Language {
+  ENGLISH
+}
+
+enum BillingCycle {
+  MONTHLY
+  HALFYEARLY
+  YEARLY
+  TWOYEARLY
+  ENTERPRISE
+}
+
+enum IndustryCategory {
+  REALESTATE
+  FINANCE
+  RENEWABLE_ENERGY
+  TRAVEL_AGENCY
+  BEAUTY_AND_WELLNESS
+}
+
+enum SupporterRole {
+  CALLATTENDANCE
+  SUPPORTMANAGER
+  SALESOFFICER
+  SYSTEMENGINEER
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+  NORMAL
+}
+
+enum ProjectCycle {
+  WEEKLY
+  BI_WEEKLY
+  MONTHLY
+}
+
+enum ProjectStatus {
+  PENDING
+  LIVE
+  DRAFT
+  OVERDUE
+  PROBLEM
+}
+
+enum TaskStatus {
+  INPROGRESS
+  COMPLETED
+  OVERDUE
+  NOSTART
+}
+
+enum TicketStatus {
+  OPEN
+  UNASSIGNED
+  IN_PROGRESS
+  SOLVED
+}
+
+enum IssueType {
+  LOGINFAILED
+  SYSTEMERROR
+  OTHERPROBLEM
+}

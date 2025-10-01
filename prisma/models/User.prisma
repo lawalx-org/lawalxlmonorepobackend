@@ -1,0 +1,40 @@
+model User {
+  id                String    @id @default(uuid())
+  email            String    @unique
+  phoneNumber      Int?
+  password         String
+  name             String
+  otp              Int?
+  role             Role      @default(VIEWER)
+  profileImage     String?
+  language         Language  @default(ENGLISH)
+  timezone         DateTime?
+  verification2FA  Boolean   @default(false)
+  isActive         Boolean   @default(false)
+  status           Boolean   @default(false)
+  lastActive       Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  // Relations
+  client                    Client?
+  manager                   Manager?
+  employee                  Employee?
+  viewer                    Viewer?
+  supporter                 Supporter?
+  superAdmin                SuperAdmin?
+  
+  // Notification relations
+  notificationEmployee      NotificationPermissionEmployee?
+  notificationManager       NotificationPermissionManager?
+  notificationClient        NotificationPermissionClient?
+  notificationSupporter     NotificationPermissionSupporter?
+  notificationAdmin         NotificationPermissionAdmin?
+  
+  // Other relations
+  notifications             NotificationProvision[]
+  otpVerification           OtpVerification?
+  payments                  Payment[]
+
+  @@map("users")
+}
