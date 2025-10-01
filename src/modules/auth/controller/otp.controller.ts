@@ -1,5 +1,5 @@
 // src/otp/otp.controller.ts
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { OtpService } from '../services/otp.services';
 import { EmailService } from 'src/modules/utils/services/emailService';
 import { SendOtpDto, VerifyOtpDto } from '../dto/otp.dto';
@@ -29,5 +29,10 @@ export class OtpController {
   @Post('verify')
   async verifyOtp(@Body() dto: VerifyOtpDto) {
     return this.otpService.verify(dto.email, dto.otp);
+  }
+
+  @Get('options')
+  async getChooseOTPOptions(@Query('username') username: string) {
+    return this.otpService.getChooseOptions(username);
   }
 }

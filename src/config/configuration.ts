@@ -38,5 +38,11 @@ export default () => ({
     password: process.env.ADMIN_PASSWORD,
     name: process.env.ADMIN_NAME,
     phoneNumber: process.env.ADMIN_PHONE,
-  },  
+  },
+  
+  twilio: {
+    accountSid: process.env.TWILIO_ACCOUNT_SID,
+    authToken: process.env.TWILIO_AUTH_TOKEN,
+    fromNumber: process.env.TWILIO_FROM_NUMBER, 
+  },
 });
