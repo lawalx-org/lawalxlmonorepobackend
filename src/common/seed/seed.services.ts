@@ -30,6 +30,6 @@ export class SeedService implements OnModuleInit {
       },
     });
 
-    console.log(`✅ Admin user ensured: ${config.admin.email}`);
+    console.log(` Admin user ensured: ${config.admin.email}`);
   }
 }
