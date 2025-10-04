@@ -12,6 +12,9 @@ import { otpTemplate } from 'src/modules/utils/template/otptemplate';
 import { resetPasswordTemplate } from 'src/modules/utils/template/resetpassowordtemplate';
 import { addMinutes, isBefore } from 'date-fns';
 import { JwtPayload } from 'src/types/RequestWithUser';
+import { UserStatus } from 'generated/prisma';
+import { maskEmail, maskPhone } from './utiles.services';
+
 
 
 @Injectable()
@@ -23,63 +26,82 @@ export class AuthService {
     private readonly emailService: EmailService,
   ) { }
 
-  async loginUser(payload: TLoginUserDto) {
-    // const { email, password } = payload;
-
-    // const user = await this.prisma.user.findUnique({
-    //   where: { email },
-    //   include: {
-    //     otpVerification: true,
-    //   },
-    // });
-
-    // if (!user) {
-    //   throw new AppError(HttpStatus.NOT_FOUND, 'This user is not found!');
-    // }
-
-    // if (user.isDeleted) {
-    //   throw new AppError(HttpStatus.FORBIDDEN, 'This user is deleted!');
-    // }
-
-    // if (user.status === UserStatus.BANNED) {
-    //   throw new AppError(HttpStatus.FORBIDDEN, 'This user is blocked!');
-    // }
-
-    // const isPasswordMatched = await bcrypt.compare(password, user.password);
-
-    // if (!isPasswordMatched) {
-    //   throw new AppError(HttpStatus.FORBIDDEN, 'Password does not match');
-    // }
-
-    // if (!user.otpVerification || user.otpVerification.verified === false) {
-    //   throw new ForbiddenException('OTP not verified. Please verify your email.');
-    // }
+ async loginUser(payload: TLoginUserDto) {
+  const { email, password } = payload;
 
 
+  const user = await this.prisma.user.findUnique({
+    where: { email },
+    include: { otpVerification: true },
+  });
 
-    // const jwtPayload = {
-    //   userId: user.id,
-    //   role: user.role,
-    //   email: user.email,
-    // };
-
-    
-
-    // const accessToken = this.jwtService.sign(jwtPayload, {
-    //   secret: this.configService.get<string>('jwt_access_secret'),
-    //   expiresIn: this.configService.get<string>('jwt_access_expires_in'),
-    // });
-
-    // const refreshToken = this.jwtService.sign(jwtPayload, {
-    //   secret: this.configService.get<string>('jwt_refresh_secret'),
-    //   expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
-    // });
-
-    // return {
-    //   accessToken,
-    //   refreshToken,
-    // };
+  if (!user) {
+    throw new NotFoundException('This user is not found!');
   }
+
+
+  if (user.userStatus === UserStatus.DELETED) {
+    throw new ForbiddenException('This user is deleted!');
+  }
+
+
+  if (user.userStatus === UserStatus.BANNED) {
+    throw new ForbiddenException('This user is blocked!');
+  }
+
+
+  const isPasswordMatched = await bcrypt.compare(password, user.password);
+  if (!isPasswordMatched) {
+    throw new UnauthorizedException('Password does not match');
+    
+  }
+
+  
+  if (!user.otpVerification || user.otpVerification.verified === false) {
+    throw new BadRequestException('OTP not verified. Please verify your email.');
+   
+  }
+
+
+ if(user.verification2FA){
+
+  const email = maskEmail(user.email)
+  const phone = maskPhone(user.phoneNumber.toString()) 
+  const jwtPayload = {
+    userId: user.id,
+    role: user.role,
+    email: user.email,
+  };
+
+
+  const specialToken  = this.jwtService.sign(jwtPayload, {
+    secret: this.configService.get<string>('jwt_access_secret'),
+    expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+  });
+
+   return {email,phone , specialToken}
+ }
+
+  // 6. Create tokens
+  const jwtPayload = {
+    userId: user.id,
+    role: user.role,
+    email: user.email,
+  };
+
+  const accessToken = this.jwtService.sign(jwtPayload, {
+    secret: this.configService.get<string>('jwt_access_secret'),
+    expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+  });
+
+  const refreshToken = this.jwtService.sign(jwtPayload, {
+    secret: this.configService.get<string>('jwt_refresh_secret'),
+    expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
+  });
+
+  return { accessToken, refreshToken };
+}
+
 
 
  async changePassword(

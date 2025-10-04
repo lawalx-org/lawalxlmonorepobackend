@@ -75,3 +75,13 @@ enum IssueType {
   SYSTEMERROR
   OTHERPROBLEM
 }
+
+
+enum UserStatus {
+  ACTIVE
+  BANNED
+  DELETED
+  SUSPENDED
+}
+
+

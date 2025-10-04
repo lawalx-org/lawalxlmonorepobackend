@@ -9,10 +9,9 @@ export function generateOTP(length = 6): string {
 }
 
 
-// utils/mask.util.ts
+
 export function maskPhone(phone: string): string {
   if (!phone) return '';
-  // keep first 4 and last 4 digits, mask middle with *
   return phone.replace(/(\d{4})\d+(\d{4})/, '$1****$2');
 }
 

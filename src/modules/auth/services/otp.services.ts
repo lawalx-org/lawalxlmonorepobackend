@@ -24,8 +24,14 @@ export class OtpService {
     const otp = generateOTP();
     const expiresAt = addMinutes(new Date(), 10);
 
-    await this.prisma.otpVerification.create({
-      data: {
+    await this.prisma.otpVerification.upsert({
+      where:{email},
+      update:{
+        verified: false ,
+        otp,
+        expiresAt
+      },
+      create: {
         email,
         otp,
         expiresAt,
@@ -61,25 +67,46 @@ export class OtpService {
 
   //  Send verification code
   async sendVerificationCode(to: string) {
-    return this.client.verify.v2
+    const data = await this.client.verify.v2
       .services(this.verifyServiceSid)
       .verifications.create({ to, channel: 'sms' });
+      
+    return data
   }
 
   //  Check verification code
-  async checkVerificationCode(to: string, code: string) {
-    return this.client.verify.v2
-      .services(this.verifyServiceSid)
-      .verificationChecks.create({ to, code });
-  }
+ async checkVerificationCode(to: string, code: string) {
+  const result = await this.client.verify.v2
+    .services(this.verifyServiceSid)
+    .verificationChecks.create({ to, code });
+     const expiresAt = addMinutes(new Date(), 10);
 
-   async getChooseOptions(username: string) {
-   
-    // return {
-    //   email: maskEmail(user.email),
-    //   phone: maskPhone(user.phone),
-    // };
+  if (result.status === 'approved') {
+    const number = parseInt(to)
+    const user = await this.prisma.user.findFirst({where:{phoneNumber:number}})
+    await this.prisma.otpVerification.upsert({
+      where: { email: user?.email }, 
+      update: {
+        verified: true,
+        otp: code, 
+        expiresAt: expiresAt , 
+      },
+      create: {
+        email: user?.email!,  
+        verified: true,
+        otp: code,
+        expiresAt: expiresAt,
+      },
+    });
+
+    return { verified: true, message: 'OTP verified successfully' };
+  } else {
+    
+    throw new BadRequestException('Invalid or expired OTP code');
   }
+}
+
+  
   
 }
 
