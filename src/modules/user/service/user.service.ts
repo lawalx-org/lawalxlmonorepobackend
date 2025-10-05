@@ -10,6 +10,7 @@ import { UploadApiResponse } from 'cloudinary';
 import { buildDynamicPrismaFilter } from 'src/modules/utils/queryBuilder/prisma-filter-builder';
 import { Role } from 'generated/prisma';
 import { ConvertEmployeeToManagerDto } from '../dto/convert-employee-to-manager.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -66,6 +67,16 @@ async uploadSingleImage(file: Express.Multer.File) {
     if (!user) {
       throw new NotFoundException(`User with ID "${id}" not found`);
     }
+
+    const { password, ...result } = user;
+    return result;
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: updateUserDto,
+    });
 
     const { password, ...result } = user;
     return result;
@@ -128,9 +139,3 @@ async uploadSingleImage(file: Express.Multer.File) {
   }
 
 }
-
-
-
-
-
-

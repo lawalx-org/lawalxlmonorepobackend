@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, Param, Delete, Put, Patch } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { ManagerService } from '../service/manager.service';
 import { EmployeeService } from '../service/employee.service';
@@ -7,6 +7,7 @@ import { CreateManagerDto } from '../dto/create-manager.dto';
 import { CreateEmployeeDto } from '../dto/create-employee.dto';
 import { CreateViewerDto } from '../dto/create-viewer.dto';
 import { ConvertEmployeeToManagerDto } from '../dto/convert-employee-to-manager.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -58,6 +59,11 @@ export class UserController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
