@@ -98,24 +98,20 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     let message: string;
     let errorDetails: string | Record<string, unknown> | undefined;
 
-    // Handle specific exception types
     if (exception instanceof BadRequestException) {
       ({ message, errorDetails } = this.handleBadRequestException(exceptionResponse));
-    } else if (exception instanceof UnauthorizedException) {
-      message = 'Authentication failed';
-    } else if (exception instanceof ForbiddenException) {
-      message = 'Access denied';
-    } else if (exception instanceof NotFoundException) {
-      message = 'Resource not found';
-    } else if (exception instanceof ConflictException) {
-      message = 'Resource conflict';
-    } else if (exception instanceof UnprocessableEntityException) {
-      message = 'Unprocessable entity';
+    } else if (typeof exceptionResponse === 'string') {
+      message = exceptionResponse;
+    } else if (typeof exceptionResponse === 'object' && exceptionResponse !== null) {
+      message = (exceptionResponse as any).message || 'HTTP exception occurred';
+      if (Object.keys(exceptionResponse).length > 1) {
+        const { message: _, ...details } = exceptionResponse as any;
+        if (Object.keys(details).length > 0) {
+            errorDetails = details;
+        }
+      }
     } else {
-      // Generic HttpException handling
-      message = typeof exceptionResponse === 'string' 
-        ? exceptionResponse 
-        : (exceptionResponse as any)?.message || 'HTTP exception occurred';
+      message = 'HTTP exception occurred';
     }
 
     return {

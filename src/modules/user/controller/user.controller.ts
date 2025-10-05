@@ -1,12 +1,12 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, Param, Delete, Put } from '@nestjs/common';
 import { UserService } from '../service/user.service';
-import { UserFilterDto } from '../dto/create-user.dto';
 import { ManagerService } from '../service/manager.service';
 import { EmployeeService } from '../service/employee.service';
 import { ViewerService } from '../service/viewer.service';
 import { CreateManagerDto } from '../dto/create-manager.dto';
 import { CreateEmployeeDto } from '../dto/create-employee.dto';
 import { CreateViewerDto } from '../dto/create-viewer.dto';
+import { ConvertEmployeeToManagerDto } from '../dto/convert-employee-to-manager.dto';
 
 @Controller('users')
 export class UserController {
@@ -35,8 +35,56 @@ export class UserController {
     return this.viewerService.create(createViewerDto);
   }
 
-  @Get('findAll')
-  async findUsers(@Query() filterDto: UserFilterDto) {
-    return this.userService.findAllWithFilters(filterDto);
+  @Get()
+  async findAll() {
+    return this.userService.findAll();
+  }
+
+  @Get('managers')
+  async findAllManagers() {
+    return this.managerService.findAll();
+  }
+
+  @Get('employees')
+  async findAllEmployees() {
+    return this.employeeService.findAll();
+  }
+
+  @Get('viewers')
+  async findAllViewers() {
+    return this.viewerService.findAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.userService.findOne(id);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return this.userService.remove(id);
+  }
+
+  @Get('managers/:id')
+  async findOneManager(@Param('id') id: string) {
+    return this.managerService.findOne(id);
+  }
+
+  @Get('employees/:id')
+  async findOneEmployee(@Param('id') id: string) {
+    return this.employeeService.findOne(id);
+  }
+
+  @Get('viewers/:id')
+  async findOneViewer(@Param('id') id: string) {
+    return this.viewerService.findOne(id);
+  }
+
+  @Put('employees/:id/convert-to-manager')
+  async convertEmployeeToManager(
+    @Param('id') id: string,
+    @Body() convertDto: ConvertEmployeeToManagerDto,
+  ) {
+    return this.userService.convertEmployeeToManager(id, convertDto);
   }
 }

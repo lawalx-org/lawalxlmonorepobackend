@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
@@ -46,6 +46,40 @@ export class ManagerService {
 
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
+    });
+  }
+
+  async findOne(id: string) {
+    const manager = await this.prisma.manager.findUnique({
+      where: { userId: id },
+      include: { user: true },
+    });
+
+    if (!manager) {
+      throw new NotFoundException(`Manager with ID "${id}" not found`);
+    }
+
+    const { user } = manager;
+    const { password, ...userWithoutPassword } = user;
+
+    return {
+      ...manager,
+      user: userWithoutPassword,
+    };
+  }
+
+  async findAll() {
+    const managers = await this.prisma.manager.findMany({
+      include: { user: true },
+    });
+
+    return managers.map(manager => {
+      const { user } = manager;
+      const { password, ...userWithoutPassword } = user;
+      return {
+        ...manager,
+        user: userWithoutPassword,
+      };
     });
   }
 }

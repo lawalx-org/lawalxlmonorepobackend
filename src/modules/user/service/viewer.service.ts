@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
@@ -45,6 +45,40 @@ export class ViewerService {
 
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
+    });
+  }
+
+  async findOne(id: string) {
+    const viewer = await this.prisma.viewer.findUnique({
+      where: { userId: id },
+      include: { user: true },
+    });
+
+    if (!viewer) {
+      throw new NotFoundException(`Viewer with ID "${id}" not found`);
+    }
+
+    const { user } = viewer;
+    const { password, ...userWithoutPassword } = user;
+
+    return {
+      ...viewer,
+      user: userWithoutPassword,
+    };
+  }
+
+  async findAll() {
+    const viewers = await this.prisma.viewer.findMany({
+      include: { user: true },
+    });
+
+    return viewers.map(viewer => {
+      const { user } = viewer;
+      const { password, ...userWithoutPassword } = user;
+      return {
+        ...viewer,
+        user: userWithoutPassword,
+      };
     });
   }
 }
