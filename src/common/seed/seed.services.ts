@@ -24,7 +24,7 @@ export class SeedService implements OnModuleInit {
         phoneNumber:config.admin.phoneNumber??'' ,
         password: hashedPassword,
         name: config.admin.name ?? 'System Admin',
-        role: 'ADMIN',
+        role: "CLIENT",
         status: true,
       },
     });

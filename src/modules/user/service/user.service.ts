@@ -1,4 +1,4 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException, BadRequestException } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
@@ -8,6 +8,7 @@ import { uploadImageAndDto } from '../dto/updatefile.dto';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UploadApiResponse } from 'cloudinary';
 import { buildDynamicPrismaFilter } from 'src/modules/utils/queryBuilder/prisma-filter-builder';
+import { Role } from 'generated/prisma';
 
 @Injectable()
 export class UserService {
@@ -16,54 +17,6 @@ export class UserService {
     private readonly configService: ConfigService,
     private readonly cloudinary: CloudinaryService
   ) {}
-
-async create(createUserDto: CreateUserDto) {
-//   const existingUser = await this.prisma.user.findUnique({
-//     where: { email: createUserDto.email },
-//   });
-
-//   if (existingUser) {
-//     throw new ConflictException('User with this email already exists');
-//   }
-//   const saltRounds = Number(this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10);
-//   const hashedPassword = await bcrypt.hash(createUserDto.password,saltRounds); 
-
-//   const user = await this.prisma.user.create({
-//     data: {
-//       ...createUserDto,
-//       password: hashedPassword, 
-//       role: createUserDto.role || UserRole.USER,
-      
-//     },
-//   });
-//   user.password = ""
-//   return user;
-// }
-
-//    async findUserById(id: string) {
-//     const user = await this.prisma.user.findUnique({
-//       where: { id },
-//     });
-
-//     if (!user) {
-//       throw new NotFoundException('User not found');
-//     }
-
-//     return user;
-//   }
-
-//    async uploadVideo(file: Express.Multer.File) {
-//   try {
-//     const result = await this.cloudinary.uploadFile(file, 'video');
-//     return {
-//       message: 'Video uploaded successfully',
-//       file: result,
-//     };
-//   } catch (error) {
-//     console.error('Video upload failed:', error);
-//     throw error;
-//   }
-}
 
 async uploadMultipleImages(files: Express.Multer.File[]) {
   const results: UploadApiResponse[] = [];

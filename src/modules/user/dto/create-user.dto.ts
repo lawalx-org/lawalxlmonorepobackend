@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmail, IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsBoolean, IsEmail, IsEnum, IsOptional, IsString, MinLength, IsArray } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { Transform } from 'class-transformer';
@@ -12,6 +12,10 @@ export class CreateUserDto {
   @ApiProperty({ example: 'john@example.com' })
   @IsEmail()
   email: string;
+  
+  @ApiProperty({ example: '25464654654' })
+  @IsString()
+  phoneNumber: string;
 
   @ApiProperty({ example: 'password123' })
   @IsString()
@@ -23,7 +27,15 @@ export class CreateUserDto {
   @IsOptional()
   role?: Role;
 
- 
+  @ApiProperty({ example: 'your-client-id' })
+  @IsString()
+  clientId: string;
+
+  @ApiPropertyOptional({ type: [String], example: ['skill1', 'skill2'] })
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  skills?: string[];
 }
 
 

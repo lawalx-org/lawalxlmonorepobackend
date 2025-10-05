@@ -1,55 +1,39 @@
-import {
-  Controller,
-  Post,
-  Body,
-  HttpCode,
-  HttpStatus,
-  UseGuards,
-  Patch,
-  Req,
-  BadRequestException,
-  UnauthorizedException,
-  Res,
-  Param,
-  Query,
-} from '@nestjs/common';
-
+import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards, Patch, Req, BadRequestException, UnauthorizedException, Res, Param, Query } from '@nestjs/common';
 import { ChangePasswordDto, forgotPasswordDto, RefreshTokenDto, ResetPasswordDto, TLoginUserDto } from '../dto/auth.dto';
 import { ApiBody, ApiCookieAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../services/auth.services';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
-import { UserService } from 'src/modules/user/service/user.service';
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { Request, Response } from 'express';
+import { ViewerService } from 'src/modules/user/service/viewer.service';
+import { CreateViewerDto } from 'src/modules/user/dto/create-viewer.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService
-
+    private readonly viewerService: ViewerService,
   ) {}
 
   @Post('login')
   async login(@Body() loginDto: TLoginUserDto) {
-    const data = await  this.authService.loginUser(loginDto)
-    return   {
+    const data = await this.authService.loginUser(loginDto);
+    return {
       message: 'Login User successfully',
-      data
+      data,
     };
-    
   }
 
-   @Post('registration')
-    async create(@Body() createUserDto:CreateUserDto) {
-      const createdUser = await this.userService.create(createUserDto);
-       
-      return {
-        message: 'User created successfully',
-        data: createdUser,
-      };
-    }
+  @Post('registration')
+  async create(@Body() createViewerDto: CreateViewerDto) {
+    const createdUser = await this.viewerService.create(createViewerDto);
+
+    return {
+      message: 'User created successfully',
+      data: createdUser,
+    };
+  }
   
 
   @UseGuards(JwtAuthGuard)
