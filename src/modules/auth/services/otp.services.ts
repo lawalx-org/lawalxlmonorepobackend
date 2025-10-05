@@ -6,12 +6,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import * as Twilio from 'twilio';
 import { generateOTP } from './utiles.services';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class OtpService {
   private client: Twilio.Twilio;
   private verifyServiceSid: string;
-  constructor(private prisma: PrismaService, private configService: ConfigService) {
+  constructor(private prisma: PrismaService, private configService: ConfigService, private readonly jwtService: JwtService,) {
      this.client = Twilio(
       this.configService.get<string>('twilio.accountSid'),
       this.configService.get<string>('twilio.authToken'),
@@ -66,6 +67,25 @@ export class OtpService {
       data: { verified: true },
     });
 
+    // 6. Create tokens
+  const jwtPayload = {
+    userId: user.id,
+    role: user.role,
+    email: user.email,
+  };
+
+  const accessToken = this.jwtService.sign(jwtPayload, {
+    secret: this.configService.get<string>('jwt_access_secret'),
+    expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+  });
+
+  const refreshToken = this.jwtService.sign(jwtPayload, {
+    secret: this.configService.get<string>('jwt_refresh_secret'),
+    expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
+  });
+
+  return { accessToken, refreshToken };
+
     return { message: 'OTP verified successfully' };
   }
 
@@ -109,6 +129,26 @@ export class OtpService {
         expiresAt: expiresAt,
       },
     });
+
+
+    // 6. Create tokens
+  const jwtPayload = {
+    userId: user.id,
+    role: user.role,
+    email: user.email,
+  };
+
+  const accessToken = this.jwtService.sign(jwtPayload, {
+    secret: this.configService.get<string>('jwt_access_secret'),
+    expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+  });
+
+  const refreshToken = this.jwtService.sign(jwtPayload, {
+    secret: this.configService.get<string>('jwt_refresh_secret'),
+    expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
+  });
+
+  return { accessToken, refreshToken };
 
     return { verified: true, message: 'OTP verified successfully' };
   } else {

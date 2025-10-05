@@ -56,7 +56,7 @@ export class AuthService {
     
   }
 
-  //todo remove this if it is not need 
+  //todo remove this if it is not need
   // if (!user.otpVerification || user.otpVerification.verified === false) {
   //   throw new BadRequestException('OTP not verified. Please verify your email.');
    
@@ -66,7 +66,7 @@ export class AuthService {
  if(user.verification2FA){
 
   const email = maskEmail(user.email)
-  const phone = maskPhone(user.phoneNumber) 
+  const phone = maskPhone(user.phoneNumber.toString()) 
   const jwtPayload = {
     userId: user.id,
     role: user.role,
@@ -76,7 +76,7 @@ export class AuthService {
 
   const specialToken  = this.jwtService.sign(jwtPayload, {
     secret: this.configService.get<string>('jwt_access_secret'),
-    expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+    expiresIn: this.configService.get<string>('jwt_OTP_expired_in'),
   });
 
    return {email,phone , specialToken}
