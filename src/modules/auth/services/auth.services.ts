@@ -56,17 +56,17 @@ export class AuthService {
     
   }
 
-  
-  if (!user.otpVerification || user.otpVerification.verified === false) {
-    throw new BadRequestException('OTP not verified. Please verify your email.');
+  //todo remove this if it is not need 
+  // if (!user.otpVerification || user.otpVerification.verified === false) {
+  //   throw new BadRequestException('OTP not verified. Please verify your email.');
    
-  }
+  // }
 
 
  if(user.verification2FA){
 
   const email = maskEmail(user.email)
-  const phone = maskPhone(user.phoneNumber.toString()) 
+  const phone = maskPhone(user.phoneNumber) 
   const jwtPayload = {
     userId: user.id,
     role: user.role,

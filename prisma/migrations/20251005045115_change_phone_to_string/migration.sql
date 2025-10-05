@@ -31,6 +31,9 @@ CREATE TYPE "TicketStatus" AS ENUM ('OPEN', 'UNASSIGNED', 'IN_PROGRESS', 'SOLVED
 -- CreateEnum
 CREATE TYPE "IssueType" AS ENUM ('LOGINFAILED', 'SYSTEMERROR', 'OTHERPROBLEM');
 
+-- CreateEnum
+CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'BANNED', 'DELETED', 'SUSPENDED');
+
 -- CreateTable
 CREATE TABLE "activities" (
     "id" TEXT NOT NULL,
@@ -350,20 +353,19 @@ CREATE TABLE "tickets" (
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "phoneNumber" INTEGER,
+    "phoneNumber" INTEGER NOT NULL,
     "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "otp" INTEGER,
     "role" "Role" NOT NULL DEFAULT 'VIEWER',
     "profileImage" TEXT,
     "language" "Language" NOT NULL DEFAULT 'ENGLISH',
     "timezone" TIMESTAMP(3),
     "verification2FA" BOOLEAN NOT NULL DEFAULT false,
-    "isActive" BOOLEAN NOT NULL DEFAULT false,
     "status" BOOLEAN NOT NULL DEFAULT false,
     "lastActive" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userStatus" "UserStatus" NOT NULL DEFAULT 'ACTIVE',
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -459,6 +461,9 @@ CREATE UNIQUE INDEX "supporters_userId_key" ON "supporters"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_phoneNumber_key" ON "users"("phoneNumber");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "viewers_userId_key" ON "viewers"("userId");

@@ -1,5 +1,5 @@
 // src/otp/otp.service.ts
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 
 import { addMinutes, isBefore } from 'date-fns';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -43,6 +43,11 @@ export class OtpService {
   
   // Check Email verification code
   async verify(email: string, submittedOtp: string) {
+    const user = await this.prisma.user.findFirst({where:{email,userStatus:{notIn:['BANNED','DELETED','SUSPENDED']}}})
+
+    if (!user) {
+      throw new NotFoundException('User not found for the provided email');
+    }
     const record = await this.prisma.otpVerification.findFirst({
       where: { email, verified: false },
       orderBy: { createdAt: 'desc' },
@@ -67,6 +72,7 @@ export class OtpService {
 
   //  Send verification code
   async sendVerificationCode(to: string) {
+    console.log(this.client,this.verifyServiceSid)
     const data = await this.client.verify.v2
       .services(this.verifyServiceSid)
       .verifications.create({ to, channel: 'sms' });
@@ -82,8 +88,13 @@ export class OtpService {
      const expiresAt = addMinutes(new Date(), 10);
 
   if (result.status === 'approved') {
-    const number = parseInt(to)
-    const user = await this.prisma.user.findFirst({where:{phoneNumber:number}})
+    const user = await this.prisma.user.findFirst({where:{phoneNumber:to,userStatus:{notIn:['BANNED','DELETED','SUSPENDED']}}})
+
+    if (!user) {
+      throw new NotFoundException('User not found for the provided phone number');
+    }
+
+  
     await this.prisma.otpVerification.upsert({
       where: { email: user?.email }, 
       update: {

@@ -12,20 +12,19 @@ export class SeedService implements OnModuleInit {
 
     const saltRounds = parseInt(config.bcrypt_salt_rounds || '10', 10);
     const hashedPassword = await bcrypt.hash(
-      config.admin.password ?? 'changeme123',
+      config.admin.password ?? '',
       saltRounds,
     );
 
     await this.prisma.user.upsert({
-      where: { email: config.admin.email ?? 'admin@example.com' },
+      where: { email: config.admin.email ?? '' },
       update: {},
       create: {
-        email: config.admin.email ?? 'admin@example.com',
-        phoneNumber: Number(config.admin.phoneNumber) || null,
+        email: config.admin.email ?? '',
+        phoneNumber:config.admin.phoneNumber??'' ,
         password: hashedPassword,
         name: config.admin.name ?? 'System Admin',
         role: 'ADMIN',
-        isActive: true,
         status: true,
       },
     });
