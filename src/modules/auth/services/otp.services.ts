@@ -86,13 +86,13 @@ export class OtpService {
 
   return { accessToken, refreshToken };
 
-    return { message: 'OTP verified successfully' };
+
   }
 
 
   //  Send verification code
   async sendVerificationCode(to: string) {
-    console.log(this.client,this.verifyServiceSid)
+   
     const data = await this.client.verify.v2
       .services(this.verifyServiceSid)
       .verifications.create({ to, channel: 'sms' });

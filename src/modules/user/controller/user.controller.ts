@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, Param, Delete, Put, Patch } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, Param, Delete, Put, Patch, UseGuards } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { ManagerService } from '../service/manager.service';
 import { EmployeeService } from '../service/employee.service';
@@ -8,6 +8,7 @@ import { CreateEmployeeDto } from '../dto/create-employee.dto';
 import { CreateViewerDto } from '../dto/create-viewer.dto';
 import { ConvertEmployeeToManagerDto } from '../dto/convert-employee-to-manager.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 
 @Controller('users')
 export class UserController {
@@ -18,6 +19,7 @@ export class UserController {
     private readonly viewerService: ViewerService,
   ) {}
 
+  
   @Post('/create-manager')
   @HttpCode(HttpStatus.CREATED)
   async createManager(@Body() createManagerDto: CreateManagerDto) {
@@ -29,7 +31,8 @@ export class UserController {
   async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeeService.create(createEmployeeDto);
   }
-
+  
+  // @UseGuards(JwtAuthGuard)
   @Post('/create-viewer')
   @HttpCode(HttpStatus.CREATED)
   async createViewer(@Body() createViewerDto: CreateViewerDto) {

@@ -76,7 +76,7 @@ export class AuthService {
 
   const specialToken  = this.jwtService.sign(jwtPayload, {
     secret: this.configService.get<string>('jwt_access_secret'),
-    expiresIn: this.configService.get<string>('jwt_OTP_expired_in'),
+    expiresIn: this.configService.get<string>('jwt_access_expires_in'),
   });
 
    return {email,phone , specialToken}
