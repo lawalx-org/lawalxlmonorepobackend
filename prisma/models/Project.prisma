@@ -14,6 +14,7 @@ model Project {
   priority                  Priority
   deadline                  DateTime
   managerId                 String
+  employeeId                 String
   startDate                 DateTime?
   progress                  Int?
   chartList                 String[]      // Seed create that chart list
@@ -26,6 +27,7 @@ model Project {
   // Relations
   program                   Program       @relation(fields: [programId], references: [id], onDelete: Cascade)
   manager                   Manager       @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  employee                  Employee       @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   tasks                     Task[]
   activities                Activity[]
   reviews                   Review[]

@@ -89,11 +89,11 @@ export class UserController {
     return this.viewerService.findOne(id);
   }
 
-  @Put('employees/:id/convert-to-manager')
-  async convertEmployeeToManager(
-    @Param('id') id: string,
-    @Body() convertDto: ConvertEmployeeToManagerDto,
-  ) {
-    return this.userService.convertEmployeeToManager(id, convertDto);
-  }
+  // @Put('employees/:id/convert-to-manager')
+  // async convertEmployeeToManager(
+  //   @Param('id') id: string,
+  //   @Body() convertDto: ConvertEmployeeToManagerDto,
+  // ) {
+  //   return this.userService.convertEmployeeToManager(id, convertDto);
+  // }
 }

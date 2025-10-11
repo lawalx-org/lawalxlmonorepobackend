@@ -13,7 +13,7 @@ export class EmployeeService {
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto) {
-    const { email, password, phoneNumber, name } = createEmployeeDto;
+    const { email, password, phoneNumber, name,description,joinedDate } = createEmployeeDto;
 
     const existingUser = await this.prisma.user.findFirst({
       where: { OR: [{ email }, { phoneNumber }] },
@@ -40,6 +40,9 @@ export class EmployeeService {
       await prisma.employee.create({
         data: {
           userId: user.id,
+          description,
+          joinedDate,
+          
           
         },
       });

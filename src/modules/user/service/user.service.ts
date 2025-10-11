@@ -99,39 +99,40 @@ async uploadSingleImage(file: Express.Multer.File) {
     return result;
   }
 
-  async convertEmployeeToManager(employeeId: string, dto: ConvertEmployeeToManagerDto) {
-    return this.prisma.$transaction(async (prisma) => {
-      const user = await prisma.user.findUnique({
-        where: { id: employeeId },
-        include: { employee: true },
-      });
+  // async convertEmployeeToManager(employeeId: string, dto: ConvertEmployeeToManagerDto) {
+  //   return this.prisma.$transaction(async (prisma) => {
+  //     const user = await prisma.user.findUnique({
+  //       where: { id: employeeId },
+  //       include: { employee: true },
+  //     });
 
-      if (!user || !user.employee) {
-        throw new BadRequestException(`User with ID "${employeeId}" is not a valid employee.`);
-      }
+  //     if (!user || !user.employee) {
+  //       throw new BadRequestException(`User with ID "${employeeId}" is not a valid employee.`);
+  //     }
 
-      await prisma.employee.delete({ where: { userId: employeeId } });
+  //     await prisma.employee.delete({ where: { userId: employeeId } });
 
-      const manager = await prisma.manager.create({
-        data: {
-          userId: employeeId,
-          skills: dto.skills || [],
-        },
-      });
+  //     const manager = await prisma.manager.create({
+  //       data: {
+  //         userId: employeeId,
+  //         description:dto.
+  //         skills: dto.skills || [],
+  //       },
+  //     });
 
-      const updatedUser = await prisma.user.update({
-        where: { id: employeeId },
-        data: { role: Role.MANAGER },
-      });
+  //     const updatedUser = await prisma.user.update({
+  //       where: { id: employeeId },
+  //       data: { role: Role.MANAGER },
+  //     });
 
-      const { password, ...userWithoutPassword } = updatedUser;
+  //     const { password, ...userWithoutPassword } = updatedUser;
 
-      return {
-        ...manager,
-        user: userWithoutPassword,
-      };
-    });
-  }
+  //     return {
+  //       ...manager,
+  //       user: userWithoutPassword,
+  //     };
+  //   });
+  // }
 
  async findAllWithFilters(dto: Record<string, any>) {
     const where = buildDynamicPrismaFilter(dto);

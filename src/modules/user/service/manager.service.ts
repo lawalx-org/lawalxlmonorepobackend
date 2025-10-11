@@ -4,16 +4,19 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { Role } from 'generated/prisma';
 import { CreateManagerDto } from '../dto/create-manager.dto';
+import { EmailService } from '../../utils/services/emailService';
+import { welcomeEmailTemplate } from '../../utils/template/welcometempleted';
 
 @Injectable()
 export class ManagerService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
+    private readonly emailService: EmailService,
   ) {}
 
   async create(createManagerDto: CreateManagerDto) {
-    const { email, password, skills, phoneNumber, name } = createManagerDto;
+    const { sendWelcomeEmail, notifyProjectManager, projects, email, password, skills, phoneNumber, name, joinedDate, description } = createManagerDto;
 
     const existingUser = await this.prisma.user.findFirst({
       where: { OR: [{ email }, { phoneNumber }] },
@@ -21,6 +24,18 @@ export class ManagerService {
 
     if (existingUser) {
       throw new ConflictException('User with this email or phone number already exists');
+    }
+
+    if (projects && projects.length > 0) {
+      const projectCount = await this.prisma.project.count({
+        where: {
+          id: { in: projects },
+        },
+      });
+
+      if (projectCount !== projects.length) {
+        throw new NotFoundException('One or more projects not found.');
+      }
     }
 
     const saltRounds = Number(this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10);
@@ -40,9 +55,20 @@ export class ManagerService {
       await prisma.manager.create({
         data: {
           userId: user.id,
+          description,
+          joinedDate,
+          projects: projects ? { connect: projects.map((id) => ({ id })) } : undefined,
           skills: skills || [],
         },
       });
+
+      if (sendWelcomeEmail) {
+        await this.emailService.sendMail(
+          user.email,
+          'Welcome to the Team!',
+          welcomeEmailTemplate(user.name, user.email, joinedDate),
+        );
+      }
 
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
