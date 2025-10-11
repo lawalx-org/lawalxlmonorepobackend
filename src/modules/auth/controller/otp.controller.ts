@@ -7,6 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { OtpType, PhoneVerifyOtpDto, VerifyOtpDto } from '../dto/otp.dto';
+import { GoogleAuthGuard } from '../utils/google-auth.guard';
 
 
 @Controller('otp')
@@ -40,9 +41,9 @@ async sendOtp(@Req() req: RequestWithUser, @Param('type') type: OtpType) {
       return { message: 'OTP sent successfully to email' };
 
     case 'phone':
-    const result = await this.otpService.sendVerificationCode(user.phoneNumber);
+     await this.otpService.sendVerificationCode(user.phoneNumber);
      //todo after completed the woke remove that  result
-      return { message: 'OTP sent successfully to phone',result };
+      return { message: 'OTP sent successfully to phone',};
 
     default:
       throw new BadRequestException('Invalid type. Must be "email" or "phone"');
@@ -56,8 +57,30 @@ async sendOtp(@Req() req: RequestWithUser, @Param('type') type: OtpType) {
   
   @Post('verify/phone')
   async PhoneVerifyOtp(@Body() dto:PhoneVerifyOtpDto) {
-    return this.otpService.verify(dto.phone, dto.otp);
+    return this.otpService.checkVerificationCode(dto.phone, dto.otp);
   }
+
+   @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  async googleLogin() {
+    
+  }
+
+  @Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleCallback(@Req() req) {
+      const user = req.user;
+      const otp = await this.otpService.generate(user.email!);
+      await this.emailService.sendMail(
+        user.email!,
+        'Your OTP Code',
+        otpTemplate('User', otp),
+      );
+      return { message: 'OTP sent successfully to email',email:user.email };
+  }
+
+
+  
 
   
 }

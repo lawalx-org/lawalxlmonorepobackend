@@ -101,61 +101,90 @@ export class OtpService {
   }
 
   //  Check verification code
- async checkVerificationCode(to: string, code: string) {
-  const result = await this.client.verify.v2
-    .services(this.verifyServiceSid)
-    .verificationChecks.create({ to, code });
-     const expiresAt = addMinutes(new Date(), 10);
+async checkVerificationCode(to: string, code: string) {
+  try {
+  
+    const result = await this.client.verify.v2
+      .services(this.verifyServiceSid)
+      .verificationChecks.create({ to, code });
 
-  if (result.status === 'approved') {
-    const user = await this.prisma.user.findFirst({where:{phoneNumber:to,userStatus:{notIn:['BANNED','DELETED','SUSPENDED']}}})
+   
+    if (!result) {
+      throw new BadRequestException('Verification failed. Please try again.');
+    }
+
+
+    if (result.status !== 'approved') {
+      if (result.status === 'pending') {
+        throw new BadRequestException('Invalid or incorrect verification code.');
+      } else if (result.status === 'expired') {
+        throw new BadRequestException('Verification code has expired. Please request a new one.');
+      } else {
+        throw new BadRequestException('Verification failed. Please try again.');
+      }
+    }
+
+
+    const user = await this.prisma.user.findFirst({
+      where: {
+        phoneNumber: to,
+        userStatus: { notIn: ['BANNED', 'DELETED', 'SUSPENDED'] },
+      },
+    });
 
     if (!user) {
       throw new NotFoundException('User not found for the provided phone number');
     }
 
-  
+    
+    const expiresAt = addMinutes(new Date(), 10);
     await this.prisma.otpVerification.upsert({
-      where: { email: user?.email }, 
-      update: {
-        verified: true,
-        otp: code, 
-        expiresAt: expiresAt , 
-      },
-      create: {
-        email: user?.email!,  
-        verified: true,
-        otp: code,
-        expiresAt: expiresAt,
-      },
+      where: { email: user.email },
+      update: { verified: true, otp: code, expiresAt },
+      create: { email: user.email, verified: true, otp: code, expiresAt },
     });
 
-
-    // 6. Create tokens
-  const jwtPayload = {
-    userId: user.id,
-    role: user.role,
-    email: user.email,
-  };
-
-  const accessToken = this.jwtService.sign(jwtPayload, {
-    secret: this.configService.get<string>('jwt_access_secret'),
-    expiresIn: this.configService.get<string>('jwt_access_expires_in'),
-  });
-
-  const refreshToken = this.jwtService.sign(jwtPayload, {
-    secret: this.configService.get<string>('jwt_refresh_secret'),
-    expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
-  });
-
-  return { accessToken, refreshToken };
-
-    return { verified: true, message: 'OTP verified successfully' };
-  } else {
     
-    throw new BadRequestException('Invalid or expired OTP code');
+    const jwtPayload = {
+      userId: user.id,
+      role: user.role,
+      email: user.email,
+    };
+
+    const accessToken = this.jwtService.sign(jwtPayload, {
+      secret: this.configService.get<string>('jwt_access_secret'),
+      expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+    });
+
+    const refreshToken = this.jwtService.sign(jwtPayload, {
+      secret: this.configService.get<string>('jwt_refresh_secret'),
+      expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
+    });
+
+   
+    return {
+      success: true,
+      message: 'OTP verified successfully',
+      accessToken,
+      refreshToken,
+    };
+  } catch (error: any) {
+   
+    if (error.code === 20404 || error.message?.includes('VerificationCheck was not found')) {
+      throw new BadRequestException(
+  'Verification failed — please check the code and try again'
+);
+
+    }
+
+    if (error.code === 60200) {
+      throw new BadRequestException('Invalid verification code.');
+    }
+
+    throw new BadRequestException(error.message || 'Verification failed.');
   }
 }
+
 
   
   

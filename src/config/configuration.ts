@@ -48,4 +48,12 @@ export default () => ({
     fromNumber: process.env.TWILIO_FROM_NUMBER,
     verifyServiceSid: process.env.TWILIO_VERIFY_SERVICE_SID 
   },
+
+
+  
+  google: {
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL,
+  },
 });

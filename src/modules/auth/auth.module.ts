@@ -9,6 +9,8 @@ import { UserModule } from '../user/user.module';
 import { UtilsModule } from '../utils/utils.module';
 import { OtpController } from './controller/otp.controller';
 import { OtpService } from './services/otp.services';
+import { GoogleStrategy } from './utils/google.stratey';
+import { PassportModule } from '@nestjs/passport';
 
 
 @Module({
@@ -16,7 +18,7 @@ import { OtpService } from './services/otp.services';
     UserModule,
     UtilsModule,
     JwtModule.registerAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule,PassportModule.register({ session: false })],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('jwt_access_secret'),
@@ -27,6 +29,6 @@ import { OtpService } from './services/otp.services';
     }),
   ],
   controllers: [AuthController,OtpController],
-  providers: [AuthService, JwtStrategy,OtpService],
+  providers: [AuthService, JwtStrategy,OtpService,GoogleStrategy],
 })
 export class AuthModule {}
