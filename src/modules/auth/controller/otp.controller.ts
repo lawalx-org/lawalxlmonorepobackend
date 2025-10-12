@@ -1,10 +1,13 @@
+/* eslint-disable no-case-declarations */
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // src/otp/otp.controller.ts
 import {
   Controller,
   Post,
   Body,
   Get,
-  Query,
   Param,
   BadRequestException,
   UseGuards,

@@ -2,15 +2,11 @@ import {
   Controller,
   Post,
   Body,
-  HttpCode,
-  HttpStatus,
   UseGuards,
   Patch,
   Req,
   BadRequestException,
   UnauthorizedException,
-  Res,
-  Param,
   Query,
 } from '@nestjs/common';
 import {
@@ -21,14 +17,12 @@ import {
   TLoginUserDto,
 } from '../dto/auth.dto';
 import {
-  ApiBody,
   ApiCookieAuth,
   ApiOperation,
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthService } from '../services/auth.services';
-import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { Request, Response } from 'express';
 import { ViewerService } from 'src/modules/user/service/viewer.service';

@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -10,15 +9,10 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 
-import { HttpStatus } from '@nestjs/common';
-import { AppError } from 'src/errors/AppError';
 import { TLoginUserDto } from '../dto/auth.dto';
 import { EmailService } from 'src/modules/utils/services/emailService';
-import { otpTemplate } from 'src/modules/utils/template/otptemplate';
-import { resetPasswordTemplate } from 'src/modules/utils/template/resetpassowordtemplate';
-import { addMinutes, isBefore } from 'date-fns';
 import { JwtPayload } from 'src/types/RequestWithUser';
-import { UserStatus, Role } from 'generated/prisma';
+import { UserStatus } from 'generated/prisma';
 import { maskEmail, maskPhone } from './utiles.services';
 import { buildJwtPayload } from '../utils/userbasetoken';
 
@@ -89,9 +83,12 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async changePassword(
-    userData: JwtPayload,
-    payload: { oldPassword: string; newPassword: string },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _userData: JwtPayload,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _payload: { oldPassword: string; newPassword: string },
   ): Promise<null> {
     // // Fetch user by ID
     // const user = await this.prisma.user.findUnique({
@@ -132,7 +129,8 @@ export class AuthService {
     return null;
   }
 
-  async refreshToken(refreshToken: string) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async refreshToken(_refreshToken: string) {
     //   let decoded: any;
     //   try {
     //     decoded = this.jwtService.verify(refreshToken, {
@@ -160,7 +158,8 @@ export class AuthService {
     //   return accessToken;
   }
 
-  async forgetPassword(email: string): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async forgetPassword(_email: string): Promise<void> {
     // const user = await this.prisma.user.findUnique({
     //   where: { email },
     // });
@@ -192,8 +191,10 @@ export class AuthService {
   }
 
   async resetPassword(
-    payload: { id: string; newPassword: string },
-    token: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _payload: { id: string; newPassword: string },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _token: string,
   ) {
     // const user = await this.prisma.user.findUnique({
     //   where: { id: payload.id },

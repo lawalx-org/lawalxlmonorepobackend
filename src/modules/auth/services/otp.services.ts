@@ -174,7 +174,9 @@ export class OtpService {
       };
     } catch (error: any) {
       if (
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         error.code === 20404 ||
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         error.message?.includes('VerificationCheck was not found')
       ) {
         throw new BadRequestException(
@@ -182,10 +184,12 @@ export class OtpService {
         );
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.code === 60200) {
         throw new BadRequestException('Invalid verification code.');
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       throw new BadRequestException(error.message || 'Verification failed.');
     }
   }

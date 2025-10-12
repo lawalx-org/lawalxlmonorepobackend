@@ -22,7 +22,7 @@ export class ManagerService {
   async create(createManagerDto: CreateManagerDto) {
     const {
       sendWelcomeEmail,
-      notifyProjectManager,
+      // notifyProjectManager,
       projects,
       email,
       password,
@@ -96,6 +96,7 @@ export class ManagerService {
         );
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
     });
@@ -112,6 +113,7 @@ export class ManagerService {
     }
 
     const { user } = manager;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user;
 
     return {
@@ -127,6 +129,7 @@ export class ManagerService {
 
     return managers.map((manager) => {
       const { user } = manager;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
       return {
         ...manager,

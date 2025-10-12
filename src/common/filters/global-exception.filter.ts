@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   ExceptionFilter,
   Catch,
@@ -6,12 +9,6 @@ import {
   HttpStatus,
   Logger,
   BadRequestException,
-  UnauthorizedException,
-  ForbiddenException,
-  NotFoundException,
-  ConflictException,
-  UnprocessableEntityException,
-  InternalServerErrorException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
@@ -115,6 +112,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     ) {
       message = (exceptionResponse as any).message || 'HTTP exception occurred';
       if (Object.keys(exceptionResponse).length > 1) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { message: _, ...details } = exceptionResponse as any;
         if (Object.keys(details).length > 0) {
           errorDetails = details;
