@@ -24,8 +24,6 @@
 // import { Roles } from 'src/common/jwt/roles.decorator';
 // import { UserRole } from 'generated/prisma';
 
-
-
 // @Controller('payments')
 // export class PaymentController {
 //   constructor(private readonly paymentService: PaymentService) { }
@@ -34,8 +32,7 @@
 //  @Roles(UserRole.USER)
 //  @Post('/')
 //   async create(@Body() dto: CreatePaymentDto, @Req() req) {
-     
-   
+
 //     const data = await this.paymentService.createPayment(dto,req.user.userId);
 //     return  {
 //       statusCode: HttpStatus.CREATED,
@@ -44,17 +41,10 @@
 //       data,
 //     };
 //   }
-  
+
 //   @Post('/webhook')
 //   async webhook(@Headers('stripe-signature') signature: string, @Req() req: RawBodyRequest<Request>) {
 //     return this.paymentService.handleWebhook(req);
 //   }
 
-
-
-  
-  
-
-  
-  
 // }

@@ -6,16 +6,8 @@ import { SeedService } from './common/seed/seed.services';
 import { PrismaModule } from './prisma/prisma.module';
 import { StoreModule } from './common/storemodule/store.module';
 
-
 @Module({
-  imports: [
-    ConfigurationModule,
-    PrismaModule ,
-    StoreModule,
-
-
-    
-  ],
+  imports: [ConfigurationModule, PrismaModule, StoreModule],
   controllers: [AppController],
   providers: [AppService, SeedService],
 })

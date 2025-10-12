@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { Role } from 'generated/prisma';
 import configuration from 'src/config/configuration';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -16,19 +17,37 @@ export class SeedService implements OnModuleInit {
       saltRounds,
     );
 
-    await this.prisma.user.upsert({
-      where: { email: config.admin.email ?? '' },
-      update: {},
-      create: {
-        email: config.admin.email ?? '',
-        phoneNumber:config.admin.phoneNumber??'' ,
-        password: hashedPassword,
-        name: config.admin.name ?? 'System Admin',
-        role: "CLIENT",
-        status: true,
-      },
-    });
+    await this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.upsert({
+        where: { email: config.admin.email ?? '' },
+        update: {},
+        create: {
+          email: config.admin.email ?? '',
+          phoneNumber: config.admin.phoneNumber ?? '',
+          password: hashedPassword,
+          name: config.admin.name ?? '',
+          role: Role.CLIENT,
+          status: true,
+        },
+      });
 
-    console.log(` Admin user ensured: ${config.admin.email}`);
+      const existingClient = await tx.client.findUnique({
+        where: { userId: user.id },
+      });
+
+      if (!existingClient) {
+        await tx.client.create({
+          data: {
+            userId: user.id,
+            email: user.email,
+          },
+        });
+        console.log(` Client entry created for: ${user.email}`);
+      } else {
+        console.log(`Client already exists for: ${user.email}`);
+      }
+
+      console.log(` Seed transaction complete for ${user.email}`);
+    });
   }
 }

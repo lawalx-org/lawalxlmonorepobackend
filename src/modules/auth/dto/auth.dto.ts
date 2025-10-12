@@ -10,16 +10,13 @@ export class TLoginUserDto {
   email: string;
 
   @ApiProperty({
-     example: 'password123' ,
+    example: 'password123',
     description: 'The password of the user (minimum 6 characters)',
   })
   @IsString()
   @MinLength(6)
   password: string;
 }
-
-
-
 
 export class ChangePasswordDto {
   @ApiProperty({
@@ -39,7 +36,6 @@ export class ChangePasswordDto {
   newPassword: string;
 }
 
-
 export class forgotPasswordDto {
   @ApiProperty({
     example: 'user@gmail.com',
@@ -49,10 +45,7 @@ export class forgotPasswordDto {
   email: string;
 }
 
-
 // src/user/dto/reset-password.dto.ts
-
-
 
 export class ResetPasswordDto {
   @ApiProperty({
@@ -71,12 +64,7 @@ export class ResetPasswordDto {
   newPassword: string;
 }
 
-
-
-
 // src/modules/auth/dto/refresh-token.dto.ts
-
-
 
 export class RefreshTokenDto {
   @ApiProperty({
@@ -84,8 +72,8 @@ export class RefreshTokenDto {
     description: 'Refresh token issued during login',
   })
   @IsString({ message: 'Refresh token must be a string.' })
-  @MinLength(10, { message: 'Refresh token must be at least 10 characters long.' })
+  @MinLength(10, {
+    message: 'Refresh token must be at least 10 characters long.',
+  })
   refreshToken: string;
 }
-
-

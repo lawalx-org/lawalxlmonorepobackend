@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
 
@@ -11,7 +15,7 @@ export class EmailService {
     this.transporter = nodemailer.createTransport({
       host: this.configService.get<string>('mail_host'),
       port: this.configService.get<number>('mail_port'),
-      secure: this.configService.get<boolean>('mail_secure'), 
+      secure: this.configService.get<boolean>('mail_secure'),
       auth: {
         user: this.configService.get<string>('mail_user'),
         pass: this.configService.get<string>('mail_pass'),
@@ -37,7 +41,9 @@ export class EmailService {
       };
     } catch (error) {
       this.logger.error(`Failed to send email: ${error.message}`, error.stack);
-      throw new InternalServerErrorException('Failed to send email. Please try again later.');
+      throw new InternalServerErrorException(
+        'Failed to send email. Please try again later.',
+      );
     }
   }
 }

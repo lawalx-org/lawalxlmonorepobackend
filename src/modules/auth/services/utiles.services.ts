@@ -8,11 +8,8 @@ export function generateOTP(length = 6): string {
   return otp;
 }
 
-
-
 export function maskPhone(phone: string): string {
   if (!phone) return '';
-
 
   const visibleStart = 5;
   const visibleEnd = 1;
@@ -25,7 +22,6 @@ export function maskPhone(phone: string): string {
 
   return `${start}${masked}${end}`;
 }
-
 
 export function maskEmail(email: string): string {
   if (!email) return '';

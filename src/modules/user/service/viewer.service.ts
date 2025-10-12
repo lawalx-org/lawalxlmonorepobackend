@@ -1,4 +1,8 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
@@ -20,10 +24,14 @@ export class ViewerService {
     });
 
     if (existingUser) {
-      throw new ConflictException('User with this email or phone number already exists');
+      throw new ConflictException(
+        'User with this email or phone number already exists',
+      );
     }
 
-    const saltRounds = Number(this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10);
+    const saltRounds = Number(
+      this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
+    );
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     return this.prisma.$transaction(async (prisma) => {
@@ -72,7 +80,7 @@ export class ViewerService {
       include: { user: true },
     });
 
-    return viewers.map(viewer => {
+    return viewers.map((viewer) => {
       const { user } = viewer;
       const { password, ...userWithoutPassword } = user;
       return {

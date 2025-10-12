@@ -1,6 +1,32 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, UseGuards, Patch, Req, BadRequestException, UnauthorizedException, Res, Param, Query } from '@nestjs/common';
-import { ChangePasswordDto, forgotPasswordDto, RefreshTokenDto, ResetPasswordDto, TLoginUserDto } from '../dto/auth.dto';
-import { ApiBody, ApiCookieAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+  Patch,
+  Req,
+  BadRequestException,
+  UnauthorizedException,
+  Res,
+  Param,
+  Query,
+} from '@nestjs/common';
+import {
+  ChangePasswordDto,
+  forgotPasswordDto,
+  RefreshTokenDto,
+  ResetPasswordDto,
+  TLoginUserDto,
+} from '../dto/auth.dto';
+import {
+  ApiBody,
+  ApiCookieAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthService } from '../services/auth.services';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
@@ -34,53 +60,56 @@ export class AuthController {
       data: createdUser,
     };
   }
-  
 
   @UseGuards(JwtAuthGuard)
   @Patch('change-password')
-  async changePassword(@Req() req: Request, @Body() payload: ChangePasswordDto) {
-    const userData = req.user as { userId: string; role: string; userEmail: string };
+  async changePassword(
+    @Req() req: Request,
+    @Body() payload: ChangePasswordDto,
+  ) {
+    const userData = req.user as {
+      userId: string;
+      role: string;
+      userEmail: string;
+    };
 
     if (!payload.oldPassword || !payload.newPassword) {
-      throw new BadRequestException('Old password and new password are required');
+      throw new BadRequestException(
+        'Old password and new password are required',
+      );
     }
 
     await this.authService.changePassword(userData, payload);
 
-   
     return;
   }
 
+  @Post('refresh-token')
+  @ApiCookieAuth()
+  @ApiOperation({
+    summary: 'Refresh access token using refresh token from cookie',
+  })
+  async refreshAccessToken(@Body() dto: RefreshTokenDto) {
+    const refreshToken = dto.refreshToken;
 
-@Post('refresh-token')
-@ApiCookieAuth()
-@ApiOperation({ summary: 'Refresh access token using refresh token from cookie' })
-async refreshAccessToken(@Body() dto:RefreshTokenDto) {
-  
+    if (!refreshToken) {
+      throw new UnauthorizedException('Refresh token is missing');
+    }
 
-  const refreshToken = dto.refreshToken
-
-  if (!refreshToken) {
-    throw new UnauthorizedException('Refresh token is missing');
+    const result = await this.authService.refreshToken(refreshToken);
+    console.log(result);
+    return {
+      message: 'Refresh token successfully',
+      data: result,
+    };
   }
 
-  const result = await this.authService.refreshToken(refreshToken);
-  console.log(result)
-  return {
-    message: 'Refresh token successfully',
-    data: result,
-  };
-}
-
-
-
-    @Post('forgot-password')
-  async forgotPassword(@Body() dto:forgotPasswordDto) {
+  @Post('forgot-password')
+  async forgotPassword(@Body() dto: forgotPasswordDto) {
     return this.authService.forgetPassword(dto.email);
   }
 
-
-   @Post('reset-password')
+  @Post('reset-password')
   @ApiQuery({ name: 'token', required: true })
   async resetPassword(
     @Body() payload: ResetPasswordDto,
@@ -88,6 +117,4 @@ async refreshAccessToken(@Body() dto:RefreshTokenDto) {
   ) {
     return this.authService.resetPassword(payload, token);
   }
-
-  
 }

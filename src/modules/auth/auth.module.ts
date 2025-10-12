@@ -12,13 +12,12 @@ import { OtpService } from './services/otp.services';
 import { GoogleStrategy } from './utils/google.stratey';
 import { PassportModule } from '@nestjs/passport';
 
-
 @Module({
   imports: [
     UserModule,
     UtilsModule,
     JwtModule.registerAsync({
-      imports: [ConfigModule,PassportModule.register({ session: false })],
+      imports: [ConfigModule, PassportModule.register({ session: false })],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('jwt_access_secret'),
@@ -28,7 +27,7 @@ import { PassportModule } from '@nestjs/passport';
       }),
     }),
   ],
-  controllers: [AuthController,OtpController],
-  providers: [AuthService, JwtStrategy,OtpService,GoogleStrategy],
+  controllers: [AuthController, OtpController],
+  providers: [AuthService, JwtStrategy, OtpService, GoogleStrategy],
 })
 export class AuthModule {}

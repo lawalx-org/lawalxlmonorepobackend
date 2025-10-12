@@ -1,4 +1,8 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
@@ -13,17 +17,28 @@ export class EmployeeService {
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto) {
-    const {skills,projects, email, password: plainTextPassword, phoneNumber, name,description,joinedDate } = createEmployeeDto;
+    const {
+      skills,
+      projects,
+      email,
+      password: plainTextPassword,
+      phoneNumber,
+      name,
+      description,
+      joinedDate,
+    } = createEmployeeDto;
 
     const existingUser = await this.prisma.user.findFirst({
       where: { OR: [{ email }, { phoneNumber }] },
     });
 
     if (existingUser) {
-      throw new ConflictException('User with this email or phone number already exists');
+      throw new ConflictException(
+        'User with this email or phone number already exists',
+      );
     }
 
-     if (projects && projects.length > 0) {
+    if (projects && projects.length > 0) {
       const projectCount = await this.prisma.project.count({
         where: {
           id: { in: projects },
@@ -35,7 +50,9 @@ export class EmployeeService {
       }
     }
 
-    const saltRounds = Number(this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10);
+    const saltRounds = Number(
+      this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
+    );
     const hashedPassword = await bcrypt.hash(plainTextPassword, saltRounds);
 
     return this.prisma.$transaction(async (prisma) => {
@@ -54,9 +71,10 @@ export class EmployeeService {
           userId: user.id,
           description,
           joinedDate,
-          projects: projects ? { connect: projects.map((id) => ({ id })) } : undefined,
+          projects: projects
+            ? { connect: projects.map((id) => ({ id })) }
+            : undefined,
           skills: skills || [],
-          
         },
       });
 
@@ -89,7 +107,7 @@ export class EmployeeService {
       include: { user: true },
     });
 
-    return employees.map(employee => {
+    return employees.map((employee) => {
       const { user } = employee;
       const { password, ...userWithoutPassword } = user;
       return {

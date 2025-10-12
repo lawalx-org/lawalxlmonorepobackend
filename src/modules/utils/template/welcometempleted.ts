@@ -2,7 +2,7 @@ export const welcomeEmailTemplate = (
   name: string,
   email: string,
   joinDate: string,
-  password: string
+  password: string,
 ) => `
   <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 30px;">
     <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">

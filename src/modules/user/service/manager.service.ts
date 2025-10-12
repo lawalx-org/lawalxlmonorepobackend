@@ -1,4 +1,8 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
@@ -16,14 +20,27 @@ export class ManagerService {
   ) {}
 
   async create(createManagerDto: CreateManagerDto) {
-    const { sendWelcomeEmail, notifyProjectManager, projects, email, password, skills, phoneNumber, name, joinedDate, description } = createManagerDto;
+    const {
+      sendWelcomeEmail,
+      notifyProjectManager,
+      projects,
+      email,
+      password,
+      skills,
+      phoneNumber,
+      name,
+      joinedDate,
+      description,
+    } = createManagerDto;
 
     const existingUser = await this.prisma.user.findFirst({
       where: { OR: [{ email }, { phoneNumber }] },
     });
 
     if (existingUser) {
-      throw new ConflictException('User with this email or phone number already exists');
+      throw new ConflictException(
+        'User with this email or phone number already exists',
+      );
     }
 
     if (projects && projects.length > 0) {
@@ -38,7 +55,9 @@ export class ManagerService {
       }
     }
 
-    const saltRounds = Number(this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10);
+    const saltRounds = Number(
+      this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
+    );
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     return this.prisma.$transaction(async (prisma) => {
@@ -57,7 +76,9 @@ export class ManagerService {
           userId: user.id,
           description,
           joinedDate,
-          projects: projects ? { connect: projects.map((id) => ({ id })) } : undefined,
+          projects: projects
+            ? { connect: projects.map((id) => ({ id })) }
+            : undefined,
           skills: skills || [],
         },
       });
@@ -66,7 +87,12 @@ export class ManagerService {
         await this.emailService.sendMail(
           user.email,
           'Welcome to the Team!',
-          welcomeEmailTemplate(user.name, user.email, joinedDate, user.password),
+          welcomeEmailTemplate(
+            user.name,
+            user.email,
+            joinedDate,
+            user.password,
+          ),
         );
       }
 
@@ -99,7 +125,7 @@ export class ManagerService {
       include: { user: true },
     });
 
-    return managers.map(manager => {
+    return managers.map((manager) => {
       const { user } = manager;
       const { password, ...userWithoutPassword } = user;
       return {

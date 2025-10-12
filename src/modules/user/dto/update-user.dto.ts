@@ -1,5 +1,10 @@
-
-import { IsString, IsOptional, IsEnum, IsBoolean, IsDateString } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsEnum,
+  IsBoolean,
+  IsDateString,
+} from 'class-validator';
 import { Language } from 'generated/prisma';
 
 export class UpdateUserDto {

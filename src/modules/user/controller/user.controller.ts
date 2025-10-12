@@ -1,4 +1,17 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Get, Query, Param, Delete, Put, Patch, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Get,
+  Query,
+  Param,
+  Delete,
+  Put,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { ManagerService } from '../service/manager.service';
 import { EmployeeService } from '../service/employee.service';
@@ -19,7 +32,6 @@ export class UserController {
     private readonly viewerService: ViewerService,
   ) {}
 
-  
   @Post('/create-manager')
   @HttpCode(HttpStatus.CREATED)
   async createManager(@Body() createManagerDto: CreateManagerDto) {
@@ -31,7 +43,7 @@ export class UserController {
   async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeeService.create(createEmployeeDto);
   }
-  
+
   // @UseGuards(JwtAuthGuard)
   @Post('/create-viewer')
   @HttpCode(HttpStatus.CREATED)

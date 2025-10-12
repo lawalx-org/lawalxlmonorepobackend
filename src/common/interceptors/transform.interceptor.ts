@@ -16,12 +16,12 @@ export class TransformInterceptor<T> implements NestInterceptor<T, any> {
     return next.handle().pipe(
       map((data: any) => {
         return {
-           statusCode: data?.statusCode ?? response.statusCode,
+          statusCode: data?.statusCode ?? response.statusCode,
           success: true,
           message: data?.message ?? 'Request successful',
           data: data?.data ?? data,
         };
-      })
+      }),
     );
   }
 }
