@@ -13,7 +13,7 @@ export class EmployeeService {
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto) {
-    const { email, password, phoneNumber, name,description,joinedDate } = createEmployeeDto;
+    const {skills,projects, email, password: plainTextPassword, phoneNumber, name,description,joinedDate } = createEmployeeDto;
 
     const existingUser = await this.prisma.user.findFirst({
       where: { OR: [{ email }, { phoneNumber }] },
@@ -23,8 +23,20 @@ export class EmployeeService {
       throw new ConflictException('User with this email or phone number already exists');
     }
 
+     if (projects && projects.length > 0) {
+      const projectCount = await this.prisma.project.count({
+        where: {
+          id: { in: projects },
+        },
+      });
+
+      if (projectCount !== projects.length) {
+        throw new NotFoundException('One or more projects not found.');
+      }
+    }
+
     const saltRounds = Number(this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10);
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await bcrypt.hash(plainTextPassword, saltRounds);
 
     return this.prisma.$transaction(async (prisma) => {
       const user = await prisma.user.create({
@@ -42,7 +54,8 @@ export class EmployeeService {
           userId: user.id,
           description,
           joinedDate,
-          
+          projects: projects ? { connect: projects.map((id) => ({ id })) } : undefined,
+          skills: skills || [],
           
         },
       });

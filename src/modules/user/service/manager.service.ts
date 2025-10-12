@@ -66,7 +66,7 @@ export class ManagerService {
         await this.emailService.sendMail(
           user.email,
           'Welcome to the Team!',
-          welcomeEmailTemplate(user.name, user.email, joinedDate),
+          welcomeEmailTemplate(user.name, user.email, joinedDate, user.password),
         );
       }
 

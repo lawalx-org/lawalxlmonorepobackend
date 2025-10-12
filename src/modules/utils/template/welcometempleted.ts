@@ -1,4 +1,9 @@
-export const welcomeEmailTemplate = (name: string, email: string, joinDate: string) => `
+export const welcomeEmailTemplate = (
+  name: string,
+  email: string,
+  joinDate: string,
+  password: string
+) => `
   <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 30px;">
     <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
       <h2 style="color: #4CAF50; text-align: center;">Welcome to Our Community, ${name} 🎉</h2>
@@ -10,11 +15,12 @@ export const welcomeEmailTemplate = (name: string, email: string, joinDate: stri
       <div style="margin-top: 25px; background-color: #f1f1f1; padding: 20px; border-radius: 6px;">
         <p style="font-size: 15px; color: #333; margin: 5px 0;"><strong>Name:</strong> ${name}</p>
         <p style="font-size: 15px; color: #333; margin: 5px 0;"><strong>Email:</strong> ${email}</p>
+        <p style="font-size: 15px; color: #333; margin: 5px 0;"><strong>Password:</strong> <span style="background-color: #e8f5e9; padding: 5px 10px; border-radius: 4px; font-family: monospace;">${password}</span></p>
         <p style="font-size: 15px; color: #333; margin: 5px 0;"><strong>Join Date:</strong> ${joinDate}</p>
       </div>
 
       <p style="font-size: 15px; color: #555; margin-top: 25px;">
-        Explore, connect, and enjoy your journey with us. If you ever have questions, our support team is always ready to help.
+        For your security, please consider updating your password after logging in for the first time.
       </p>
 
       <div style="text-align: center; margin-top: 30px;">
