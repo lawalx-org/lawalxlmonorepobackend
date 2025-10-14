@@ -8,16 +8,21 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { Role } from 'generated/prisma';
 import { CreateEmployeeDto } from '../dto/create-employee.dto';
+import { EmailService } from 'src/modules/utils/services/emailService';
+import { welcomeEmailTemplate } from 'src/modules/utils/template/welcometempleted';
 
 @Injectable()
 export class EmployeeService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
+    private readonly emailService: EmailService,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto) {
     const {
+      sendWelcomeEmail,
+      notifyProjectManager,
       skills,
       projects,
       email,
@@ -86,8 +91,27 @@ export class EmployeeService {
         },
       });
 
+      if (sendWelcomeEmail) {
+        await this.emailService.sendMail(
+          user.email,
+          'Welcome to the Team!',
+          welcomeEmailTemplate(
+            user.name,
+            user.email,
+            joinedDate,
+            plainTextPassword,
+          ),
+        );
+      }
+
+      if (notifyProjectManager) {
+        console.log(
+          'Notify project manager functionality not implemented yet.',
+        );
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...userWithoutPassword } = user;
+      const { password: _password, ...userWithoutPassword } = user;
       return userWithoutPassword;
     });
   }

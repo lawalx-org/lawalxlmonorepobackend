@@ -42,7 +42,7 @@ export class CreateManagerDto extends BaseUserDto {
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
-  projects: string[];
+  projects?: string[];
 
   @ApiPropertyOptional({
     example: true,

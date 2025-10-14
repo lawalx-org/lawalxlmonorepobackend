@@ -22,7 +22,7 @@ export class ManagerService {
   async create(createManagerDto: CreateManagerDto) {
     const {
       sendWelcomeEmail,
-      // notifyProjectManager,
+      notifyProjectManager,
       projects,
       email,
       password,
@@ -87,17 +87,18 @@ export class ManagerService {
         await this.emailService.sendMail(
           user.email,
           'Welcome to the Team!',
-          welcomeEmailTemplate(
-            user.name,
-            user.email,
-            joinedDate,
-            user.password,
-          ),
+          welcomeEmailTemplate(user.name, user.email, joinedDate, password),
+        );
+      }
+
+      if (notifyProjectManager) {
+        console.log(
+          'Notify project manager functionality not implemented yet.',
         );
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...userWithoutPassword } = user;
+      const { password: _password, ...userWithoutPassword } = user;
       return userWithoutPassword;
     });
   }
