@@ -26,7 +26,6 @@ import { AuthService } from '../services/auth.services';
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { Request, Response } from 'express';
 import { ViewerService } from 'src/modules/user/service/viewer.service';
-import { CreateViewerDto } from 'src/modules/user/dto/create-viewer.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -42,16 +41,6 @@ export class AuthController {
     return {
       message: 'Login User successfully',
       data,
-    };
-  }
-
-  @Post('registration')
-  async create(@Body() createViewerDto: CreateViewerDto) {
-    const createdUser = await this.viewerService.create(createViewerDto);
-
-    return {
-      message: 'User created successfully',
-      data: createdUser,
     };
   }
 
@@ -75,7 +64,7 @@ export class AuthController {
 
     await this.authService.changePassword(userData, payload);
 
-    return;
+    return { message: 'Password changed successfully!' };
   }
 
   @Post('refresh-token')
@@ -91,16 +80,16 @@ export class AuthController {
     }
 
     const result = await this.authService.refreshToken(refreshToken);
-    console.log(result);
     return {
-      message: 'Refresh token successfully',
+      message: 'access  token Change successfully',
       data: result,
     };
   }
 
   @Post('forgot-password')
   async forgotPassword(@Body() dto: forgotPasswordDto) {
-    return this.authService.forgetPassword(dto.email);
+    await this.authService.forgetPassword(dto.email);
+    return { message: 'Please check your email to reset your password.' };
   }
 
   @Post('reset-password')

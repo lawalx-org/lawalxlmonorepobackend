@@ -18,6 +18,7 @@ export class ProgramService {
     return this.prisma.program.create({
       data: {
         ...programData,
+        progress: 0,
         client: {
           connect: { id: userId },
         },

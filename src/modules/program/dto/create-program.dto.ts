@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsNotEmpty,
-  IsOptional,
-  IsInt,
-  IsISO8601,
-} from 'class-validator';
+import { IsString, IsNotEmpty, IsISO8601 } from 'class-validator';
 
 export class CreateProgramDto {
   @ApiProperty({
@@ -47,13 +41,4 @@ export class CreateProgramDto {
   @IsISO8601()
   @IsNotEmpty()
   deadline: string;
-
-  @ApiProperty({
-    example: 50,
-    description: 'The progress of the program in percentage',
-    required: false,
-  })
-  @IsInt()
-  @IsOptional()
-  progress?: number;
 }

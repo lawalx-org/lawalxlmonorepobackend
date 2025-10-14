@@ -71,13 +71,22 @@ export class EmployeeService {
           userId: user.id,
           description,
           joinedDate,
-          projects: projects
-            ? { connect: projects.map((id) => ({ id })) }
+          projectEmployees: projects
+            ? {
+                create: projects.map((projectId) => ({
+                  project: {
+                    connect: {
+                      id: projectId,
+                    },
+                  },
+                })),
+              }
             : undefined,
           skills: skills || [],
         },
       });
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
     });
@@ -94,6 +103,7 @@ export class EmployeeService {
     }
 
     const { user } = employee;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user;
 
     return {
@@ -109,6 +119,7 @@ export class EmployeeService {
 
     return employees.map((employee) => {
       const { user } = employee;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
       return {
         ...employee,
