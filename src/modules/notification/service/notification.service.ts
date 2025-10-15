@@ -46,7 +46,6 @@ export class NotificationService {
     await this.notificationGateWay.emitToUsers(receiverIds, type, notification);
     return notification;
   }
-
   async findAll(userId: string) {
     const notifications = await this.prisma.notification.findMany({
       where: {

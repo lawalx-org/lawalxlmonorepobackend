@@ -10,6 +10,7 @@ import { Role } from 'generated/prisma';
 import { CreateEmployeeDto } from '../dto/create-employee.dto';
 import { EmailService } from 'src/modules/utils/services/emailService';
 import { welcomeEmailTemplate } from 'src/modules/utils/template/welcometempleted';
+import { NotificationService } from 'src/modules/notification/service/notification.service';
 
 @Injectable()
 export class EmployeeService {
@@ -17,6 +18,7 @@ export class EmployeeService {
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
     private readonly emailService: EmailService,
+    private readonly notificationService: NotificationService,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto) {
@@ -104,9 +106,22 @@ export class EmployeeService {
         );
       }
 
-      if (notifyProjectManager) {
-        console.log(
-          'Notify project manager functionality not implemented yet.',
+      if (notifyProjectManager && projects && projects.length > 0) {
+        const projectManagers = await this.prisma.project.findMany({
+          where: {
+            id: { in: projects },
+          },
+          select: {
+            managerId: true,
+          },
+        });
+        await this.notificationService.create(
+          {
+            receiverIds: [...new Set(projectManagers.map((p) => p.managerId))],
+            context: `A new employee ${name} has been assigned to a project you are managing.`,
+            type: 'NEW_EMPLOYEE_ASSIGNED',
+          },
+          user.id,
         );
       }
 

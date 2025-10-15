@@ -36,7 +36,8 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
   ) {}
 
   async handleConnection(client: Socket) {
-    const token =client.handshake.auth?.token || client.handshake.headers?.authorization;
+    const token =
+      client.handshake.auth?.token || client.handshake.headers?.authorization;
 
     if (!token) {
       client.emit('error', { message: 'Authentication token is required' });
@@ -46,7 +47,7 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     const jwtAccessSecret = this.configService.get<string>('jwt_access_secret');
     if (!jwtAccessSecret) {
-       client.emit('error', { message: 'jwt_access_secret not found' });
+      client.emit('error', { message: 'jwt_access_secret not found' });
       throw new Error('JWT access secret is not defined');
     }
 
@@ -68,7 +69,6 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
 
       await this.redisService.hSet('userSocketMap', userId, client.id);
 
-
       client.emit('connectionSuccess', {
         message: 'User connected and authenticated successfully.',
         userId,
@@ -80,7 +80,6 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
       client.disconnect();
     }
   }
-
 
   async handleDisconnect(client: Socket) {
     const userSocketMap = await this.redisService.hGetAll('userSocketMap');
@@ -94,23 +93,19 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   }
 
-
   async emitToUsers(userIds: string[], event: string, data: any) {
-  const socketIds: string[] = [];
+    const socketIds: string[] = [];
 
- 
-  const promises = userIds.map((userId) =>
-    this.redisService.hGet('userSocketMap', userId),
-  );
+    const promises = userIds.map((userId) =>
+      this.redisService.hGet('userSocketMap', userId),
+    );
 
-  const results = await Promise.all(promises);
+    const results = await Promise.all(promises);
 
-  for (const socketId of results) {
-    if (socketId) {
-      this.server.to(socketId).emit(event, data);
+    for (const socketId of results) {
+      if (socketId) {
+        this.server.to(socketId).emit(event, data);
+      }
     }
   }
-}
-
-
 }
