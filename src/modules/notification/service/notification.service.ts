@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNotificationDto } from '../dto/create-notification.dto';
+import { Gateway } from './notification.getway';
 
 @Injectable()
 export class NotificationService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private notificationGateWay: Gateway,
+  ) {}
 
   async create(createNotificationDto: CreateNotificationDto, senderId: string) {
     const { receiverIds, context, type } = createNotificationDto;
@@ -39,7 +43,7 @@ export class NotificationService {
         provisions: true,
       },
     });
-
+    await this.notificationGateWay.emitToUsers(receiverIds, type, notification);
     return notification;
   }
 
