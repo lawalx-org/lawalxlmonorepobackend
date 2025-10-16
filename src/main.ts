@@ -12,17 +12,16 @@ async function bootstrap() {
     rawBody: true,
     bodyParser: true,
   });
-   app.enableCors();
+  app.enableCors();
 
-   
-   // Global success response formatting
+  // Global success response formatting
   app.useGlobalInterceptors(new TransformInterceptor());
 
   // Global error response formatting
   app.useGlobalFilters(new GlobalExceptionFilter());
 
   //here add global pipe line for validation
-    app.useGlobalPipes(
+  app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
@@ -30,13 +29,11 @@ async function bootstrap() {
     }),
   );
 
-  
-
   //here add global prefix for api
-  app.setGlobalPrefix('/api/v1')
-  app.use(cookieParser()); 
+  app.setGlobalPrefix('/api/v1');
+  app.use(cookieParser());
 
- const config = app.get(ConfigService);
+  const config = app.get(ConfigService);
   const port = config.get('port') || 3000;
   const node_env = config.get('node_env') || 'development';
   if (node_env !== 'production') {

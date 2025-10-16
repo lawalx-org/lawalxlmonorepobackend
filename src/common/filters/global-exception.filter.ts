@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   ExceptionFilter,
   Catch,
@@ -6,12 +9,6 @@ import {
   HttpStatus,
   Logger,
   BadRequestException,
-  UnauthorizedException,
-  ForbiddenException,
-  NotFoundException,
-  ConflictException,
-  UnprocessableEntityException,
-  InternalServerErrorException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
@@ -56,7 +53,10 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     this.logError(request, errorResponse, exception);
   }
 
-  private buildErrorResponse(exception: unknown, request: Request): ErrorResponse {
+  private buildErrorResponse(
+    exception: unknown,
+    request: Request,
+  ): ErrorResponse {
     const baseResponse: ErrorResponse = {
       success: false,
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -91,31 +91,35 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     };
   }
 
-  private handleHttpException(exception: HttpException, baseResponse: ErrorResponse): ErrorResponse {
+  private handleHttpException(
+    exception: HttpException,
+    baseResponse: ErrorResponse,
+  ): ErrorResponse {
     const status = exception.getStatus();
     const exceptionResponse = exception.getResponse();
-    
+
     let message: string;
     let errorDetails: string | Record<string, unknown> | undefined;
 
-    // Handle specific exception types
     if (exception instanceof BadRequestException) {
-      ({ message, errorDetails } = this.handleBadRequestException(exceptionResponse));
-    } else if (exception instanceof UnauthorizedException) {
-      message = 'Authentication failed';
-    } else if (exception instanceof ForbiddenException) {
-      message = 'Access denied';
-    } else if (exception instanceof NotFoundException) {
-      message = 'Resource not found';
-    } else if (exception instanceof ConflictException) {
-      message = 'Resource conflict';
-    } else if (exception instanceof UnprocessableEntityException) {
-      message = 'Unprocessable entity';
+      ({ message, errorDetails } =
+        this.handleBadRequestException(exceptionResponse));
+    } else if (typeof exceptionResponse === 'string') {
+      message = exceptionResponse;
+    } else if (
+      typeof exceptionResponse === 'object' &&
+      exceptionResponse !== null
+    ) {
+      message = (exceptionResponse as any).message || 'HTTP exception occurred';
+      if (Object.keys(exceptionResponse).length > 1) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { message: _, ...details } = exceptionResponse as any;
+        if (Object.keys(details).length > 0) {
+          errorDetails = details;
+        }
+      }
     } else {
-      // Generic HttpException handling
-      message = typeof exceptionResponse === 'string' 
-        ? exceptionResponse 
-        : (exceptionResponse as any)?.message || 'HTTP exception occurred';
+      message = 'HTTP exception occurred';
     }
 
     return {
@@ -127,7 +131,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     };
   }
 
-  private handleBadRequestException(exceptionResponse: string | Record<string, any>): {
+  private handleBadRequestException(
+    exceptionResponse: string | Record<string, any>,
+  ): {
     message: string;
     errorDetails?: Record<string, unknown>;
   } {
@@ -135,7 +141,10 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       return { message: exceptionResponse };
     }
 
-    const response = exceptionResponse as { message?: string | string[]; error?: string };
+    const response = exceptionResponse as {
+      message?: string | string[];
+      error?: string;
+    };
     let message: string;
     let errorDetails: Record<string, unknown> | undefined;
 
@@ -151,9 +160,12 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     return { message, errorDetails };
   }
 
-  private handlePrismaError(exception: any, baseResponse: ErrorResponse): ErrorResponse {
+  private handlePrismaError(
+    exception: any,
+    baseResponse: ErrorResponse,
+  ): ErrorResponse {
     const errorName = exception.constructor?.name || '';
-    
+
     // Handle Prisma Client Validation Error
     if (errorName === 'PrismaClientValidationError') {
       return {
@@ -161,7 +173,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         statusCode: HttpStatus.BAD_REQUEST,
         message: 'Database validation error',
         error: 'PrismaValidationError',
-        errorDetails: this.sanitizePrismaError(exception.message || 'Validation failed'),
+        errorDetails: this.sanitizePrismaError(
+          exception.message || 'Validation failed',
+        ),
       };
     }
 
@@ -207,13 +221,28 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     };
   }
 
-  private handlePrismaKnownError(exception: any, baseResponse: ErrorResponse): ErrorResponse {
+  private handlePrismaKnownError(
+    exception: any,
+    baseResponse: ErrorResponse,
+  ): ErrorResponse {
     const errorMap: Record<string, { status: number; message: string }> = {
-      P2002: { status: HttpStatus.CONFLICT, message: 'Unique constraint violation' },
-      P2014: { status: HttpStatus.BAD_REQUEST, message: 'Invalid relation data' },
-      P2003: { status: HttpStatus.BAD_REQUEST, message: 'Foreign key constraint failed' },
+      P2002: {
+        status: HttpStatus.CONFLICT,
+        message: 'Unique constraint violation',
+      },
+      P2014: {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'Invalid relation data',
+      },
+      P2003: {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'Foreign key constraint failed',
+      },
       P2025: { status: HttpStatus.NOT_FOUND, message: 'Record not found' },
-      P2016: { status: HttpStatus.BAD_REQUEST, message: 'Query interpretation error' },
+      P2016: {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'Query interpretation error',
+      },
       P2021: { status: HttpStatus.NOT_FOUND, message: 'Table does not exist' },
       P2022: { status: HttpStatus.NOT_FOUND, message: 'Column does not exist' },
     };
@@ -235,7 +264,10 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     };
   }
 
-  private handleGenericError(exception: Error, baseResponse: ErrorResponse): ErrorResponse {
+  private handleGenericError(
+    exception: Error,
+    baseResponse: ErrorResponse,
+  ): ErrorResponse {
     return {
       ...baseResponse,
       message: exception.message || 'An error occurred',
@@ -248,34 +280,47 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     // Remove potentially sensitive information from Prisma error messages
     return errorMessage
       .replace(/Argument `[\w.]+`:/g, 'Argument:')
-      .replace(/Invalid value provided\. Expected .+, provided .+\./g, 'Invalid value provided.')
-      .replace(/Got invalid value .+ on prisma\.[\w.]+\./g, 'Invalid value provided.');
+      .replace(
+        /Invalid value provided\. Expected .+, provided .+\./g,
+        'Invalid value provided.',
+      )
+      .replace(
+        /Got invalid value .+ on prisma\.[\w.]+\./g,
+        'Invalid value provided.',
+      );
   }
 
   private isPrismaError(exception: unknown): boolean {
     if (!exception || typeof exception !== 'object') {
       return false;
     }
-    
+
     const errorName = (exception as any).constructor?.name || '';
     const prismaErrorNames = [
       'PrismaClientValidationError',
-      'PrismaClientKnownRequestError', 
+      'PrismaClientKnownRequestError',
       'PrismaClientUnknownRequestError',
       'PrismaClientRustPanicError',
-      'PrismaClientInitializationError'
+      'PrismaClientInitializationError',
     ];
-    
+
     return prismaErrorNames.includes(errorName);
   }
 
-  private sendErrorResponse(response: Response, errorResponse: ErrorResponse): void {
+  private sendErrorResponse(
+    response: Response,
+    errorResponse: ErrorResponse,
+  ): void {
     response.status(errorResponse.statusCode).json(errorResponse);
   }
 
-  private logError(request: Request, errorResponse: ErrorResponse, exception: unknown): void {
+  private logError(
+    request: Request,
+    errorResponse: ErrorResponse,
+    exception: unknown,
+  ): void {
     const logMessage = `${request.method} ${request.url} - ${errorResponse.statusCode} ${errorResponse.message}`;
-    
+
     const logDetails = {
       url: request.url,
       method: request.method,
@@ -284,11 +329,17 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       error: errorResponse.error,
       userAgent: request.get('user-agent'),
       ip: request.ip,
-      ...(errorResponse.errorDetails && { errorDetails: errorResponse.errorDetails }),
+      ...(errorResponse.errorDetails && {
+        errorDetails: errorResponse.errorDetails,
+      }),
     };
 
     if (errorResponse.statusCode >= 500) {
-      this.logger.error(logMessage, exception instanceof Error ? exception.stack : undefined, JSON.stringify(logDetails, null, 2));
+      this.logger.error(
+        logMessage,
+        exception instanceof Error ? exception.stack : undefined,
+        JSON.stringify(logDetails, null, 2),
+      );
     } else if (errorResponse.statusCode >= 400) {
       this.logger.warn(logMessage, JSON.stringify(logDetails, null, 2));
     } else {
