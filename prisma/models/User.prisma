@@ -35,6 +35,7 @@ model User {
   notifications             NotificationProvision[]
   otpVerification           OtpVerification?
   payments                  Payment[]
+  activities  Activity[]
 
   @@map("users")
 }
