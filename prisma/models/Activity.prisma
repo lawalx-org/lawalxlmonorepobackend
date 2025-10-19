@@ -6,6 +6,8 @@ model Activity {
   description String
   projectId   String
   ipAddress   String?
+  actionType  ActivityActionType  @default(GENERAL)
+  metadata    Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

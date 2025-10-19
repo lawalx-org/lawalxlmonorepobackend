@@ -15,6 +15,23 @@ export class TransformInterceptor<T> implements NestInterceptor<T, any> {
 
     return next.handle().pipe(
       map((data: any) => {
+        // Check if response has both data and meta (pagination response)
+        if (
+          data &&
+          typeof data === 'object' &&
+          'data' in data &&
+          'meta' in data
+        ) {
+          return {
+            statusCode: data?.statusCode ?? response.statusCode,
+            success: true,
+            message: data?.message ?? 'Request successful',
+            data: data.data,
+            meta: data.meta,
+          };
+        }
+
+        // Default response format
         return {
           statusCode: data?.statusCode ?? response.statusCode,
           success: true,
