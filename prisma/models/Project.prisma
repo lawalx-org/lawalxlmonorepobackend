@@ -22,14 +22,33 @@ model Project {
   budget                    String?
   createdAt                 DateTime      @default(now())
   updatedAt                 DateTime      @updatedAt
+  latitude                  Float?
+  longitude                 Float?
 
   // Relations
   program                   Program       @relation(fields: [programId], references: [id], onDelete: Cascade)
   manager                   Manager       @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  projectEmployees           ProjectEmployee[]
   tasks                     Task[]
   activities                Activity[]
   reviews                   Review[]
   requestsToAddProjectMember RequestToAddProjectMember[]
 
   @@map("projects")
+}
+
+
+
+model ProjectEmployee {
+  id          String     @id @default(uuid())
+  projectId   String
+  employeeId  String
+  assignedAt  DateTime   @default(now())
+
+  // Relations
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  employee    Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, employeeId]) 
+  @@map("project_employees")
 }

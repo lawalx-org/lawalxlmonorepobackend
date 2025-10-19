@@ -1,4 +1,12 @@
-import { IsBoolean, IsEmail, IsEnum, IsOptional, IsString, MinLength } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  MinLength,
+  IsArray,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { Transform } from 'class-transformer';
@@ -13,6 +21,10 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
+  @ApiProperty({ example: '25464654654' })
+  @IsString()
+  phoneNumber: string;
+
   @ApiProperty({ example: 'password123' })
   @IsString()
   @MinLength(6)
@@ -23,34 +35,48 @@ export class CreateUserDto {
   @IsOptional()
   role?: Role;
 
- 
+  @ApiProperty({ example: 'your-client-id' })
+  @IsString()
+  clientId: string;
+
+  @ApiPropertyOptional({ type: [String], example: ['skill1', 'skill2'] })
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  skills?: string[];
 }
 
-
-
 export class UserFilterDto {
-  @ApiPropertyOptional({ example: 'john', description: 'Partial match on name' })
+  @ApiPropertyOptional({
+    example: 'john',
+    description: 'Partial match on name',
+  })
   @IsOptional()
   @IsString()
   name_contains?: string;
 
-  @ApiPropertyOptional({ example: 'gmail.com', description: 'Email ends with this value' })
+  @ApiPropertyOptional({
+    example: 'gmail.com',
+    description: 'Email ends with this value',
+  })
   @IsOptional()
   @IsString()
   email_endsWith?: string;
 
-  @ApiPropertyOptional({ example: true, description: 'Filter users by active status' })
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Filter users by active status',
+  })
   @IsOptional()
-  @Transform(({ value }) => value === 'true') 
+  @Transform(({ value }) => value === 'true')
   @IsBoolean()
   isActive?: boolean;
 
-  @ApiPropertyOptional({ example: 'admin,user', description: 'Comma-separated roles' })
+  @ApiPropertyOptional({
+    example: 'admin,user',
+    description: 'Comma-separated roles',
+  })
   @IsOptional()
   @IsString()
   role_in?: string;
 }
-
-
-
-

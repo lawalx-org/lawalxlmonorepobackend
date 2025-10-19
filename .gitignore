@@ -57,4 +57,11 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # /generated/prisma
 
+<<<<<<< HEAD
 # /generated/prisma
+=======
+/generated/prisma
+
+docker-compose.yml
+Dockerfile
+>>>>>>> 20c60b1c8d2f707e27af124dee219781256f3cb9

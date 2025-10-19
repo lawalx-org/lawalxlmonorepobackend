@@ -1,7 +1,7 @@
 model User {
   id                String    @id @default(uuid())
   email            String    @unique
-  phoneNumber      Int       @unique  
+  phoneNumber      String       @unique  
   password         String
   name             String
   role             Role      @default(VIEWER)
@@ -35,6 +35,7 @@ model User {
   notifications             NotificationProvision[]
   otpVerification           OtpVerification?
   payments                  Payment[]
+  activities  Activity[]
 
   @@map("users")
 }

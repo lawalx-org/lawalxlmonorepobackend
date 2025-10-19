@@ -1,4 +1,13 @@
-type SupportedOperators = 'equals' | 'contains' | 'startsWith' | 'endsWith' | 'gte' | 'lte' | 'gt' | 'lt' | 'in';
+type SupportedOperators =
+  | 'equals'
+  | 'contains'
+  | 'startsWith'
+  | 'endsWith'
+  | 'gte'
+  | 'lte'
+  | 'gt'
+  | 'lt'
+  | 'in';
 
 const operatorMap: Record<string, SupportedOperators> = {
   equals: 'equals',
@@ -20,10 +29,12 @@ function parseKey(key: string): { field: string; op: SupportedOperators } {
   if (operatorMap[opSuffix]) {
     return { field, op: operatorMap[opSuffix] };
   }
-  return { field: key, op: 'contains' }; 
+  return { field: key, op: 'contains' };
 }
 
-export const buildDynamicPrismaFilter = <T = any>(dto: Record<string, any>): Record<string, any> => {
+export const buildDynamicPrismaFilter = <T = any>(
+  dto: Record<string, any>,
+): Record<string, any> => {
   const filter: Record<string, any> = {};
   const excludedFields = ['createdAt', 'updatedAt'];
 
@@ -33,13 +44,12 @@ export const buildDynamicPrismaFilter = <T = any>(dto: Record<string, any>): Rec
 
     const { field, op } = parseKey(rawKey);
 
-    
     if (excludedFields.includes(field)) continue;
 
     if (!filter[field]) filter[field] = {};
 
     if (op === 'in' && typeof value === 'string') {
-      filter[field][op] = value.split(',').map(v => v.trim());
+      filter[field][op] = value.split(',').map((v) => v.trim());
     } else {
       filter[field][op] = value;
     }

@@ -2,6 +2,8 @@ export default () => ({
   port: parseInt(process.env.PORT as string, 10),
   node_env: process.env.NODE_ENV,
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
+  jwt_OPT_secret: process.env.JWT_OTP_SECRET,
+  jwt_OTP_expired_in: process.env.JWT_OTP_EXPIRED_IN || '1m',
   jwt_secret: process.env.JWT_SECRET,
   jwt_expired_in: process.env.JWT_EXPIRED_IN || '5m',
   jwt_access_secret: process.env.JWT_ACCESS_SECRET,
@@ -9,7 +11,7 @@ export default () => ({
   jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
   jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   stripe_secret_key: process.env.STRIPE_SECRET_KEY,
-   stripe_webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+  stripe_webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
   cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
   cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
@@ -26,12 +28,11 @@ export default () => ({
   mail_pass: process.env.MAIL_PASS,
   mail_from_name: process.env.MAIL_FROM_NAME,
   mail_from_email: process.env.MAIL_FROM_EMAIL,
- 
+
   redis_connection_url: process.env.REDIS_CONNECTION_URL,
   database: {
-    url: process.env.DATABASE_URL
+    url: process.env.DATABASE_URL,
   },
-
 
   admin: {
     email: process.env.ADMIN_EMAIL,
@@ -39,10 +40,17 @@ export default () => ({
     name: process.env.ADMIN_NAME,
     phoneNumber: process.env.ADMIN_PHONE,
   },
-  
+
   twilio: {
     accountSid: process.env.TWILIO_ACCOUNT_SID,
     authToken: process.env.TWILIO_AUTH_TOKEN,
-    fromNumber: process.env.TWILIO_FROM_NUMBER, 
+    fromNumber: process.env.TWILIO_FROM_NUMBER,
+    verifyServiceSid: process.env.TWILIO_VERIFY_SERVICE_SID,
+  },
+
+  google: {
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL,
   },
 });

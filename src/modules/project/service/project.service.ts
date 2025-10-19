@@ -1,0 +1,96 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateProjectDto } from '../dto/create-project.dto';
+import { FindAllProjectsDto } from '../dto/find-all-projects.dto';
+import { buildProjectFilter } from '../utils/project-filter-builder';
+
+@Injectable()
+export class ProjectService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createProjectDto: CreateProjectDto) {
+    const { employeeIds, managerId, programId, ...projectData } =
+      createProjectDto;
+
+    const manager = await this.prisma.manager.findUnique({
+      where: { id: managerId },
+    });
+    if (!manager) {
+      throw new NotFoundException(`Manager with ID "${managerId}" not found`);
+    }
+
+    const program = await this.prisma.program.findUnique({
+      where: { id: programId },
+    });
+    if (!program) {
+      throw new NotFoundException(`Program with ID "${programId}" not found`);
+    }
+
+    if (employeeIds && employeeIds.length > 0) {
+      const employees = await this.prisma.employee.findMany({
+        where: {
+          id: { in: employeeIds },
+        },
+      });
+      if (employees.length !== employeeIds.length) {
+        throw new NotFoundException('One or more employees not found.');
+      }
+    }
+
+    return this.prisma.project.create({
+      data: {
+        ...projectData,
+        manager: {
+          connect: { id: managerId },
+        },
+        program: {
+          connect: { id: programId },
+        },
+        projectEmployees: {
+          create: employeeIds?.map((employeeId) => ({
+            employee: {
+              connect: {
+                id: employeeId,
+              },
+            },
+          })),
+        },
+      },
+    });
+  }
+
+  async findAll(query: FindAllProjectsDto) {
+    const { page = 1, limit = 10 } = query;
+    const skip = (page - 1) * limit;
+
+    const where = buildProjectFilter(query);
+
+    const [projects, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where,
+        skip,
+        take: limit,
+      }),
+      this.prisma.project.count({ where }),
+    ]);
+
+    return {
+      data: projects,
+      total,
+      page,
+      limit,
+    };
+  }
+
+  async findOne(id: string) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+    });
+
+    if (!project) {
+      throw new NotFoundException(`Project with ID "${id}" not found`);
+    }
+
+    return project;
+  }
+}
