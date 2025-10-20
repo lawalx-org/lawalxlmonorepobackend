@@ -4,54 +4,24 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-import { QueryActivityDto, ActivityResponseDto } from '../dto';
-import { ActivityActionType } from 'generated/prisma';
-import { DateRangeHelper } from '../helpers/date-range.helper';
+import {
+  QueryActivityDto,
+  ActivityResponseDto,
+  CreateActivityDto,
+} from '../dto';
+import { CsvHelper } from '../utils/csv.helper';
+import { ActivityQueryBuilder } from '../utils/query-builder.helper';
+import { ActivityMapper } from '../utils/activity-mapper.helper';
+import { ActivityValidator } from '../utils/activity-validator.helper';
 
 @Injectable()
 export class ActivityService {
   constructor(private prisma: PrismaService) {}
 
   async getActivities(query: QueryActivityDto): Promise<ActivityResponseDto> {
-    const {
-      page = 1,
-      limit = 20,
-      userId,
-      projectId,
-      search,
-      dateRange,
-      startDate,
-      endDate,
-    } = query;
-
-    // Validate date range
-    DateRangeHelper.validateDateRange(startDate, endDate);
-
+    const { page = 1, limit = 20 } = query;
     const skip = (page - 1) * limit;
-
-    const where: any = {};
-
-    if (userId) where.userId = userId;
-    if (projectId) where.projectId = projectId;
-
-    // Multiple field search
-    if (search) {
-      where.OR = [
-        { description: { contains: search, mode: 'insensitive' } },
-        { user: { name: { contains: search, mode: 'insensitive' } } },
-        { project: { name: { contains: search, mode: 'insensitive' } } },
-        { ipAddress: { contains: search, mode: 'insensitive' } },
-      ];
-    }
-
-    // Handle date filtering
-    if (dateRange) {
-      where.timestamp = DateRangeHelper.getDateRangeFromPreset(dateRange);
-    } else if (startDate || endDate) {
-      where.timestamp = {};
-      if (startDate) where.timestamp.gte = new Date(startDate);
-      if (endDate) where.timestamp.lte = new Date(endDate);
-    }
+    const where = ActivityQueryBuilder.buildWhereClause(query);
 
     const [activities, total] = await Promise.all([
       this.prisma.activity.findMany({
@@ -67,29 +37,9 @@ export class ActivityService {
       this.prisma.activity.count({ where }),
     ]);
 
-    const data = activities.map((activity) => ({
-      id: activity.id,
-      timestamp: activity.timestamp,
-      user: {
-        id: activity.user.id,
-        name: activity.user.name,
-        avatar: activity.user.profileImage || undefined,
-      },
-      description: activity.description,
-      projectName: activity.project.name,
-      ipAddress: activity.ipAddress || undefined,
-      actionType: activity.actionType,
-      metadata: activity.metadata || undefined,
-    }));
-
     return {
-      data,
-      meta: {
-        total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
-      },
+      data: activities.map(ActivityMapper.mapToDto),
+      meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
     };
   }
 
@@ -102,68 +52,21 @@ export class ActivityService {
       },
     });
 
-    if (!activity) {
-      throw new NotFoundException('Activity not found');
-    }
+    if (!activity) throw new NotFoundException('Activity not found');
 
-    return {
-      id: activity.id,
-      timestamp: activity.timestamp,
-      user: {
-        id: activity.user.id,
-        name: activity.user.name,
-        avatar: activity.user.profileImage || undefined,
-      },
-      description: activity.description,
-      projectName: activity.project.name,
-      ipAddress: activity.ipAddress || undefined,
-      actionType: activity.actionType,
-      metadata: activity.metadata || undefined,
-    };
+    return ActivityMapper.mapToDto(activity);
   }
 
   async getUserActivities(
     userId: string,
     query: QueryActivityDto,
   ): Promise<ActivityResponseDto> {
-    const {
-      page = 1,
-      limit = 20,
-      search,
-      dateRange,
-      startDate,
-      endDate,
-      includeIp = false,
-    } = query;
-
-    // Validate date range
-    DateRangeHelper.validateDateRange(startDate, endDate);
-
+    const { page = 1, limit = 20, includeIp = false } = query;
     const skip = (page - 1) * limit;
-
-    const where: any = { userId };
-
-    // Multiple field search (excluding user name since it's single user)
-    if (search) {
-      where.OR = [
-        { description: { contains: search, mode: 'insensitive' } },
-        { project: { name: { contains: search, mode: 'insensitive' } } },
-      ];
-
-      // Only search IP if includeIp is true
-      if (includeIp) {
-        where.OR.push({ ipAddress: { contains: search, mode: 'insensitive' } });
-      }
-    }
-
-    // Handle date filtering
-    if (dateRange) {
-      where.timestamp = DateRangeHelper.getDateRangeFromPreset(dateRange);
-    } else if (startDate || endDate) {
-      where.timestamp = {};
-      if (startDate) where.timestamp.gte = new Date(startDate);
-      if (endDate) where.timestamp.lte = new Date(endDate);
-    }
+    const where = {
+      ...ActivityQueryBuilder.buildWhereClause(query, false),
+      userId,
+    };
 
     const [activities, total, user] = await Promise.all([
       this.prisma.activity.findMany({
@@ -171,9 +74,7 @@ export class ActivityService {
         skip,
         take: limit,
         orderBy: { timestamp: 'desc' },
-        include: {
-          project: { select: { name: true } },
-        },
+        include: { project: { select: { name: true } } },
       }),
       this.prisma.activity.count({ where }),
       this.prisma.user.findUnique({
@@ -182,30 +83,12 @@ export class ActivityService {
       }),
     ]);
 
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    const data = activities.map((activity) => {
-      const result: any = {
-        id: activity.id,
-        timestamp: activity.timestamp,
-        description: activity.description,
-        projectName: activity.project.name,
-        actionType: activity.actionType,
-        metadata: activity.metadata || undefined,
-      };
-
-      // Conditionally include IP address
-      if (includeIp) {
-        result.ipAddress = activity.ipAddress || undefined;
-      }
-
-      return result;
-    });
+    if (!user) throw new NotFoundException('User not found');
 
     return {
-      data,
+      data: activities.map((a) =>
+        ActivityMapper.mapUserActivityToDto(a, includeIp),
+      ),
       meta: {
         total,
         page,
@@ -222,50 +105,22 @@ export class ActivityService {
   }
 
   async exportActivities(query: QueryActivityDto) {
-    const { userId, projectId, search, dateRange, startDate, endDate } = query;
-
-    // Validate date range
-    DateRangeHelper.validateDateRange(startDate, endDate);
-
-    const where: any = {};
-
-    if (userId) where.userId = userId;
-    if (projectId) where.projectId = projectId;
-
-    // Multiple field search
-    if (search) {
-      where.OR = [
-        { description: { contains: search, mode: 'insensitive' } },
-        { user: { name: { contains: search, mode: 'insensitive' } } },
-        { project: { name: { contains: search, mode: 'insensitive' } } },
-        { ipAddress: { contains: search, mode: 'insensitive' } },
-      ];
-    }
-
-    if (dateRange) {
-      where.timestamp = DateRangeHelper.getDateRangeFromPreset(dateRange);
-    } else if (startDate || endDate) {
-      where.timestamp = {};
-      if (startDate) where.timestamp.gte = new Date(startDate);
-      if (endDate) where.timestamp.lte = new Date(endDate);
-    }
+    const where = ActivityQueryBuilder.buildWhereClause(query);
 
     const activities = await this.prisma.activity.findMany({
       where,
       orderBy: { timestamp: 'desc' },
-      take: 10000, // Limit export to 10,000 records
+      take: 10000,
       include: {
         user: { select: { name: true } },
         project: { select: { name: true } },
       },
     });
 
-    // Check if no activities found
     if (activities.length === 0) {
       throw new NotFoundException('No activities found to export');
     }
 
-    // Warn if too many records
     if (activities.length >= 10000) {
       throw new BadRequestException(
         'Too many records to export. Please apply more specific filters.',
@@ -281,16 +136,18 @@ export class ActivityService {
     }));
   }
 
-  //TODO: Add Quick Actions features Here
+  async exportActivitiesAsCsv(query: QueryActivityDto): Promise<string> {
+    const activities = await this.exportActivities(query);
+    return CsvHelper.generateActivitiesCsv(activities);
+  }
 
-  async createActivity(data: {
-    userId: string;
-    projectId: string;
-    description: string;
-    actionType: ActivityActionType;
-    ipAddress?: string;
-    metadata?: any;
-  }) {
+  async createActivity(data: CreateActivityDto) {
+    await ActivityValidator.validateUserAndProject(
+      this.prisma,
+      data.userId,
+      data.projectId,
+    );
+
     return this.prisma.activity.create({ data });
   }
 }

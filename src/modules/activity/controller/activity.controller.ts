@@ -1,20 +1,5 @@
-import {
-  Controller,
-  Get,
-  Query,
-  UseGuards,
-  Param,
-  Header,
-  Res,
-} from '@nestjs/common';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiSecurity,
-  ApiResponse,
-  ApiBadRequestResponse,
-  ApiNotFoundResponse,
-} from '@nestjs/swagger';
+import { Controller, Get, Query, UseGuards, Param, Res } from '@nestjs/common';
+import { ApiTags, ApiSecurity } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ActivityService } from '../service/activity.service';
 import {
@@ -24,6 +9,12 @@ import {
   UserIdParamDto,
 } from '../dto';
 import { JwtAuthGuard } from '../../../common/jwt/jwt.guard';
+import {
+  GetAllActivitiesDecorators,
+  GetActivityByIdDecorators,
+  GetUserActivitiesDecorators,
+  ExportActivitiesDecorators,
+} from '../decorators/activity.decorators';
 
 @ApiTags('Activity')
 @ApiSecurity('auth')
@@ -32,14 +23,9 @@ import { JwtAuthGuard } from '../../../common/jwt/jwt.guard';
 export class ActivityController {
   constructor(private activityService: ActivityService) {}
 
-  // Get all activities with filters
+  // Get all activities with optional filters
   @Get()
-  @ApiOperation({ summary: 'Get all activities with filters' })
-  @ApiResponse({
-    status: 200,
-    description: 'Activities retrieved successfully',
-  })
-  @ApiBadRequestResponse({ description: 'Invalid query parameters' })
+  @GetAllActivitiesDecorators()
   async getActivities(
     @Query() query: QueryActivityDto,
   ): Promise<ActivityResponseDto> {
@@ -48,48 +34,25 @@ export class ActivityController {
 
   // Export activities as CSV
   @Get('export')
-  @ApiOperation({ summary: 'Export activities as CSV' })
-  @ApiResponse({ status: 200, description: 'CSV file generated successfully' })
-  @ApiBadRequestResponse({ description: 'Invalid query parameters' })
-  @ApiNotFoundResponse({ description: 'No activities found to export' })
-  @Header('Content-Type', 'text/csv')
-  @Header('Content-Disposition', 'attachment; filename="activities.csv"')
+  @ExportActivitiesDecorators()
   async exportActivities(
     @Query() query: QueryActivityDto,
     @Res() res: Response,
   ) {
-    const activities = await this.activityService.exportActivities(query);
-
-    const csv = [
-      'Timestamp,User,Description,Project Name,IP Address',
-      ...activities.map(
-        (a) =>
-          `${a.timestamp},"${a.user}","${a.description}","${a.projectName}","${a.ipAddress}"`,
-      ),
-    ].join('\n');
-
+    const csv = await this.activityService.exportActivitiesAsCsv(query);
     res.send(csv);
   }
 
   // Get activity by ID
   @Get(':id')
-  @ApiOperation({ summary: 'Get activity by ID' })
-  @ApiResponse({ status: 200, description: 'Activity retrieved successfully' })
-  @ApiBadRequestResponse({ description: 'Invalid activity ID format' })
-  @ApiNotFoundResponse({ description: 'Activity not found' })
+  @GetActivityByIdDecorators()
   async getActivityById(@Param() params: UuidParamDto) {
     return this.activityService.getActivityById(params.id);
   }
 
   // Get activities by user ID
   @Get('user/:userId')
-  @ApiOperation({ summary: 'Get activities by user ID' })
-  @ApiResponse({
-    status: 200,
-    description: 'User activities retrieved successfully',
-  })
-  @ApiBadRequestResponse({ description: 'Invalid user ID format' })
-  @ApiNotFoundResponse({ description: 'User not found' })
+  @GetUserActivitiesDecorators()
   async getUserActivities(
     @Param() params: UserIdParamDto,
     @Query() query: QueryActivityDto,
