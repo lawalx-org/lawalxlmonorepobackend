@@ -14,7 +14,7 @@ import {
   GetActivityByIdDecorators,
   GetUserActivitiesDecorators,
   ExportActivitiesDecorators,
-} from '../decorators/activity.decorators';
+} from '../utils/activity.decorators';
 
 @ApiTags('Activity')
 @ApiSecurity('auth')
