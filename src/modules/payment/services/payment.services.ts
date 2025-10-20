@@ -20,9 +20,8 @@
 //   private stripe: Stripe;
 
 //   constructor(
-   
+
 //     private prisma: PrismaService,
-    
 
 //   ) {
 //     this.stripe = new Stripe(
@@ -32,9 +31,7 @@
 
 //   async createPayment(dto: CreatePaymentDto, userId:string) {
 
-
 //     const {amount } = dto;
-
 
 // const user = await this.prisma.user.findUnique({
 //   where: { id: userId },
@@ -48,8 +45,6 @@
 // if (user.payment) {
 //   throw new BadRequestException('Cannot delete user with existing payment record');
 // }
-    
-     
 
 //     const session = await this.stripe.checkout.sessions.create({
 //       payment_method_types: ['card'],
@@ -107,12 +102,12 @@
 //     const metadata = data.metadata;
 //      console.log(metadata, "not success but hite")
 //      console.log(event.type);
-     
+
 //      if (event.type === 'payment_intent.succeeded') {
 //       console.log("successful")
 //       const transactionId = data.id;
-//       const amount = data.amount_received / 100; 
-//       const userId = metadata.userId; 
+//       const amount = data.amount_received / 100;
+//       const userId = metadata.userId;
 
 //       this.logger.warn("")
 
@@ -132,7 +127,7 @@
 //     id: userId,
 //   },
 //   data: {
-   
+
 //   },
 // });
 
@@ -142,9 +137,8 @@
 //       }
 //     }
 
-
 //     if (event.type === 'payment_intent.payment_failed') {
-     
+
 //     }
 
 //     return { received: true, type: event.type };

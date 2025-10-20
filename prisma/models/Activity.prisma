@@ -1,15 +1,20 @@
 
 model Activity {
   id          String   @id @default(uuid())
+  userId      String  
   timestamp   DateTime @default(now())
   description String
   projectId   String
   ipAddress   String?
+  actionType  ActivityActionType  @default(GENERAL)
+  metadata    Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   // Relations
   project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    
 
   @@map("activities")
 }

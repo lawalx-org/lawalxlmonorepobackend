@@ -1,18 +1,22 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 
-import { HttpStatus } from '@nestjs/common';
-import { AppError } from 'src/errors/AppError';
 import { TLoginUserDto } from '../dto/auth.dto';
 import { EmailService } from 'src/modules/utils/services/emailService';
-import { otpTemplate } from 'src/modules/utils/template/otptemplate';
-import { resetPasswordTemplate } from 'src/modules/utils/template/resetpassowordtemplate';
-import { addMinutes, isBefore } from 'date-fns';
 import { JwtPayload } from 'src/types/RequestWithUser';
-
+import { UserStatus } from 'generated/prisma';
+import { maskEmail, maskPhone } from './utiles.services';
+import { buildJwtPayload } from '../utils/userbasetoken';
+import { resetPasswordTemplate } from 'src/modules/utils/template/resetpassowordtemplate';
 
 @Injectable()
 export class AuthService {
@@ -21,246 +25,248 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly emailService: EmailService,
-  ) { }
+  ) {}
 
   async loginUser(payload: TLoginUserDto) {
-    // const { email, password } = payload;
+    const { email, password } = payload;
 
-    // const user = await this.prisma.user.findUnique({
-    //   where: { email },
-    //   include: {
-    //     otpVerification: true,
-    //   },
-    // });
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+      include: { otpVerification: true },
+    });
 
-    // if (!user) {
-    //   throw new AppError(HttpStatus.NOT_FOUND, 'This user is not found!');
-    // }
+    if (!user) {
+      throw new NotFoundException('This user is not found!');
+    }
 
-    // if (user.isDeleted) {
-    //   throw new AppError(HttpStatus.FORBIDDEN, 'This user is deleted!');
-    // }
+    if (user.userStatus === UserStatus.DELETED) {
+      throw new ForbiddenException('This user is deleted!');
+    }
 
-    // if (user.status === UserStatus.BANNED) {
-    //   throw new AppError(HttpStatus.FORBIDDEN, 'This user is blocked!');
-    // }
+    if (user.userStatus === UserStatus.BANNED) {
+      throw new ForbiddenException('This user is blocked!');
+    }
 
-    // const isPasswordMatched = await bcrypt.compare(password, user.password);
+    const isPasswordMatched = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatched) {
+      throw new UnauthorizedException('Password does not match');
+    }
 
-    // if (!isPasswordMatched) {
-    //   throw new AppError(HttpStatus.FORBIDDEN, 'Password does not match');
-    // }
+    const jwtPayload = await buildJwtPayload(this.prisma, user);
 
-    // if (!user.otpVerification || user.otpVerification.verified === false) {
-    //   throw new ForbiddenException('OTP not verified. Please verify your email.');
-    // }
+    if (user.verification2FA) {
+      const email = maskEmail(user.email);
+      const phone = maskPhone(user.phoneNumber.toString());
 
+      const specialToken = this.jwtService.sign(jwtPayload, {
+        secret: this.configService.get<string>('jwt_access_secret'),
+        expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+      });
 
+      return { email, phone, specialToken };
+    }
 
-    // const jwtPayload = {
-    //   userId: user.id,
-    //   role: user.role,
-    //   email: user.email,
-    // };
+    const accessToken = this.jwtService.sign(jwtPayload, {
+      secret: this.configService.get<string>('jwt_access_secret'),
+      expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+    });
 
-    
+    const refreshToken = this.jwtService.sign(jwtPayload, {
+      secret: this.configService.get<string>('jwt_refresh_secret'),
+      expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
+    });
 
-    // const accessToken = this.jwtService.sign(jwtPayload, {
-    //   secret: this.configService.get<string>('jwt_access_secret'),
-    //   expiresIn: this.configService.get<string>('jwt_access_expires_in'),
-    // });
-
-    // const refreshToken = this.jwtService.sign(jwtPayload, {
-    //   secret: this.configService.get<string>('jwt_refresh_secret'),
-    //   expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
-    // });
-
-    // return {
-    //   accessToken,
-    //   refreshToken,
-    // };
+    return { accessToken, refreshToken };
   }
 
-
- async changePassword(
+  async changePassword(
     userData: JwtPayload,
     payload: { oldPassword: string; newPassword: string },
   ): Promise<null> {
-    // // Fetch user by ID
-    // const user = await this.prisma.user.findUnique({
-    //   where: { id: userData.userId },
-    // });
+    const user = await this.prisma.user.findUnique({
+      where: { id: userData.userId },
+    });
 
-    // if (!user) {
-    //   throw new NotFoundException('This user is not found!');
-    // }
+    if (!user) {
+      throw new NotFoundException('This user is not found!');
+    }
 
-    // if (user.isDeleted) {
-    //   throw new ForbiddenException('This user is deleted!');
-    // }
+    if (user.userStatus === UserStatus.DELETED) {
+      throw new ForbiddenException('This user is deleted!');
+    }
 
-    // if (user.status === UserStatus.BANNED) {
-    //   throw new ForbiddenException('This user is blocked!');
-    // }
+    if (user.userStatus === UserStatus.BANNED) {
+      throw new ForbiddenException('This user is blocked!');
+    }
 
-    // // Verify old password
-    // const isMatch = await bcrypt.compare(payload.oldPassword, user.password);
-    // if (!isMatch) {
-    //   throw new ForbiddenException('Password does not match');
-    // }
+    if (user.userStatus !== UserStatus.ACTIVE) {
+      throw new ForbiddenException('Only active users can change password!');
+    }
 
-    // const saltRounds = Number(this.configService.get<string>('bcrypt_salt_rounds')) || 10;
-    // const newHashedPassword = await bcrypt.hash(payload.newPassword, saltRounds);
+    const isMatch = await bcrypt.compare(payload.oldPassword, user.password);
+    if (!isMatch) {
+      throw new ForbiddenException('Old password does not match');
+    }
 
-    // // Update user password and related fields
-    // await this.prisma.user.update({
-    //   where: {
-    //     id: userData.userId,
-    //   },
-    //   data: {
-    //     password: newHashedPassword,
-    //   },
-    // });
+    const saltRounds =
+      Number(this.configService.get<string>('bcrypt_salt_rounds')) || 10;
+    const newHashedPassword = await bcrypt.hash(
+      payload.newPassword,
+      saltRounds,
+    );
+
+    await this.prisma.user.update({
+      where: { id: userData.userId },
+      data: { password: newHashedPassword },
+    });
 
     return null;
   }
 
+  async refreshToken(refreshToken: string): Promise<{ accessToken: string }> {
+    try {
+      const decoded: JwtPayload = this.jwtService.verify<JwtPayload>(
+        refreshToken,
+        {
+          secret: this.configService.get<string>('jwt_refresh_secret'),
+        },
+      );
 
- async refreshToken(refreshToken: string) {
-  //   let decoded: any;
+      const { userId }: { userId: string } = decoded;
 
-  //   try {
-  //     decoded = this.jwtService.verify(refreshToken, {
-  //       secret: this.configService.get<string>('jwt_refresh_secret'),
-  //     });
-  //   } catch (error) {
-  //     throw new UnauthorizedException('Invalid or expired refresh token');
-  //   }
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+      });
 
-  //   const { userId, iat } = decoded;
-    
-  //   const user = await this.prisma.user.findUnique({
-  //     where: { id: userId },
-  //   });
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
 
-  //   if (!user || user.isDeleted || user.status === UserStatus.BANNED) {
-  //     throw new UnauthorizedException('Unauthorized');
-  //   }
+      if (user.userStatus === UserStatus.BANNED) {
+        throw new UnauthorizedException('This user is banned');
+      }
 
-  //  const jwtPayload = {
-  //     userId: user.id,
-  //     role: user.role,
-  //     email: user.email,
-  //   };
+      if (user.userStatus === UserStatus.DELETED) {
+        throw new UnauthorizedException('This user account has been deleted');
+      }
 
-    
+      if (user.userStatus !== UserStatus.ACTIVE) {
+        throw new UnauthorizedException('Only active users can refresh token');
+      }
 
-  //   const accessToken = this.jwtService.sign(jwtPayload, {
-  //     secret: this.configService.get<string>('jwt_access_secret'),
-  //     expiresIn: this.configService.get<string>('jwt_access_expires_in'),
-  //   });
+      const payload = {
+        userId: user.id,
+        role: user.role,
+        email: user.email,
+      };
 
-   
-  //   return accessToken;
+      const accessToken = this.jwtService.sign(payload, {
+        secret: this.configService.get<string>('jwt_access_secret'),
+        expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+      });
+
+      return { accessToken };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_error) {
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
   }
 
+  async forgetPassword(email: string): Promise<void> {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
 
-async forgetPassword(email: string): Promise<void> {
-    // const user = await this.prisma.user.findUnique({
-    //   where: { email },
-    // });
+    if (!user) {
+      throw new NotFoundException('This user is not found!');
+    }
 
-    // if (!user) {
-    //   throw new NotFoundException('This user is not found!');
-    // }
+    if (user.userStatus === UserStatus.DELETED) {
+      throw new ForbiddenException('This user is deleted!');
+    }
 
-    // if (user.isDeleted) {
-    //   throw new ForbiddenException('This user is deleted!');
-    // }
+    if (user.userStatus === UserStatus.BANNED) {
+      throw new ForbiddenException('This user is blocked!');
+    }
 
-    // if (user.status === UserStatus.BANNED) {
-    //   throw new ForbiddenException('This user is blocked!');
-    // }
+    if (user.userStatus !== UserStatus.ACTIVE) {
+      throw new ForbiddenException('Only active users can reset password!');
+    }
 
-    // const jwtPayload = {
-    //   userId: user.id,
-    //   role: user.role,
-    //   email: user.email,
-    // };
+    const jwtPayload = {
+      userId: user.id,
+      role: user.role,
+      email: user.email,
+    };
 
-    
+    const token = this.jwtService.sign(jwtPayload, {
+      secret: this.configService.get<string>('jwt_reset_secret'),
+      expiresIn: '5m',
+    });
 
-    // const token = this.jwtService.sign(jwtPayload, {
-    //   secret: this.configService.get<string>('jwt_access_secret'),
-    //   expiresIn: this.configService.get<string>('jwt_access_expires_in'),
-    // });
+    const resetLink = `${this.configService.get<string>(
+      'reset_pass_ui_link',
+    )}?id=${user.id}&token=${token}`;
 
-    // const resetLink = `${this.configService.get<string>('reset_pass_ui_link')}?id=${user.id}&token=${token}`;
-
-    // await this.emailService.sendMail(
-    //   user.email,
-    //   'Reset Your Password',
-    //   resetPasswordTemplate(user.name,resetLink)
-    // );
-
-    // console.log('Reset link:', resetLink);
+    await this.emailService.sendMail(
+      user.email,
+      'Reset Your Password',
+      resetPasswordTemplate(user.name, resetLink),
+    );
   }
 
+  async resetPassword(
+    payload: { id: string; newPassword: string },
+    token: string,
+  ): Promise<{ message: string }> {
+    let decoded: { userId: string; email: string; role: string };
+    try {
+      decoded = this.jwtService.verify(token, {
+        secret: this.configService.get<string>('jwt_reset_secret'),
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_error) {
+      throw new BadRequestException('Invalid or expired token!');
+    }
 
-  async resetPassword(payload: { id: string; newPassword: string }, token: string) {
-    // const user = await this.prisma.user.findUnique({
-    //   where: { id: payload.id },
-    // });
+    if (decoded.userId !== payload.id) {
+      throw new ForbiddenException('You are forbidden to reset this password!');
+    }
 
-    // if (!user) {
-    //   throw new NotFoundException('This user is not found!');
-    // }
+    const user = await this.prisma.user.findUnique({
+      where: { id: payload.id },
+    });
 
-    // if (user.isDeleted) {
-    //   throw new ForbiddenException('This user is deleted!');
-    // }
+    if (!user) {
+      throw new NotFoundException('This user is not found!');
+    }
 
-    // if (user.status === UserStatus.BANNED) {
-    //   throw new ForbiddenException('This user is blocked!');
-    // }
+    if (user.userStatus === UserStatus.DELETED) {
+      throw new ForbiddenException('This user is deleted!');
+    }
 
-    // let decoded: JwtPayload;
+    if (user.userStatus === UserStatus.BANNED) {
+      throw new ForbiddenException('This user is blocked!');
+    }
 
-    // try {
-    //   decoded = this.jwtService.verify<JwtPayload>(
-    //     token,
-    //     {
-    //       secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
-    //     },
-    //   );
-    // } catch (err) {
-    //   throw new BadRequestException('Invalid or expired token!');
-    // }
+    if (user.userStatus !== UserStatus.ACTIVE) {
+      throw new ForbiddenException('Only active users can reset password!');
+    }
 
-    // if (decoded.userId !== payload.id) {
-    //   throw new ForbiddenException('You are forbidden!');
-    // }
+    const saltRounds =
+      Number(this.configService.get<string>('bcrypt_salt_rounds')) || 10;
 
-    // const hashedPassword = await bcrypt.hash(
-    //   payload.newPassword,
-    //   Number(this.configService.get('BCRYPT_SALT_ROUNDS')),
-    // );
+    const hashedPassword = await bcrypt.hash(payload.newPassword, saltRounds);
 
-    // await this.prisma.user.update({
-    //   where: { id: decoded.userId },
-    //   data: {
-    //     password: hashedPassword,
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+      },
+    });
 
-    //   },
-    // });
-
-    // return { message: 'Password reset successful!' };
+    return {
+      message: 'Password reset successful!',
+    };
   }
- 
-
 }
-
-
-
-
-

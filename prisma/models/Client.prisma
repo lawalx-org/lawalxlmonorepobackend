@@ -26,9 +26,9 @@ model Client {
 
   // Relations
   user                  User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  managers              Manager[]
-  employees             Employee[]
-  viewers               Viewer[]
+  // managers              Manager[]
+  // employees             Employee[]
+  // viewers               Viewer[]
   referredPersons       ReferredPerson[]
   tickets               Ticket[]
   programs              Program[]

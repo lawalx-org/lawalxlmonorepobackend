@@ -31,9 +31,13 @@ CREATE TYPE "TicketStatus" AS ENUM ('OPEN', 'UNASSIGNED', 'IN_PROGRESS', 'SOLVED
 -- CreateEnum
 CREATE TYPE "IssueType" AS ENUM ('LOGINFAILED', 'SYSTEMERROR', 'OTHERPROBLEM');
 
+-- CreateEnum
+CREATE TYPE "UserStatus" AS ENUM ('ACTIVE', 'BANNED', 'DELETED', 'SUSPENDED');
+
 -- CreateTable
 CREATE TABLE "activities" (
     "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "description" TEXT NOT NULL,
     "projectId" TEXT NOT NULL,
@@ -78,9 +82,11 @@ CREATE TABLE "clients" (
 CREATE TABLE "employees" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "clientId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "description" TEXT NOT NULL,
+    "joinedDate" TEXT NOT NULL,
+    "skills" TEXT[],
 
     CONSTRAINT "employees_pkey" PRIMARY KEY ("id")
 );
@@ -113,10 +119,11 @@ CREATE TABLE "payments" (
 CREATE TABLE "managers" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "clientId" TEXT NOT NULL,
     "skills" TEXT[],
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "description" TEXT NOT NULL,
+    "joinedDate" TEXT NOT NULL,
 
     CONSTRAINT "managers_pkey" PRIMARY KEY ("id")
 );
@@ -124,7 +131,7 @@ CREATE TABLE "managers" (
 -- CreateTable
 CREATE TABLE "notifications" (
     "id" TEXT NOT NULL,
-    "senderIds" TEXT[],
+    "senderId" TEXT NOT NULL,
     "receiverIds" TEXT[],
     "context" TEXT NOT NULL,
     "type" TEXT NOT NULL,
@@ -265,8 +272,20 @@ CREATE TABLE "projects" (
     "budget" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "latitude" DOUBLE PRECISION,
+    "longitude" DOUBLE PRECISION,
 
     CONSTRAINT "projects_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "project_employees" (
+    "id" TEXT NOT NULL,
+    "projectId" TEXT NOT NULL,
+    "employeeId" TEXT NOT NULL,
+    "assignedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "project_employees_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -350,20 +369,19 @@ CREATE TABLE "tickets" (
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "phoneNumber" INTEGER,
+    "phoneNumber" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "otp" INTEGER,
     "role" "Role" NOT NULL DEFAULT 'VIEWER',
     "profileImage" TEXT,
     "language" "Language" NOT NULL DEFAULT 'ENGLISH',
     "timezone" TIMESTAMP(3),
     "verification2FA" BOOLEAN NOT NULL DEFAULT false,
-    "isActive" BOOLEAN NOT NULL DEFAULT false,
     "status" BOOLEAN NOT NULL DEFAULT false,
     "lastActive" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userStatus" "UserStatus" NOT NULL DEFAULT 'ACTIVE',
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -408,7 +426,6 @@ CREATE TABLE "request_to_add_project_members" (
 CREATE TABLE "viewers" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "clientId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -452,6 +469,9 @@ CREATE UNIQUE INDEX "notification_permissions_admin_userId_key" ON "notification
 CREATE UNIQUE INDEX "notification_permissions_super_admin_userId_key" ON "notification_permissions_super_admin"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "project_employees_projectId_employeeId_key" ON "project_employees"("projectId", "employeeId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "super_admins_userId_key" ON "super_admins"("userId");
 
 -- CreateIndex
@@ -461,19 +481,22 @@ CREATE UNIQUE INDEX "supporters_userId_key" ON "supporters"("userId");
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_phoneNumber_key" ON "users"("phoneNumber");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "viewers_userId_key" ON "viewers"("userId");
 
 -- AddForeignKey
 ALTER TABLE "activities" ADD CONSTRAINT "activities_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "activities" ADD CONSTRAINT "activities_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "clients" ADD CONSTRAINT "clients_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "employees" ADD CONSTRAINT "employees_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "employees" ADD CONSTRAINT "employees_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "clients"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "otp_verifications" ADD CONSTRAINT "otp_verifications_email_fkey" FOREIGN KEY ("email") REFERENCES "users"("email") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -483,9 +506,6 @@ ALTER TABLE "payments" ADD CONSTRAINT "payments_userId_fkey" FOREIGN KEY ("userI
 
 -- AddForeignKey
 ALTER TABLE "managers" ADD CONSTRAINT "managers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "managers" ADD CONSTRAINT "managers_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "clients"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "notification_provisions" ADD CONSTRAINT "notification_provisions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -521,6 +541,12 @@ ALTER TABLE "projects" ADD CONSTRAINT "projects_programId_fkey" FOREIGN KEY ("pr
 ALTER TABLE "projects" ADD CONSTRAINT "projects_managerId_fkey" FOREIGN KEY ("managerId") REFERENCES "managers"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "project_employees" ADD CONSTRAINT "project_employees_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "project_employees" ADD CONSTRAINT "project_employees_employeeId_fkey" FOREIGN KEY ("employeeId") REFERENCES "employees"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -549,6 +575,3 @@ ALTER TABLE "request_to_add_project_members" ADD CONSTRAINT "request_to_add_proj
 
 -- AddForeignKey
 ALTER TABLE "viewers" ADD CONSTRAINT "viewers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "viewers" ADD CONSTRAINT "viewers_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "clients"("id") ON DELETE CASCADE ON UPDATE CASCADE;
