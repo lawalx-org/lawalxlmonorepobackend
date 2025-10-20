@@ -1,12 +1,14 @@
 model Activity {
-  id          String   @id @default(uuid())
+  id          String             @id @default(uuid())
   userId      String
-  timestamp   DateTime @default(now())
+  timestamp   DateTime           @default(now())
   description String
   projectId   String
   ipAddress   String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  actionType  ActivityActionType @default(GENERAL)
+  metadata    Json?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 
   // Relations
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -587,6 +589,27 @@ enum UserStatus {
   BANNED
   DELETED
   SUSPENDED
+}
+
+enum ActivityActionType {
+  ASSIGNEE_ADDED
+  ASSIGNEE_REMOVED
+  FILE_ADDED
+  FILE_REMOVED
+  LINK_ADDED
+  LINK_REMOVED
+  DUE_DATE_CHANGED
+  PROGRESS_CHANGED
+  SUBTASK_ADDED
+  SUBTASK_REMOVED
+  STATUS_CHANGED
+  PRIORITY_CHANGED
+  COMMENT_ADDED
+  PROJECT_CREATED
+  PROJECT_UPDATED
+  TASK_CREATED
+  TASK_COMPLETED
+  GENERAL
 }
 
 // Prisma client generator

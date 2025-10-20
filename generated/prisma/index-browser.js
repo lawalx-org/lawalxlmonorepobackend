@@ -127,6 +127,8 @@ exports.Prisma.ActivityScalarFieldEnum = {
   description: 'description',
   projectId: 'projectId',
   ipAddress: 'ipAddress',
+  actionType: 'actionType',
+  metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -442,15 +444,47 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.ActivityActionType = exports.$Enums.ActivityActionType = {
+  ASSIGNEE_ADDED: 'ASSIGNEE_ADDED',
+  ASSIGNEE_REMOVED: 'ASSIGNEE_REMOVED',
+  FILE_ADDED: 'FILE_ADDED',
+  FILE_REMOVED: 'FILE_REMOVED',
+  LINK_ADDED: 'LINK_ADDED',
+  LINK_REMOVED: 'LINK_REMOVED',
+  DUE_DATE_CHANGED: 'DUE_DATE_CHANGED',
+  PROGRESS_CHANGED: 'PROGRESS_CHANGED',
+  SUBTASK_ADDED: 'SUBTASK_ADDED',
+  SUBTASK_REMOVED: 'SUBTASK_REMOVED',
+  STATUS_CHANGED: 'STATUS_CHANGED',
+  PRIORITY_CHANGED: 'PRIORITY_CHANGED',
+  COMMENT_ADDED: 'COMMENT_ADDED',
+  PROJECT_CREATED: 'PROJECT_CREATED',
+  PROJECT_UPDATED: 'PROJECT_UPDATED',
+  TASK_CREATED: 'TASK_CREATED',
+  TASK_COMPLETED: 'TASK_COMPLETED',
+  GENERAL: 'GENERAL'
+};
+
 exports.IndustryCategory = exports.$Enums.IndustryCategory = {
   REALESTATE: 'REALESTATE',
   FINANCE: 'FINANCE',

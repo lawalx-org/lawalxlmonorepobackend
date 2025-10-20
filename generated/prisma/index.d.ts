@@ -273,6 +273,30 @@ export const UserStatus: {
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
+
+export const ActivityActionType: {
+  ASSIGNEE_ADDED: 'ASSIGNEE_ADDED',
+  ASSIGNEE_REMOVED: 'ASSIGNEE_REMOVED',
+  FILE_ADDED: 'FILE_ADDED',
+  FILE_REMOVED: 'FILE_REMOVED',
+  LINK_ADDED: 'LINK_ADDED',
+  LINK_REMOVED: 'LINK_REMOVED',
+  DUE_DATE_CHANGED: 'DUE_DATE_CHANGED',
+  PROGRESS_CHANGED: 'PROGRESS_CHANGED',
+  SUBTASK_ADDED: 'SUBTASK_ADDED',
+  SUBTASK_REMOVED: 'SUBTASK_REMOVED',
+  STATUS_CHANGED: 'STATUS_CHANGED',
+  PRIORITY_CHANGED: 'PRIORITY_CHANGED',
+  COMMENT_ADDED: 'COMMENT_ADDED',
+  PROJECT_CREATED: 'PROJECT_CREATED',
+  PROJECT_UPDATED: 'PROJECT_UPDATED',
+  TASK_CREATED: 'TASK_CREATED',
+  TASK_COMPLETED: 'TASK_COMPLETED',
+  GENERAL: 'GENERAL'
+};
+
+export type ActivityActionType = (typeof ActivityActionType)[keyof typeof ActivityActionType]
+
 }
 
 export type Role = $Enums.Role
@@ -322,6 +346,10 @@ export const IssueType: typeof $Enums.IssueType
 export type UserStatus = $Enums.UserStatus
 
 export const UserStatus: typeof $Enums.UserStatus
+
+export type ActivityActionType = $Enums.ActivityActionType
+
+export const ActivityActionType: typeof $Enums.ActivityActionType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -3714,6 +3742,7 @@ export namespace Prisma {
     description: string | null
     projectId: string | null
     ipAddress: string | null
+    actionType: $Enums.ActivityActionType | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3725,6 +3754,7 @@ export namespace Prisma {
     description: string | null
     projectId: string | null
     ipAddress: string | null
+    actionType: $Enums.ActivityActionType | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3736,6 +3766,8 @@ export namespace Prisma {
     description: number
     projectId: number
     ipAddress: number
+    actionType: number
+    metadata: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3749,6 +3781,7 @@ export namespace Prisma {
     description?: true
     projectId?: true
     ipAddress?: true
+    actionType?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3760,6 +3793,7 @@ export namespace Prisma {
     description?: true
     projectId?: true
     ipAddress?: true
+    actionType?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3771,6 +3805,8 @@ export namespace Prisma {
     description?: true
     projectId?: true
     ipAddress?: true
+    actionType?: true
+    metadata?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3855,6 +3891,8 @@ export namespace Prisma {
     description: string
     projectId: string
     ipAddress: string | null
+    actionType: $Enums.ActivityActionType
+    metadata: JsonValue | null
     createdAt: Date
     updatedAt: Date
     _count: ActivityCountAggregateOutputType | null
@@ -3883,6 +3921,8 @@ export namespace Prisma {
     description?: boolean
     projectId?: boolean
     ipAddress?: boolean
+    actionType?: boolean
+    metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
@@ -3896,6 +3936,8 @@ export namespace Prisma {
     description?: boolean
     projectId?: boolean
     ipAddress?: boolean
+    actionType?: boolean
+    metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
@@ -3909,6 +3951,8 @@ export namespace Prisma {
     description?: boolean
     projectId?: boolean
     ipAddress?: boolean
+    actionType?: boolean
+    metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
@@ -3922,11 +3966,13 @@ export namespace Prisma {
     description?: boolean
     projectId?: boolean
     ipAddress?: boolean
+    actionType?: boolean
+    metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "timestamp" | "description" | "projectId" | "ipAddress" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
+  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "timestamp" | "description" | "projectId" | "ipAddress" | "actionType" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
   export type ActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -3953,6 +3999,8 @@ export namespace Prisma {
       description: string
       projectId: string
       ipAddress: string | null
+      actionType: $Enums.ActivityActionType
+      metadata: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["activity"]>
@@ -4386,6 +4434,8 @@ export namespace Prisma {
     readonly description: FieldRef<"Activity", 'String'>
     readonly projectId: FieldRef<"Activity", 'String'>
     readonly ipAddress: FieldRef<"Activity", 'String'>
+    readonly actionType: FieldRef<"Activity", 'ActivityActionType'>
+    readonly metadata: FieldRef<"Activity", 'Json'>
     readonly createdAt: FieldRef<"Activity", 'DateTime'>
     readonly updatedAt: FieldRef<"Activity", 'DateTime'>
   }
@@ -34599,6 +34649,8 @@ export namespace Prisma {
     description: 'description',
     projectId: 'projectId',
     ipAddress: 'ipAddress',
+    actionType: 'actionType',
+    metadata: 'metadata',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -34998,12 +35050,29 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   export const NullsOrder: {
@@ -35044,6 +35113,34 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ActivityActionType'
+   */
+  export type EnumActivityActionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityActionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ActivityActionType[]'
+   */
+  export type ListEnumActivityActionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActivityActionType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -35249,6 +35346,8 @@ export namespace Prisma {
     description?: StringFilter<"Activity"> | string
     projectId?: StringFilter<"Activity"> | string
     ipAddress?: StringNullableFilter<"Activity"> | string | null
+    actionType?: EnumActivityActionTypeFilter<"Activity"> | $Enums.ActivityActionType
+    metadata?: JsonNullableFilter<"Activity">
     createdAt?: DateTimeFilter<"Activity"> | Date | string
     updatedAt?: DateTimeFilter<"Activity"> | Date | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
@@ -35262,6 +35361,8 @@ export namespace Prisma {
     description?: SortOrder
     projectId?: SortOrder
     ipAddress?: SortOrderInput | SortOrder
+    actionType?: SortOrder
+    metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     project?: ProjectOrderByWithRelationInput
@@ -35278,6 +35379,8 @@ export namespace Prisma {
     description?: StringFilter<"Activity"> | string
     projectId?: StringFilter<"Activity"> | string
     ipAddress?: StringNullableFilter<"Activity"> | string | null
+    actionType?: EnumActivityActionTypeFilter<"Activity"> | $Enums.ActivityActionType
+    metadata?: JsonNullableFilter<"Activity">
     createdAt?: DateTimeFilter<"Activity"> | Date | string
     updatedAt?: DateTimeFilter<"Activity"> | Date | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
@@ -35291,6 +35394,8 @@ export namespace Prisma {
     description?: SortOrder
     projectId?: SortOrder
     ipAddress?: SortOrderInput | SortOrder
+    actionType?: SortOrder
+    metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ActivityCountOrderByAggregateInput
@@ -35308,6 +35413,8 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Activity"> | string
     projectId?: StringWithAggregatesFilter<"Activity"> | string
     ipAddress?: StringNullableWithAggregatesFilter<"Activity"> | string | null
+    actionType?: EnumActivityActionTypeWithAggregatesFilter<"Activity"> | $Enums.ActivityActionType
+    metadata?: JsonNullableWithAggregatesFilter<"Activity">
     createdAt?: DateTimeWithAggregatesFilter<"Activity"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Activity"> | Date | string
   }
@@ -37349,6 +37456,8 @@ export namespace Prisma {
     timestamp?: Date | string
     description: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutActivitiesInput
@@ -37362,6 +37471,8 @@ export namespace Prisma {
     description: string
     projectId: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -37371,6 +37482,8 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutActivitiesNestedInput
@@ -37384,6 +37497,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -37395,6 +37510,8 @@ export namespace Prisma {
     description: string
     projectId: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -37404,6 +37521,8 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -37415,6 +37534,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39695,6 +39816,36 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type EnumActivityActionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ActivityActionType | EnumActivityActionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ActivityActionType[] | ListEnumActivityActionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ActivityActionType[] | ListEnumActivityActionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumActivityActionTypeFilter<$PrismaModel> | $Enums.ActivityActionType
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type ProjectScalarRelationFilter = {
     is?: ProjectWhereInput
     isNot?: ProjectWhereInput
@@ -39717,6 +39868,8 @@ export namespace Prisma {
     description?: SortOrder
     projectId?: SortOrder
     ipAddress?: SortOrder
+    actionType?: SortOrder
+    metadata?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -39728,6 +39881,7 @@ export namespace Prisma {
     description?: SortOrder
     projectId?: SortOrder
     ipAddress?: SortOrder
+    actionType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -39739,6 +39893,7 @@ export namespace Prisma {
     description?: SortOrder
     projectId?: SortOrder
     ipAddress?: SortOrder
+    actionType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -39791,6 +39946,42 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type EnumActivityActionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ActivityActionType | EnumActivityActionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ActivityActionType[] | ListEnumActivityActionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ActivityActionType[] | ListEnumActivityActionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumActivityActionTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityActionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumActivityActionTypeFilter<$PrismaModel>
+    _max?: NestedEnumActivityActionTypeFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type EnumIndustryCategoryFilter<$PrismaModel = never> = {
@@ -41311,6 +41502,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type EnumActivityActionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ActivityActionType
   }
 
   export type ProjectUpdateOneRequiredWithoutActivitiesNestedInput = {
@@ -43055,6 +43250,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedEnumActivityActionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ActivityActionType | EnumActivityActionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ActivityActionType[] | ListEnumActivityActionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ActivityActionType[] | ListEnumActivityActionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumActivityActionTypeFilter<$PrismaModel> | $Enums.ActivityActionType
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -43123,6 +43325,39 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumActivityActionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ActivityActionType | EnumActivityActionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ActivityActionType[] | ListEnumActivityActionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ActivityActionType[] | ListEnumActivityActionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumActivityActionTypeWithAggregatesFilter<$PrismaModel> | $Enums.ActivityActionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumActivityActionTypeFilter<$PrismaModel>
+    _max?: NestedEnumActivityActionTypeFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedEnumIndustryCategoryFilter<$PrismaModel = never> = {
@@ -46259,6 +46494,8 @@ export namespace Prisma {
     timestamp?: Date | string
     description: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutActivitiesInput
@@ -46270,6 +46507,8 @@ export namespace Prisma {
     timestamp?: Date | string
     description: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -46482,6 +46721,8 @@ export namespace Prisma {
     description?: StringFilter<"Activity"> | string
     projectId?: StringFilter<"Activity"> | string
     ipAddress?: StringNullableFilter<"Activity"> | string | null
+    actionType?: EnumActivityActionTypeFilter<"Activity"> | $Enums.ActivityActionType
+    metadata?: JsonNullableFilter<"Activity">
     createdAt?: DateTimeFilter<"Activity"> | Date | string
     updatedAt?: DateTimeFilter<"Activity"> | Date | string
   }
@@ -47862,6 +48103,8 @@ export namespace Prisma {
     timestamp?: Date | string
     description: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutActivitiesInput
@@ -47873,6 +48116,8 @@ export namespace Prisma {
     description: string
     projectId: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49443,6 +49688,8 @@ export namespace Prisma {
     timestamp?: Date | string
     description: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49523,6 +49770,8 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
@@ -49534,6 +49783,8 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49544,6 +49795,8 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49617,6 +49870,8 @@ export namespace Prisma {
     description: string
     projectId: string
     ipAddress?: string | null
+    actionType?: $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49662,6 +49917,8 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutActivitiesNestedInput
@@ -49673,6 +49930,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49683,6 +49942,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    actionType?: EnumActivityActionTypeFieldUpdateOperationsInput | $Enums.ActivityActionType
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
