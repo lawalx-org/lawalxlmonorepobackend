@@ -1,4 +1,3 @@
-/* eslint-disable */
 // src/redis/redis.service.ts
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
