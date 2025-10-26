@@ -105,3 +105,12 @@ enum ActivityActionType {
   TASK_COMPLETED
   GENERAL
 }
+
+
+
+
+enum NotificationType {
+  NEW_EMPLOYEE_ASSIGNED
+  NEW_MANAGER_ASSIGNED
+
+}
