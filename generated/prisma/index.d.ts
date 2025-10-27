@@ -109,6 +109,11 @@ export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
  */
 export type Sheet = $Result.DefaultSelection<Prisma.$SheetPayload>
 /**
+ * Model SubmissionReturn
+ * 
+ */
+export type SubmissionReturn = $Result.DefaultSelection<Prisma.$SubmissionReturnPayload>
+/**
  * Model Submitted
  * 
  */
@@ -683,6 +688,16 @@ export class PrismaClient<
   get sheet(): Prisma.SheetDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.submissionReturn`: Exposes CRUD operations for the **SubmissionReturn** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SubmissionReturns
+    * const submissionReturns = await prisma.submissionReturn.findMany()
+    * ```
+    */
+  get submissionReturn(): Prisma.SubmissionReturnDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.submitted`: Exposes CRUD operations for the **Submitted** model.
     * Example usage:
     * ```ts
@@ -1241,6 +1256,7 @@ export namespace Prisma {
     ProjectEmployee: 'ProjectEmployee',
     Review: 'Review',
     Sheet: 'Sheet',
+    SubmissionReturn: 'SubmissionReturn',
     Submitted: 'Submitted',
     SuperAdmin: 'SuperAdmin',
     Supporter: 'Supporter',
@@ -1269,7 +1285,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "sheet" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer"
+      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "sheet" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2679,6 +2695,80 @@ export namespace Prisma {
           }
         }
       }
+      SubmissionReturn: {
+        payload: Prisma.$SubmissionReturnPayload<ExtArgs>
+        fields: Prisma.SubmissionReturnFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubmissionReturnFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubmissionReturnFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          findFirst: {
+            args: Prisma.SubmissionReturnFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubmissionReturnFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          findMany: {
+            args: Prisma.SubmissionReturnFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>[]
+          }
+          create: {
+            args: Prisma.SubmissionReturnCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          createMany: {
+            args: Prisma.SubmissionReturnCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubmissionReturnCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>[]
+          }
+          delete: {
+            args: Prisma.SubmissionReturnDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          update: {
+            args: Prisma.SubmissionReturnUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubmissionReturnDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubmissionReturnUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubmissionReturnUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>[]
+          }
+          upsert: {
+            args: Prisma.SubmissionReturnUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          aggregate: {
+            args: Prisma.SubmissionReturnAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubmissionReturn>
+          }
+          groupBy: {
+            args: Prisma.SubmissionReturnGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubmissionReturnGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubmissionReturnCountArgs<ExtArgs>
+            result: $Utils.Optional<SubmissionReturnCountAggregateOutputType> | number
+          }
+        }
+      }
       Submitted: {
         payload: Prisma.$SubmittedPayload<ExtArgs>
         fields: Prisma.SubmittedFieldRefs
@@ -3534,6 +3624,7 @@ export namespace Prisma {
     projectEmployee?: ProjectEmployeeOmit
     review?: ReviewOmit
     sheet?: SheetOmit
+    submissionReturn?: SubmissionReturnOmit
     submitted?: SubmittedOmit
     superAdmin?: SuperAdminOmit
     supporter?: SupporterOmit
@@ -25592,6 +25683,1038 @@ export namespace Prisma {
 
 
   /**
+   * Model SubmissionReturn
+   */
+
+  export type AggregateSubmissionReturn = {
+    _count: SubmissionReturnCountAggregateOutputType | null
+    _min: SubmissionReturnMinAggregateOutputType | null
+    _max: SubmissionReturnMaxAggregateOutputType | null
+  }
+
+  export type SubmissionReturnMinAggregateOutputType = {
+    id: string | null
+    submittedId: string | null
+    returnedAt: Date | null
+  }
+
+  export type SubmissionReturnMaxAggregateOutputType = {
+    id: string | null
+    submittedId: string | null
+    returnedAt: Date | null
+  }
+
+  export type SubmissionReturnCountAggregateOutputType = {
+    id: number
+    submittedId: number
+    returnedAt: number
+    _all: number
+  }
+
+
+  export type SubmissionReturnMinAggregateInputType = {
+    id?: true
+    submittedId?: true
+    returnedAt?: true
+  }
+
+  export type SubmissionReturnMaxAggregateInputType = {
+    id?: true
+    submittedId?: true
+    returnedAt?: true
+  }
+
+  export type SubmissionReturnCountAggregateInputType = {
+    id?: true
+    submittedId?: true
+    returnedAt?: true
+    _all?: true
+  }
+
+  export type SubmissionReturnAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SubmissionReturn to aggregate.
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubmissionReturns to fetch.
+     */
+    orderBy?: SubmissionReturnOrderByWithRelationInput | SubmissionReturnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubmissionReturnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubmissionReturns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubmissionReturns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SubmissionReturns
+    **/
+    _count?: true | SubmissionReturnCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubmissionReturnMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubmissionReturnMaxAggregateInputType
+  }
+
+  export type GetSubmissionReturnAggregateType<T extends SubmissionReturnAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubmissionReturn]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubmissionReturn[P]>
+      : GetScalarType<T[P], AggregateSubmissionReturn[P]>
+  }
+
+
+
+
+  export type SubmissionReturnGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmissionReturnWhereInput
+    orderBy?: SubmissionReturnOrderByWithAggregationInput | SubmissionReturnOrderByWithAggregationInput[]
+    by: SubmissionReturnScalarFieldEnum[] | SubmissionReturnScalarFieldEnum
+    having?: SubmissionReturnScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubmissionReturnCountAggregateInputType | true
+    _min?: SubmissionReturnMinAggregateInputType
+    _max?: SubmissionReturnMaxAggregateInputType
+  }
+
+  export type SubmissionReturnGroupByOutputType = {
+    id: string
+    submittedId: string
+    returnedAt: Date
+    _count: SubmissionReturnCountAggregateOutputType | null
+    _min: SubmissionReturnMinAggregateOutputType | null
+    _max: SubmissionReturnMaxAggregateOutputType | null
+  }
+
+  type GetSubmissionReturnGroupByPayload<T extends SubmissionReturnGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubmissionReturnGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubmissionReturnGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubmissionReturnGroupByOutputType[P]>
+            : GetScalarType<T[P], SubmissionReturnGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubmissionReturnSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submittedId?: boolean
+    returnedAt?: boolean
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submissionReturn"]>
+
+  export type SubmissionReturnSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submittedId?: boolean
+    returnedAt?: boolean
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submissionReturn"]>
+
+  export type SubmissionReturnSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submittedId?: boolean
+    returnedAt?: boolean
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submissionReturn"]>
+
+  export type SubmissionReturnSelectScalar = {
+    id?: boolean
+    submittedId?: boolean
+    returnedAt?: boolean
+  }
+
+  export type SubmissionReturnOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "submittedId" | "returnedAt", ExtArgs["result"]["submissionReturn"]>
+  export type SubmissionReturnInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }
+  export type SubmissionReturnIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }
+  export type SubmissionReturnIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }
+
+  export type $SubmissionReturnPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SubmissionReturn"
+    objects: {
+      submitted: Prisma.$SubmittedPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      submittedId: string
+      returnedAt: Date
+    }, ExtArgs["result"]["submissionReturn"]>
+    composites: {}
+  }
+
+  type SubmissionReturnGetPayload<S extends boolean | null | undefined | SubmissionReturnDefaultArgs> = $Result.GetResult<Prisma.$SubmissionReturnPayload, S>
+
+  type SubmissionReturnCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubmissionReturnFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubmissionReturnCountAggregateInputType | true
+    }
+
+  export interface SubmissionReturnDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SubmissionReturn'], meta: { name: 'SubmissionReturn' } }
+    /**
+     * Find zero or one SubmissionReturn that matches the filter.
+     * @param {SubmissionReturnFindUniqueArgs} args - Arguments to find a SubmissionReturn
+     * @example
+     * // Get one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubmissionReturnFindUniqueArgs>(args: SelectSubset<T, SubmissionReturnFindUniqueArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SubmissionReturn that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubmissionReturnFindUniqueOrThrowArgs} args - Arguments to find a SubmissionReturn
+     * @example
+     * // Get one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubmissionReturnFindUniqueOrThrowArgs>(args: SelectSubset<T, SubmissionReturnFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SubmissionReturn that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnFindFirstArgs} args - Arguments to find a SubmissionReturn
+     * @example
+     * // Get one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubmissionReturnFindFirstArgs>(args?: SelectSubset<T, SubmissionReturnFindFirstArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SubmissionReturn that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnFindFirstOrThrowArgs} args - Arguments to find a SubmissionReturn
+     * @example
+     * // Get one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubmissionReturnFindFirstOrThrowArgs>(args?: SelectSubset<T, SubmissionReturnFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SubmissionReturns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SubmissionReturns
+     * const submissionReturns = await prisma.submissionReturn.findMany()
+     * 
+     * // Get first 10 SubmissionReturns
+     * const submissionReturns = await prisma.submissionReturn.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const submissionReturnWithIdOnly = await prisma.submissionReturn.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubmissionReturnFindManyArgs>(args?: SelectSubset<T, SubmissionReturnFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SubmissionReturn.
+     * @param {SubmissionReturnCreateArgs} args - Arguments to create a SubmissionReturn.
+     * @example
+     * // Create one SubmissionReturn
+     * const SubmissionReturn = await prisma.submissionReturn.create({
+     *   data: {
+     *     // ... data to create a SubmissionReturn
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubmissionReturnCreateArgs>(args: SelectSubset<T, SubmissionReturnCreateArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SubmissionReturns.
+     * @param {SubmissionReturnCreateManyArgs} args - Arguments to create many SubmissionReturns.
+     * @example
+     * // Create many SubmissionReturns
+     * const submissionReturn = await prisma.submissionReturn.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubmissionReturnCreateManyArgs>(args?: SelectSubset<T, SubmissionReturnCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SubmissionReturns and returns the data saved in the database.
+     * @param {SubmissionReturnCreateManyAndReturnArgs} args - Arguments to create many SubmissionReturns.
+     * @example
+     * // Create many SubmissionReturns
+     * const submissionReturn = await prisma.submissionReturn.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SubmissionReturns and only return the `id`
+     * const submissionReturnWithIdOnly = await prisma.submissionReturn.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubmissionReturnCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmissionReturnCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SubmissionReturn.
+     * @param {SubmissionReturnDeleteArgs} args - Arguments to delete one SubmissionReturn.
+     * @example
+     * // Delete one SubmissionReturn
+     * const SubmissionReturn = await prisma.submissionReturn.delete({
+     *   where: {
+     *     // ... filter to delete one SubmissionReturn
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubmissionReturnDeleteArgs>(args: SelectSubset<T, SubmissionReturnDeleteArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SubmissionReturn.
+     * @param {SubmissionReturnUpdateArgs} args - Arguments to update one SubmissionReturn.
+     * @example
+     * // Update one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubmissionReturnUpdateArgs>(args: SelectSubset<T, SubmissionReturnUpdateArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SubmissionReturns.
+     * @param {SubmissionReturnDeleteManyArgs} args - Arguments to filter SubmissionReturns to delete.
+     * @example
+     * // Delete a few SubmissionReturns
+     * const { count } = await prisma.submissionReturn.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubmissionReturnDeleteManyArgs>(args?: SelectSubset<T, SubmissionReturnDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubmissionReturns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SubmissionReturns
+     * const submissionReturn = await prisma.submissionReturn.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubmissionReturnUpdateManyArgs>(args: SelectSubset<T, SubmissionReturnUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubmissionReturns and returns the data updated in the database.
+     * @param {SubmissionReturnUpdateManyAndReturnArgs} args - Arguments to update many SubmissionReturns.
+     * @example
+     * // Update many SubmissionReturns
+     * const submissionReturn = await prisma.submissionReturn.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SubmissionReturns and only return the `id`
+     * const submissionReturnWithIdOnly = await prisma.submissionReturn.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubmissionReturnUpdateManyAndReturnArgs>(args: SelectSubset<T, SubmissionReturnUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SubmissionReturn.
+     * @param {SubmissionReturnUpsertArgs} args - Arguments to update or create a SubmissionReturn.
+     * @example
+     * // Update or create a SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.upsert({
+     *   create: {
+     *     // ... data to create a SubmissionReturn
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SubmissionReturn we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubmissionReturnUpsertArgs>(args: SelectSubset<T, SubmissionReturnUpsertArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SubmissionReturns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnCountArgs} args - Arguments to filter SubmissionReturns to count.
+     * @example
+     * // Count the number of SubmissionReturns
+     * const count = await prisma.submissionReturn.count({
+     *   where: {
+     *     // ... the filter for the SubmissionReturns we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubmissionReturnCountArgs>(
+      args?: Subset<T, SubmissionReturnCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubmissionReturnCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SubmissionReturn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubmissionReturnAggregateArgs>(args: Subset<T, SubmissionReturnAggregateArgs>): Prisma.PrismaPromise<GetSubmissionReturnAggregateType<T>>
+
+    /**
+     * Group by SubmissionReturn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubmissionReturnGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubmissionReturnGroupByArgs['orderBy'] }
+        : { orderBy?: SubmissionReturnGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubmissionReturnGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmissionReturnGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SubmissionReturn model
+   */
+  readonly fields: SubmissionReturnFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SubmissionReturn.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubmissionReturnClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    submitted<T extends SubmittedDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubmittedDefaultArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SubmissionReturn model
+   */
+  interface SubmissionReturnFieldRefs {
+    readonly id: FieldRef<"SubmissionReturn", 'String'>
+    readonly submittedId: FieldRef<"SubmissionReturn", 'String'>
+    readonly returnedAt: FieldRef<"SubmissionReturn", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SubmissionReturn findUnique
+   */
+  export type SubmissionReturnFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturn to fetch.
+     */
+    where: SubmissionReturnWhereUniqueInput
+  }
+
+  /**
+   * SubmissionReturn findUniqueOrThrow
+   */
+  export type SubmissionReturnFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturn to fetch.
+     */
+    where: SubmissionReturnWhereUniqueInput
+  }
+
+  /**
+   * SubmissionReturn findFirst
+   */
+  export type SubmissionReturnFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturn to fetch.
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubmissionReturns to fetch.
+     */
+    orderBy?: SubmissionReturnOrderByWithRelationInput | SubmissionReturnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubmissionReturns.
+     */
+    cursor?: SubmissionReturnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubmissionReturns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubmissionReturns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubmissionReturns.
+     */
+    distinct?: SubmissionReturnScalarFieldEnum | SubmissionReturnScalarFieldEnum[]
+  }
+
+  /**
+   * SubmissionReturn findFirstOrThrow
+   */
+  export type SubmissionReturnFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturn to fetch.
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubmissionReturns to fetch.
+     */
+    orderBy?: SubmissionReturnOrderByWithRelationInput | SubmissionReturnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubmissionReturns.
+     */
+    cursor?: SubmissionReturnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubmissionReturns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubmissionReturns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubmissionReturns.
+     */
+    distinct?: SubmissionReturnScalarFieldEnum | SubmissionReturnScalarFieldEnum[]
+  }
+
+  /**
+   * SubmissionReturn findMany
+   */
+  export type SubmissionReturnFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturns to fetch.
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubmissionReturns to fetch.
+     */
+    orderBy?: SubmissionReturnOrderByWithRelationInput | SubmissionReturnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SubmissionReturns.
+     */
+    cursor?: SubmissionReturnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubmissionReturns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubmissionReturns.
+     */
+    skip?: number
+    distinct?: SubmissionReturnScalarFieldEnum | SubmissionReturnScalarFieldEnum[]
+  }
+
+  /**
+   * SubmissionReturn create
+   */
+  export type SubmissionReturnCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SubmissionReturn.
+     */
+    data: XOR<SubmissionReturnCreateInput, SubmissionReturnUncheckedCreateInput>
+  }
+
+  /**
+   * SubmissionReturn createMany
+   */
+  export type SubmissionReturnCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SubmissionReturns.
+     */
+    data: SubmissionReturnCreateManyInput | SubmissionReturnCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SubmissionReturn createManyAndReturn
+   */
+  export type SubmissionReturnCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * The data used to create many SubmissionReturns.
+     */
+    data: SubmissionReturnCreateManyInput | SubmissionReturnCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SubmissionReturn update
+   */
+  export type SubmissionReturnUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SubmissionReturn.
+     */
+    data: XOR<SubmissionReturnUpdateInput, SubmissionReturnUncheckedUpdateInput>
+    /**
+     * Choose, which SubmissionReturn to update.
+     */
+    where: SubmissionReturnWhereUniqueInput
+  }
+
+  /**
+   * SubmissionReturn updateMany
+   */
+  export type SubmissionReturnUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SubmissionReturns.
+     */
+    data: XOR<SubmissionReturnUpdateManyMutationInput, SubmissionReturnUncheckedUpdateManyInput>
+    /**
+     * Filter which SubmissionReturns to update
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * Limit how many SubmissionReturns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SubmissionReturn updateManyAndReturn
+   */
+  export type SubmissionReturnUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * The data used to update SubmissionReturns.
+     */
+    data: XOR<SubmissionReturnUpdateManyMutationInput, SubmissionReturnUncheckedUpdateManyInput>
+    /**
+     * Filter which SubmissionReturns to update
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * Limit how many SubmissionReturns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SubmissionReturn upsert
+   */
+  export type SubmissionReturnUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SubmissionReturn to update in case it exists.
+     */
+    where: SubmissionReturnWhereUniqueInput
+    /**
+     * In case the SubmissionReturn found by the `where` argument doesn't exist, create a new SubmissionReturn with this data.
+     */
+    create: XOR<SubmissionReturnCreateInput, SubmissionReturnUncheckedCreateInput>
+    /**
+     * In case the SubmissionReturn was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubmissionReturnUpdateInput, SubmissionReturnUncheckedUpdateInput>
+  }
+
+  /**
+   * SubmissionReturn delete
+   */
+  export type SubmissionReturnDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter which SubmissionReturn to delete.
+     */
+    where: SubmissionReturnWhereUniqueInput
+  }
+
+  /**
+   * SubmissionReturn deleteMany
+   */
+  export type SubmissionReturnDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SubmissionReturns to delete
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * Limit how many SubmissionReturns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SubmissionReturn without action
+   */
+  export type SubmissionReturnDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Submitted
    */
 
@@ -25790,6 +26913,7 @@ export namespace Prisma {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
     sheet?: boolean | SheetDefaultArgs<ExtArgs>
+    submissionReturn?: boolean | Submitted$submissionReturnArgs<ExtArgs>
   }, ExtArgs["result"]["submitted"]>
 
   export type SubmittedSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -25839,6 +26963,7 @@ export namespace Prisma {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
     sheet?: boolean | SheetDefaultArgs<ExtArgs>
+    submissionReturn?: boolean | Submitted$submissionReturnArgs<ExtArgs>
   }
   export type SubmittedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
@@ -25857,6 +26982,7 @@ export namespace Prisma {
       employee: Prisma.$EmployeePayload<ExtArgs>
       project: Prisma.$ProjectPayload<ExtArgs>
       sheet: Prisma.$SheetPayload<ExtArgs>
+      submissionReturn: Prisma.$SubmissionReturnPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -26265,6 +27391,7 @@ export namespace Prisma {
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     sheet<T extends SheetDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SheetDefaultArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    submissionReturn<T extends Submitted$submissionReturnArgs<ExtArgs> = {}>(args?: Subset<T, Submitted$submissionReturnArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -26696,6 +27823,25 @@ export namespace Prisma {
      * Limit how many Submitteds to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Submitted.submissionReturn
+   */
+  export type Submitted$submissionReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    where?: SubmissionReturnWhereInput
   }
 
   /**
@@ -37405,6 +38551,15 @@ export namespace Prisma {
   export type SheetScalarFieldEnum = (typeof SheetScalarFieldEnum)[keyof typeof SheetScalarFieldEnum]
 
 
+  export const SubmissionReturnScalarFieldEnum: {
+    id: 'id',
+    submittedId: 'submittedId',
+    returnedAt: 'returnedAt'
+  };
+
+  export type SubmissionReturnScalarFieldEnum = (typeof SubmissionReturnScalarFieldEnum)[keyof typeof SubmissionReturnScalarFieldEnum]
+
+
   export const SubmittedScalarFieldEnum: {
     id: 'id',
     information: 'information',
@@ -39321,6 +40476,51 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
   }
 
+  export type SubmissionReturnWhereInput = {
+    AND?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
+    OR?: SubmissionReturnWhereInput[]
+    NOT?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
+    id?: StringFilter<"SubmissionReturn"> | string
+    submittedId?: StringFilter<"SubmissionReturn"> | string
+    returnedAt?: DateTimeFilter<"SubmissionReturn"> | Date | string
+    submitted?: XOR<SubmittedScalarRelationFilter, SubmittedWhereInput>
+  }
+
+  export type SubmissionReturnOrderByWithRelationInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+    submitted?: SubmittedOrderByWithRelationInput
+  }
+
+  export type SubmissionReturnWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    submittedId?: string
+    AND?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
+    OR?: SubmissionReturnWhereInput[]
+    NOT?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
+    returnedAt?: DateTimeFilter<"SubmissionReturn"> | Date | string
+    submitted?: XOR<SubmittedScalarRelationFilter, SubmittedWhereInput>
+  }, "id" | "submittedId">
+
+  export type SubmissionReturnOrderByWithAggregationInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+    _count?: SubmissionReturnCountOrderByAggregateInput
+    _max?: SubmissionReturnMaxOrderByAggregateInput
+    _min?: SubmissionReturnMinOrderByAggregateInput
+  }
+
+  export type SubmissionReturnScalarWhereWithAggregatesInput = {
+    AND?: SubmissionReturnScalarWhereWithAggregatesInput | SubmissionReturnScalarWhereWithAggregatesInput[]
+    OR?: SubmissionReturnScalarWhereWithAggregatesInput[]
+    NOT?: SubmissionReturnScalarWhereWithAggregatesInput | SubmissionReturnScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SubmissionReturn"> | string
+    submittedId?: StringWithAggregatesFilter<"SubmissionReturn"> | string
+    returnedAt?: DateTimeWithAggregatesFilter<"SubmissionReturn"> | Date | string
+  }
+
   export type SubmittedWhereInput = {
     AND?: SubmittedWhereInput | SubmittedWhereInput[]
     OR?: SubmittedWhereInput[]
@@ -39337,6 +40537,7 @@ export namespace Prisma {
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
     sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
+    submissionReturn?: XOR<SubmissionReturnNullableScalarRelationFilter, SubmissionReturnWhereInput> | null
   }
 
   export type SubmittedOrderByWithRelationInput = {
@@ -39352,6 +40553,7 @@ export namespace Prisma {
     employee?: EmployeeOrderByWithRelationInput
     project?: ProjectOrderByWithRelationInput
     sheet?: SheetOrderByWithRelationInput
+    submissionReturn?: SubmissionReturnOrderByWithRelationInput
   }
 
   export type SubmittedWhereUniqueInput = Prisma.AtLeast<{
@@ -39370,6 +40572,7 @@ export namespace Prisma {
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
     sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
+    submissionReturn?: XOR<SubmissionReturnNullableScalarRelationFilter, SubmissionReturnWhereInput> | null
   }, "id">
 
   export type SubmittedOrderByWithAggregationInput = {
@@ -41713,6 +42916,47 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SubmissionReturnCreateInput = {
+    id?: string
+    returnedAt?: Date | string
+    submitted: SubmittedCreateNestedOneWithoutSubmissionReturnInput
+  }
+
+  export type SubmissionReturnUncheckedCreateInput = {
+    id?: string
+    submittedId: string
+    returnedAt?: Date | string
+  }
+
+  export type SubmissionReturnUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submitted?: SubmittedUpdateOneRequiredWithoutSubmissionReturnNestedInput
+  }
+
+  export type SubmissionReturnUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submittedId?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnCreateManyInput = {
+    id?: string
+    submittedId: string
+    returnedAt?: Date | string
+  }
+
+  export type SubmissionReturnUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submittedId?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SubmittedCreateInput = {
     id?: string
     information: string
@@ -41723,6 +42967,7 @@ export namespace Prisma {
     employee: EmployeeCreateNestedOneWithoutSubmittedInput
     project: ProjectCreateNestedOneWithoutSubmittedInput
     sheet: SheetCreateNestedOneWithoutSubmittedInput
+    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedUncheckedCreateInput = {
@@ -41735,6 +42980,7 @@ export namespace Prisma {
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedUpdateInput = {
@@ -41747,6 +42993,7 @@ export namespace Prisma {
     employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
     sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
+    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
 
   export type SubmittedUncheckedUpdateInput = {
@@ -41759,6 +43006,7 @@ export namespace Prisma {
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
   }
 
   export type SubmittedCreateManyInput = {
@@ -43793,6 +45041,29 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type SubmittedScalarRelationFilter = {
+    is?: SubmittedWhereInput
+    isNot?: SubmittedWhereInput
+  }
+
+  export type SubmissionReturnCountOrderByAggregateInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+  }
+
+  export type SubmissionReturnMaxOrderByAggregateInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+  }
+
+  export type SubmissionReturnMinOrderByAggregateInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+  }
+
   export type EnumSubmittedStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.SubmittedStatus | EnumSubmittedStatusFieldRefInput<$PrismaModel>
     in?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
@@ -43803,6 +45074,11 @@ export namespace Prisma {
   export type SheetScalarRelationFilter = {
     is?: SheetWhereInput
     isNot?: SheetWhereInput
+  }
+
+  export type SubmissionReturnNullableScalarRelationFilter = {
+    is?: SubmissionReturnWhereInput | null
+    isNot?: SubmissionReturnWhereInput | null
   }
 
   export type SubmittedCountOrderByAggregateInput = {
@@ -45487,6 +46763,20 @@ export namespace Prisma {
     deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
   }
 
+  export type SubmittedCreateNestedOneWithoutSubmissionReturnInput = {
+    create?: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
+    connectOrCreate?: SubmittedCreateOrConnectWithoutSubmissionReturnInput
+    connect?: SubmittedWhereUniqueInput
+  }
+
+  export type SubmittedUpdateOneRequiredWithoutSubmissionReturnNestedInput = {
+    create?: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
+    connectOrCreate?: SubmittedCreateOrConnectWithoutSubmissionReturnInput
+    upsert?: SubmittedUpsertWithoutSubmissionReturnInput
+    connect?: SubmittedWhereUniqueInput
+    update?: XOR<XOR<SubmittedUpdateToOneWithWhereWithoutSubmissionReturnInput, SubmittedUpdateWithoutSubmissionReturnInput>, SubmittedUncheckedUpdateWithoutSubmissionReturnInput>
+  }
+
   export type EmployeeCreateNestedOneWithoutSubmittedInput = {
     create?: XOR<EmployeeCreateWithoutSubmittedInput, EmployeeUncheckedCreateWithoutSubmittedInput>
     connectOrCreate?: EmployeeCreateOrConnectWithoutSubmittedInput
@@ -45503,6 +46793,18 @@ export namespace Prisma {
     create?: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
     connectOrCreate?: SheetCreateOrConnectWithoutSubmittedInput
     connect?: SheetWhereUniqueInput
+  }
+
+  export type SubmissionReturnCreateNestedOneWithoutSubmittedInput = {
+    create?: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SubmissionReturnCreateOrConnectWithoutSubmittedInput
+    connect?: SubmissionReturnWhereUniqueInput
+  }
+
+  export type SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput = {
+    create?: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SubmissionReturnCreateOrConnectWithoutSubmittedInput
+    connect?: SubmissionReturnWhereUniqueInput
   }
 
   export type EnumSubmittedStatusFieldUpdateOperationsInput = {
@@ -45531,6 +46833,26 @@ export namespace Prisma {
     upsert?: SheetUpsertWithoutSubmittedInput
     connect?: SheetWhereUniqueInput
     update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutSubmittedInput, SheetUpdateWithoutSubmittedInput>, SheetUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type SubmissionReturnUpdateOneWithoutSubmittedNestedInput = {
+    create?: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SubmissionReturnCreateOrConnectWithoutSubmittedInput
+    upsert?: SubmissionReturnUpsertWithoutSubmittedInput
+    disconnect?: SubmissionReturnWhereInput | boolean
+    delete?: SubmissionReturnWhereInput | boolean
+    connect?: SubmissionReturnWhereUniqueInput
+    update?: XOR<XOR<SubmissionReturnUpdateToOneWithWhereWithoutSubmittedInput, SubmissionReturnUpdateWithoutSubmittedInput>, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput = {
+    create?: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SubmissionReturnCreateOrConnectWithoutSubmittedInput
+    upsert?: SubmissionReturnUpsertWithoutSubmittedInput
+    disconnect?: SubmissionReturnWhereInput | boolean
+    delete?: SubmissionReturnWhereInput | boolean
+    connect?: SubmissionReturnWhereUniqueInput
+    update?: XOR<XOR<SubmissionReturnUpdateToOneWithWhereWithoutSubmittedInput, SubmissionReturnUpdateWithoutSubmittedInput>, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
   }
 
   export type UserCreateNestedOneWithoutSuperAdminInput = {
@@ -47513,6 +48835,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutSubmittedInput
     sheet: SheetCreateNestedOneWithoutSubmittedInput
+    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedUncheckedCreateWithoutEmployeeInput = {
@@ -47524,6 +48847,7 @@ export namespace Prisma {
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedCreateOrConnectWithoutEmployeeInput = {
@@ -49737,6 +51061,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutSubmittedInput
     sheet: SheetCreateNestedOneWithoutSubmittedInput
+    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedUncheckedCreateWithoutProjectInput = {
@@ -49748,6 +51073,7 @@ export namespace Prisma {
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedCreateOrConnectWithoutProjectInput = {
@@ -50328,6 +51654,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutSubmittedInput
     project: ProjectCreateNestedOneWithoutSubmittedInput
+    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedUncheckedCreateWithoutSheetInput = {
@@ -50339,6 +51666,7 @@ export namespace Prisma {
     projectId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedCreateOrConnectWithoutSheetInput = {
@@ -50365,6 +51693,70 @@ export namespace Prisma {
   export type SubmittedUpdateManyWithWhereWithoutSheetInput = {
     where: SubmittedScalarWhereInput
     data: XOR<SubmittedUpdateManyMutationInput, SubmittedUncheckedUpdateManyWithoutSheetInput>
+  }
+
+  export type SubmittedCreateWithoutSubmissionReturnInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee: EmployeeCreateNestedOneWithoutSubmittedInput
+    project: ProjectCreateNestedOneWithoutSubmittedInput
+    sheet: SheetCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedUncheckedCreateWithoutSubmissionReturnInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    employeeId: string
+    projectId: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubmittedCreateOrConnectWithoutSubmissionReturnInput = {
+    where: SubmittedWhereUniqueInput
+    create: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
+  }
+
+  export type SubmittedUpsertWithoutSubmissionReturnInput = {
+    update: XOR<SubmittedUpdateWithoutSubmissionReturnInput, SubmittedUncheckedUpdateWithoutSubmissionReturnInput>
+    create: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
+    where?: SubmittedWhereInput
+  }
+
+  export type SubmittedUpdateToOneWithWhereWithoutSubmissionReturnInput = {
+    where?: SubmittedWhereInput
+    data: XOR<SubmittedUpdateWithoutSubmissionReturnInput, SubmittedUncheckedUpdateWithoutSubmissionReturnInput>
+  }
+
+  export type SubmittedUpdateWithoutSubmissionReturnInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
+    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateWithoutSubmissionReturnInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    employeeId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EmployeeCreateWithoutSubmittedInput = {
@@ -50480,6 +51872,21 @@ export namespace Prisma {
   export type SheetCreateOrConnectWithoutSubmittedInput = {
     where: SheetWhereUniqueInput
     create: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
+  }
+
+  export type SubmissionReturnCreateWithoutSubmittedInput = {
+    id?: string
+    returnedAt?: Date | string
+  }
+
+  export type SubmissionReturnUncheckedCreateWithoutSubmittedInput = {
+    id?: string
+    returnedAt?: Date | string
+  }
+
+  export type SubmissionReturnCreateOrConnectWithoutSubmittedInput = {
+    where: SubmissionReturnWhereUniqueInput
+    create: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
   }
 
   export type EmployeeUpsertWithoutSubmittedInput = {
@@ -50613,6 +52020,27 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnUpsertWithoutSubmittedInput = {
+    update: XOR<SubmissionReturnUpdateWithoutSubmittedInput, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
+    create: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    where?: SubmissionReturnWhereInput
+  }
+
+  export type SubmissionReturnUpdateToOneWithWhereWithoutSubmittedInput = {
+    where?: SubmissionReturnWhereInput
+    data: XOR<SubmissionReturnUpdateWithoutSubmittedInput, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type SubmissionReturnUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnUncheckedUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutSuperAdminInput = {
@@ -52927,6 +54355,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
     sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
+    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
 
   export type SubmittedUncheckedUpdateWithoutEmployeeInput = {
@@ -52938,6 +54367,7 @@ export namespace Prisma {
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
   }
 
   export type SubmittedUncheckedUpdateManyWithoutEmployeeInput = {
@@ -53439,6 +54869,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
     sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
+    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
 
   export type SubmittedUncheckedUpdateWithoutProjectInput = {
@@ -53450,6 +54881,7 @@ export namespace Prisma {
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
   }
 
   export type SubmittedUncheckedUpdateManyWithoutProjectInput = {
@@ -53483,6 +54915,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
+    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
 
   export type SubmittedUncheckedUpdateWithoutSheetInput = {
@@ -53494,6 +54927,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
   }
 
   export type SubmittedUncheckedUpdateManyWithoutSheetInput = {

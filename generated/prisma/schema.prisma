@@ -342,19 +342,29 @@ model Sheet {
   updatedAt DateTime    @updatedAt
 }
 
+model SubmissionReturn {
+  id          String    @id @default(cuid())
+  submitted   Submitted @relation(fields: [submittedId], references: [id])
+  submittedId String    @unique
+  returnedAt  DateTime  @default(now())
+
+  @@map("submission_returns")
+}
+
 model Submitted {
-  id          String          @id @default(cuid())
-  information String
-  submission  String
-  status      SubmittedStatus @default(PENDING)
-  employee    Employee        @relation(fields: [employeeId], references: [id])
-  employeeId  String
-  project     Project         @relation(fields: [projectId], references: [id])
-  projectId   String
-  sheet       Sheet           @relation(fields: [sheetId], references: [id])
-  sheetId     String
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  id               String            @id @default(cuid())
+  information      String
+  submission       String
+  status           SubmittedStatus   @default(PENDING)
+  employee         Employee          @relation(fields: [employeeId], references: [id])
+  employeeId       String
+  project          Project           @relation(fields: [projectId], references: [id])
+  projectId        String
+  sheet            Sheet             @relation(fields: [sheetId], references: [id])
+  sheetId          String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  submissionReturn SubmissionReturn? // Relation to the submission return
 }
 
 model SuperAdmin {

@@ -342,6 +342,12 @@ exports.Prisma.SheetScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SubmissionReturnScalarFieldEnum = {
+  id: 'id',
+  submittedId: 'submittedId',
+  returnedAt: 'returnedAt'
+};
+
 exports.Prisma.SubmittedScalarFieldEnum = {
   id: 'id',
   information: 'information',
@@ -607,6 +613,7 @@ exports.Prisma.ModelName = {
   ProjectEmployee: 'ProjectEmployee',
   Review: 'Review',
   Sheet: 'Sheet',
+  SubmissionReturn: 'SubmissionReturn',
   Submitted: 'Submitted',
   SuperAdmin: 'SuperAdmin',
   Supporter: 'Supporter',

@@ -111,13 +111,34 @@ export class SubmittedService {
     id: string,
     updateSubmittedStatusDto: UpdateSubmittedStatusDto,
   ) {
-    const submitted = await this.prisma.submitted.findUnique({ where: { id } });
-    if (!submitted) {
-      throw new NotFoundException(`Submission with ID ${id} not found`);
-    }
-    return this.prisma.submitted.update({
-      where: { id },
-      data: updateSubmittedStatusDto,
+    const { status } = updateSubmittedStatusDto;
+
+    return this.prisma.$transaction(async (prisma) => {
+      const submitted = await prisma.submitted.findUnique({ where: { id } });
+      if (!submitted) {
+        throw new NotFoundException(`Submission with ID ${id} not found`);
+      }
+
+      const updatedSubmission = await prisma.submitted.update({
+        where: { id },
+        data: { status },
+      });
+
+      if (status === SubmittedStatus.REJECTED) {
+        const existingReturn = await prisma.submissionReturn.findUnique({
+          where: { submittedId: id },
+        });
+
+        if (!existingReturn) {
+          await prisma.submissionReturn.create({
+            data: {
+              submittedId: id,
+            },
+          });
+        }
+      }
+
+      return updatedSubmission;
     });
   }
 
