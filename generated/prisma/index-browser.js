@@ -335,6 +335,25 @@ exports.Prisma.ReviewScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SheetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SubmittedScalarFieldEnum = {
+  id: 'id',
+  information: 'information',
+  submission: 'submission',
+  status: 'status',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  sheetId: 'sheetId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SuperAdminScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -514,6 +533,12 @@ exports.Priority = exports.$Enums.Priority = {
   NORMAL: 'NORMAL'
 };
 
+exports.SubmittedStatus = exports.$Enums.SubmittedStatus = {
+  APPROVED: 'APPROVED',
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED'
+};
+
 exports.SupporterRole = exports.$Enums.SupporterRole = {
   CALLATTENDANCE: 'CALLATTENDANCE',
   SUPPORTMANAGER: 'SUPPORTMANAGER',
@@ -581,6 +606,8 @@ exports.Prisma.ModelName = {
   Project: 'Project',
   ProjectEmployee: 'ProjectEmployee',
   Review: 'Review',
+  Sheet: 'Sheet',
+  Submitted: 'Submitted',
   SuperAdmin: 'SuperAdmin',
   Supporter: 'Supporter',
   Task: 'Task',

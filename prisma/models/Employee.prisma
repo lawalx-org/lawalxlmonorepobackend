@@ -12,5 +12,6 @@ model Employee {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
     projectEmployees   ProjectEmployee[]
+    submitted          Submitted[]
   @@map("employees")
 }

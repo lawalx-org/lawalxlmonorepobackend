@@ -105,3 +105,9 @@ enum ActivityActionType {
   TASK_COMPLETED
   GENERAL
 }
+
+enum SubmittedStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}

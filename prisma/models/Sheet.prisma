@@ -1,0 +1,7 @@
+model Sheet {
+  id          String   @id @default(cuid())
+  name        String
+  submitted   Submitted[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
