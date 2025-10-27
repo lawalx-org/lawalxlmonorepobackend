@@ -58,4 +58,9 @@ export class FindAllProjectsDto {
   @Type(() => Number)
   @IsInt()
   progress?: number;
+
+  @ApiPropertyOptional({ description: 'Filter by employee ID' })
+  @IsOptional()
+  @IsString()
+  employeeId?: string;
 }

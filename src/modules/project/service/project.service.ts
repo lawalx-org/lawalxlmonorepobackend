@@ -97,15 +97,23 @@ export class ProjectService {
   }
 
   async searchByName(query: SearchProjectByNameDto) {
-    const { name, page = 1, limit = 10 } = query;
+    const { name, page = 1, limit = 10, employeeId } = query;
     const skip = (page - 1) * limit;
 
-    const where = {
+    const where: Prisma.ProjectWhereInput = {
       name: {
         contains: name,
         mode: 'insensitive' as const,
       },
     };
+
+    if (employeeId) {
+      where.projectEmployees = {
+        some: {
+          employeeId: employeeId,
+        },
+      };
+    }
 
     const [projects, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({

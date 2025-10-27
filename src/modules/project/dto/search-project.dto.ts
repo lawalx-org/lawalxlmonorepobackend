@@ -20,4 +20,9 @@ export class SearchProjectByNameDto {
   @IsInt()
   @Min(1)
   limit?: number;
+
+  @ApiPropertyOptional({ description: 'Filter by employee ID' })
+  @IsOptional()
+  @IsString()
+  employeeId?: string;
 }

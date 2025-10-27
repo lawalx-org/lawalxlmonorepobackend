@@ -27,7 +27,7 @@ export function buildProjectFilter(
   }
 
   if (query.progress) {
-    where.progress = { equals: query.progress };
+    where.progress = { equals: query.progress }
   }
 
   if (query.startDate && query.endDate) {
@@ -37,6 +37,14 @@ export function buildProjectFilter(
     where.startDate = { gte: query.startDate };
   } else if (query.endDate) {
     where.deadline = { lte: query.endDate };
+  }
+
+  if (query.employeeId) {
+    where.projectEmployees = {
+      some: {
+        employeeId: query.employeeId,
+      },
+    };
   }
 
   return where;
