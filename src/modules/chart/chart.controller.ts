@@ -1,0 +1,35 @@
+import {
+  Controller,
+  Get,
+  Query,
+  Req,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { ChartService } from './chart.service';
+import { RequestWithUser } from 'src/types/RequestWithUser';
+
+@Controller('charts')
+export class ChartController {
+  constructor(private readonly chartService: ChartService) {}
+
+  @Get('submission-status')
+  async getSubmissionStatusChartData(
+    @Req() req: RequestWithUser,
+    @Query('period') period: string,
+  ) {
+    const employeeId = req.user.employeeId;
+    if (!employeeId) {
+      throw new UnauthorizedException('Employee ID not found in token');
+    }
+    return this.chartService.getSubmissionStatusChartData(employeeId, period);
+  }
+
+  @Get('top-overdue-projects')
+  async getTopOverdueProjectsChartData(@Req() req: RequestWithUser) {
+    const employeeId = req.user.employeeId;
+    if (!employeeId) {
+      throw new UnauthorizedException('Employee ID not found in token');
+    }
+    return this.chartService.getTopOverdueProjectsChartData(employeeId);
+  }
+}

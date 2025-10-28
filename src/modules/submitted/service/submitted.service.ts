@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateSubmittedDto } from '../dto/create-submitted.dto';
 import { UpdateSubmittedStatusDto } from '../dto/update-submitted-status.dto';
@@ -10,6 +14,7 @@ import {
 import { Submitted, SubmittedStatus } from '../../../../generated/prisma';
 
 interface WhereClause {
+  employeeId?: string;
   project?: {
     name: {
       contains: string;
@@ -27,8 +32,8 @@ interface WhereClause {
 export class SubmittedService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createSubmittedDto: CreateSubmittedDto) {
-    const { employeeId, projectId, sheetId } = createSubmittedDto;
+  async create(createSubmittedDto: CreateSubmittedDto, employeeId: string) {
+    const { projectId, sheetId } = createSubmittedDto;
 
     const employee = await this.prisma.employee.findUnique({
       where: { id: employeeId },
@@ -54,15 +59,18 @@ export class SubmittedService {
       throw new NotFoundException(`Sheet with ID ${sheetId} not found`);
     }
 
-    return this.prisma.submitted.create({ data: createSubmittedDto });
+    return this.prisma.submitted.create({
+      data: { ...createSubmittedDto, employeeId },
+    });
   }
 
   async findAll(
     query: GetAllSubmissionsDto,
+    employeeId: string,
   ): Promise<PaginatedResult<Submitted>> {
     const { page = 1, limit = 10, search, status, startDate, endDate } = query;
 
-    const where: WhereClause = {};
+    const where: WhereClause = { employeeId };
 
     if (search) {
       where.project = {
@@ -92,7 +100,7 @@ export class SubmittedService {
     );
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, employeeId: string) {
     const submitted = await this.prisma.submitted.findUnique({
       where: { id },
       include: {
@@ -103,6 +111,11 @@ export class SubmittedService {
     });
     if (!submitted) {
       throw new NotFoundException(`Submission with ID ${id} not found`);
+    }
+    if (submitted.employeeId !== employeeId) {
+      throw new UnauthorizedException(
+        'You are not authorized to view this submission',
+      );
     }
     return submitted;
   }
@@ -142,10 +155,15 @@ export class SubmittedService {
     });
   }
 
-  async delete(id: string) {
+  async delete(id: string, employeeId: string) {
     const submitted = await this.prisma.submitted.findUnique({ where: { id } });
     if (!submitted) {
       throw new NotFoundException(`Submission with ID ${id} not found`);
+    }
+    if (submitted.employeeId !== employeeId) {
+      throw new UnauthorizedException(
+        'You are not authorized to delete this submission',
+      );
     }
     await this.prisma.submitted.delete({
       where: { id },

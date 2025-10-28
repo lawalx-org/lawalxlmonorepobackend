@@ -27,7 +27,7 @@ export function buildProjectFilter(
   }
 
   if (query.progress) {
-    where.progress = { equals: query.progress }
+    where.progress = { equals: query.progress };
   }
 
   if (query.startDate && query.endDate) {

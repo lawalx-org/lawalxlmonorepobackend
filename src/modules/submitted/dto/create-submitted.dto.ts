@@ -19,14 +19,6 @@ export class CreateSubmittedDto {
   submission: string;
 
   @ApiProperty({
-    example: 'employee-id',
-    description: 'The ID of the employee',
-  })
-  @IsString()
-  @IsNotEmpty()
-  employeeId: string;
-
-  @ApiProperty({
     example: 'project-id',
     description: 'The ID of the project',
   })

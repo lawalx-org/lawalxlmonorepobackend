@@ -529,7 +529,8 @@ exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   LIVE: 'LIVE',
   DRAFT: 'DRAFT',
   OVERDUE: 'OVERDUE',
-  PROBLEM: 'PROBLEM'
+  PROBLEM: 'PROBLEM',
+  COMPLETED: 'COMPLETED'
 };
 
 exports.Priority = exports.$Enums.Priority = {

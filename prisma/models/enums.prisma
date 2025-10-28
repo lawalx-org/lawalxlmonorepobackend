@@ -54,6 +54,7 @@ enum ProjectStatus {
   DRAFT
   OVERDUE
   PROBLEM
+  COMPLETED
 }
 
 enum TaskStatus {

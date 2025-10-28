@@ -7,7 +7,10 @@ export class SearchProjectByNameDto {
   @IsString()
   name: string;
 
-  @ApiPropertyOptional({ description: 'Page number for pagination', minimum: 1 })
+  @ApiPropertyOptional({
+    description: 'Page number for pagination',
+    minimum: 1,
+  })
   @IsOptional()
   @Type(() => Number)
   @IsInt()

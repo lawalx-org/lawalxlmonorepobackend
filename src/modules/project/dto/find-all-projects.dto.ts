@@ -4,7 +4,10 @@ import { ProjectStatus, Priority } from 'generated/prisma';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class FindAllProjectsDto {
-  @ApiPropertyOptional({ description: 'Page number for pagination', minimum: 1 })
+  @ApiPropertyOptional({
+    description: 'Page number for pagination',
+    minimum: 1,
+  })
   @IsOptional()
   @Type(() => Number)
   @IsInt()
@@ -18,12 +21,18 @@ export class FindAllProjectsDto {
   @Min(1)
   limit?: number;
 
-  @ApiPropertyOptional({ enum: ProjectStatus, description: 'Filter by project status' })
+  @ApiPropertyOptional({
+    enum: ProjectStatus,
+    description: 'Filter by project status',
+  })
   @IsOptional()
   @IsEnum(ProjectStatus)
   status?: ProjectStatus;
 
-  @ApiPropertyOptional({ enum: Priority, description: 'Filter by project priority' })
+  @ApiPropertyOptional({
+    enum: Priority,
+    description: 'Filter by project priority',
+  })
   @IsOptional()
   @IsEnum(Priority)
   priority?: Priority;
@@ -38,12 +47,16 @@ export class FindAllProjectsDto {
   @IsString()
   programId?: string;
 
-  @ApiPropertyOptional({ description: 'Filter by project name (case-insensitive search)' })
+  @ApiPropertyOptional({
+    description: 'Filter by project name (case-insensitive search)',
+  })
   @IsOptional()
   @IsString()
   name?: string;
 
-  @ApiPropertyOptional({ description: 'Filter by start date (ISO 8601 format)' })
+  @ApiPropertyOptional({
+    description: 'Filter by start date (ISO 8601 format)',
+  })
   @IsOptional()
   @Type(() => Date)
   startDate?: Date;

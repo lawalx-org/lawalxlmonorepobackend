@@ -244,7 +244,8 @@ export const ProjectStatus: {
   LIVE: 'LIVE',
   DRAFT: 'DRAFT',
   OVERDUE: 'OVERDUE',
-  PROBLEM: 'PROBLEM'
+  PROBLEM: 'PROBLEM',
+  COMPLETED: 'COMPLETED'
 };
 
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
