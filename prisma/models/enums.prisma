@@ -107,8 +107,18 @@ enum ActivityActionType {
   GENERAL
 }
 
+
 enum SubmittedStatus {
   APPROVED
   PENDING
   REJECTED
+  }
+
+
+
+
+enum NotificationType {
+  NEW_EMPLOYEE_ASSIGNED
+  NEW_MANAGER_ASSIGNED
+
 }
