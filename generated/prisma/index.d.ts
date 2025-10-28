@@ -104,6 +104,21 @@ export type ProjectEmployee = $Result.DefaultSelection<Prisma.$ProjectEmployeePa
  */
 export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
 /**
+ * Model Sheet
+ * 
+ */
+export type Sheet = $Result.DefaultSelection<Prisma.$SheetPayload>
+/**
+ * Model SubmissionReturn
+ * 
+ */
+export type SubmissionReturn = $Result.DefaultSelection<Prisma.$SubmissionReturnPayload>
+/**
+ * Model Submitted
+ * 
+ */
+export type Submitted = $Result.DefaultSelection<Prisma.$SubmittedPayload>
+/**
  * Model SuperAdmin
  * 
  */
@@ -229,7 +244,8 @@ export const ProjectStatus: {
   LIVE: 'LIVE',
   DRAFT: 'DRAFT',
   OVERDUE: 'OVERDUE',
-  PROBLEM: 'PROBLEM'
+  PROBLEM: 'PROBLEM',
+  COMPLETED: 'COMPLETED'
 };
 
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
@@ -297,6 +313,15 @@ export const ActivityActionType: {
 
 export type ActivityActionType = (typeof ActivityActionType)[keyof typeof ActivityActionType]
 
+
+export const SubmittedStatus: {
+  APPROVED: 'APPROVED',
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED'
+};
+
+export type SubmittedStatus = (typeof SubmittedStatus)[keyof typeof SubmittedStatus]
+
 }
 
 export type Role = $Enums.Role
@@ -350,6 +375,10 @@ export const UserStatus: typeof $Enums.UserStatus
 export type ActivityActionType = $Enums.ActivityActionType
 
 export const ActivityActionType: typeof $Enums.ActivityActionType
+
+export type SubmittedStatus = $Enums.SubmittedStatus
+
+export const SubmittedStatus: typeof $Enums.SubmittedStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -648,6 +677,36 @@ export class PrismaClient<
     * ```
     */
   get review(): Prisma.ReviewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sheet`: Exposes CRUD operations for the **Sheet** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Sheets
+    * const sheets = await prisma.sheet.findMany()
+    * ```
+    */
+  get sheet(): Prisma.SheetDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.submissionReturn`: Exposes CRUD operations for the **SubmissionReturn** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SubmissionReturns
+    * const submissionReturns = await prisma.submissionReturn.findMany()
+    * ```
+    */
+  get submissionReturn(): Prisma.SubmissionReturnDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.submitted`: Exposes CRUD operations for the **Submitted** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Submitteds
+    * const submitteds = await prisma.submitted.findMany()
+    * ```
+    */
+  get submitted(): Prisma.SubmittedDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.superAdmin`: Exposes CRUD operations for the **SuperAdmin** model.
@@ -1197,6 +1256,9 @@ export namespace Prisma {
     Project: 'Project',
     ProjectEmployee: 'ProjectEmployee',
     Review: 'Review',
+    Sheet: 'Sheet',
+    SubmissionReturn: 'SubmissionReturn',
+    Submitted: 'Submitted',
     SuperAdmin: 'SuperAdmin',
     Supporter: 'Supporter',
     Task: 'Task',
@@ -1224,7 +1286,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer"
+      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "sheet" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2560,6 +2622,228 @@ export namespace Prisma {
           }
         }
       }
+      Sheet: {
+        payload: Prisma.$SheetPayload<ExtArgs>
+        fields: Prisma.SheetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SheetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SheetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          findFirst: {
+            args: Prisma.SheetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SheetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          findMany: {
+            args: Prisma.SheetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
+          }
+          create: {
+            args: Prisma.SheetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          createMany: {
+            args: Prisma.SheetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SheetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
+          }
+          delete: {
+            args: Prisma.SheetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          update: {
+            args: Prisma.SheetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          deleteMany: {
+            args: Prisma.SheetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SheetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SheetUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
+          }
+          upsert: {
+            args: Prisma.SheetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          aggregate: {
+            args: Prisma.SheetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSheet>
+          }
+          groupBy: {
+            args: Prisma.SheetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SheetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SheetCountArgs<ExtArgs>
+            result: $Utils.Optional<SheetCountAggregateOutputType> | number
+          }
+        }
+      }
+      SubmissionReturn: {
+        payload: Prisma.$SubmissionReturnPayload<ExtArgs>
+        fields: Prisma.SubmissionReturnFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubmissionReturnFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubmissionReturnFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          findFirst: {
+            args: Prisma.SubmissionReturnFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubmissionReturnFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          findMany: {
+            args: Prisma.SubmissionReturnFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>[]
+          }
+          create: {
+            args: Prisma.SubmissionReturnCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          createMany: {
+            args: Prisma.SubmissionReturnCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubmissionReturnCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>[]
+          }
+          delete: {
+            args: Prisma.SubmissionReturnDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          update: {
+            args: Prisma.SubmissionReturnUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubmissionReturnDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubmissionReturnUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubmissionReturnUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>[]
+          }
+          upsert: {
+            args: Prisma.SubmissionReturnUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmissionReturnPayload>
+          }
+          aggregate: {
+            args: Prisma.SubmissionReturnAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubmissionReturn>
+          }
+          groupBy: {
+            args: Prisma.SubmissionReturnGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubmissionReturnGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubmissionReturnCountArgs<ExtArgs>
+            result: $Utils.Optional<SubmissionReturnCountAggregateOutputType> | number
+          }
+        }
+      }
+      Submitted: {
+        payload: Prisma.$SubmittedPayload<ExtArgs>
+        fields: Prisma.SubmittedFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SubmittedFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SubmittedFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>
+          }
+          findFirst: {
+            args: Prisma.SubmittedFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SubmittedFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>
+          }
+          findMany: {
+            args: Prisma.SubmittedFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>[]
+          }
+          create: {
+            args: Prisma.SubmittedCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>
+          }
+          createMany: {
+            args: Prisma.SubmittedCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SubmittedCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>[]
+          }
+          delete: {
+            args: Prisma.SubmittedDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>
+          }
+          update: {
+            args: Prisma.SubmittedUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>
+          }
+          deleteMany: {
+            args: Prisma.SubmittedDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SubmittedUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SubmittedUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>[]
+          }
+          upsert: {
+            args: Prisma.SubmittedUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SubmittedPayload>
+          }
+          aggregate: {
+            args: Prisma.SubmittedAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubmitted>
+          }
+          groupBy: {
+            args: Prisma.SubmittedGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubmittedGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SubmittedCountArgs<ExtArgs>
+            result: $Utils.Optional<SubmittedCountAggregateOutputType> | number
+          }
+        }
+      }
       SuperAdmin: {
         payload: Prisma.$SuperAdminPayload<ExtArgs>
         fields: Prisma.SuperAdminFieldRefs
@@ -3340,6 +3624,9 @@ export namespace Prisma {
     project?: ProjectOmit
     projectEmployee?: ProjectEmployeeOmit
     review?: ReviewOmit
+    sheet?: SheetOmit
+    submissionReturn?: SubmissionReturnOmit
+    submitted?: SubmittedOmit
     superAdmin?: SuperAdminOmit
     supporter?: SupporterOmit
     task?: TaskOmit
@@ -3479,10 +3766,12 @@ export namespace Prisma {
 
   export type EmployeeCountOutputType = {
     projectEmployees: number
+    submitted: number
   }
 
   export type EmployeeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     projectEmployees?: boolean | EmployeeCountOutputTypeCountProjectEmployeesArgs
+    submitted?: boolean | EmployeeCountOutputTypeCountSubmittedArgs
   }
 
   // Custom InputTypes
@@ -3501,6 +3790,13 @@ export namespace Prisma {
    */
   export type EmployeeCountOutputTypeCountProjectEmployeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProjectEmployeeWhereInput
+  }
+
+  /**
+   * EmployeeCountOutputType without action
+   */
+  export type EmployeeCountOutputTypeCountSubmittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmittedWhereInput
   }
 
 
@@ -3616,6 +3912,7 @@ export namespace Prisma {
     activities: number
     reviews: number
     requestsToAddProjectMember: number
+    submitted: number
   }
 
   export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3624,6 +3921,7 @@ export namespace Prisma {
     activities?: boolean | ProjectCountOutputTypeCountActivitiesArgs
     reviews?: boolean | ProjectCountOutputTypeCountReviewsArgs
     requestsToAddProjectMember?: boolean | ProjectCountOutputTypeCountRequestsToAddProjectMemberArgs
+    submitted?: boolean | ProjectCountOutputTypeCountSubmittedArgs
   }
 
   // Custom InputTypes
@@ -3670,6 +3968,44 @@ export namespace Prisma {
    */
   export type ProjectCountOutputTypeCountRequestsToAddProjectMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RequestToAddProjectMemberWhereInput
+  }
+
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeCountSubmittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmittedWhereInput
+  }
+
+
+  /**
+   * Count Type SheetCountOutputType
+   */
+
+  export type SheetCountOutputType = {
+    submitted: number
+  }
+
+  export type SheetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitted?: boolean | SheetCountOutputTypeCountSubmittedArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SheetCountOutputType without action
+   */
+  export type SheetCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetCountOutputType
+     */
+    select?: SheetCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SheetCountOutputType without action
+   */
+  export type SheetCountOutputTypeCountSubmittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmittedWhereInput
   }
 
 
@@ -6483,6 +6819,7 @@ export namespace Prisma {
     skills?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     projectEmployees?: boolean | Employee$projectEmployeesArgs<ExtArgs>
+    submitted?: boolean | Employee$submittedArgs<ExtArgs>
     _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["employee"]>
 
@@ -6522,6 +6859,7 @@ export namespace Prisma {
   export type EmployeeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     projectEmployees?: boolean | Employee$projectEmployeesArgs<ExtArgs>
+    submitted?: boolean | Employee$submittedArgs<ExtArgs>
     _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EmployeeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6536,6 +6874,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       projectEmployees: Prisma.$ProjectEmployeePayload<ExtArgs>[]
+      submitted: Prisma.$SubmittedPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6941,6 +7280,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     projectEmployees<T extends Employee$projectEmployeesArgs<ExtArgs> = {}>(args?: Subset<T, Employee$projectEmployeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectEmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submitted<T extends Employee$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Employee$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7394,6 +7734,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProjectEmployeeScalarFieldEnum | ProjectEmployeeScalarFieldEnum[]
+  }
+
+  /**
+   * Employee.submitted
+   */
+  export type Employee$submittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    where?: SubmittedWhereInput
+    orderBy?: SubmittedOrderByWithRelationInput | SubmittedOrderByWithRelationInput[]
+    cursor?: SubmittedWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubmittedScalarFieldEnum | SubmittedScalarFieldEnum[]
   }
 
   /**
@@ -20965,6 +21329,7 @@ export namespace Prisma {
     activities?: boolean | Project$activitiesArgs<ExtArgs>
     reviews?: boolean | Project$reviewsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Project$requestsToAddProjectMemberArgs<ExtArgs>
+    submitted?: boolean | Project$submittedArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
@@ -21062,6 +21427,7 @@ export namespace Prisma {
     activities?: boolean | Project$activitiesArgs<ExtArgs>
     reviews?: boolean | Project$reviewsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Project$requestsToAddProjectMemberArgs<ExtArgs>
+    submitted?: boolean | Project$submittedArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -21083,6 +21449,7 @@ export namespace Prisma {
       activities: Prisma.$ActivityPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       requestsToAddProjectMember: Prisma.$RequestToAddProjectMemberPayload<ExtArgs>[]
+      submitted: Prisma.$SubmittedPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -21510,6 +21877,7 @@ export namespace Prisma {
     activities<T extends Project$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Project$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Project$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Project$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     requestsToAddProjectMember<T extends Project$requestsToAddProjectMemberArgs<ExtArgs> = {}>(args?: Subset<T, Project$requestsToAddProjectMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestToAddProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submitted<T extends Project$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Project$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22076,6 +22444,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: RequestToAddProjectMemberScalarFieldEnum | RequestToAddProjectMemberScalarFieldEnum[]
+  }
+
+  /**
+   * Project.submitted
+   */
+  export type Project$submittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    where?: SubmittedWhereInput
+    orderBy?: SubmittedOrderByWithRelationInput | SubmittedOrderByWithRelationInput[]
+    cursor?: SubmittedWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubmittedScalarFieldEnum | SubmittedScalarFieldEnum[]
   }
 
   /**
@@ -24231,6 +24623,3244 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ReviewInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Sheet
+   */
+
+  export type AggregateSheet = {
+    _count: SheetCountAggregateOutputType | null
+    _min: SheetMinAggregateOutputType | null
+    _max: SheetMaxAggregateOutputType | null
+  }
+
+  export type SheetMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SheetMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SheetCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SheetMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SheetMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SheetCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SheetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sheet to aggregate.
+     */
+    where?: SheetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sheets to fetch.
+     */
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SheetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sheets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sheets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Sheets
+    **/
+    _count?: true | SheetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SheetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SheetMaxAggregateInputType
+  }
+
+  export type GetSheetAggregateType<T extends SheetAggregateArgs> = {
+        [P in keyof T & keyof AggregateSheet]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSheet[P]>
+      : GetScalarType<T[P], AggregateSheet[P]>
+  }
+
+
+
+
+  export type SheetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SheetWhereInput
+    orderBy?: SheetOrderByWithAggregationInput | SheetOrderByWithAggregationInput[]
+    by: SheetScalarFieldEnum[] | SheetScalarFieldEnum
+    having?: SheetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SheetCountAggregateInputType | true
+    _min?: SheetMinAggregateInputType
+    _max?: SheetMaxAggregateInputType
+  }
+
+  export type SheetGroupByOutputType = {
+    id: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: SheetCountAggregateOutputType | null
+    _min: SheetMinAggregateOutputType | null
+    _max: SheetMaxAggregateOutputType | null
+  }
+
+  type GetSheetGroupByPayload<T extends SheetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SheetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SheetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SheetGroupByOutputType[P]>
+            : GetScalarType<T[P], SheetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SheetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    submitted?: boolean | Sheet$submittedArgs<ExtArgs>
+    _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sheet"]>
+
+  export type SheetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["sheet"]>
+
+  export type SheetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["sheet"]>
+
+  export type SheetSelectScalar = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SheetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["sheet"]>
+  export type SheetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitted?: boolean | Sheet$submittedArgs<ExtArgs>
+    _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SheetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SheetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Sheet"
+    objects: {
+      submitted: Prisma.$SubmittedPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["sheet"]>
+    composites: {}
+  }
+
+  type SheetGetPayload<S extends boolean | null | undefined | SheetDefaultArgs> = $Result.GetResult<Prisma.$SheetPayload, S>
+
+  type SheetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SheetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SheetCountAggregateInputType | true
+    }
+
+  export interface SheetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Sheet'], meta: { name: 'Sheet' } }
+    /**
+     * Find zero or one Sheet that matches the filter.
+     * @param {SheetFindUniqueArgs} args - Arguments to find a Sheet
+     * @example
+     * // Get one Sheet
+     * const sheet = await prisma.sheet.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SheetFindUniqueArgs>(args: SelectSubset<T, SheetFindUniqueArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Sheet that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SheetFindUniqueOrThrowArgs} args - Arguments to find a Sheet
+     * @example
+     * // Get one Sheet
+     * const sheet = await prisma.sheet.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SheetFindUniqueOrThrowArgs>(args: SelectSubset<T, SheetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sheet that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetFindFirstArgs} args - Arguments to find a Sheet
+     * @example
+     * // Get one Sheet
+     * const sheet = await prisma.sheet.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SheetFindFirstArgs>(args?: SelectSubset<T, SheetFindFirstArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sheet that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetFindFirstOrThrowArgs} args - Arguments to find a Sheet
+     * @example
+     * // Get one Sheet
+     * const sheet = await prisma.sheet.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SheetFindFirstOrThrowArgs>(args?: SelectSubset<T, SheetFindFirstOrThrowArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Sheets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Sheets
+     * const sheets = await prisma.sheet.findMany()
+     * 
+     * // Get first 10 Sheets
+     * const sheets = await prisma.sheet.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sheetWithIdOnly = await prisma.sheet.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SheetFindManyArgs>(args?: SelectSubset<T, SheetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Sheet.
+     * @param {SheetCreateArgs} args - Arguments to create a Sheet.
+     * @example
+     * // Create one Sheet
+     * const Sheet = await prisma.sheet.create({
+     *   data: {
+     *     // ... data to create a Sheet
+     *   }
+     * })
+     * 
+     */
+    create<T extends SheetCreateArgs>(args: SelectSubset<T, SheetCreateArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Sheets.
+     * @param {SheetCreateManyArgs} args - Arguments to create many Sheets.
+     * @example
+     * // Create many Sheets
+     * const sheet = await prisma.sheet.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SheetCreateManyArgs>(args?: SelectSubset<T, SheetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Sheets and returns the data saved in the database.
+     * @param {SheetCreateManyAndReturnArgs} args - Arguments to create many Sheets.
+     * @example
+     * // Create many Sheets
+     * const sheet = await prisma.sheet.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Sheets and only return the `id`
+     * const sheetWithIdOnly = await prisma.sheet.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SheetCreateManyAndReturnArgs>(args?: SelectSubset<T, SheetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Sheet.
+     * @param {SheetDeleteArgs} args - Arguments to delete one Sheet.
+     * @example
+     * // Delete one Sheet
+     * const Sheet = await prisma.sheet.delete({
+     *   where: {
+     *     // ... filter to delete one Sheet
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SheetDeleteArgs>(args: SelectSubset<T, SheetDeleteArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Sheet.
+     * @param {SheetUpdateArgs} args - Arguments to update one Sheet.
+     * @example
+     * // Update one Sheet
+     * const sheet = await prisma.sheet.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SheetUpdateArgs>(args: SelectSubset<T, SheetUpdateArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Sheets.
+     * @param {SheetDeleteManyArgs} args - Arguments to filter Sheets to delete.
+     * @example
+     * // Delete a few Sheets
+     * const { count } = await prisma.sheet.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SheetDeleteManyArgs>(args?: SelectSubset<T, SheetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sheets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Sheets
+     * const sheet = await prisma.sheet.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SheetUpdateManyArgs>(args: SelectSubset<T, SheetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sheets and returns the data updated in the database.
+     * @param {SheetUpdateManyAndReturnArgs} args - Arguments to update many Sheets.
+     * @example
+     * // Update many Sheets
+     * const sheet = await prisma.sheet.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Sheets and only return the `id`
+     * const sheetWithIdOnly = await prisma.sheet.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SheetUpdateManyAndReturnArgs>(args: SelectSubset<T, SheetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Sheet.
+     * @param {SheetUpsertArgs} args - Arguments to update or create a Sheet.
+     * @example
+     * // Update or create a Sheet
+     * const sheet = await prisma.sheet.upsert({
+     *   create: {
+     *     // ... data to create a Sheet
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Sheet we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SheetUpsertArgs>(args: SelectSubset<T, SheetUpsertArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Sheets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetCountArgs} args - Arguments to filter Sheets to count.
+     * @example
+     * // Count the number of Sheets
+     * const count = await prisma.sheet.count({
+     *   where: {
+     *     // ... the filter for the Sheets we want to count
+     *   }
+     * })
+    **/
+    count<T extends SheetCountArgs>(
+      args?: Subset<T, SheetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SheetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Sheet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SheetAggregateArgs>(args: Subset<T, SheetAggregateArgs>): Prisma.PrismaPromise<GetSheetAggregateType<T>>
+
+    /**
+     * Group by Sheet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SheetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SheetGroupByArgs['orderBy'] }
+        : { orderBy?: SheetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SheetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSheetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Sheet model
+   */
+  readonly fields: SheetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Sheet.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SheetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    submitted<T extends Sheet$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Sheet model
+   */
+  interface SheetFieldRefs {
+    readonly id: FieldRef<"Sheet", 'String'>
+    readonly name: FieldRef<"Sheet", 'String'>
+    readonly createdAt: FieldRef<"Sheet", 'DateTime'>
+    readonly updatedAt: FieldRef<"Sheet", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Sheet findUnique
+   */
+  export type SheetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheet to fetch.
+     */
+    where: SheetWhereUniqueInput
+  }
+
+  /**
+   * Sheet findUniqueOrThrow
+   */
+  export type SheetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheet to fetch.
+     */
+    where: SheetWhereUniqueInput
+  }
+
+  /**
+   * Sheet findFirst
+   */
+  export type SheetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheet to fetch.
+     */
+    where?: SheetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sheets to fetch.
+     */
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sheets.
+     */
+    cursor?: SheetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sheets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sheets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sheets.
+     */
+    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet findFirstOrThrow
+   */
+  export type SheetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheet to fetch.
+     */
+    where?: SheetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sheets to fetch.
+     */
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sheets.
+     */
+    cursor?: SheetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sheets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sheets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sheets.
+     */
+    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet findMany
+   */
+  export type SheetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheets to fetch.
+     */
+    where?: SheetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sheets to fetch.
+     */
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Sheets.
+     */
+    cursor?: SheetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sheets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sheets.
+     */
+    skip?: number
+    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet create
+   */
+  export type SheetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Sheet.
+     */
+    data: XOR<SheetCreateInput, SheetUncheckedCreateInput>
+  }
+
+  /**
+   * Sheet createMany
+   */
+  export type SheetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Sheets.
+     */
+    data: SheetCreateManyInput | SheetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Sheet createManyAndReturn
+   */
+  export type SheetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * The data used to create many Sheets.
+     */
+    data: SheetCreateManyInput | SheetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Sheet update
+   */
+  export type SheetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Sheet.
+     */
+    data: XOR<SheetUpdateInput, SheetUncheckedUpdateInput>
+    /**
+     * Choose, which Sheet to update.
+     */
+    where: SheetWhereUniqueInput
+  }
+
+  /**
+   * Sheet updateMany
+   */
+  export type SheetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Sheets.
+     */
+    data: XOR<SheetUpdateManyMutationInput, SheetUncheckedUpdateManyInput>
+    /**
+     * Filter which Sheets to update
+     */
+    where?: SheetWhereInput
+    /**
+     * Limit how many Sheets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sheet updateManyAndReturn
+   */
+  export type SheetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * The data used to update Sheets.
+     */
+    data: XOR<SheetUpdateManyMutationInput, SheetUncheckedUpdateManyInput>
+    /**
+     * Filter which Sheets to update
+     */
+    where?: SheetWhereInput
+    /**
+     * Limit how many Sheets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sheet upsert
+   */
+  export type SheetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Sheet to update in case it exists.
+     */
+    where: SheetWhereUniqueInput
+    /**
+     * In case the Sheet found by the `where` argument doesn't exist, create a new Sheet with this data.
+     */
+    create: XOR<SheetCreateInput, SheetUncheckedCreateInput>
+    /**
+     * In case the Sheet was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SheetUpdateInput, SheetUncheckedUpdateInput>
+  }
+
+  /**
+   * Sheet delete
+   */
+  export type SheetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter which Sheet to delete.
+     */
+    where: SheetWhereUniqueInput
+  }
+
+  /**
+   * Sheet deleteMany
+   */
+  export type SheetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sheets to delete
+     */
+    where?: SheetWhereInput
+    /**
+     * Limit how many Sheets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sheet.submitted
+   */
+  export type Sheet$submittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    where?: SubmittedWhereInput
+    orderBy?: SubmittedOrderByWithRelationInput | SubmittedOrderByWithRelationInput[]
+    cursor?: SubmittedWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SubmittedScalarFieldEnum | SubmittedScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet without action
+   */
+  export type SheetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SubmissionReturn
+   */
+
+  export type AggregateSubmissionReturn = {
+    _count: SubmissionReturnCountAggregateOutputType | null
+    _min: SubmissionReturnMinAggregateOutputType | null
+    _max: SubmissionReturnMaxAggregateOutputType | null
+  }
+
+  export type SubmissionReturnMinAggregateOutputType = {
+    id: string | null
+    submittedId: string | null
+    returnedAt: Date | null
+  }
+
+  export type SubmissionReturnMaxAggregateOutputType = {
+    id: string | null
+    submittedId: string | null
+    returnedAt: Date | null
+  }
+
+  export type SubmissionReturnCountAggregateOutputType = {
+    id: number
+    submittedId: number
+    returnedAt: number
+    _all: number
+  }
+
+
+  export type SubmissionReturnMinAggregateInputType = {
+    id?: true
+    submittedId?: true
+    returnedAt?: true
+  }
+
+  export type SubmissionReturnMaxAggregateInputType = {
+    id?: true
+    submittedId?: true
+    returnedAt?: true
+  }
+
+  export type SubmissionReturnCountAggregateInputType = {
+    id?: true
+    submittedId?: true
+    returnedAt?: true
+    _all?: true
+  }
+
+  export type SubmissionReturnAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SubmissionReturn to aggregate.
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubmissionReturns to fetch.
+     */
+    orderBy?: SubmissionReturnOrderByWithRelationInput | SubmissionReturnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubmissionReturnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubmissionReturns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubmissionReturns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SubmissionReturns
+    **/
+    _count?: true | SubmissionReturnCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubmissionReturnMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubmissionReturnMaxAggregateInputType
+  }
+
+  export type GetSubmissionReturnAggregateType<T extends SubmissionReturnAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubmissionReturn]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubmissionReturn[P]>
+      : GetScalarType<T[P], AggregateSubmissionReturn[P]>
+  }
+
+
+
+
+  export type SubmissionReturnGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmissionReturnWhereInput
+    orderBy?: SubmissionReturnOrderByWithAggregationInput | SubmissionReturnOrderByWithAggregationInput[]
+    by: SubmissionReturnScalarFieldEnum[] | SubmissionReturnScalarFieldEnum
+    having?: SubmissionReturnScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubmissionReturnCountAggregateInputType | true
+    _min?: SubmissionReturnMinAggregateInputType
+    _max?: SubmissionReturnMaxAggregateInputType
+  }
+
+  export type SubmissionReturnGroupByOutputType = {
+    id: string
+    submittedId: string
+    returnedAt: Date
+    _count: SubmissionReturnCountAggregateOutputType | null
+    _min: SubmissionReturnMinAggregateOutputType | null
+    _max: SubmissionReturnMaxAggregateOutputType | null
+  }
+
+  type GetSubmissionReturnGroupByPayload<T extends SubmissionReturnGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubmissionReturnGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubmissionReturnGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubmissionReturnGroupByOutputType[P]>
+            : GetScalarType<T[P], SubmissionReturnGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubmissionReturnSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submittedId?: boolean
+    returnedAt?: boolean
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submissionReturn"]>
+
+  export type SubmissionReturnSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submittedId?: boolean
+    returnedAt?: boolean
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submissionReturn"]>
+
+  export type SubmissionReturnSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    submittedId?: boolean
+    returnedAt?: boolean
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submissionReturn"]>
+
+  export type SubmissionReturnSelectScalar = {
+    id?: boolean
+    submittedId?: boolean
+    returnedAt?: boolean
+  }
+
+  export type SubmissionReturnOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "submittedId" | "returnedAt", ExtArgs["result"]["submissionReturn"]>
+  export type SubmissionReturnInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }
+  export type SubmissionReturnIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }
+  export type SubmissionReturnIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    submitted?: boolean | SubmittedDefaultArgs<ExtArgs>
+  }
+
+  export type $SubmissionReturnPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SubmissionReturn"
+    objects: {
+      submitted: Prisma.$SubmittedPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      submittedId: string
+      returnedAt: Date
+    }, ExtArgs["result"]["submissionReturn"]>
+    composites: {}
+  }
+
+  type SubmissionReturnGetPayload<S extends boolean | null | undefined | SubmissionReturnDefaultArgs> = $Result.GetResult<Prisma.$SubmissionReturnPayload, S>
+
+  type SubmissionReturnCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubmissionReturnFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubmissionReturnCountAggregateInputType | true
+    }
+
+  export interface SubmissionReturnDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SubmissionReturn'], meta: { name: 'SubmissionReturn' } }
+    /**
+     * Find zero or one SubmissionReturn that matches the filter.
+     * @param {SubmissionReturnFindUniqueArgs} args - Arguments to find a SubmissionReturn
+     * @example
+     * // Get one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubmissionReturnFindUniqueArgs>(args: SelectSubset<T, SubmissionReturnFindUniqueArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SubmissionReturn that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubmissionReturnFindUniqueOrThrowArgs} args - Arguments to find a SubmissionReturn
+     * @example
+     * // Get one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubmissionReturnFindUniqueOrThrowArgs>(args: SelectSubset<T, SubmissionReturnFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SubmissionReturn that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnFindFirstArgs} args - Arguments to find a SubmissionReturn
+     * @example
+     * // Get one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubmissionReturnFindFirstArgs>(args?: SelectSubset<T, SubmissionReturnFindFirstArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SubmissionReturn that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnFindFirstOrThrowArgs} args - Arguments to find a SubmissionReturn
+     * @example
+     * // Get one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubmissionReturnFindFirstOrThrowArgs>(args?: SelectSubset<T, SubmissionReturnFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SubmissionReturns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SubmissionReturns
+     * const submissionReturns = await prisma.submissionReturn.findMany()
+     * 
+     * // Get first 10 SubmissionReturns
+     * const submissionReturns = await prisma.submissionReturn.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const submissionReturnWithIdOnly = await prisma.submissionReturn.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubmissionReturnFindManyArgs>(args?: SelectSubset<T, SubmissionReturnFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SubmissionReturn.
+     * @param {SubmissionReturnCreateArgs} args - Arguments to create a SubmissionReturn.
+     * @example
+     * // Create one SubmissionReturn
+     * const SubmissionReturn = await prisma.submissionReturn.create({
+     *   data: {
+     *     // ... data to create a SubmissionReturn
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubmissionReturnCreateArgs>(args: SelectSubset<T, SubmissionReturnCreateArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SubmissionReturns.
+     * @param {SubmissionReturnCreateManyArgs} args - Arguments to create many SubmissionReturns.
+     * @example
+     * // Create many SubmissionReturns
+     * const submissionReturn = await prisma.submissionReturn.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubmissionReturnCreateManyArgs>(args?: SelectSubset<T, SubmissionReturnCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SubmissionReturns and returns the data saved in the database.
+     * @param {SubmissionReturnCreateManyAndReturnArgs} args - Arguments to create many SubmissionReturns.
+     * @example
+     * // Create many SubmissionReturns
+     * const submissionReturn = await prisma.submissionReturn.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SubmissionReturns and only return the `id`
+     * const submissionReturnWithIdOnly = await prisma.submissionReturn.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubmissionReturnCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmissionReturnCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SubmissionReturn.
+     * @param {SubmissionReturnDeleteArgs} args - Arguments to delete one SubmissionReturn.
+     * @example
+     * // Delete one SubmissionReturn
+     * const SubmissionReturn = await prisma.submissionReturn.delete({
+     *   where: {
+     *     // ... filter to delete one SubmissionReturn
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubmissionReturnDeleteArgs>(args: SelectSubset<T, SubmissionReturnDeleteArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SubmissionReturn.
+     * @param {SubmissionReturnUpdateArgs} args - Arguments to update one SubmissionReturn.
+     * @example
+     * // Update one SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubmissionReturnUpdateArgs>(args: SelectSubset<T, SubmissionReturnUpdateArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SubmissionReturns.
+     * @param {SubmissionReturnDeleteManyArgs} args - Arguments to filter SubmissionReturns to delete.
+     * @example
+     * // Delete a few SubmissionReturns
+     * const { count } = await prisma.submissionReturn.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubmissionReturnDeleteManyArgs>(args?: SelectSubset<T, SubmissionReturnDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubmissionReturns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SubmissionReturns
+     * const submissionReturn = await prisma.submissionReturn.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubmissionReturnUpdateManyArgs>(args: SelectSubset<T, SubmissionReturnUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubmissionReturns and returns the data updated in the database.
+     * @param {SubmissionReturnUpdateManyAndReturnArgs} args - Arguments to update many SubmissionReturns.
+     * @example
+     * // Update many SubmissionReturns
+     * const submissionReturn = await prisma.submissionReturn.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SubmissionReturns and only return the `id`
+     * const submissionReturnWithIdOnly = await prisma.submissionReturn.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubmissionReturnUpdateManyAndReturnArgs>(args: SelectSubset<T, SubmissionReturnUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SubmissionReturn.
+     * @param {SubmissionReturnUpsertArgs} args - Arguments to update or create a SubmissionReturn.
+     * @example
+     * // Update or create a SubmissionReturn
+     * const submissionReturn = await prisma.submissionReturn.upsert({
+     *   create: {
+     *     // ... data to create a SubmissionReturn
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SubmissionReturn we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubmissionReturnUpsertArgs>(args: SelectSubset<T, SubmissionReturnUpsertArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SubmissionReturns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnCountArgs} args - Arguments to filter SubmissionReturns to count.
+     * @example
+     * // Count the number of SubmissionReturns
+     * const count = await prisma.submissionReturn.count({
+     *   where: {
+     *     // ... the filter for the SubmissionReturns we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubmissionReturnCountArgs>(
+      args?: Subset<T, SubmissionReturnCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubmissionReturnCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SubmissionReturn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubmissionReturnAggregateArgs>(args: Subset<T, SubmissionReturnAggregateArgs>): Prisma.PrismaPromise<GetSubmissionReturnAggregateType<T>>
+
+    /**
+     * Group by SubmissionReturn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmissionReturnGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubmissionReturnGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubmissionReturnGroupByArgs['orderBy'] }
+        : { orderBy?: SubmissionReturnGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubmissionReturnGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmissionReturnGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SubmissionReturn model
+   */
+  readonly fields: SubmissionReturnFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SubmissionReturn.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubmissionReturnClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    submitted<T extends SubmittedDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubmittedDefaultArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SubmissionReturn model
+   */
+  interface SubmissionReturnFieldRefs {
+    readonly id: FieldRef<"SubmissionReturn", 'String'>
+    readonly submittedId: FieldRef<"SubmissionReturn", 'String'>
+    readonly returnedAt: FieldRef<"SubmissionReturn", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SubmissionReturn findUnique
+   */
+  export type SubmissionReturnFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturn to fetch.
+     */
+    where: SubmissionReturnWhereUniqueInput
+  }
+
+  /**
+   * SubmissionReturn findUniqueOrThrow
+   */
+  export type SubmissionReturnFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturn to fetch.
+     */
+    where: SubmissionReturnWhereUniqueInput
+  }
+
+  /**
+   * SubmissionReturn findFirst
+   */
+  export type SubmissionReturnFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturn to fetch.
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubmissionReturns to fetch.
+     */
+    orderBy?: SubmissionReturnOrderByWithRelationInput | SubmissionReturnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubmissionReturns.
+     */
+    cursor?: SubmissionReturnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubmissionReturns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubmissionReturns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubmissionReturns.
+     */
+    distinct?: SubmissionReturnScalarFieldEnum | SubmissionReturnScalarFieldEnum[]
+  }
+
+  /**
+   * SubmissionReturn findFirstOrThrow
+   */
+  export type SubmissionReturnFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturn to fetch.
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubmissionReturns to fetch.
+     */
+    orderBy?: SubmissionReturnOrderByWithRelationInput | SubmissionReturnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubmissionReturns.
+     */
+    cursor?: SubmissionReturnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubmissionReturns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubmissionReturns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubmissionReturns.
+     */
+    distinct?: SubmissionReturnScalarFieldEnum | SubmissionReturnScalarFieldEnum[]
+  }
+
+  /**
+   * SubmissionReturn findMany
+   */
+  export type SubmissionReturnFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter, which SubmissionReturns to fetch.
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubmissionReturns to fetch.
+     */
+    orderBy?: SubmissionReturnOrderByWithRelationInput | SubmissionReturnOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SubmissionReturns.
+     */
+    cursor?: SubmissionReturnWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubmissionReturns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubmissionReturns.
+     */
+    skip?: number
+    distinct?: SubmissionReturnScalarFieldEnum | SubmissionReturnScalarFieldEnum[]
+  }
+
+  /**
+   * SubmissionReturn create
+   */
+  export type SubmissionReturnCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SubmissionReturn.
+     */
+    data: XOR<SubmissionReturnCreateInput, SubmissionReturnUncheckedCreateInput>
+  }
+
+  /**
+   * SubmissionReturn createMany
+   */
+  export type SubmissionReturnCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SubmissionReturns.
+     */
+    data: SubmissionReturnCreateManyInput | SubmissionReturnCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SubmissionReturn createManyAndReturn
+   */
+  export type SubmissionReturnCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * The data used to create many SubmissionReturns.
+     */
+    data: SubmissionReturnCreateManyInput | SubmissionReturnCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SubmissionReturn update
+   */
+  export type SubmissionReturnUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SubmissionReturn.
+     */
+    data: XOR<SubmissionReturnUpdateInput, SubmissionReturnUncheckedUpdateInput>
+    /**
+     * Choose, which SubmissionReturn to update.
+     */
+    where: SubmissionReturnWhereUniqueInput
+  }
+
+  /**
+   * SubmissionReturn updateMany
+   */
+  export type SubmissionReturnUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SubmissionReturns.
+     */
+    data: XOR<SubmissionReturnUpdateManyMutationInput, SubmissionReturnUncheckedUpdateManyInput>
+    /**
+     * Filter which SubmissionReturns to update
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * Limit how many SubmissionReturns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SubmissionReturn updateManyAndReturn
+   */
+  export type SubmissionReturnUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * The data used to update SubmissionReturns.
+     */
+    data: XOR<SubmissionReturnUpdateManyMutationInput, SubmissionReturnUncheckedUpdateManyInput>
+    /**
+     * Filter which SubmissionReturns to update
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * Limit how many SubmissionReturns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SubmissionReturn upsert
+   */
+  export type SubmissionReturnUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SubmissionReturn to update in case it exists.
+     */
+    where: SubmissionReturnWhereUniqueInput
+    /**
+     * In case the SubmissionReturn found by the `where` argument doesn't exist, create a new SubmissionReturn with this data.
+     */
+    create: XOR<SubmissionReturnCreateInput, SubmissionReturnUncheckedCreateInput>
+    /**
+     * In case the SubmissionReturn was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubmissionReturnUpdateInput, SubmissionReturnUncheckedUpdateInput>
+  }
+
+  /**
+   * SubmissionReturn delete
+   */
+  export type SubmissionReturnDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    /**
+     * Filter which SubmissionReturn to delete.
+     */
+    where: SubmissionReturnWhereUniqueInput
+  }
+
+  /**
+   * SubmissionReturn deleteMany
+   */
+  export type SubmissionReturnDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SubmissionReturns to delete
+     */
+    where?: SubmissionReturnWhereInput
+    /**
+     * Limit how many SubmissionReturns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SubmissionReturn without action
+   */
+  export type SubmissionReturnDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Submitted
+   */
+
+  export type AggregateSubmitted = {
+    _count: SubmittedCountAggregateOutputType | null
+    _min: SubmittedMinAggregateOutputType | null
+    _max: SubmittedMaxAggregateOutputType | null
+  }
+
+  export type SubmittedMinAggregateOutputType = {
+    id: string | null
+    information: string | null
+    submission: string | null
+    status: $Enums.SubmittedStatus | null
+    employeeId: string | null
+    projectId: string | null
+    sheetId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubmittedMaxAggregateOutputType = {
+    id: string | null
+    information: string | null
+    submission: string | null
+    status: $Enums.SubmittedStatus | null
+    employeeId: string | null
+    projectId: string | null
+    sheetId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubmittedCountAggregateOutputType = {
+    id: number
+    information: number
+    submission: number
+    status: number
+    employeeId: number
+    projectId: number
+    sheetId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SubmittedMinAggregateInputType = {
+    id?: true
+    information?: true
+    submission?: true
+    status?: true
+    employeeId?: true
+    projectId?: true
+    sheetId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubmittedMaxAggregateInputType = {
+    id?: true
+    information?: true
+    submission?: true
+    status?: true
+    employeeId?: true
+    projectId?: true
+    sheetId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubmittedCountAggregateInputType = {
+    id?: true
+    information?: true
+    submission?: true
+    status?: true
+    employeeId?: true
+    projectId?: true
+    sheetId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SubmittedAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Submitted to aggregate.
+     */
+    where?: SubmittedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submitteds to fetch.
+     */
+    orderBy?: SubmittedOrderByWithRelationInput | SubmittedOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubmittedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submitteds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submitteds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Submitteds
+    **/
+    _count?: true | SubmittedCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubmittedMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubmittedMaxAggregateInputType
+  }
+
+  export type GetSubmittedAggregateType<T extends SubmittedAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubmitted]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubmitted[P]>
+      : GetScalarType<T[P], AggregateSubmitted[P]>
+  }
+
+
+
+
+  export type SubmittedGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SubmittedWhereInput
+    orderBy?: SubmittedOrderByWithAggregationInput | SubmittedOrderByWithAggregationInput[]
+    by: SubmittedScalarFieldEnum[] | SubmittedScalarFieldEnum
+    having?: SubmittedScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubmittedCountAggregateInputType | true
+    _min?: SubmittedMinAggregateInputType
+    _max?: SubmittedMaxAggregateInputType
+  }
+
+  export type SubmittedGroupByOutputType = {
+    id: string
+    information: string
+    submission: string
+    status: $Enums.SubmittedStatus
+    employeeId: string
+    projectId: string
+    sheetId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: SubmittedCountAggregateOutputType | null
+    _min: SubmittedMinAggregateOutputType | null
+    _max: SubmittedMaxAggregateOutputType | null
+  }
+
+  type GetSubmittedGroupByPayload<T extends SubmittedGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubmittedGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubmittedGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubmittedGroupByOutputType[P]>
+            : GetScalarType<T[P], SubmittedGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubmittedSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    information?: boolean
+    submission?: boolean
+    status?: boolean
+    employeeId?: boolean
+    projectId?: boolean
+    sheetId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+    submissionReturn?: boolean | Submitted$submissionReturnArgs<ExtArgs>
+  }, ExtArgs["result"]["submitted"]>
+
+  export type SubmittedSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    information?: boolean
+    submission?: boolean
+    status?: boolean
+    employeeId?: boolean
+    projectId?: boolean
+    sheetId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submitted"]>
+
+  export type SubmittedSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    information?: boolean
+    submission?: boolean
+    status?: boolean
+    employeeId?: boolean
+    projectId?: boolean
+    sheetId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["submitted"]>
+
+  export type SubmittedSelectScalar = {
+    id?: boolean
+    information?: boolean
+    submission?: boolean
+    status?: boolean
+    employeeId?: boolean
+    projectId?: boolean
+    sheetId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SubmittedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "information" | "submission" | "status" | "employeeId" | "projectId" | "sheetId" | "createdAt" | "updatedAt", ExtArgs["result"]["submitted"]>
+  export type SubmittedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+    submissionReturn?: boolean | Submitted$submissionReturnArgs<ExtArgs>
+  }
+  export type SubmittedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }
+  export type SubmittedIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }
+
+  export type $SubmittedPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Submitted"
+    objects: {
+      employee: Prisma.$EmployeePayload<ExtArgs>
+      project: Prisma.$ProjectPayload<ExtArgs>
+      sheet: Prisma.$SheetPayload<ExtArgs>
+      submissionReturn: Prisma.$SubmissionReturnPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      information: string
+      submission: string
+      status: $Enums.SubmittedStatus
+      employeeId: string
+      projectId: string
+      sheetId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["submitted"]>
+    composites: {}
+  }
+
+  type SubmittedGetPayload<S extends boolean | null | undefined | SubmittedDefaultArgs> = $Result.GetResult<Prisma.$SubmittedPayload, S>
+
+  type SubmittedCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SubmittedFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubmittedCountAggregateInputType | true
+    }
+
+  export interface SubmittedDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Submitted'], meta: { name: 'Submitted' } }
+    /**
+     * Find zero or one Submitted that matches the filter.
+     * @param {SubmittedFindUniqueArgs} args - Arguments to find a Submitted
+     * @example
+     * // Get one Submitted
+     * const submitted = await prisma.submitted.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SubmittedFindUniqueArgs>(args: SelectSubset<T, SubmittedFindUniqueArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Submitted that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SubmittedFindUniqueOrThrowArgs} args - Arguments to find a Submitted
+     * @example
+     * // Get one Submitted
+     * const submitted = await prisma.submitted.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SubmittedFindUniqueOrThrowArgs>(args: SelectSubset<T, SubmittedFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Submitted that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmittedFindFirstArgs} args - Arguments to find a Submitted
+     * @example
+     * // Get one Submitted
+     * const submitted = await prisma.submitted.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SubmittedFindFirstArgs>(args?: SelectSubset<T, SubmittedFindFirstArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Submitted that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmittedFindFirstOrThrowArgs} args - Arguments to find a Submitted
+     * @example
+     * // Get one Submitted
+     * const submitted = await prisma.submitted.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SubmittedFindFirstOrThrowArgs>(args?: SelectSubset<T, SubmittedFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Submitteds that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmittedFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Submitteds
+     * const submitteds = await prisma.submitted.findMany()
+     * 
+     * // Get first 10 Submitteds
+     * const submitteds = await prisma.submitted.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const submittedWithIdOnly = await prisma.submitted.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SubmittedFindManyArgs>(args?: SelectSubset<T, SubmittedFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Submitted.
+     * @param {SubmittedCreateArgs} args - Arguments to create a Submitted.
+     * @example
+     * // Create one Submitted
+     * const Submitted = await prisma.submitted.create({
+     *   data: {
+     *     // ... data to create a Submitted
+     *   }
+     * })
+     * 
+     */
+    create<T extends SubmittedCreateArgs>(args: SelectSubset<T, SubmittedCreateArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Submitteds.
+     * @param {SubmittedCreateManyArgs} args - Arguments to create many Submitteds.
+     * @example
+     * // Create many Submitteds
+     * const submitted = await prisma.submitted.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SubmittedCreateManyArgs>(args?: SelectSubset<T, SubmittedCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Submitteds and returns the data saved in the database.
+     * @param {SubmittedCreateManyAndReturnArgs} args - Arguments to create many Submitteds.
+     * @example
+     * // Create many Submitteds
+     * const submitted = await prisma.submitted.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Submitteds and only return the `id`
+     * const submittedWithIdOnly = await prisma.submitted.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SubmittedCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmittedCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Submitted.
+     * @param {SubmittedDeleteArgs} args - Arguments to delete one Submitted.
+     * @example
+     * // Delete one Submitted
+     * const Submitted = await prisma.submitted.delete({
+     *   where: {
+     *     // ... filter to delete one Submitted
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SubmittedDeleteArgs>(args: SelectSubset<T, SubmittedDeleteArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Submitted.
+     * @param {SubmittedUpdateArgs} args - Arguments to update one Submitted.
+     * @example
+     * // Update one Submitted
+     * const submitted = await prisma.submitted.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SubmittedUpdateArgs>(args: SelectSubset<T, SubmittedUpdateArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Submitteds.
+     * @param {SubmittedDeleteManyArgs} args - Arguments to filter Submitteds to delete.
+     * @example
+     * // Delete a few Submitteds
+     * const { count } = await prisma.submitted.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SubmittedDeleteManyArgs>(args?: SelectSubset<T, SubmittedDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Submitteds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmittedUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Submitteds
+     * const submitted = await prisma.submitted.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SubmittedUpdateManyArgs>(args: SelectSubset<T, SubmittedUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Submitteds and returns the data updated in the database.
+     * @param {SubmittedUpdateManyAndReturnArgs} args - Arguments to update many Submitteds.
+     * @example
+     * // Update many Submitteds
+     * const submitted = await prisma.submitted.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Submitteds and only return the `id`
+     * const submittedWithIdOnly = await prisma.submitted.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SubmittedUpdateManyAndReturnArgs>(args: SelectSubset<T, SubmittedUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Submitted.
+     * @param {SubmittedUpsertArgs} args - Arguments to update or create a Submitted.
+     * @example
+     * // Update or create a Submitted
+     * const submitted = await prisma.submitted.upsert({
+     *   create: {
+     *     // ... data to create a Submitted
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Submitted we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SubmittedUpsertArgs>(args: SelectSubset<T, SubmittedUpsertArgs<ExtArgs>>): Prisma__SubmittedClient<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Submitteds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmittedCountArgs} args - Arguments to filter Submitteds to count.
+     * @example
+     * // Count the number of Submitteds
+     * const count = await prisma.submitted.count({
+     *   where: {
+     *     // ... the filter for the Submitteds we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubmittedCountArgs>(
+      args?: Subset<T, SubmittedCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubmittedCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Submitted.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmittedAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubmittedAggregateArgs>(args: Subset<T, SubmittedAggregateArgs>): Prisma.PrismaPromise<GetSubmittedAggregateType<T>>
+
+    /**
+     * Group by Submitted.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmittedGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubmittedGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubmittedGroupByArgs['orderBy'] }
+        : { orderBy?: SubmittedGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubmittedGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmittedGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Submitted model
+   */
+  readonly fields: SubmittedFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Submitted.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SubmittedClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sheet<T extends SheetDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SheetDefaultArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    submissionReturn<T extends Submitted$submissionReturnArgs<ExtArgs> = {}>(args?: Subset<T, Submitted$submissionReturnArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Submitted model
+   */
+  interface SubmittedFieldRefs {
+    readonly id: FieldRef<"Submitted", 'String'>
+    readonly information: FieldRef<"Submitted", 'String'>
+    readonly submission: FieldRef<"Submitted", 'String'>
+    readonly status: FieldRef<"Submitted", 'SubmittedStatus'>
+    readonly employeeId: FieldRef<"Submitted", 'String'>
+    readonly projectId: FieldRef<"Submitted", 'String'>
+    readonly sheetId: FieldRef<"Submitted", 'String'>
+    readonly createdAt: FieldRef<"Submitted", 'DateTime'>
+    readonly updatedAt: FieldRef<"Submitted", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Submitted findUnique
+   */
+  export type SubmittedFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * Filter, which Submitted to fetch.
+     */
+    where: SubmittedWhereUniqueInput
+  }
+
+  /**
+   * Submitted findUniqueOrThrow
+   */
+  export type SubmittedFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * Filter, which Submitted to fetch.
+     */
+    where: SubmittedWhereUniqueInput
+  }
+
+  /**
+   * Submitted findFirst
+   */
+  export type SubmittedFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * Filter, which Submitted to fetch.
+     */
+    where?: SubmittedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submitteds to fetch.
+     */
+    orderBy?: SubmittedOrderByWithRelationInput | SubmittedOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Submitteds.
+     */
+    cursor?: SubmittedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submitteds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submitteds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submitteds.
+     */
+    distinct?: SubmittedScalarFieldEnum | SubmittedScalarFieldEnum[]
+  }
+
+  /**
+   * Submitted findFirstOrThrow
+   */
+  export type SubmittedFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * Filter, which Submitted to fetch.
+     */
+    where?: SubmittedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submitteds to fetch.
+     */
+    orderBy?: SubmittedOrderByWithRelationInput | SubmittedOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Submitteds.
+     */
+    cursor?: SubmittedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submitteds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submitteds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Submitteds.
+     */
+    distinct?: SubmittedScalarFieldEnum | SubmittedScalarFieldEnum[]
+  }
+
+  /**
+   * Submitted findMany
+   */
+  export type SubmittedFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * Filter, which Submitteds to fetch.
+     */
+    where?: SubmittedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Submitteds to fetch.
+     */
+    orderBy?: SubmittedOrderByWithRelationInput | SubmittedOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Submitteds.
+     */
+    cursor?: SubmittedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Submitteds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Submitteds.
+     */
+    skip?: number
+    distinct?: SubmittedScalarFieldEnum | SubmittedScalarFieldEnum[]
+  }
+
+  /**
+   * Submitted create
+   */
+  export type SubmittedCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Submitted.
+     */
+    data: XOR<SubmittedCreateInput, SubmittedUncheckedCreateInput>
+  }
+
+  /**
+   * Submitted createMany
+   */
+  export type SubmittedCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Submitteds.
+     */
+    data: SubmittedCreateManyInput | SubmittedCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Submitted createManyAndReturn
+   */
+  export type SubmittedCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * The data used to create many Submitteds.
+     */
+    data: SubmittedCreateManyInput | SubmittedCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Submitted update
+   */
+  export type SubmittedUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Submitted.
+     */
+    data: XOR<SubmittedUpdateInput, SubmittedUncheckedUpdateInput>
+    /**
+     * Choose, which Submitted to update.
+     */
+    where: SubmittedWhereUniqueInput
+  }
+
+  /**
+   * Submitted updateMany
+   */
+  export type SubmittedUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Submitteds.
+     */
+    data: XOR<SubmittedUpdateManyMutationInput, SubmittedUncheckedUpdateManyInput>
+    /**
+     * Filter which Submitteds to update
+     */
+    where?: SubmittedWhereInput
+    /**
+     * Limit how many Submitteds to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submitted updateManyAndReturn
+   */
+  export type SubmittedUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * The data used to update Submitteds.
+     */
+    data: XOR<SubmittedUpdateManyMutationInput, SubmittedUncheckedUpdateManyInput>
+    /**
+     * Filter which Submitteds to update
+     */
+    where?: SubmittedWhereInput
+    /**
+     * Limit how many Submitteds to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Submitted upsert
+   */
+  export type SubmittedUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Submitted to update in case it exists.
+     */
+    where: SubmittedWhereUniqueInput
+    /**
+     * In case the Submitted found by the `where` argument doesn't exist, create a new Submitted with this data.
+     */
+    create: XOR<SubmittedCreateInput, SubmittedUncheckedCreateInput>
+    /**
+     * In case the Submitted was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubmittedUpdateInput, SubmittedUncheckedUpdateInput>
+  }
+
+  /**
+   * Submitted delete
+   */
+  export type SubmittedDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
+    /**
+     * Filter which Submitted to delete.
+     */
+    where: SubmittedWhereUniqueInput
+  }
+
+  /**
+   * Submitted deleteMany
+   */
+  export type SubmittedDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Submitteds to delete
+     */
+    where?: SubmittedWhereInput
+    /**
+     * Limit how many Submitteds to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Submitted.submissionReturn
+   */
+  export type Submitted$submissionReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SubmissionReturn
+     */
+    select?: SubmissionReturnSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SubmissionReturn
+     */
+    omit?: SubmissionReturnOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmissionReturnInclude<ExtArgs> | null
+    where?: SubmissionReturnWhereInput
+  }
+
+  /**
+   * Submitted without action
+   */
+  export type SubmittedDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submitted
+     */
+    select?: SubmittedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Submitted
+     */
+    omit?: SubmittedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SubmittedInclude<ExtArgs> | null
   }
 
 
@@ -34912,6 +38542,40 @@ export namespace Prisma {
   export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
+  export const SheetScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SheetScalarFieldEnum = (typeof SheetScalarFieldEnum)[keyof typeof SheetScalarFieldEnum]
+
+
+  export const SubmissionReturnScalarFieldEnum: {
+    id: 'id',
+    submittedId: 'submittedId',
+    returnedAt: 'returnedAt'
+  };
+
+  export type SubmissionReturnScalarFieldEnum = (typeof SubmissionReturnScalarFieldEnum)[keyof typeof SubmissionReturnScalarFieldEnum]
+
+
+  export const SubmittedScalarFieldEnum: {
+    id: 'id',
+    information: 'information',
+    submission: 'submission',
+    status: 'status',
+    employeeId: 'employeeId',
+    projectId: 'projectId',
+    sheetId: 'sheetId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SubmittedScalarFieldEnum = (typeof SubmittedScalarFieldEnum)[keyof typeof SubmittedScalarFieldEnum]
+
+
   export const SuperAdminScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -35233,6 +38897,20 @@ export namespace Prisma {
    * Reference to a field of type 'Priority[]'
    */
   export type ListEnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'SubmittedStatus'
+   */
+  export type EnumSubmittedStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmittedStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'SubmittedStatus[]'
+   */
+  export type ListEnumSubmittedStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmittedStatus[]'>
     
 
 
@@ -35597,6 +39275,7 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"Employee">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     projectEmployees?: ProjectEmployeeListRelationFilter
+    submitted?: SubmittedListRelationFilter
   }
 
   export type EmployeeOrderByWithRelationInput = {
@@ -35609,6 +39288,7 @@ export namespace Prisma {
     skills?: SortOrder
     user?: UserOrderByWithRelationInput
     projectEmployees?: ProjectEmployeeOrderByRelationAggregateInput
+    submitted?: SubmittedOrderByRelationAggregateInput
   }
 
   export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
@@ -35624,6 +39304,7 @@ export namespace Prisma {
     skills?: StringNullableListFilter<"Employee">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     projectEmployees?: ProjectEmployeeListRelationFilter
+    submitted?: SubmittedListRelationFilter
   }, "id" | "userId">
 
   export type EmployeeOrderByWithAggregationInput = {
@@ -36489,6 +40170,7 @@ export namespace Prisma {
     activities?: ActivityListRelationFilter
     reviews?: ReviewListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
+    submitted?: SubmittedListRelationFilter
   }
 
   export type ProjectOrderByWithRelationInput = {
@@ -36523,6 +40205,7 @@ export namespace Prisma {
     activities?: ActivityOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
     requestsToAddProjectMember?: RequestToAddProjectMemberOrderByRelationAggregateInput
+    submitted?: SubmittedOrderByRelationAggregateInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -36560,6 +40243,7 @@ export namespace Prisma {
     activities?: ActivityListRelationFilter
     reviews?: ReviewListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
+    submitted?: SubmittedListRelationFilter
   }, "id">
 
   export type ProjectOrderByWithAggregationInput = {
@@ -36741,6 +40425,185 @@ export namespace Prisma {
     managerId?: StringNullableWithAggregatesFilter<"Review"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
+  }
+
+  export type SheetWhereInput = {
+    AND?: SheetWhereInput | SheetWhereInput[]
+    OR?: SheetWhereInput[]
+    NOT?: SheetWhereInput | SheetWhereInput[]
+    id?: StringFilter<"Sheet"> | string
+    name?: StringFilter<"Sheet"> | string
+    createdAt?: DateTimeFilter<"Sheet"> | Date | string
+    updatedAt?: DateTimeFilter<"Sheet"> | Date | string
+    submitted?: SubmittedListRelationFilter
+  }
+
+  export type SheetOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    submitted?: SubmittedOrderByRelationAggregateInput
+  }
+
+  export type SheetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SheetWhereInput | SheetWhereInput[]
+    OR?: SheetWhereInput[]
+    NOT?: SheetWhereInput | SheetWhereInput[]
+    name?: StringFilter<"Sheet"> | string
+    createdAt?: DateTimeFilter<"Sheet"> | Date | string
+    updatedAt?: DateTimeFilter<"Sheet"> | Date | string
+    submitted?: SubmittedListRelationFilter
+  }, "id">
+
+  export type SheetOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SheetCountOrderByAggregateInput
+    _max?: SheetMaxOrderByAggregateInput
+    _min?: SheetMinOrderByAggregateInput
+  }
+
+  export type SheetScalarWhereWithAggregatesInput = {
+    AND?: SheetScalarWhereWithAggregatesInput | SheetScalarWhereWithAggregatesInput[]
+    OR?: SheetScalarWhereWithAggregatesInput[]
+    NOT?: SheetScalarWhereWithAggregatesInput | SheetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Sheet"> | string
+    name?: StringWithAggregatesFilter<"Sheet"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
+  }
+
+  export type SubmissionReturnWhereInput = {
+    AND?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
+    OR?: SubmissionReturnWhereInput[]
+    NOT?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
+    id?: StringFilter<"SubmissionReturn"> | string
+    submittedId?: StringFilter<"SubmissionReturn"> | string
+    returnedAt?: DateTimeFilter<"SubmissionReturn"> | Date | string
+    submitted?: XOR<SubmittedScalarRelationFilter, SubmittedWhereInput>
+  }
+
+  export type SubmissionReturnOrderByWithRelationInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+    submitted?: SubmittedOrderByWithRelationInput
+  }
+
+  export type SubmissionReturnWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    submittedId?: string
+    AND?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
+    OR?: SubmissionReturnWhereInput[]
+    NOT?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
+    returnedAt?: DateTimeFilter<"SubmissionReturn"> | Date | string
+    submitted?: XOR<SubmittedScalarRelationFilter, SubmittedWhereInput>
+  }, "id" | "submittedId">
+
+  export type SubmissionReturnOrderByWithAggregationInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+    _count?: SubmissionReturnCountOrderByAggregateInput
+    _max?: SubmissionReturnMaxOrderByAggregateInput
+    _min?: SubmissionReturnMinOrderByAggregateInput
+  }
+
+  export type SubmissionReturnScalarWhereWithAggregatesInput = {
+    AND?: SubmissionReturnScalarWhereWithAggregatesInput | SubmissionReturnScalarWhereWithAggregatesInput[]
+    OR?: SubmissionReturnScalarWhereWithAggregatesInput[]
+    NOT?: SubmissionReturnScalarWhereWithAggregatesInput | SubmissionReturnScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SubmissionReturn"> | string
+    submittedId?: StringWithAggregatesFilter<"SubmissionReturn"> | string
+    returnedAt?: DateTimeWithAggregatesFilter<"SubmissionReturn"> | Date | string
+  }
+
+  export type SubmittedWhereInput = {
+    AND?: SubmittedWhereInput | SubmittedWhereInput[]
+    OR?: SubmittedWhereInput[]
+    NOT?: SubmittedWhereInput | SubmittedWhereInput[]
+    id?: StringFilter<"Submitted"> | string
+    information?: StringFilter<"Submitted"> | string
+    submission?: StringFilter<"Submitted"> | string
+    status?: EnumSubmittedStatusFilter<"Submitted"> | $Enums.SubmittedStatus
+    employeeId?: StringFilter<"Submitted"> | string
+    projectId?: StringFilter<"Submitted"> | string
+    sheetId?: StringFilter<"Submitted"> | string
+    createdAt?: DateTimeFilter<"Submitted"> | Date | string
+    updatedAt?: DateTimeFilter<"Submitted"> | Date | string
+    employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
+    submissionReturn?: XOR<SubmissionReturnNullableScalarRelationFilter, SubmissionReturnWhereInput> | null
+  }
+
+  export type SubmittedOrderByWithRelationInput = {
+    id?: SortOrder
+    information?: SortOrder
+    submission?: SortOrder
+    status?: SortOrder
+    employeeId?: SortOrder
+    projectId?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    employee?: EmployeeOrderByWithRelationInput
+    project?: ProjectOrderByWithRelationInput
+    sheet?: SheetOrderByWithRelationInput
+    submissionReturn?: SubmissionReturnOrderByWithRelationInput
+  }
+
+  export type SubmittedWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SubmittedWhereInput | SubmittedWhereInput[]
+    OR?: SubmittedWhereInput[]
+    NOT?: SubmittedWhereInput | SubmittedWhereInput[]
+    information?: StringFilter<"Submitted"> | string
+    submission?: StringFilter<"Submitted"> | string
+    status?: EnumSubmittedStatusFilter<"Submitted"> | $Enums.SubmittedStatus
+    employeeId?: StringFilter<"Submitted"> | string
+    projectId?: StringFilter<"Submitted"> | string
+    sheetId?: StringFilter<"Submitted"> | string
+    createdAt?: DateTimeFilter<"Submitted"> | Date | string
+    updatedAt?: DateTimeFilter<"Submitted"> | Date | string
+    employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
+    submissionReturn?: XOR<SubmissionReturnNullableScalarRelationFilter, SubmissionReturnWhereInput> | null
+  }, "id">
+
+  export type SubmittedOrderByWithAggregationInput = {
+    id?: SortOrder
+    information?: SortOrder
+    submission?: SortOrder
+    status?: SortOrder
+    employeeId?: SortOrder
+    projectId?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SubmittedCountOrderByAggregateInput
+    _max?: SubmittedMaxOrderByAggregateInput
+    _min?: SubmittedMinOrderByAggregateInput
+  }
+
+  export type SubmittedScalarWhereWithAggregatesInput = {
+    AND?: SubmittedScalarWhereWithAggregatesInput | SubmittedScalarWhereWithAggregatesInput[]
+    OR?: SubmittedScalarWhereWithAggregatesInput[]
+    NOT?: SubmittedScalarWhereWithAggregatesInput | SubmittedScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Submitted"> | string
+    information?: StringWithAggregatesFilter<"Submitted"> | string
+    submission?: StringWithAggregatesFilter<"Submitted"> | string
+    status?: EnumSubmittedStatusWithAggregatesFilter<"Submitted"> | $Enums.SubmittedStatus
+    employeeId?: StringWithAggregatesFilter<"Submitted"> | string
+    projectId?: StringWithAggregatesFilter<"Submitted"> | string
+    sheetId?: StringWithAggregatesFilter<"Submitted"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Submitted"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Submitted"> | Date | string
   }
 
   export type SuperAdminWhereInput = {
@@ -37754,6 +41617,7 @@ export namespace Prisma {
     skills?: EmployeeCreateskillsInput | string[]
     user: UserCreateNestedOneWithoutEmployeeInput
     projectEmployees?: ProjectEmployeeCreateNestedManyWithoutEmployeeInput
+    submitted?: SubmittedCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeUncheckedCreateInput = {
@@ -37765,6 +41629,7 @@ export namespace Prisma {
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeUpdateInput = {
@@ -37776,6 +41641,7 @@ export namespace Prisma {
     skills?: EmployeeUpdateskillsInput | string[]
     user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
     projectEmployees?: ProjectEmployeeUpdateManyWithoutEmployeeNestedInput
+    submitted?: SubmittedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type EmployeeUncheckedUpdateInput = {
@@ -37787,6 +41653,7 @@ export namespace Prisma {
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type EmployeeCreateManyInput = {
@@ -38700,6 +42567,7 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateInput = {
@@ -38732,6 +42600,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUpdateInput = {
@@ -38764,6 +42633,7 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
@@ -38796,6 +42666,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateManyInput = {
@@ -38989,6 +42860,185 @@ export namespace Prisma {
     taskAssignId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     managerId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submitted?: SubmittedCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetUncheckedCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submitted?: SubmittedUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submitted?: SubmittedUncheckedUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetCreateManyInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SheetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnCreateInput = {
+    id?: string
+    returnedAt?: Date | string
+    submitted: SubmittedCreateNestedOneWithoutSubmissionReturnInput
+  }
+
+  export type SubmissionReturnUncheckedCreateInput = {
+    id?: string
+    submittedId: string
+    returnedAt?: Date | string
+  }
+
+  export type SubmissionReturnUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submitted?: SubmittedUpdateOneRequiredWithoutSubmissionReturnNestedInput
+  }
+
+  export type SubmissionReturnUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submittedId?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnCreateManyInput = {
+    id?: string
+    submittedId: string
+    returnedAt?: Date | string
+  }
+
+  export type SubmissionReturnUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    submittedId?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmittedCreateInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee: EmployeeCreateNestedOneWithoutSubmittedInput
+    project: ProjectCreateNestedOneWithoutSubmittedInput
+    sheet: SheetCreateNestedOneWithoutSubmittedInput
+    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedUncheckedCreateInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    employeeId: string
+    projectId: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
+    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
+    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    employeeId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedCreateManyInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    employeeId: string
+    projectId: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubmittedUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmittedUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    employeeId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40182,7 +44232,17 @@ export namespace Prisma {
     none?: ProjectEmployeeWhereInput
   }
 
+  export type SubmittedListRelationFilter = {
+    every?: SubmittedWhereInput
+    some?: SubmittedWhereInput
+    none?: SubmittedWhereInput
+  }
+
   export type ProjectEmployeeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SubmittedOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -40959,6 +45019,113 @@ export namespace Prisma {
     managerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type SheetCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SheetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SheetMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubmittedScalarRelationFilter = {
+    is?: SubmittedWhereInput
+    isNot?: SubmittedWhereInput
+  }
+
+  export type SubmissionReturnCountOrderByAggregateInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+  }
+
+  export type SubmissionReturnMaxOrderByAggregateInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+  }
+
+  export type SubmissionReturnMinOrderByAggregateInput = {
+    id?: SortOrder
+    submittedId?: SortOrder
+    returnedAt?: SortOrder
+  }
+
+  export type EnumSubmittedStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubmittedStatus | EnumSubmittedStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubmittedStatusFilter<$PrismaModel> | $Enums.SubmittedStatus
+  }
+
+  export type SheetScalarRelationFilter = {
+    is?: SheetWhereInput
+    isNot?: SheetWhereInput
+  }
+
+  export type SubmissionReturnNullableScalarRelationFilter = {
+    is?: SubmissionReturnWhereInput | null
+    isNot?: SubmissionReturnWhereInput | null
+  }
+
+  export type SubmittedCountOrderByAggregateInput = {
+    id?: SortOrder
+    information?: SortOrder
+    submission?: SortOrder
+    status?: SortOrder
+    employeeId?: SortOrder
+    projectId?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubmittedMaxOrderByAggregateInput = {
+    id?: SortOrder
+    information?: SortOrder
+    submission?: SortOrder
+    status?: SortOrder
+    employeeId?: SortOrder
+    projectId?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubmittedMinOrderByAggregateInput = {
+    id?: SortOrder
+    information?: SortOrder
+    submission?: SortOrder
+    status?: SortOrder
+    employeeId?: SortOrder
+    projectId?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumSubmittedStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubmittedStatus | EnumSubmittedStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubmittedStatusWithAggregatesFilter<$PrismaModel> | $Enums.SubmittedStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSubmittedStatusFilter<$PrismaModel>
+    _max?: NestedEnumSubmittedStatusFilter<$PrismaModel>
   }
 
   export type NotificationPermissionSuperAdminNullableScalarRelationFilter = {
@@ -41739,11 +45906,25 @@ export namespace Prisma {
     connect?: ProjectEmployeeWhereUniqueInput | ProjectEmployeeWhereUniqueInput[]
   }
 
+  export type SubmittedCreateNestedManyWithoutEmployeeInput = {
+    create?: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput> | SubmittedCreateWithoutEmployeeInput[] | SubmittedUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutEmployeeInput | SubmittedCreateOrConnectWithoutEmployeeInput[]
+    createMany?: SubmittedCreateManyEmployeeInputEnvelope
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+  }
+
   export type ProjectEmployeeUncheckedCreateNestedManyWithoutEmployeeInput = {
     create?: XOR<ProjectEmployeeCreateWithoutEmployeeInput, ProjectEmployeeUncheckedCreateWithoutEmployeeInput> | ProjectEmployeeCreateWithoutEmployeeInput[] | ProjectEmployeeUncheckedCreateWithoutEmployeeInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutEmployeeInput | ProjectEmployeeCreateOrConnectWithoutEmployeeInput[]
     createMany?: ProjectEmployeeCreateManyEmployeeInputEnvelope
     connect?: ProjectEmployeeWhereUniqueInput | ProjectEmployeeWhereUniqueInput[]
+  }
+
+  export type SubmittedUncheckedCreateNestedManyWithoutEmployeeInput = {
+    create?: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput> | SubmittedCreateWithoutEmployeeInput[] | SubmittedUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutEmployeeInput | SubmittedCreateOrConnectWithoutEmployeeInput[]
+    createMany?: SubmittedCreateManyEmployeeInputEnvelope
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
   }
 
   export type EmployeeUpdateskillsInput = {
@@ -41773,6 +45954,20 @@ export namespace Prisma {
     deleteMany?: ProjectEmployeeScalarWhereInput | ProjectEmployeeScalarWhereInput[]
   }
 
+  export type SubmittedUpdateManyWithoutEmployeeNestedInput = {
+    create?: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput> | SubmittedCreateWithoutEmployeeInput[] | SubmittedUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutEmployeeInput | SubmittedCreateOrConnectWithoutEmployeeInput[]
+    upsert?: SubmittedUpsertWithWhereUniqueWithoutEmployeeInput | SubmittedUpsertWithWhereUniqueWithoutEmployeeInput[]
+    createMany?: SubmittedCreateManyEmployeeInputEnvelope
+    set?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    disconnect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    delete?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    update?: SubmittedUpdateWithWhereUniqueWithoutEmployeeInput | SubmittedUpdateWithWhereUniqueWithoutEmployeeInput[]
+    updateMany?: SubmittedUpdateManyWithWhereWithoutEmployeeInput | SubmittedUpdateManyWithWhereWithoutEmployeeInput[]
+    deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
+  }
+
   export type ProjectEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput = {
     create?: XOR<ProjectEmployeeCreateWithoutEmployeeInput, ProjectEmployeeUncheckedCreateWithoutEmployeeInput> | ProjectEmployeeCreateWithoutEmployeeInput[] | ProjectEmployeeUncheckedCreateWithoutEmployeeInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutEmployeeInput | ProjectEmployeeCreateOrConnectWithoutEmployeeInput[]
@@ -41785,6 +45980,20 @@ export namespace Prisma {
     update?: ProjectEmployeeUpdateWithWhereUniqueWithoutEmployeeInput | ProjectEmployeeUpdateWithWhereUniqueWithoutEmployeeInput[]
     updateMany?: ProjectEmployeeUpdateManyWithWhereWithoutEmployeeInput | ProjectEmployeeUpdateManyWithWhereWithoutEmployeeInput[]
     deleteMany?: ProjectEmployeeScalarWhereInput | ProjectEmployeeScalarWhereInput[]
+  }
+
+  export type SubmittedUncheckedUpdateManyWithoutEmployeeNestedInput = {
+    create?: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput> | SubmittedCreateWithoutEmployeeInput[] | SubmittedUncheckedCreateWithoutEmployeeInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutEmployeeInput | SubmittedCreateOrConnectWithoutEmployeeInput[]
+    upsert?: SubmittedUpsertWithWhereUniqueWithoutEmployeeInput | SubmittedUpsertWithWhereUniqueWithoutEmployeeInput[]
+    createMany?: SubmittedCreateManyEmployeeInputEnvelope
+    set?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    disconnect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    delete?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    update?: SubmittedUpdateWithWhereUniqueWithoutEmployeeInput | SubmittedUpdateWithWhereUniqueWithoutEmployeeInput[]
+    updateMany?: SubmittedUpdateManyWithWhereWithoutEmployeeInput | SubmittedUpdateManyWithWhereWithoutEmployeeInput[]
+    deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutOtpVerificationInput = {
@@ -42204,6 +46413,13 @@ export namespace Prisma {
     connect?: RequestToAddProjectMemberWhereUniqueInput | RequestToAddProjectMemberWhereUniqueInput[]
   }
 
+  export type SubmittedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput> | SubmittedCreateWithoutProjectInput[] | SubmittedUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutProjectInput | SubmittedCreateOrConnectWithoutProjectInput[]
+    createMany?: SubmittedCreateManyProjectInputEnvelope
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+  }
+
   export type ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<ProjectEmployeeCreateWithoutProjectInput, ProjectEmployeeUncheckedCreateWithoutProjectInput> | ProjectEmployeeCreateWithoutProjectInput[] | ProjectEmployeeUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutProjectInput | ProjectEmployeeCreateOrConnectWithoutProjectInput[]
@@ -42237,6 +46453,13 @@ export namespace Prisma {
     connectOrCreate?: RequestToAddProjectMemberCreateOrConnectWithoutProjectInput | RequestToAddProjectMemberCreateOrConnectWithoutProjectInput[]
     createMany?: RequestToAddProjectMemberCreateManyProjectInputEnvelope
     connect?: RequestToAddProjectMemberWhereUniqueInput | RequestToAddProjectMemberWhereUniqueInput[]
+  }
+
+  export type SubmittedUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput> | SubmittedCreateWithoutProjectInput[] | SubmittedUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutProjectInput | SubmittedCreateOrConnectWithoutProjectInput[]
+    createMany?: SubmittedCreateManyProjectInputEnvelope
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -42359,6 +46582,20 @@ export namespace Prisma {
     deleteMany?: RequestToAddProjectMemberScalarWhereInput | RequestToAddProjectMemberScalarWhereInput[]
   }
 
+  export type SubmittedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput> | SubmittedCreateWithoutProjectInput[] | SubmittedUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutProjectInput | SubmittedCreateOrConnectWithoutProjectInput[]
+    upsert?: SubmittedUpsertWithWhereUniqueWithoutProjectInput | SubmittedUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: SubmittedCreateManyProjectInputEnvelope
+    set?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    disconnect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    delete?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    update?: SubmittedUpdateWithWhereUniqueWithoutProjectInput | SubmittedUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: SubmittedUpdateManyWithWhereWithoutProjectInput | SubmittedUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
+  }
+
   export type ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<ProjectEmployeeCreateWithoutProjectInput, ProjectEmployeeUncheckedCreateWithoutProjectInput> | ProjectEmployeeCreateWithoutProjectInput[] | ProjectEmployeeUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutProjectInput | ProjectEmployeeCreateOrConnectWithoutProjectInput[]
@@ -42429,6 +46666,20 @@ export namespace Prisma {
     deleteMany?: RequestToAddProjectMemberScalarWhereInput | RequestToAddProjectMemberScalarWhereInput[]
   }
 
+  export type SubmittedUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput> | SubmittedCreateWithoutProjectInput[] | SubmittedUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutProjectInput | SubmittedCreateOrConnectWithoutProjectInput[]
+    upsert?: SubmittedUpsertWithWhereUniqueWithoutProjectInput | SubmittedUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: SubmittedCreateManyProjectInputEnvelope
+    set?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    disconnect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    delete?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    update?: SubmittedUpdateWithWhereUniqueWithoutProjectInput | SubmittedUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: SubmittedUpdateManyWithWhereWithoutProjectInput | SubmittedUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
+  }
+
   export type ProjectCreateNestedOneWithoutProjectEmployeesInput = {
     create?: XOR<ProjectCreateWithoutProjectEmployeesInput, ProjectUncheckedCreateWithoutProjectEmployeesInput>
     connectOrCreate?: ProjectCreateOrConnectWithoutProjectEmployeesInput
@@ -42469,6 +46720,140 @@ export namespace Prisma {
     upsert?: ProjectUpsertWithoutReviewsInput
     connect?: ProjectWhereUniqueInput
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutReviewsInput, ProjectUpdateWithoutReviewsInput>, ProjectUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type SubmittedCreateNestedManyWithoutSheetInput = {
+    create?: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput> | SubmittedCreateWithoutSheetInput[] | SubmittedUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutSheetInput | SubmittedCreateOrConnectWithoutSheetInput[]
+    createMany?: SubmittedCreateManySheetInputEnvelope
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+  }
+
+  export type SubmittedUncheckedCreateNestedManyWithoutSheetInput = {
+    create?: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput> | SubmittedCreateWithoutSheetInput[] | SubmittedUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutSheetInput | SubmittedCreateOrConnectWithoutSheetInput[]
+    createMany?: SubmittedCreateManySheetInputEnvelope
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+  }
+
+  export type SubmittedUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput> | SubmittedCreateWithoutSheetInput[] | SubmittedUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutSheetInput | SubmittedCreateOrConnectWithoutSheetInput[]
+    upsert?: SubmittedUpsertWithWhereUniqueWithoutSheetInput | SubmittedUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: SubmittedCreateManySheetInputEnvelope
+    set?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    disconnect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    delete?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    update?: SubmittedUpdateWithWhereUniqueWithoutSheetInput | SubmittedUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: SubmittedUpdateManyWithWhereWithoutSheetInput | SubmittedUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
+  }
+
+  export type SubmittedUncheckedUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput> | SubmittedCreateWithoutSheetInput[] | SubmittedUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: SubmittedCreateOrConnectWithoutSheetInput | SubmittedCreateOrConnectWithoutSheetInput[]
+    upsert?: SubmittedUpsertWithWhereUniqueWithoutSheetInput | SubmittedUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: SubmittedCreateManySheetInputEnvelope
+    set?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    disconnect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    delete?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
+    update?: SubmittedUpdateWithWhereUniqueWithoutSheetInput | SubmittedUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: SubmittedUpdateManyWithWhereWithoutSheetInput | SubmittedUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
+  }
+
+  export type SubmittedCreateNestedOneWithoutSubmissionReturnInput = {
+    create?: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
+    connectOrCreate?: SubmittedCreateOrConnectWithoutSubmissionReturnInput
+    connect?: SubmittedWhereUniqueInput
+  }
+
+  export type SubmittedUpdateOneRequiredWithoutSubmissionReturnNestedInput = {
+    create?: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
+    connectOrCreate?: SubmittedCreateOrConnectWithoutSubmissionReturnInput
+    upsert?: SubmittedUpsertWithoutSubmissionReturnInput
+    connect?: SubmittedWhereUniqueInput
+    update?: XOR<XOR<SubmittedUpdateToOneWithWhereWithoutSubmissionReturnInput, SubmittedUpdateWithoutSubmissionReturnInput>, SubmittedUncheckedUpdateWithoutSubmissionReturnInput>
+  }
+
+  export type EmployeeCreateNestedOneWithoutSubmittedInput = {
+    create?: XOR<EmployeeCreateWithoutSubmittedInput, EmployeeUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutSubmittedInput
+    connect?: EmployeeWhereUniqueInput
+  }
+
+  export type ProjectCreateNestedOneWithoutSubmittedInput = {
+    create?: XOR<ProjectCreateWithoutSubmittedInput, ProjectUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutSubmittedInput
+    connect?: ProjectWhereUniqueInput
+  }
+
+  export type SheetCreateNestedOneWithoutSubmittedInput = {
+    create?: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutSubmittedInput
+    connect?: SheetWhereUniqueInput
+  }
+
+  export type SubmissionReturnCreateNestedOneWithoutSubmittedInput = {
+    create?: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SubmissionReturnCreateOrConnectWithoutSubmittedInput
+    connect?: SubmissionReturnWhereUniqueInput
+  }
+
+  export type SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput = {
+    create?: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SubmissionReturnCreateOrConnectWithoutSubmittedInput
+    connect?: SubmissionReturnWhereUniqueInput
+  }
+
+  export type EnumSubmittedStatusFieldUpdateOperationsInput = {
+    set?: $Enums.SubmittedStatus
+  }
+
+  export type EmployeeUpdateOneRequiredWithoutSubmittedNestedInput = {
+    create?: XOR<EmployeeCreateWithoutSubmittedInput, EmployeeUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: EmployeeCreateOrConnectWithoutSubmittedInput
+    upsert?: EmployeeUpsertWithoutSubmittedInput
+    connect?: EmployeeWhereUniqueInput
+    update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutSubmittedInput, EmployeeUpdateWithoutSubmittedInput>, EmployeeUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type ProjectUpdateOneRequiredWithoutSubmittedNestedInput = {
+    create?: XOR<ProjectCreateWithoutSubmittedInput, ProjectUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutSubmittedInput
+    upsert?: ProjectUpsertWithoutSubmittedInput
+    connect?: ProjectWhereUniqueInput
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutSubmittedInput, ProjectUpdateWithoutSubmittedInput>, ProjectUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type SheetUpdateOneRequiredWithoutSubmittedNestedInput = {
+    create?: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutSubmittedInput
+    upsert?: SheetUpsertWithoutSubmittedInput
+    connect?: SheetWhereUniqueInput
+    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutSubmittedInput, SheetUpdateWithoutSubmittedInput>, SheetUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type SubmissionReturnUpdateOneWithoutSubmittedNestedInput = {
+    create?: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SubmissionReturnCreateOrConnectWithoutSubmittedInput
+    upsert?: SubmissionReturnUpsertWithoutSubmittedInput
+    disconnect?: SubmissionReturnWhereInput | boolean
+    delete?: SubmissionReturnWhereInput | boolean
+    connect?: SubmissionReturnWhereUniqueInput
+    update?: XOR<XOR<SubmissionReturnUpdateToOneWithWhereWithoutSubmittedInput, SubmissionReturnUpdateWithoutSubmittedInput>, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput = {
+    create?: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    connectOrCreate?: SubmissionReturnCreateOrConnectWithoutSubmittedInput
+    upsert?: SubmissionReturnUpsertWithoutSubmittedInput
+    disconnect?: SubmissionReturnWhereInput | boolean
+    delete?: SubmissionReturnWhereInput | boolean
+    connect?: SubmissionReturnWhereUniqueInput
+    update?: XOR<XOR<SubmissionReturnUpdateToOneWithWhereWithoutSubmittedInput, SubmissionReturnUpdateWithoutSubmittedInput>, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
   }
 
   export type UserCreateNestedOneWithoutSuperAdminInput = {
@@ -43537,6 +47922,23 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumSubmittedStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubmittedStatus | EnumSubmittedStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubmittedStatusFilter<$PrismaModel> | $Enums.SubmittedStatus
+  }
+
+  export type NestedEnumSubmittedStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SubmittedStatus | EnumSubmittedStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSubmittedStatusWithAggregatesFilter<$PrismaModel> | $Enums.SubmittedStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSubmittedStatusFilter<$PrismaModel>
+    _max?: NestedEnumSubmittedStatusFilter<$PrismaModel>
+  }
+
   export type NestedEnumSupporterRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.SupporterRole | EnumSupporterRoleFieldRefInput<$PrismaModel>
     in?: $Enums.SupporterRole[] | ListEnumSupporterRoleFieldRefInput<$PrismaModel>
@@ -43685,6 +48087,7 @@ export namespace Prisma {
     tasks?: TaskCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutActivitiesInput = {
@@ -43716,6 +48119,7 @@ export namespace Prisma {
     tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutActivitiesInput = {
@@ -43832,6 +48236,7 @@ export namespace Prisma {
     tasks?: TaskUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutActivitiesInput = {
@@ -43863,6 +48268,7 @@ export namespace Prisma {
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type UserUpsertWithoutActivitiesInput = {
@@ -44421,6 +48827,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SubmittedCreateWithoutEmployeeInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    project: ProjectCreateNestedOneWithoutSubmittedInput
+    sheet: SheetCreateNestedOneWithoutSubmittedInput
+    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedUncheckedCreateWithoutEmployeeInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    projectId: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedCreateOrConnectWithoutEmployeeInput = {
+    where: SubmittedWhereUniqueInput
+    create: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput>
+  }
+
+  export type SubmittedCreateManyEmployeeInputEnvelope = {
+    data: SubmittedCreateManyEmployeeInput | SubmittedCreateManyEmployeeInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutEmployeeInput = {
     update: XOR<UserUpdateWithoutEmployeeInput, UserUncheckedUpdateWithoutEmployeeInput>
     create: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
@@ -44520,6 +48960,37 @@ export namespace Prisma {
     projectId?: StringFilter<"ProjectEmployee"> | string
     employeeId?: StringFilter<"ProjectEmployee"> | string
     assignedAt?: DateTimeFilter<"ProjectEmployee"> | Date | string
+  }
+
+  export type SubmittedUpsertWithWhereUniqueWithoutEmployeeInput = {
+    where: SubmittedWhereUniqueInput
+    update: XOR<SubmittedUpdateWithoutEmployeeInput, SubmittedUncheckedUpdateWithoutEmployeeInput>
+    create: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput>
+  }
+
+  export type SubmittedUpdateWithWhereUniqueWithoutEmployeeInput = {
+    where: SubmittedWhereUniqueInput
+    data: XOR<SubmittedUpdateWithoutEmployeeInput, SubmittedUncheckedUpdateWithoutEmployeeInput>
+  }
+
+  export type SubmittedUpdateManyWithWhereWithoutEmployeeInput = {
+    where: SubmittedScalarWhereInput
+    data: XOR<SubmittedUpdateManyMutationInput, SubmittedUncheckedUpdateManyWithoutEmployeeInput>
+  }
+
+  export type SubmittedScalarWhereInput = {
+    AND?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
+    OR?: SubmittedScalarWhereInput[]
+    NOT?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
+    id?: StringFilter<"Submitted"> | string
+    information?: StringFilter<"Submitted"> | string
+    submission?: StringFilter<"Submitted"> | string
+    status?: EnumSubmittedStatusFilter<"Submitted"> | $Enums.SubmittedStatus
+    employeeId?: StringFilter<"Submitted"> | string
+    projectId?: StringFilter<"Submitted"> | string
+    sheetId?: StringFilter<"Submitted"> | string
+    createdAt?: DateTimeFilter<"Submitted"> | Date | string
+    updatedAt?: DateTimeFilter<"Submitted"> | Date | string
   }
 
   export type UserCreateWithoutOtpVerificationInput = {
@@ -44908,6 +49379,7 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutManagerInput = {
@@ -44939,6 +49411,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutManagerInput = {
@@ -46246,6 +50719,7 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutProgramInput = {
@@ -46277,6 +50751,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutProgramInput = {
@@ -46578,6 +51053,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SubmittedCreateWithoutProjectInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee: EmployeeCreateNestedOneWithoutSubmittedInput
+    sheet: SheetCreateNestedOneWithoutSubmittedInput
+    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedUncheckedCreateWithoutProjectInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    employeeId: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedCreateOrConnectWithoutProjectInput = {
+    where: SubmittedWhereUniqueInput
+    create: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput>
+  }
+
+  export type SubmittedCreateManyProjectInputEnvelope = {
+    data: SubmittedCreateManyProjectInput | SubmittedCreateManyProjectInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ProgramUpsertWithoutProjectsInput = {
     update: XOR<ProgramUpdateWithoutProjectsInput, ProgramUncheckedUpdateWithoutProjectsInput>
     create: XOR<ProgramCreateWithoutProjectsInput, ProgramUncheckedCreateWithoutProjectsInput>
@@ -46773,6 +51282,22 @@ export namespace Prisma {
     data: XOR<RequestToAddProjectMemberUpdateManyMutationInput, RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectInput>
   }
 
+  export type SubmittedUpsertWithWhereUniqueWithoutProjectInput = {
+    where: SubmittedWhereUniqueInput
+    update: XOR<SubmittedUpdateWithoutProjectInput, SubmittedUncheckedUpdateWithoutProjectInput>
+    create: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput>
+  }
+
+  export type SubmittedUpdateWithWhereUniqueWithoutProjectInput = {
+    where: SubmittedWhereUniqueInput
+    data: XOR<SubmittedUpdateWithoutProjectInput, SubmittedUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type SubmittedUpdateManyWithWhereWithoutProjectInput = {
+    where: SubmittedScalarWhereInput
+    data: XOR<SubmittedUpdateManyMutationInput, SubmittedUncheckedUpdateManyWithoutProjectInput>
+  }
+
   export type ProjectCreateWithoutProjectEmployeesInput = {
     id?: string
     name: string
@@ -46802,6 +51327,7 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutProjectEmployeesInput = {
@@ -46833,6 +51359,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutProjectEmployeesInput = {
@@ -46848,6 +51375,7 @@ export namespace Prisma {
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
     user: UserCreateNestedOneWithoutEmployeeInput
+    submitted?: SubmittedCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeUncheckedCreateWithoutProjectEmployeesInput = {
@@ -46858,6 +51386,7 @@ export namespace Prisma {
     description: string
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeCreateOrConnectWithoutProjectEmployeesInput = {
@@ -46905,6 +51434,7 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutProjectEmployeesInput = {
@@ -46936,6 +51466,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type EmployeeUpsertWithoutProjectEmployeesInput = {
@@ -46957,6 +51488,7 @@ export namespace Prisma {
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
     user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    submitted?: SubmittedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type EmployeeUncheckedUpdateWithoutProjectEmployeesInput = {
@@ -46967,6 +51499,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
+    submitted?: SubmittedUncheckedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type ProjectCreateWithoutReviewsInput = {
@@ -46998,6 +51531,7 @@ export namespace Prisma {
     tasks?: TaskCreateNestedManyWithoutProjectInput
     activities?: ActivityCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutReviewsInput = {
@@ -47029,6 +51563,7 @@ export namespace Prisma {
     tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutReviewsInput = {
@@ -47076,6 +51611,7 @@ export namespace Prisma {
     tasks?: TaskUpdateManyWithoutProjectNestedInput
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutReviewsInput = {
@@ -47107,6 +51643,405 @@ export namespace Prisma {
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type SubmittedCreateWithoutSheetInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee: EmployeeCreateNestedOneWithoutSubmittedInput
+    project: ProjectCreateNestedOneWithoutSubmittedInput
+    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedUncheckedCreateWithoutSheetInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    employeeId: string
+    projectId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedCreateOrConnectWithoutSheetInput = {
+    where: SubmittedWhereUniqueInput
+    create: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput>
+  }
+
+  export type SubmittedCreateManySheetInputEnvelope = {
+    data: SubmittedCreateManySheetInput | SubmittedCreateManySheetInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SubmittedUpsertWithWhereUniqueWithoutSheetInput = {
+    where: SubmittedWhereUniqueInput
+    update: XOR<SubmittedUpdateWithoutSheetInput, SubmittedUncheckedUpdateWithoutSheetInput>
+    create: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput>
+  }
+
+  export type SubmittedUpdateWithWhereUniqueWithoutSheetInput = {
+    where: SubmittedWhereUniqueInput
+    data: XOR<SubmittedUpdateWithoutSheetInput, SubmittedUncheckedUpdateWithoutSheetInput>
+  }
+
+  export type SubmittedUpdateManyWithWhereWithoutSheetInput = {
+    where: SubmittedScalarWhereInput
+    data: XOR<SubmittedUpdateManyMutationInput, SubmittedUncheckedUpdateManyWithoutSheetInput>
+  }
+
+  export type SubmittedCreateWithoutSubmissionReturnInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee: EmployeeCreateNestedOneWithoutSubmittedInput
+    project: ProjectCreateNestedOneWithoutSubmittedInput
+    sheet: SheetCreateNestedOneWithoutSubmittedInput
+  }
+
+  export type SubmittedUncheckedCreateWithoutSubmissionReturnInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    employeeId: string
+    projectId: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubmittedCreateOrConnectWithoutSubmissionReturnInput = {
+    where: SubmittedWhereUniqueInput
+    create: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
+  }
+
+  export type SubmittedUpsertWithoutSubmissionReturnInput = {
+    update: XOR<SubmittedUpdateWithoutSubmissionReturnInput, SubmittedUncheckedUpdateWithoutSubmissionReturnInput>
+    create: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
+    where?: SubmittedWhereInput
+  }
+
+  export type SubmittedUpdateToOneWithWhereWithoutSubmissionReturnInput = {
+    where?: SubmittedWhereInput
+    data: XOR<SubmittedUpdateWithoutSubmissionReturnInput, SubmittedUncheckedUpdateWithoutSubmissionReturnInput>
+  }
+
+  export type SubmittedUpdateWithoutSubmissionReturnInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
+    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateWithoutSubmissionReturnInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    employeeId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EmployeeCreateWithoutSubmittedInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    description: string
+    joinedDate: string
+    skills?: EmployeeCreateskillsInput | string[]
+    user: UserCreateNestedOneWithoutEmployeeInput
+    projectEmployees?: ProjectEmployeeCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeUncheckedCreateWithoutSubmittedInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    description: string
+    joinedDate: string
+    skills?: EmployeeCreateskillsInput | string[]
+    projectEmployees?: ProjectEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+  }
+
+  export type EmployeeCreateOrConnectWithoutSubmittedInput = {
+    where: EmployeeWhereUniqueInput
+    create: XOR<EmployeeCreateWithoutSubmittedInput, EmployeeUncheckedCreateWithoutSubmittedInput>
+  }
+
+  export type ProjectCreateWithoutSubmittedInput = {
+    id?: string
+    name: string
+    datetime?: Date | string | null
+    uploadCycle: $Enums.ProjectCycle
+    description: string
+    dataReceivedTime?: string | null
+    beforeSubmitData?: number | null
+    importFiles?: ProjectCreateimportFilesInput | string[]
+    importMainFile?: string | null
+    status?: $Enums.ProjectStatus
+    priority: $Enums.Priority
+    deadline: Date | string
+    startDate?: Date | string | null
+    progress?: number | null
+    chartList?: ProjectCreatechartListInput | string[]
+    estimatedCompletedDate?: Date | string | null
+    currentRate?: string | null
+    budget?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    program: ProgramCreateNestedOneWithoutProjectsInput
+    manager: ManagerCreateNestedOneWithoutProjectsInput
+    projectEmployees?: ProjectEmployeeCreateNestedManyWithoutProjectInput
+    tasks?: TaskCreateNestedManyWithoutProjectInput
+    activities?: ActivityCreateNestedManyWithoutProjectInput
+    reviews?: ReviewCreateNestedManyWithoutProjectInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectUncheckedCreateWithoutSubmittedInput = {
+    id?: string
+    programId: string
+    name: string
+    datetime?: Date | string | null
+    uploadCycle: $Enums.ProjectCycle
+    description: string
+    dataReceivedTime?: string | null
+    beforeSubmitData?: number | null
+    importFiles?: ProjectCreateimportFilesInput | string[]
+    importMainFile?: string | null
+    status?: $Enums.ProjectStatus
+    priority: $Enums.Priority
+    deadline: Date | string
+    managerId: string
+    startDate?: Date | string | null
+    progress?: number | null
+    chartList?: ProjectCreatechartListInput | string[]
+    estimatedCompletedDate?: Date | string | null
+    currentRate?: string | null
+    budget?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    projectEmployees?: ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectCreateOrConnectWithoutSubmittedInput = {
+    where: ProjectWhereUniqueInput
+    create: XOR<ProjectCreateWithoutSubmittedInput, ProjectUncheckedCreateWithoutSubmittedInput>
+  }
+
+  export type SheetCreateWithoutSubmittedInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SheetUncheckedCreateWithoutSubmittedInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SheetCreateOrConnectWithoutSubmittedInput = {
+    where: SheetWhereUniqueInput
+    create: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
+  }
+
+  export type SubmissionReturnCreateWithoutSubmittedInput = {
+    id?: string
+    returnedAt?: Date | string
+  }
+
+  export type SubmissionReturnUncheckedCreateWithoutSubmittedInput = {
+    id?: string
+    returnedAt?: Date | string
+  }
+
+  export type SubmissionReturnCreateOrConnectWithoutSubmittedInput = {
+    where: SubmissionReturnWhereUniqueInput
+    create: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+  }
+
+  export type EmployeeUpsertWithoutSubmittedInput = {
+    update: XOR<EmployeeUpdateWithoutSubmittedInput, EmployeeUncheckedUpdateWithoutSubmittedInput>
+    create: XOR<EmployeeCreateWithoutSubmittedInput, EmployeeUncheckedCreateWithoutSubmittedInput>
+    where?: EmployeeWhereInput
+  }
+
+  export type EmployeeUpdateToOneWithWhereWithoutSubmittedInput = {
+    where?: EmployeeWhereInput
+    data: XOR<EmployeeUpdateWithoutSubmittedInput, EmployeeUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type EmployeeUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    joinedDate?: StringFieldUpdateOperationsInput | string
+    skills?: EmployeeUpdateskillsInput | string[]
+    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    projectEmployees?: ProjectEmployeeUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type EmployeeUncheckedUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    joinedDate?: StringFieldUpdateOperationsInput | string
+    skills?: EmployeeUpdateskillsInput | string[]
+    projectEmployees?: ProjectEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+  }
+
+  export type ProjectUpsertWithoutSubmittedInput = {
+    update: XOR<ProjectUpdateWithoutSubmittedInput, ProjectUncheckedUpdateWithoutSubmittedInput>
+    create: XOR<ProjectCreateWithoutSubmittedInput, ProjectUncheckedCreateWithoutSubmittedInput>
+    where?: ProjectWhereInput
+  }
+
+  export type ProjectUpdateToOneWithWhereWithoutSubmittedInput = {
+    where?: ProjectWhereInput
+    data: XOR<ProjectUpdateWithoutSubmittedInput, ProjectUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type ProjectUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
+    description?: StringFieldUpdateOperationsInput | string
+    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
+    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
+    importFiles?: ProjectUpdateimportFilesInput | string[]
+    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    chartList?: ProjectUpdatechartListInput | string[]
+    estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRate?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    program?: ProgramUpdateOneRequiredWithoutProjectsNestedInput
+    manager?: ManagerUpdateOneRequiredWithoutProjectsNestedInput
+    projectEmployees?: ProjectEmployeeUpdateManyWithoutProjectNestedInput
+    tasks?: TaskUpdateManyWithoutProjectNestedInput
+    activities?: ActivityUpdateManyWithoutProjectNestedInput
+    reviews?: ReviewUpdateManyWithoutProjectNestedInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    programId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
+    description?: StringFieldUpdateOperationsInput | string
+    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
+    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
+    importFiles?: ProjectUpdateimportFilesInput | string[]
+    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    managerId?: StringFieldUpdateOperationsInput | string
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    chartList?: ProjectUpdatechartListInput | string[]
+    estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRate?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectEmployees?: ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type SheetUpsertWithoutSubmittedInput = {
+    update: XOR<SheetUpdateWithoutSubmittedInput, SheetUncheckedUpdateWithoutSubmittedInput>
+    create: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
+    where?: SheetWhereInput
+  }
+
+  export type SheetUpdateToOneWithWhereWithoutSubmittedInput = {
+    where?: SheetWhereInput
+    data: XOR<SheetUpdateWithoutSubmittedInput, SheetUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type SheetUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetUncheckedUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnUpsertWithoutSubmittedInput = {
+    update: XOR<SubmissionReturnUpdateWithoutSubmittedInput, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
+    create: XOR<SubmissionReturnCreateWithoutSubmittedInput, SubmissionReturnUncheckedCreateWithoutSubmittedInput>
+    where?: SubmissionReturnWhereInput
+  }
+
+  export type SubmissionReturnUpdateToOneWithWhereWithoutSubmittedInput = {
+    where?: SubmissionReturnWhereInput
+    data: XOR<SubmissionReturnUpdateWithoutSubmittedInput, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
+  }
+
+  export type SubmissionReturnUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmissionReturnUncheckedUpdateWithoutSubmittedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutSuperAdminInput = {
@@ -47478,6 +52413,7 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutTasksInput = {
@@ -47509,6 +52445,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutTasksInput = {
@@ -47556,6 +52493,7 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutTasksInput = {
@@ -47587,6 +52525,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ClientCreateWithoutTicketsInput = {
@@ -47825,6 +52764,7 @@ export namespace Prisma {
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
     projectEmployees?: ProjectEmployeeCreateNestedManyWithoutEmployeeInput
+    submitted?: SubmittedCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeUncheckedCreateWithoutUserInput = {
@@ -47835,6 +52775,7 @@ export namespace Prisma {
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeCreateOrConnectWithoutUserInput = {
@@ -48256,6 +53197,7 @@ export namespace Prisma {
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUpdateManyWithoutEmployeeNestedInput
+    submitted?: SubmittedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type EmployeeUncheckedUpdateWithoutUserInput = {
@@ -48266,6 +53208,7 @@ export namespace Prisma {
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type ViewerUpsertWithoutUserInput = {
@@ -48896,6 +53839,7 @@ export namespace Prisma {
     tasks?: TaskCreateNestedManyWithoutProjectInput
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutRequestsToAddProjectMemberInput = {
@@ -48927,6 +53871,7 @@ export namespace Prisma {
     tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutRequestsToAddProjectMemberInput = {
@@ -49001,6 +53946,7 @@ export namespace Prisma {
     tasks?: TaskUpdateManyWithoutProjectNestedInput
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutRequestsToAddProjectMemberInput = {
@@ -49032,6 +53978,7 @@ export namespace Prisma {
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ManagerUpsertWithoutRequestsToAddProjectMemberInput = {
@@ -49371,6 +54318,17 @@ export namespace Prisma {
     assignedAt?: Date | string
   }
 
+  export type SubmittedCreateManyEmployeeInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    projectId: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ProjectEmployeeUpdateWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49387,6 +54345,41 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmittedUpdateWithoutEmployeeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
+    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
+    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateWithoutEmployeeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    projectId?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateManyWithoutEmployeeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    projectId?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProjectCreateManyManagerInput = {
@@ -49452,6 +54445,7 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutManagerInput = {
@@ -49483,6 +54477,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutManagerInput = {
@@ -49606,6 +54601,7 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutProgramInput = {
@@ -49637,6 +54633,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutProgramInput = {
@@ -49708,6 +54705,17 @@ export namespace Prisma {
     id?: string
     clientId?: string | null
     managerId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubmittedCreateManyProjectInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    employeeId: string
+    sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49849,6 +54857,87 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     clientId?: NullableStringFieldUpdateOperationsInput | string | null
     managerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmittedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
+    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
+    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    employeeId?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    employeeId?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubmittedCreateManySheetInput = {
+    id?: string
+    information: string
+    submission: string
+    status?: $Enums.SubmittedStatus
+    employeeId: string
+    projectId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubmittedUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
+    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    employeeId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
+  }
+
+  export type SubmittedUncheckedUpdateManyWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    information?: StringFieldUpdateOperationsInput | string
+    submission?: StringFieldUpdateOperationsInput | string
+    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    employeeId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

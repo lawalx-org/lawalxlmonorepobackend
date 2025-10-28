@@ -70,6 +70,7 @@ model Employee {
   user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   projectEmployees ProjectEmployee[]
+  submitted        Submitted[]
 
   @@map("employees")
 }
@@ -269,7 +270,7 @@ model Project {
   id                     String        @id @default(uuid())
   programId              String
   name                   String
-  datetime               DateTime?
+  datetime               DateTime? //not needed?
   uploadCycle            ProjectCycle
   description            String
   dataReceivedTime       String?
@@ -299,6 +300,7 @@ model Project {
   activities                 Activity[]
   reviews                    Review[]
   requestsToAddProjectMember RequestToAddProjectMember[]
+  submitted                  Submitted[]
 
   @@map("projects")
 }
@@ -330,6 +332,39 @@ model Review {
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@map("reviews")
+}
+
+model Sheet {
+  id        String      @id @default(cuid())
+  name      String
+  submitted Submitted[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model SubmissionReturn {
+  id          String    @id @default(cuid())
+  submitted   Submitted @relation(fields: [submittedId], references: [id])
+  submittedId String    @unique
+  returnedAt  DateTime  @default(now())
+
+  @@map("submission_returns")
+}
+
+model Submitted {
+  id               String            @id @default(cuid())
+  information      String
+  submission       String
+  status           SubmittedStatus   @default(PENDING)
+  employee         Employee          @relation(fields: [employeeId], references: [id])
+  employeeId       String
+  project          Project           @relation(fields: [projectId], references: [id])
+  projectId        String
+  sheet            Sheet             @relation(fields: [sheetId], references: [id])
+  sheetId          String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  submissionReturn SubmissionReturn? // Relation to the submission return
 }
 
 model SuperAdmin {
@@ -562,6 +597,7 @@ enum ProjectStatus {
   DRAFT
   OVERDUE
   PROBLEM
+  COMPLETED
 }
 
 enum TaskStatus {
@@ -610,6 +646,12 @@ enum ActivityActionType {
   TASK_CREATED
   TASK_COMPLETED
   GENERAL
+}
+
+enum SubmittedStatus {
+  APPROVED
+  PENDING
+  REJECTED
 }
 
 // Prisma client generator

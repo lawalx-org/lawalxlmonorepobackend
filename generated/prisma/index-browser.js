@@ -335,6 +335,31 @@ exports.Prisma.ReviewScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SheetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SubmissionReturnScalarFieldEnum = {
+  id: 'id',
+  submittedId: 'submittedId',
+  returnedAt: 'returnedAt'
+};
+
+exports.Prisma.SubmittedScalarFieldEnum = {
+  id: 'id',
+  information: 'information',
+  submission: 'submission',
+  status: 'status',
+  employeeId: 'employeeId',
+  projectId: 'projectId',
+  sheetId: 'sheetId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SuperAdminScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -504,7 +529,8 @@ exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   LIVE: 'LIVE',
   DRAFT: 'DRAFT',
   OVERDUE: 'OVERDUE',
-  PROBLEM: 'PROBLEM'
+  PROBLEM: 'PROBLEM',
+  COMPLETED: 'COMPLETED'
 };
 
 exports.Priority = exports.$Enums.Priority = {
@@ -512,6 +538,12 @@ exports.Priority = exports.$Enums.Priority = {
   MEDIUM: 'MEDIUM',
   LOW: 'LOW',
   NORMAL: 'NORMAL'
+};
+
+exports.SubmittedStatus = exports.$Enums.SubmittedStatus = {
+  APPROVED: 'APPROVED',
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED'
 };
 
 exports.SupporterRole = exports.$Enums.SupporterRole = {
@@ -581,6 +613,9 @@ exports.Prisma.ModelName = {
   Project: 'Project',
   ProjectEmployee: 'ProjectEmployee',
   Review: 'Review',
+  Sheet: 'Sheet',
+  SubmissionReturn: 'SubmissionReturn',
+  Submitted: 'Submitted',
   SuperAdmin: 'SuperAdmin',
   Supporter: 'Supporter',
   Task: 'Task',

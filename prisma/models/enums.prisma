@@ -54,6 +54,7 @@ enum ProjectStatus {
   DRAFT
   OVERDUE
   PROBLEM
+  COMPLETED
 }
 
 enum TaskStatus {
@@ -105,6 +106,13 @@ enum ActivityActionType {
   TASK_COMPLETED
   GENERAL
 }
+
+
+enum SubmittedStatus {
+  APPROVED
+  PENDING
+  REJECTED
+  }
 
 
 

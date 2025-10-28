@@ -3,7 +3,7 @@ model Project {
   id                        String        @id @default(uuid())
   programId                 String
   name                      String
-  datetime                  DateTime?
+  datetime                  DateTime?   //not needed?
   uploadCycle               ProjectCycle
   description               String
   dataReceivedTime          String?
@@ -33,6 +33,7 @@ model Project {
   activities                Activity[]
   reviews                   Review[]
   requestsToAddProjectMember RequestToAddProjectMember[]
+  submitted                 Submitted[]
 
   @@map("projects")
 }

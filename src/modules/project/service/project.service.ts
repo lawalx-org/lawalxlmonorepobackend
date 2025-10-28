@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
 import { FindAllProjectsDto } from '../dto/find-all-projects.dto';
 import { buildProjectFilter } from '../utils/project-filter-builder';
+import { SearchProjectByNameDto } from '../dto/search-project.dto';
 
 @Injectable()
 export class ProjectService {
@@ -60,10 +62,59 @@ export class ProjectService {
   }
 
   async findAll(query: FindAllProjectsDto) {
-    const { page = 1, limit = 10 } = query;
+    const where = buildProjectFilter(query);
+
+    if (query.limit !== 12) {
+      // Return all projects if limit is not 12 or not provided
+      const projects = await this.prisma.project.findMany({ where });
+      return {
+        data: projects,
+        total: projects.length,
+        page: 1,
+        limit: projects.length,
+      };
+    }
+
+    // Standard pagination with a limit of 12
+    const { page = 1 } = query;
+    const limit = 12;
     const skip = (page - 1) * limit;
 
-    const where = buildProjectFilter(query);
+    const [projects, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where,
+        skip,
+        take: limit,
+      }),
+      this.prisma.project.count({ where }),
+    ]);
+
+    return {
+      data: projects,
+      total,
+      page,
+      limit,
+    };
+  }
+
+  async searchByName(query: SearchProjectByNameDto) {
+    const { name, page = 1, limit = 10, employeeId } = query;
+    const skip = (page - 1) * limit;
+
+    const where: Prisma.ProjectWhereInput = {
+      name: {
+        contains: name,
+        mode: 'insensitive' as const,
+      },
+    };
+
+    if (employeeId) {
+      where.projectEmployees = {
+        some: {
+          employeeId: employeeId,
+        },
+      };
+    }
 
     const [projects, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
