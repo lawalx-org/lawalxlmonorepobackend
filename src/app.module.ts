@@ -41,4 +41,3 @@ import { ChartModule } from './modules/chart/chart.module';
   providers: [AppService, ConfigService],
 })
 export class AppModule {}
-
