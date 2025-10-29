@@ -322,6 +322,14 @@ export const SubmittedStatus: {
 
 export type SubmittedStatus = (typeof SubmittedStatus)[keyof typeof SubmittedStatus]
 
+
+export const NotificationType: {
+  NEW_EMPLOYEE_ASSIGNED: 'NEW_EMPLOYEE_ASSIGNED',
+  NEW_MANAGER_ASSIGNED: 'NEW_MANAGER_ASSIGNED'
+};
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
 }
 
 export type Role = $Enums.Role
@@ -379,6 +387,10 @@ export const ActivityActionType: typeof $Enums.ActivityActionType
 export type SubmittedStatus = $Enums.SubmittedStatus
 
 export const SubmittedStatus: typeof $Enums.SubmittedStatus
+
+export type NotificationType = $Enums.NotificationType
+
+export const NotificationType: typeof $Enums.NotificationType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -20998,12 +21010,11 @@ export namespace Prisma {
     id: string | null
     programId: string | null
     name: string | null
-    datetime: Date | null
+    uploadbeforeday: string | null
     uploadCycle: $Enums.ProjectCycle | null
     description: string | null
     dataReceivedTime: string | null
     beforeSubmitData: number | null
-    importMainFile: string | null
     status: $Enums.ProjectStatus | null
     priority: $Enums.Priority | null
     deadline: Date | null
@@ -21023,12 +21034,11 @@ export namespace Prisma {
     id: string | null
     programId: string | null
     name: string | null
-    datetime: Date | null
+    uploadbeforeday: string | null
     uploadCycle: $Enums.ProjectCycle | null
     description: string | null
     dataReceivedTime: string | null
     beforeSubmitData: number | null
-    importMainFile: string | null
     status: $Enums.ProjectStatus | null
     priority: $Enums.Priority | null
     deadline: Date | null
@@ -21048,13 +21058,13 @@ export namespace Prisma {
     id: number
     programId: number
     name: number
-    datetime: number
+    uploadbeforeday: number
     uploadCycle: number
     description: number
     dataReceivedTime: number
     beforeSubmitData: number
-    importFiles: number
-    importMainFile: number
+    weakuploadData: number
+    monthlyuploadData: number
     status: number
     priority: number
     deadline: number
@@ -21091,12 +21101,11 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-    datetime?: true
+    uploadbeforeday?: true
     uploadCycle?: true
     description?: true
     dataReceivedTime?: true
     beforeSubmitData?: true
-    importMainFile?: true
     status?: true
     priority?: true
     deadline?: true
@@ -21116,12 +21125,11 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-    datetime?: true
+    uploadbeforeday?: true
     uploadCycle?: true
     description?: true
     dataReceivedTime?: true
     beforeSubmitData?: true
-    importMainFile?: true
     status?: true
     priority?: true
     deadline?: true
@@ -21141,13 +21149,13 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-    datetime?: true
+    uploadbeforeday?: true
     uploadCycle?: true
     description?: true
     dataReceivedTime?: true
     beforeSubmitData?: true
-    importFiles?: true
-    importMainFile?: true
+    weakuploadData?: true
+    monthlyuploadData?: true
     status?: true
     priority?: true
     deadline?: true
@@ -21255,13 +21263,13 @@ export namespace Prisma {
     id: string
     programId: string
     name: string
-    datetime: Date | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime: string | null
     beforeSubmitData: number | null
-    importFiles: string[]
-    importMainFile: string | null
+    weakuploadData: string[]
+    monthlyuploadData: string[]
     status: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date
@@ -21301,13 +21309,13 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-    datetime?: boolean
+    uploadbeforeday?: boolean
     uploadCycle?: boolean
     description?: boolean
     dataReceivedTime?: boolean
     beforeSubmitData?: boolean
-    importFiles?: boolean
-    importMainFile?: boolean
+    weakuploadData?: boolean
+    monthlyuploadData?: boolean
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -21337,13 +21345,13 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-    datetime?: boolean
+    uploadbeforeday?: boolean
     uploadCycle?: boolean
     description?: boolean
     dataReceivedTime?: boolean
     beforeSubmitData?: boolean
-    importFiles?: boolean
-    importMainFile?: boolean
+    weakuploadData?: boolean
+    monthlyuploadData?: boolean
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -21366,13 +21374,13 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-    datetime?: boolean
+    uploadbeforeday?: boolean
     uploadCycle?: boolean
     description?: boolean
     dataReceivedTime?: boolean
     beforeSubmitData?: boolean
-    importFiles?: boolean
-    importMainFile?: boolean
+    weakuploadData?: boolean
+    monthlyuploadData?: boolean
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -21395,13 +21403,13 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-    datetime?: boolean
+    uploadbeforeday?: boolean
     uploadCycle?: boolean
     description?: boolean
     dataReceivedTime?: boolean
     beforeSubmitData?: boolean
-    importFiles?: boolean
-    importMainFile?: boolean
+    weakuploadData?: boolean
+    monthlyuploadData?: boolean
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -21418,7 +21426,7 @@ export namespace Prisma {
     longitude?: boolean
   }
 
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "datetime" | "uploadCycle" | "description" | "dataReceivedTime" | "beforeSubmitData" | "importFiles" | "importMainFile" | "status" | "priority" | "deadline" | "managerId" | "startDate" | "progress" | "chartList" | "estimatedCompletedDate" | "currentRate" | "budget" | "createdAt" | "updatedAt" | "latitude" | "longitude", ExtArgs["result"]["project"]>
+  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "uploadbeforeday" | "uploadCycle" | "description" | "dataReceivedTime" | "beforeSubmitData" | "weakuploadData" | "monthlyuploadData" | "status" | "priority" | "deadline" | "managerId" | "startDate" | "progress" | "chartList" | "estimatedCompletedDate" | "currentRate" | "budget" | "createdAt" | "updatedAt" | "latitude" | "longitude", ExtArgs["result"]["project"]>
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     program?: boolean | ProgramDefaultArgs<ExtArgs>
     manager?: boolean | ManagerDefaultArgs<ExtArgs>
@@ -21455,13 +21463,13 @@ export namespace Prisma {
       id: string
       programId: string
       name: string
-      datetime: Date | null
+      uploadbeforeday: string
       uploadCycle: $Enums.ProjectCycle
       description: string
       dataReceivedTime: string | null
       beforeSubmitData: number | null
-      importFiles: string[]
-      importMainFile: string | null
+      weakuploadData: string[]
+      monthlyuploadData: string[]
       status: $Enums.ProjectStatus
       priority: $Enums.Priority
       deadline: Date
@@ -21910,13 +21918,13 @@ export namespace Prisma {
     readonly id: FieldRef<"Project", 'String'>
     readonly programId: FieldRef<"Project", 'String'>
     readonly name: FieldRef<"Project", 'String'>
-    readonly datetime: FieldRef<"Project", 'DateTime'>
+    readonly uploadbeforeday: FieldRef<"Project", 'String'>
     readonly uploadCycle: FieldRef<"Project", 'ProjectCycle'>
     readonly description: FieldRef<"Project", 'String'>
     readonly dataReceivedTime: FieldRef<"Project", 'String'>
     readonly beforeSubmitData: FieldRef<"Project", 'Int'>
-    readonly importFiles: FieldRef<"Project", 'String[]'>
-    readonly importMainFile: FieldRef<"Project", 'String'>
+    readonly weakuploadData: FieldRef<"Project", 'String[]'>
+    readonly monthlyuploadData: FieldRef<"Project", 'String[]'>
     readonly status: FieldRef<"Project", 'ProjectStatus'>
     readonly priority: FieldRef<"Project", 'Priority'>
     readonly deadline: FieldRef<"Project", 'DateTime'>
@@ -38493,13 +38501,13 @@ export namespace Prisma {
     id: 'id',
     programId: 'programId',
     name: 'name',
-    datetime: 'datetime',
+    uploadbeforeday: 'uploadbeforeday',
     uploadCycle: 'uploadCycle',
     description: 'description',
     dataReceivedTime: 'dataReceivedTime',
     beforeSubmitData: 'beforeSubmitData',
-    importFiles: 'importFiles',
-    importMainFile: 'importMainFile',
+    weakuploadData: 'weakuploadData',
+    monthlyuploadData: 'monthlyuploadData',
     status: 'status',
     priority: 'priority',
     deadline: 'deadline',
@@ -40142,13 +40150,13 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-    datetime?: DateTimeNullableFilter<"Project"> | Date | string | null
+    uploadbeforeday?: StringFilter<"Project"> | string
     uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
     dataReceivedTime?: StringNullableFilter<"Project"> | string | null
     beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    importFiles?: StringNullableListFilter<"Project">
-    importMainFile?: StringNullableFilter<"Project"> | string | null
+    weakuploadData?: StringNullableListFilter<"Project">
+    monthlyuploadData?: StringNullableListFilter<"Project">
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -40177,13 +40185,13 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    datetime?: SortOrderInput | SortOrder
+    uploadbeforeday?: SortOrder
     uploadCycle?: SortOrder
     description?: SortOrder
     dataReceivedTime?: SortOrderInput | SortOrder
     beforeSubmitData?: SortOrderInput | SortOrder
-    importFiles?: SortOrder
-    importMainFile?: SortOrderInput | SortOrder
+    weakuploadData?: SortOrder
+    monthlyuploadData?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -40215,13 +40223,13 @@ export namespace Prisma {
     NOT?: ProjectWhereInput | ProjectWhereInput[]
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-    datetime?: DateTimeNullableFilter<"Project"> | Date | string | null
+    uploadbeforeday?: StringFilter<"Project"> | string
     uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
     dataReceivedTime?: StringNullableFilter<"Project"> | string | null
     beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    importFiles?: StringNullableListFilter<"Project">
-    importMainFile?: StringNullableFilter<"Project"> | string | null
+    weakuploadData?: StringNullableListFilter<"Project">
+    monthlyuploadData?: StringNullableListFilter<"Project">
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -40250,13 +40258,13 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    datetime?: SortOrderInput | SortOrder
+    uploadbeforeday?: SortOrder
     uploadCycle?: SortOrder
     description?: SortOrder
     dataReceivedTime?: SortOrderInput | SortOrder
     beforeSubmitData?: SortOrderInput | SortOrder
-    importFiles?: SortOrder
-    importMainFile?: SortOrderInput | SortOrder
+    weakuploadData?: SortOrder
+    monthlyuploadData?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -40285,13 +40293,13 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Project"> | string
     programId?: StringWithAggregatesFilter<"Project"> | string
     name?: StringWithAggregatesFilter<"Project"> | string
-    datetime?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+    uploadbeforeday?: StringWithAggregatesFilter<"Project"> | string
     uploadCycle?: EnumProjectCycleWithAggregatesFilter<"Project"> | $Enums.ProjectCycle
     description?: StringWithAggregatesFilter<"Project"> | string
     dataReceivedTime?: StringNullableWithAggregatesFilter<"Project"> | string | null
     beforeSubmitData?: IntNullableWithAggregatesFilter<"Project"> | number | null
-    importFiles?: StringNullableListFilter<"Project">
-    importMainFile?: StringNullableWithAggregatesFilter<"Project"> | string | null
+    weakuploadData?: StringNullableListFilter<"Project">
+    monthlyuploadData?: StringNullableListFilter<"Project">
     status?: EnumProjectStatusWithAggregatesFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityWithAggregatesFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeWithAggregatesFilter<"Project"> | Date | string
@@ -42540,13 +42548,13 @@ export namespace Prisma {
   export type ProjectCreateInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -42574,13 +42582,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -42606,13 +42614,13 @@ export namespace Prisma {
   export type ProjectUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42640,13 +42648,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42673,13 +42681,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -42699,13 +42707,13 @@ export namespace Prisma {
   export type ProjectUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42725,13 +42733,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44726,17 +44734,6 @@ export namespace Prisma {
     progress?: SortOrder
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type EnumProjectCycleFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
     in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
@@ -44756,6 +44753,17 @@ export namespace Prisma {
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
     notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
     not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -44813,13 +44821,13 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    datetime?: SortOrder
+    uploadbeforeday?: SortOrder
     uploadCycle?: SortOrder
     description?: SortOrder
     dataReceivedTime?: SortOrder
     beforeSubmitData?: SortOrder
-    importFiles?: SortOrder
-    importMainFile?: SortOrder
+    weakuploadData?: SortOrder
+    monthlyuploadData?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -44847,12 +44855,11 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    datetime?: SortOrder
+    uploadbeforeday?: SortOrder
     uploadCycle?: SortOrder
     description?: SortOrder
     dataReceivedTime?: SortOrder
     beforeSubmitData?: SortOrder
-    importMainFile?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -44872,12 +44879,11 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    datetime?: SortOrder
+    uploadbeforeday?: SortOrder
     uploadCycle?: SortOrder
     description?: SortOrder
     dataReceivedTime?: SortOrder
     beforeSubmitData?: SortOrder
-    importMainFile?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -44898,20 +44904,6 @@ export namespace Prisma {
     progress?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumProjectCycleWithAggregatesFilter<$PrismaModel = never> = {
@@ -44942,6 +44934,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPriorityFilter<$PrismaModel>
     _max?: NestedEnumPriorityFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -46358,7 +46364,11 @@ export namespace Prisma {
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
   }
 
-  export type ProjectCreateimportFilesInput = {
+  export type ProjectCreateweakuploadDataInput = {
+    set: string[]
+  }
+
+  export type ProjectCreatemonthlyuploadDataInput = {
     set: string[]
   }
 
@@ -46462,15 +46472,16 @@ export namespace Prisma {
     connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type EnumProjectCycleFieldUpdateOperationsInput = {
     set?: $Enums.ProjectCycle
   }
 
-  export type ProjectUpdateimportFilesInput = {
+  export type ProjectUpdateweakuploadDataInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ProjectUpdatemonthlyuploadDataInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -46481,6 +46492,10 @@ export namespace Prisma {
 
   export type EnumPriorityFieldUpdateOperationsInput = {
     set?: $Enums.Priority
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type ProjectUpdatechartListInput = {
@@ -47830,17 +47845,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedEnumProjectCycleFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
     in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
@@ -47862,7 +47866,7 @@ export namespace Prisma {
     not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
     notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -47870,10 +47874,7 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedEnumProjectCycleWithAggregatesFilter<$PrismaModel = never> = {
@@ -47904,6 +47905,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPriorityFilter<$PrismaModel>
     _max?: NestedEnumPriorityFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -48061,13 +48076,13 @@ export namespace Prisma {
   export type ProjectCreateWithoutActivitiesInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -48094,13 +48109,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -48210,13 +48225,13 @@ export namespace Prisma {
   export type ProjectUpdateWithoutActivitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48243,13 +48258,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49353,13 +49368,13 @@ export namespace Prisma {
   export type ProjectCreateWithoutManagerInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -49386,13 +49401,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -49548,13 +49563,13 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-    datetime?: DateTimeNullableFilter<"Project"> | Date | string | null
+    uploadbeforeday?: StringFilter<"Project"> | string
     uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
     dataReceivedTime?: StringNullableFilter<"Project"> | string | null
     beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    importFiles?: StringNullableListFilter<"Project">
-    importMainFile?: StringNullableFilter<"Project"> | string | null
+    weakuploadData?: StringNullableListFilter<"Project">
+    monthlyuploadData?: StringNullableListFilter<"Project">
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -50693,13 +50708,13 @@ export namespace Prisma {
   export type ProjectCreateWithoutProgramInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -50725,13 +50740,13 @@ export namespace Prisma {
   export type ProjectUncheckedCreateWithoutProgramInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51301,13 +51316,13 @@ export namespace Prisma {
   export type ProjectCreateWithoutProjectEmployeesInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51334,13 +51349,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51408,13 +51423,13 @@ export namespace Prisma {
   export type ProjectUpdateWithoutProjectEmployeesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51441,13 +51456,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51505,13 +51520,13 @@ export namespace Prisma {
   export type ProjectCreateWithoutReviewsInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51538,13 +51553,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51585,13 +51600,13 @@ export namespace Prisma {
   export type ProjectUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51618,13 +51633,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51790,13 +51805,13 @@ export namespace Prisma {
   export type ProjectCreateWithoutSubmittedInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51823,13 +51838,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51937,13 +51952,13 @@ export namespace Prisma {
   export type ProjectUpdateWithoutSubmittedInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51970,13 +51985,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52387,13 +52402,13 @@ export namespace Prisma {
   export type ProjectCreateWithoutTasksInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -52420,13 +52435,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -52467,13 +52482,13 @@ export namespace Prisma {
   export type ProjectUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52500,13 +52515,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53813,13 +53828,13 @@ export namespace Prisma {
   export type ProjectCreateWithoutRequestsToAddProjectMemberInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -53846,13 +53861,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -53920,13 +53935,13 @@ export namespace Prisma {
   export type ProjectUpdateWithoutRequestsToAddProjectMemberInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53953,13 +53968,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54386,13 +54401,13 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -54419,13 +54434,13 @@ export namespace Prisma {
   export type ProjectUpdateWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54452,13 +54467,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54484,13 +54499,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54549,13 +54564,13 @@ export namespace Prisma {
   export type ProjectCreateManyProgramInput = {
     id?: string
     name: string
-    datetime?: Date | string | null
+    uploadbeforeday: string
     uploadCycle: $Enums.ProjectCycle
     description: string
     dataReceivedTime?: string | null
     beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
+    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -54575,13 +54590,13 @@ export namespace Prisma {
   export type ProjectUpdateWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54607,13 +54622,13 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54639,13 +54654,13 @@ export namespace Prisma {
   export type ProjectUncheckedUpdateManyWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadbeforeday?: StringFieldUpdateOperationsInput | string
     uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
     dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
     beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
+    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
+    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string

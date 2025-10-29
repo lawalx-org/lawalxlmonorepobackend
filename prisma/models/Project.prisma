@@ -3,13 +3,13 @@ model Project {
   id                        String        @id @default(uuid())
   programId                 String
   name                      String
-  datetime                  DateTime?   //not needed?
+  uploadbeforeday           String
   uploadCycle               ProjectCycle
   description               String
   dataReceivedTime          String?
   beforeSubmitData          Int?
-  importFiles               String[]
-  importMainFile            String?
+  weakuploadData            String[]
+  monthlyuploadData         String[]
   status                    ProjectStatus @default(PENDING)
   priority                  Priority
   deadline                  DateTime

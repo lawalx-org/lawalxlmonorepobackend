@@ -39,6 +39,21 @@ export class CreateProjectDto {
   @IsNotEmpty()
   uploadCycle: ProjectCycle;
 
+  @ApiProperty({ description: 'Day to upload before', example: 'Monday' })
+  @IsString()
+  @IsNotEmpty()
+  uploadbeforeday: string;
+
+  @ApiProperty({ description: 'Weekly upload data', isArray: true, type: String })
+  @IsArray()
+  @IsString({ each: true })
+  weakuploadData: string[];
+
+  @ApiProperty({ description: 'Monthly upload data', isArray: true, type: String })
+  @IsArray()
+  @IsString({ each: true })
+  monthlyuploadData: string[];
+
   @ApiProperty({
     description: 'The description of the project',
     example: 'This is a project to do something important.',
@@ -126,12 +141,6 @@ export class CreateProjectDto {
   @IsString()
   @IsOptional()
   budget?: string;
-
-  @ApiProperty({ description: 'Project datetime', required: false })
-  @IsDate()
-  @IsOptional()
-  @Type(() => Date)
-  datetime?: Date;
 
   @ApiProperty({
     description: 'Latitude for the project location',
