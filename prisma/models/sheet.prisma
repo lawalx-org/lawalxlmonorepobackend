@@ -1,0 +1,29 @@
+model Sheet {
+  id        String   @id @default(cuid())
+  name      String
+  cells     Cell[]
+  snapshots SheetSnapshot[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Cell {
+  id        String   @id @default(cuid())
+  row       Int
+  col       Int
+  value     String
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sheetId, row, col])
+}
+
+model SheetSnapshot {
+  id        String   @id @default(cuid())
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId   String
+  data      Json
+  createdAt DateTime @default(now())
+}
