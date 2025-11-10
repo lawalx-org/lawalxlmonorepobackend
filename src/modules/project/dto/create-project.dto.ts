@@ -12,8 +12,9 @@ import {
 import { Type } from 'class-transformer';
 import { Priority, ProjectCycle } from 'generated/prisma';
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateReminderDto } from 'src/modules/notification/dto/create-reminder.dto';
 
-export class CreateProjectDto {
+export class CreateProjectDto extends CreateReminderDto {
   @ApiProperty({
     description: 'The name of the project',
     example: 'Project Alpha',
@@ -30,22 +31,6 @@ export class CreateProjectDto {
   @IsNotEmpty()
   programId: string;
 
-
-
-  @ApiProperty({ description: 'Day to upload before', example: 'Monday' })
-  @IsString()
-  @IsNotEmpty()
-  uploadbeforeday: string;
-
-  @ApiProperty({ description: 'Weekly upload data', isArray: true, type: String })
-  @IsArray()
-  @IsString({ each: true })
-  weakuploadData: string[];
-
-  @ApiProperty({ description: 'Monthly upload data', isArray: true, type: String })
-  @IsArray()
-  @IsString({ each: true })
-  monthlyuploadData: string[];
 
   @ApiProperty({
     description: 'The description of the project',

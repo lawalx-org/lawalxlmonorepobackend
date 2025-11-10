@@ -104,11 +104,6 @@ export type ProjectEmployee = $Result.DefaultSelection<Prisma.$ProjectEmployeePa
  */
 export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
 /**
- * Model Sheet
- * 
- */
-export type Sheet = $Result.DefaultSelection<Prisma.$SheetPayload>
-/**
  * Model SubmissionReturn
  * 
  */
@@ -163,6 +158,26 @@ export type RequestToAddProjectMember = $Result.DefaultSelection<Prisma.$Request
  * 
  */
 export type Viewer = $Result.DefaultSelection<Prisma.$ViewerPayload>
+/**
+ * Model Reminder
+ * 
+ */
+export type Reminder = $Result.DefaultSelection<Prisma.$ReminderPayload>
+/**
+ * Model Sheet
+ * 
+ */
+export type Sheet = $Result.DefaultSelection<Prisma.$SheetPayload>
+/**
+ * Model Cell
+ * 
+ */
+export type Cell = $Result.DefaultSelection<Prisma.$CellPayload>
+/**
+ * Model SheetSnapshot
+ * 
+ */
+export type SheetSnapshot = $Result.DefaultSelection<Prisma.$SheetSnapshotPayload>
 
 /**
  * Enums
@@ -330,6 +345,28 @@ export const NotificationType: {
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
 
+
+export const RepeatInterval: {
+  WEEKLY: 'WEEKLY',
+  BI_WEEKLY: 'BI_WEEKLY',
+  MONTHLY: 'MONTHLY'
+};
+
+export type RepeatInterval = (typeof RepeatInterval)[keyof typeof RepeatInterval]
+
+
+export const DayOfWeek: {
+  SUNDAY: 'SUNDAY',
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY'
+};
+
+export type DayOfWeek = (typeof DayOfWeek)[keyof typeof DayOfWeek]
+
 }
 
 export type Role = $Enums.Role
@@ -391,6 +428,14 @@ export const SubmittedStatus: typeof $Enums.SubmittedStatus
 export type NotificationType = $Enums.NotificationType
 
 export const NotificationType: typeof $Enums.NotificationType
+
+export type RepeatInterval = $Enums.RepeatInterval
+
+export const RepeatInterval: typeof $Enums.RepeatInterval
+
+export type DayOfWeek = $Enums.DayOfWeek
+
+export const DayOfWeek: typeof $Enums.DayOfWeek
 
 /**
  * ##  Prisma Client ʲˢ
@@ -691,16 +736,6 @@ export class PrismaClient<
   get review(): Prisma.ReviewDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.sheet`: Exposes CRUD operations for the **Sheet** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Sheets
-    * const sheets = await prisma.sheet.findMany()
-    * ```
-    */
-  get sheet(): Prisma.SheetDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.submissionReturn`: Exposes CRUD operations for the **SubmissionReturn** model.
     * Example usage:
     * ```ts
@@ -809,6 +844,46 @@ export class PrismaClient<
     * ```
     */
   get viewer(): Prisma.ViewerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.reminder`: Exposes CRUD operations for the **Reminder** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Reminders
+    * const reminders = await prisma.reminder.findMany()
+    * ```
+    */
+  get reminder(): Prisma.ReminderDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sheet`: Exposes CRUD operations for the **Sheet** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Sheets
+    * const sheets = await prisma.sheet.findMany()
+    * ```
+    */
+  get sheet(): Prisma.SheetDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cell`: Exposes CRUD operations for the **Cell** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cells
+    * const cells = await prisma.cell.findMany()
+    * ```
+    */
+  get cell(): Prisma.CellDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.sheetSnapshot`: Exposes CRUD operations for the **SheetSnapshot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SheetSnapshots
+    * const sheetSnapshots = await prisma.sheetSnapshot.findMany()
+    * ```
+    */
+  get sheetSnapshot(): Prisma.SheetSnapshotDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1268,7 +1343,6 @@ export namespace Prisma {
     Project: 'Project',
     ProjectEmployee: 'ProjectEmployee',
     Review: 'Review',
-    Sheet: 'Sheet',
     SubmissionReturn: 'SubmissionReturn',
     Submitted: 'Submitted',
     SuperAdmin: 'SuperAdmin',
@@ -1279,7 +1353,11 @@ export namespace Prisma {
     Tag: 'Tag',
     ReferredPerson: 'ReferredPerson',
     RequestToAddProjectMember: 'RequestToAddProjectMember',
-    Viewer: 'Viewer'
+    Viewer: 'Viewer',
+    Reminder: 'Reminder',
+    Sheet: 'Sheet',
+    Cell: 'Cell',
+    SheetSnapshot: 'SheetSnapshot'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1298,7 +1376,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "sheet" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer"
+      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer" | "reminder" | "sheet" | "cell" | "sheetSnapshot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2634,80 +2712,6 @@ export namespace Prisma {
           }
         }
       }
-      Sheet: {
-        payload: Prisma.$SheetPayload<ExtArgs>
-        fields: Prisma.SheetFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.SheetFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.SheetFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
-          }
-          findFirst: {
-            args: Prisma.SheetFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.SheetFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
-          }
-          findMany: {
-            args: Prisma.SheetFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
-          }
-          create: {
-            args: Prisma.SheetCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
-          }
-          createMany: {
-            args: Prisma.SheetCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.SheetCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
-          }
-          delete: {
-            args: Prisma.SheetDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
-          }
-          update: {
-            args: Prisma.SheetUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
-          }
-          deleteMany: {
-            args: Prisma.SheetDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.SheetUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.SheetUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
-          }
-          upsert: {
-            args: Prisma.SheetUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
-          }
-          aggregate: {
-            args: Prisma.SheetAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSheet>
-          }
-          groupBy: {
-            args: Prisma.SheetGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SheetGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.SheetCountArgs<ExtArgs>
-            result: $Utils.Optional<SheetCountAggregateOutputType> | number
-          }
-        }
-      }
       SubmissionReturn: {
         payload: Prisma.$SubmissionReturnPayload<ExtArgs>
         fields: Prisma.SubmissionReturnFieldRefs
@@ -3522,6 +3526,302 @@ export namespace Prisma {
           }
         }
       }
+      Reminder: {
+        payload: Prisma.$ReminderPayload<ExtArgs>
+        fields: Prisma.ReminderFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReminderFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReminderFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>
+          }
+          findFirst: {
+            args: Prisma.ReminderFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReminderFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>
+          }
+          findMany: {
+            args: Prisma.ReminderFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>[]
+          }
+          create: {
+            args: Prisma.ReminderCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>
+          }
+          createMany: {
+            args: Prisma.ReminderCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReminderCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>[]
+          }
+          delete: {
+            args: Prisma.ReminderDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>
+          }
+          update: {
+            args: Prisma.ReminderUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReminderDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReminderUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ReminderUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>[]
+          }
+          upsert: {
+            args: Prisma.ReminderUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReminderPayload>
+          }
+          aggregate: {
+            args: Prisma.ReminderAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReminder>
+          }
+          groupBy: {
+            args: Prisma.ReminderGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReminderGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReminderCountArgs<ExtArgs>
+            result: $Utils.Optional<ReminderCountAggregateOutputType> | number
+          }
+        }
+      }
+      Sheet: {
+        payload: Prisma.$SheetPayload<ExtArgs>
+        fields: Prisma.SheetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SheetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SheetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          findFirst: {
+            args: Prisma.SheetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SheetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          findMany: {
+            args: Prisma.SheetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
+          }
+          create: {
+            args: Prisma.SheetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          createMany: {
+            args: Prisma.SheetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SheetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
+          }
+          delete: {
+            args: Prisma.SheetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          update: {
+            args: Prisma.SheetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          deleteMany: {
+            args: Prisma.SheetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SheetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SheetUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>[]
+          }
+          upsert: {
+            args: Prisma.SheetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetPayload>
+          }
+          aggregate: {
+            args: Prisma.SheetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSheet>
+          }
+          groupBy: {
+            args: Prisma.SheetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SheetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SheetCountArgs<ExtArgs>
+            result: $Utils.Optional<SheetCountAggregateOutputType> | number
+          }
+        }
+      }
+      Cell: {
+        payload: Prisma.$CellPayload<ExtArgs>
+        fields: Prisma.CellFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CellFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CellFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>
+          }
+          findFirst: {
+            args: Prisma.CellFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CellFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>
+          }
+          findMany: {
+            args: Prisma.CellFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>[]
+          }
+          create: {
+            args: Prisma.CellCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>
+          }
+          createMany: {
+            args: Prisma.CellCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CellCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>[]
+          }
+          delete: {
+            args: Prisma.CellDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>
+          }
+          update: {
+            args: Prisma.CellUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>
+          }
+          deleteMany: {
+            args: Prisma.CellDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CellUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CellUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>[]
+          }
+          upsert: {
+            args: Prisma.CellUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CellPayload>
+          }
+          aggregate: {
+            args: Prisma.CellAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCell>
+          }
+          groupBy: {
+            args: Prisma.CellGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CellGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CellCountArgs<ExtArgs>
+            result: $Utils.Optional<CellCountAggregateOutputType> | number
+          }
+        }
+      }
+      SheetSnapshot: {
+        payload: Prisma.$SheetSnapshotPayload<ExtArgs>
+        fields: Prisma.SheetSnapshotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SheetSnapshotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SheetSnapshotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>
+          }
+          findFirst: {
+            args: Prisma.SheetSnapshotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SheetSnapshotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>
+          }
+          findMany: {
+            args: Prisma.SheetSnapshotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>[]
+          }
+          create: {
+            args: Prisma.SheetSnapshotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>
+          }
+          createMany: {
+            args: Prisma.SheetSnapshotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SheetSnapshotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>[]
+          }
+          delete: {
+            args: Prisma.SheetSnapshotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>
+          }
+          update: {
+            args: Prisma.SheetSnapshotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>
+          }
+          deleteMany: {
+            args: Prisma.SheetSnapshotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SheetSnapshotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SheetSnapshotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>[]
+          }
+          upsert: {
+            args: Prisma.SheetSnapshotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SheetSnapshotPayload>
+          }
+          aggregate: {
+            args: Prisma.SheetSnapshotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSheetSnapshot>
+          }
+          groupBy: {
+            args: Prisma.SheetSnapshotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SheetSnapshotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SheetSnapshotCountArgs<ExtArgs>
+            result: $Utils.Optional<SheetSnapshotCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3636,7 +3936,6 @@ export namespace Prisma {
     project?: ProjectOmit
     projectEmployee?: ProjectEmployeeOmit
     review?: ReviewOmit
-    sheet?: SheetOmit
     submissionReturn?: SubmissionReturnOmit
     submitted?: SubmittedOmit
     superAdmin?: SuperAdminOmit
@@ -3648,6 +3947,10 @@ export namespace Prisma {
     referredPerson?: ReferredPersonOmit
     requestToAddProjectMember?: RequestToAddProjectMemberOmit
     viewer?: ViewerOmit
+    reminder?: ReminderOmit
+    sheet?: SheetOmit
+    cell?: CellOmit
+    sheetSnapshot?: SheetSnapshotOmit
   }
 
   /* Types for Logging */
@@ -3925,6 +4228,7 @@ export namespace Prisma {
     reviews: number
     requestsToAddProjectMember: number
     submitted: number
+    reminders: number
   }
 
   export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3934,6 +4238,7 @@ export namespace Prisma {
     reviews?: boolean | ProjectCountOutputTypeCountReviewsArgs
     requestsToAddProjectMember?: boolean | ProjectCountOutputTypeCountRequestsToAddProjectMemberArgs
     submitted?: boolean | ProjectCountOutputTypeCountSubmittedArgs
+    reminders?: boolean | ProjectCountOutputTypeCountRemindersArgs
   }
 
   // Custom InputTypes
@@ -3989,35 +4294,11 @@ export namespace Prisma {
     where?: SubmittedWhereInput
   }
 
-
   /**
-   * Count Type SheetCountOutputType
+   * ProjectCountOutputType without action
    */
-
-  export type SheetCountOutputType = {
-    submitted: number
-  }
-
-  export type SheetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    submitted?: boolean | SheetCountOutputTypeCountSubmittedArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * SheetCountOutputType without action
-   */
-  export type SheetCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SheetCountOutputType
-     */
-    select?: SheetCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * SheetCountOutputType without action
-   */
-  export type SheetCountOutputTypeCountSubmittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SubmittedWhereInput
+  export type ProjectCountOutputTypeCountRemindersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReminderWhereInput
   }
 
 
@@ -4067,6 +4348,46 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ActivityWhereInput
+  }
+
+
+  /**
+   * Count Type SheetCountOutputType
+   */
+
+  export type SheetCountOutputType = {
+    cells: number
+    snapshots: number
+  }
+
+  export type SheetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cells?: boolean | SheetCountOutputTypeCountCellsArgs
+    snapshots?: boolean | SheetCountOutputTypeCountSnapshotsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SheetCountOutputType without action
+   */
+  export type SheetCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetCountOutputType
+     */
+    select?: SheetCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SheetCountOutputType without action
+   */
+  export type SheetCountOutputTypeCountCellsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CellWhereInput
+  }
+
+  /**
+   * SheetCountOutputType without action
+   */
+  export type SheetCountOutputTypeCountSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SheetSnapshotWhereInput
   }
 
 
@@ -11118,6 +11439,7 @@ export namespace Prisma {
   export type NotificationMinAggregateOutputType = {
     id: string | null
     senderId: string | null
+    projectId: string | null
     context: string | null
     type: string | null
     isRead: boolean | null
@@ -11128,6 +11450,7 @@ export namespace Prisma {
   export type NotificationMaxAggregateOutputType = {
     id: string | null
     senderId: string | null
+    projectId: string | null
     context: string | null
     type: string | null
     isRead: boolean | null
@@ -11139,6 +11462,7 @@ export namespace Prisma {
     id: number
     senderId: number
     receiverIds: number
+    projectId: number
     context: number
     type: number
     isRead: number
@@ -11151,6 +11475,7 @@ export namespace Prisma {
   export type NotificationMinAggregateInputType = {
     id?: true
     senderId?: true
+    projectId?: true
     context?: true
     type?: true
     isRead?: true
@@ -11161,6 +11486,7 @@ export namespace Prisma {
   export type NotificationMaxAggregateInputType = {
     id?: true
     senderId?: true
+    projectId?: true
     context?: true
     type?: true
     isRead?: true
@@ -11172,6 +11498,7 @@ export namespace Prisma {
     id?: true
     senderId?: true
     receiverIds?: true
+    projectId?: true
     context?: true
     type?: true
     isRead?: true
@@ -11256,6 +11583,7 @@ export namespace Prisma {
     id: string
     senderId: string
     receiverIds: string[]
+    projectId: string | null
     context: string
     type: string
     isRead: boolean
@@ -11284,6 +11612,7 @@ export namespace Prisma {
     id?: boolean
     senderId?: boolean
     receiverIds?: boolean
+    projectId?: boolean
     context?: boolean
     type?: boolean
     isRead?: boolean
@@ -11297,6 +11626,7 @@ export namespace Prisma {
     id?: boolean
     senderId?: boolean
     receiverIds?: boolean
+    projectId?: boolean
     context?: boolean
     type?: boolean
     isRead?: boolean
@@ -11308,6 +11638,7 @@ export namespace Prisma {
     id?: boolean
     senderId?: boolean
     receiverIds?: boolean
+    projectId?: boolean
     context?: boolean
     type?: boolean
     isRead?: boolean
@@ -11319,6 +11650,7 @@ export namespace Prisma {
     id?: boolean
     senderId?: boolean
     receiverIds?: boolean
+    projectId?: boolean
     context?: boolean
     type?: boolean
     isRead?: boolean
@@ -11326,7 +11658,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senderId" | "receiverIds" | "context" | "type" | "isRead" | "createdAt" | "updatedAt", ExtArgs["result"]["notification"]>
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senderId" | "receiverIds" | "projectId" | "context" | "type" | "isRead" | "createdAt" | "updatedAt", ExtArgs["result"]["notification"]>
   export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     provisions?: boolean | Notification$provisionsArgs<ExtArgs>
     _count?: boolean | NotificationCountOutputTypeDefaultArgs<ExtArgs>
@@ -11343,6 +11675,7 @@ export namespace Prisma {
       id: string
       senderId: string
       receiverIds: string[]
+      projectId: string | null
       context: string
       type: string
       isRead: boolean
@@ -11775,6 +12108,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Notification", 'String'>
     readonly senderId: FieldRef<"Notification", 'String'>
     readonly receiverIds: FieldRef<"Notification", 'String[]'>
+    readonly projectId: FieldRef<"Notification", 'String'>
     readonly context: FieldRef<"Notification", 'String'>
     readonly type: FieldRef<"Notification", 'String'>
     readonly isRead: FieldRef<"Notification", 'Boolean'>
@@ -20993,14 +21327,12 @@ export namespace Prisma {
   }
 
   export type ProjectAvgAggregateOutputType = {
-    beforeSubmitData: number | null
     progress: number | null
     latitude: number | null
     longitude: number | null
   }
 
   export type ProjectSumAggregateOutputType = {
-    beforeSubmitData: number | null
     progress: number | null
     latitude: number | null
     longitude: number | null
@@ -21010,11 +21342,7 @@ export namespace Prisma {
     id: string | null
     programId: string | null
     name: string | null
-    uploadbeforeday: string | null
-    uploadCycle: $Enums.ProjectCycle | null
     description: string | null
-    dataReceivedTime: string | null
-    beforeSubmitData: number | null
     status: $Enums.ProjectStatus | null
     priority: $Enums.Priority | null
     deadline: Date | null
@@ -21034,11 +21362,7 @@ export namespace Prisma {
     id: string | null
     programId: string | null
     name: string | null
-    uploadbeforeday: string | null
-    uploadCycle: $Enums.ProjectCycle | null
     description: string | null
-    dataReceivedTime: string | null
-    beforeSubmitData: number | null
     status: $Enums.ProjectStatus | null
     priority: $Enums.Priority | null
     deadline: Date | null
@@ -21058,13 +21382,7 @@ export namespace Prisma {
     id: number
     programId: number
     name: number
-    uploadbeforeday: number
-    uploadCycle: number
     description: number
-    dataReceivedTime: number
-    beforeSubmitData: number
-    weakuploadData: number
-    monthlyuploadData: number
     status: number
     priority: number
     deadline: number
@@ -21084,14 +21402,12 @@ export namespace Prisma {
 
 
   export type ProjectAvgAggregateInputType = {
-    beforeSubmitData?: true
     progress?: true
     latitude?: true
     longitude?: true
   }
 
   export type ProjectSumAggregateInputType = {
-    beforeSubmitData?: true
     progress?: true
     latitude?: true
     longitude?: true
@@ -21101,11 +21417,7 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-    uploadbeforeday?: true
-    uploadCycle?: true
     description?: true
-    dataReceivedTime?: true
-    beforeSubmitData?: true
     status?: true
     priority?: true
     deadline?: true
@@ -21125,11 +21437,7 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-    uploadbeforeday?: true
-    uploadCycle?: true
     description?: true
-    dataReceivedTime?: true
-    beforeSubmitData?: true
     status?: true
     priority?: true
     deadline?: true
@@ -21149,13 +21457,7 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-    uploadbeforeday?: true
-    uploadCycle?: true
     description?: true
-    dataReceivedTime?: true
-    beforeSubmitData?: true
-    weakuploadData?: true
-    monthlyuploadData?: true
     status?: true
     priority?: true
     deadline?: true
@@ -21263,13 +21565,7 @@ export namespace Prisma {
     id: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime: string | null
-    beforeSubmitData: number | null
-    weakuploadData: string[]
-    monthlyuploadData: string[]
     status: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date
@@ -21309,13 +21605,7 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-    uploadbeforeday?: boolean
-    uploadCycle?: boolean
     description?: boolean
-    dataReceivedTime?: boolean
-    beforeSubmitData?: boolean
-    weakuploadData?: boolean
-    monthlyuploadData?: boolean
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -21338,6 +21628,7 @@ export namespace Prisma {
     reviews?: boolean | Project$reviewsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Project$requestsToAddProjectMemberArgs<ExtArgs>
     submitted?: boolean | Project$submittedArgs<ExtArgs>
+    reminders?: boolean | Project$remindersArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
@@ -21345,13 +21636,7 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-    uploadbeforeday?: boolean
-    uploadCycle?: boolean
     description?: boolean
-    dataReceivedTime?: boolean
-    beforeSubmitData?: boolean
-    weakuploadData?: boolean
-    monthlyuploadData?: boolean
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -21374,13 +21659,7 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-    uploadbeforeday?: boolean
-    uploadCycle?: boolean
     description?: boolean
-    dataReceivedTime?: boolean
-    beforeSubmitData?: boolean
-    weakuploadData?: boolean
-    monthlyuploadData?: boolean
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -21403,13 +21682,7 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-    uploadbeforeday?: boolean
-    uploadCycle?: boolean
     description?: boolean
-    dataReceivedTime?: boolean
-    beforeSubmitData?: boolean
-    weakuploadData?: boolean
-    monthlyuploadData?: boolean
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -21426,7 +21699,7 @@ export namespace Prisma {
     longitude?: boolean
   }
 
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "uploadbeforeday" | "uploadCycle" | "description" | "dataReceivedTime" | "beforeSubmitData" | "weakuploadData" | "monthlyuploadData" | "status" | "priority" | "deadline" | "managerId" | "startDate" | "progress" | "chartList" | "estimatedCompletedDate" | "currentRate" | "budget" | "createdAt" | "updatedAt" | "latitude" | "longitude", ExtArgs["result"]["project"]>
+  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "description" | "status" | "priority" | "deadline" | "managerId" | "startDate" | "progress" | "chartList" | "estimatedCompletedDate" | "currentRate" | "budget" | "createdAt" | "updatedAt" | "latitude" | "longitude", ExtArgs["result"]["project"]>
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     program?: boolean | ProgramDefaultArgs<ExtArgs>
     manager?: boolean | ManagerDefaultArgs<ExtArgs>
@@ -21436,6 +21709,7 @@ export namespace Prisma {
     reviews?: boolean | Project$reviewsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Project$requestsToAddProjectMemberArgs<ExtArgs>
     submitted?: boolean | Project$submittedArgs<ExtArgs>
+    reminders?: boolean | Project$remindersArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -21458,18 +21732,13 @@ export namespace Prisma {
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       requestsToAddProjectMember: Prisma.$RequestToAddProjectMemberPayload<ExtArgs>[]
       submitted: Prisma.$SubmittedPayload<ExtArgs>[]
+      reminders: Prisma.$ReminderPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       programId: string
       name: string
-      uploadbeforeday: string
-      uploadCycle: $Enums.ProjectCycle
       description: string
-      dataReceivedTime: string | null
-      beforeSubmitData: number | null
-      weakuploadData: string[]
-      monthlyuploadData: string[]
       status: $Enums.ProjectStatus
       priority: $Enums.Priority
       deadline: Date
@@ -21886,6 +22155,7 @@ export namespace Prisma {
     reviews<T extends Project$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Project$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     requestsToAddProjectMember<T extends Project$requestsToAddProjectMemberArgs<ExtArgs> = {}>(args?: Subset<T, Project$requestsToAddProjectMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestToAddProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     submitted<T extends Project$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Project$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reminders<T extends Project$remindersArgs<ExtArgs> = {}>(args?: Subset<T, Project$remindersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21918,13 +22188,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Project", 'String'>
     readonly programId: FieldRef<"Project", 'String'>
     readonly name: FieldRef<"Project", 'String'>
-    readonly uploadbeforeday: FieldRef<"Project", 'String'>
-    readonly uploadCycle: FieldRef<"Project", 'ProjectCycle'>
     readonly description: FieldRef<"Project", 'String'>
-    readonly dataReceivedTime: FieldRef<"Project", 'String'>
-    readonly beforeSubmitData: FieldRef<"Project", 'Int'>
-    readonly weakuploadData: FieldRef<"Project", 'String[]'>
-    readonly monthlyuploadData: FieldRef<"Project", 'String[]'>
     readonly status: FieldRef<"Project", 'ProjectStatus'>
     readonly priority: FieldRef<"Project", 'Priority'>
     readonly deadline: FieldRef<"Project", 'DateTime'>
@@ -22476,6 +22740,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SubmittedScalarFieldEnum | SubmittedScalarFieldEnum[]
+  }
+
+  /**
+   * Project.reminders
+   */
+  export type Project$remindersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    where?: ReminderWhereInput
+    orderBy?: ReminderOrderByWithRelationInput | ReminderOrderByWithRelationInput[]
+    cursor?: ReminderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReminderScalarFieldEnum | ReminderScalarFieldEnum[]
   }
 
   /**
@@ -24635,1063 +24923,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Sheet
-   */
-
-  export type AggregateSheet = {
-    _count: SheetCountAggregateOutputType | null
-    _min: SheetMinAggregateOutputType | null
-    _max: SheetMaxAggregateOutputType | null
-  }
-
-  export type SheetMinAggregateOutputType = {
-    id: string | null
-    name: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type SheetMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type SheetCountAggregateOutputType = {
-    id: number
-    name: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type SheetMinAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type SheetMaxAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type SheetCountAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type SheetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Sheet to aggregate.
-     */
-    where?: SheetWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Sheets to fetch.
-     */
-    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: SheetWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Sheets from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Sheets.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Sheets
-    **/
-    _count?: true | SheetCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: SheetMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: SheetMaxAggregateInputType
-  }
-
-  export type GetSheetAggregateType<T extends SheetAggregateArgs> = {
-        [P in keyof T & keyof AggregateSheet]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateSheet[P]>
-      : GetScalarType<T[P], AggregateSheet[P]>
-  }
-
-
-
-
-  export type SheetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SheetWhereInput
-    orderBy?: SheetOrderByWithAggregationInput | SheetOrderByWithAggregationInput[]
-    by: SheetScalarFieldEnum[] | SheetScalarFieldEnum
-    having?: SheetScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: SheetCountAggregateInputType | true
-    _min?: SheetMinAggregateInputType
-    _max?: SheetMaxAggregateInputType
-  }
-
-  export type SheetGroupByOutputType = {
-    id: string
-    name: string
-    createdAt: Date
-    updatedAt: Date
-    _count: SheetCountAggregateOutputType | null
-    _min: SheetMinAggregateOutputType | null
-    _max: SheetMaxAggregateOutputType | null
-  }
-
-  type GetSheetGroupByPayload<T extends SheetGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<SheetGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof SheetGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], SheetGroupByOutputType[P]>
-            : GetScalarType<T[P], SheetGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type SheetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    submitted?: boolean | Sheet$submittedArgs<ExtArgs>
-    _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["sheet"]>
-
-  export type SheetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["sheet"]>
-
-  export type SheetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["sheet"]>
-
-  export type SheetSelectScalar = {
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type SheetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["sheet"]>
-  export type SheetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    submitted?: boolean | Sheet$submittedArgs<ExtArgs>
-    _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type SheetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $SheetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Sheet"
-    objects: {
-      submitted: Prisma.$SubmittedPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["sheet"]>
-    composites: {}
-  }
-
-  type SheetGetPayload<S extends boolean | null | undefined | SheetDefaultArgs> = $Result.GetResult<Prisma.$SheetPayload, S>
-
-  type SheetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SheetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SheetCountAggregateInputType | true
-    }
-
-  export interface SheetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Sheet'], meta: { name: 'Sheet' } }
-    /**
-     * Find zero or one Sheet that matches the filter.
-     * @param {SheetFindUniqueArgs} args - Arguments to find a Sheet
-     * @example
-     * // Get one Sheet
-     * const sheet = await prisma.sheet.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends SheetFindUniqueArgs>(args: SelectSubset<T, SheetFindUniqueArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Sheet that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {SheetFindUniqueOrThrowArgs} args - Arguments to find a Sheet
-     * @example
-     * // Get one Sheet
-     * const sheet = await prisma.sheet.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends SheetFindUniqueOrThrowArgs>(args: SelectSubset<T, SheetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Sheet that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SheetFindFirstArgs} args - Arguments to find a Sheet
-     * @example
-     * // Get one Sheet
-     * const sheet = await prisma.sheet.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends SheetFindFirstArgs>(args?: SelectSubset<T, SheetFindFirstArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Sheet that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SheetFindFirstOrThrowArgs} args - Arguments to find a Sheet
-     * @example
-     * // Get one Sheet
-     * const sheet = await prisma.sheet.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends SheetFindFirstOrThrowArgs>(args?: SelectSubset<T, SheetFindFirstOrThrowArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Sheets that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SheetFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Sheets
-     * const sheets = await prisma.sheet.findMany()
-     * 
-     * // Get first 10 Sheets
-     * const sheets = await prisma.sheet.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const sheetWithIdOnly = await prisma.sheet.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends SheetFindManyArgs>(args?: SelectSubset<T, SheetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Sheet.
-     * @param {SheetCreateArgs} args - Arguments to create a Sheet.
-     * @example
-     * // Create one Sheet
-     * const Sheet = await prisma.sheet.create({
-     *   data: {
-     *     // ... data to create a Sheet
-     *   }
-     * })
-     * 
-     */
-    create<T extends SheetCreateArgs>(args: SelectSubset<T, SheetCreateArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Sheets.
-     * @param {SheetCreateManyArgs} args - Arguments to create many Sheets.
-     * @example
-     * // Create many Sheets
-     * const sheet = await prisma.sheet.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends SheetCreateManyArgs>(args?: SelectSubset<T, SheetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Sheets and returns the data saved in the database.
-     * @param {SheetCreateManyAndReturnArgs} args - Arguments to create many Sheets.
-     * @example
-     * // Create many Sheets
-     * const sheet = await prisma.sheet.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Sheets and only return the `id`
-     * const sheetWithIdOnly = await prisma.sheet.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends SheetCreateManyAndReturnArgs>(args?: SelectSubset<T, SheetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Sheet.
-     * @param {SheetDeleteArgs} args - Arguments to delete one Sheet.
-     * @example
-     * // Delete one Sheet
-     * const Sheet = await prisma.sheet.delete({
-     *   where: {
-     *     // ... filter to delete one Sheet
-     *   }
-     * })
-     * 
-     */
-    delete<T extends SheetDeleteArgs>(args: SelectSubset<T, SheetDeleteArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Sheet.
-     * @param {SheetUpdateArgs} args - Arguments to update one Sheet.
-     * @example
-     * // Update one Sheet
-     * const sheet = await prisma.sheet.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends SheetUpdateArgs>(args: SelectSubset<T, SheetUpdateArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Sheets.
-     * @param {SheetDeleteManyArgs} args - Arguments to filter Sheets to delete.
-     * @example
-     * // Delete a few Sheets
-     * const { count } = await prisma.sheet.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends SheetDeleteManyArgs>(args?: SelectSubset<T, SheetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Sheets.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SheetUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Sheets
-     * const sheet = await prisma.sheet.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends SheetUpdateManyArgs>(args: SelectSubset<T, SheetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Sheets and returns the data updated in the database.
-     * @param {SheetUpdateManyAndReturnArgs} args - Arguments to update many Sheets.
-     * @example
-     * // Update many Sheets
-     * const sheet = await prisma.sheet.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Sheets and only return the `id`
-     * const sheetWithIdOnly = await prisma.sheet.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends SheetUpdateManyAndReturnArgs>(args: SelectSubset<T, SheetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Sheet.
-     * @param {SheetUpsertArgs} args - Arguments to update or create a Sheet.
-     * @example
-     * // Update or create a Sheet
-     * const sheet = await prisma.sheet.upsert({
-     *   create: {
-     *     // ... data to create a Sheet
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Sheet we want to update
-     *   }
-     * })
-     */
-    upsert<T extends SheetUpsertArgs>(args: SelectSubset<T, SheetUpsertArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Sheets.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SheetCountArgs} args - Arguments to filter Sheets to count.
-     * @example
-     * // Count the number of Sheets
-     * const count = await prisma.sheet.count({
-     *   where: {
-     *     // ... the filter for the Sheets we want to count
-     *   }
-     * })
-    **/
-    count<T extends SheetCountArgs>(
-      args?: Subset<T, SheetCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], SheetCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Sheet.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SheetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends SheetAggregateArgs>(args: Subset<T, SheetAggregateArgs>): Prisma.PrismaPromise<GetSheetAggregateType<T>>
-
-    /**
-     * Group by Sheet.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SheetGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends SheetGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SheetGroupByArgs['orderBy'] }
-        : { orderBy?: SheetGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, SheetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSheetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Sheet model
-   */
-  readonly fields: SheetFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Sheet.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__SheetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    submitted<T extends Sheet$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Sheet model
-   */
-  interface SheetFieldRefs {
-    readonly id: FieldRef<"Sheet", 'String'>
-    readonly name: FieldRef<"Sheet", 'String'>
-    readonly createdAt: FieldRef<"Sheet", 'DateTime'>
-    readonly updatedAt: FieldRef<"Sheet", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Sheet findUnique
-   */
-  export type SheetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * Filter, which Sheet to fetch.
-     */
-    where: SheetWhereUniqueInput
-  }
-
-  /**
-   * Sheet findUniqueOrThrow
-   */
-  export type SheetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * Filter, which Sheet to fetch.
-     */
-    where: SheetWhereUniqueInput
-  }
-
-  /**
-   * Sheet findFirst
-   */
-  export type SheetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * Filter, which Sheet to fetch.
-     */
-    where?: SheetWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Sheets to fetch.
-     */
-    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Sheets.
-     */
-    cursor?: SheetWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Sheets from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Sheets.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Sheets.
-     */
-    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
-  }
-
-  /**
-   * Sheet findFirstOrThrow
-   */
-  export type SheetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * Filter, which Sheet to fetch.
-     */
-    where?: SheetWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Sheets to fetch.
-     */
-    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Sheets.
-     */
-    cursor?: SheetWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Sheets from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Sheets.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Sheets.
-     */
-    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
-  }
-
-  /**
-   * Sheet findMany
-   */
-  export type SheetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * Filter, which Sheets to fetch.
-     */
-    where?: SheetWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Sheets to fetch.
-     */
-    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Sheets.
-     */
-    cursor?: SheetWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Sheets from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Sheets.
-     */
-    skip?: number
-    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
-  }
-
-  /**
-   * Sheet create
-   */
-  export type SheetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Sheet.
-     */
-    data: XOR<SheetCreateInput, SheetUncheckedCreateInput>
-  }
-
-  /**
-   * Sheet createMany
-   */
-  export type SheetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Sheets.
-     */
-    data: SheetCreateManyInput | SheetCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Sheet createManyAndReturn
-   */
-  export type SheetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * The data used to create many Sheets.
-     */
-    data: SheetCreateManyInput | SheetCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Sheet update
-   */
-  export type SheetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Sheet.
-     */
-    data: XOR<SheetUpdateInput, SheetUncheckedUpdateInput>
-    /**
-     * Choose, which Sheet to update.
-     */
-    where: SheetWhereUniqueInput
-  }
-
-  /**
-   * Sheet updateMany
-   */
-  export type SheetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Sheets.
-     */
-    data: XOR<SheetUpdateManyMutationInput, SheetUncheckedUpdateManyInput>
-    /**
-     * Filter which Sheets to update
-     */
-    where?: SheetWhereInput
-    /**
-     * Limit how many Sheets to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Sheet updateManyAndReturn
-   */
-  export type SheetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * The data used to update Sheets.
-     */
-    data: XOR<SheetUpdateManyMutationInput, SheetUncheckedUpdateManyInput>
-    /**
-     * Filter which Sheets to update
-     */
-    where?: SheetWhereInput
-    /**
-     * Limit how many Sheets to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Sheet upsert
-   */
-  export type SheetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Sheet to update in case it exists.
-     */
-    where: SheetWhereUniqueInput
-    /**
-     * In case the Sheet found by the `where` argument doesn't exist, create a new Sheet with this data.
-     */
-    create: XOR<SheetCreateInput, SheetUncheckedCreateInput>
-    /**
-     * In case the Sheet was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<SheetUpdateInput, SheetUncheckedUpdateInput>
-  }
-
-  /**
-   * Sheet delete
-   */
-  export type SheetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-    /**
-     * Filter which Sheet to delete.
-     */
-    where: SheetWhereUniqueInput
-  }
-
-  /**
-   * Sheet deleteMany
-   */
-  export type SheetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Sheets to delete
-     */
-    where?: SheetWhereInput
-    /**
-     * Limit how many Sheets to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Sheet.submitted
-   */
-  export type Sheet$submittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Submitted
-     */
-    select?: SubmittedSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Submitted
-     */
-    omit?: SubmittedOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SubmittedInclude<ExtArgs> | null
-    where?: SubmittedWhereInput
-    orderBy?: SubmittedOrderByWithRelationInput | SubmittedOrderByWithRelationInput[]
-    cursor?: SubmittedWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SubmittedScalarFieldEnum | SubmittedScalarFieldEnum[]
-  }
-
-  /**
-   * Sheet without action
-   */
-  export type SheetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Sheet
-     */
-    select?: SheetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Sheet
-     */
-    omit?: SheetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SheetInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model SubmissionReturn
    */
 
@@ -26921,7 +26152,6 @@ export namespace Prisma {
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    sheet?: boolean | SheetDefaultArgs<ExtArgs>
     submissionReturn?: boolean | Submitted$submissionReturnArgs<ExtArgs>
   }, ExtArgs["result"]["submitted"]>
 
@@ -26937,7 +26167,6 @@ export namespace Prisma {
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    sheet?: boolean | SheetDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["submitted"]>
 
   export type SubmittedSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -26952,7 +26181,6 @@ export namespace Prisma {
     updatedAt?: boolean
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    sheet?: boolean | SheetDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["submitted"]>
 
   export type SubmittedSelectScalar = {
@@ -26971,18 +26199,15 @@ export namespace Prisma {
   export type SubmittedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    sheet?: boolean | SheetDefaultArgs<ExtArgs>
     submissionReturn?: boolean | Submitted$submissionReturnArgs<ExtArgs>
   }
   export type SubmittedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    sheet?: boolean | SheetDefaultArgs<ExtArgs>
   }
   export type SubmittedIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | EmployeeDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
-    sheet?: boolean | SheetDefaultArgs<ExtArgs>
   }
 
   export type $SubmittedPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -26990,7 +26215,6 @@ export namespace Prisma {
     objects: {
       employee: Prisma.$EmployeePayload<ExtArgs>
       project: Prisma.$ProjectPayload<ExtArgs>
-      sheet: Prisma.$SheetPayload<ExtArgs>
       submissionReturn: Prisma.$SubmissionReturnPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -27399,7 +26623,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    sheet<T extends SheetDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SheetDefaultArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     submissionReturn<T extends Submitted$submissionReturnArgs<ExtArgs> = {}>(args?: Subset<T, Submitted$submissionReturnArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -38268,6 +37491,4420 @@ export namespace Prisma {
 
 
   /**
+   * Model Reminder
+   */
+
+  export type AggregateReminder = {
+    _count: ReminderCountAggregateOutputType | null
+    _avg: ReminderAvgAggregateOutputType | null
+    _sum: ReminderSumAggregateOutputType | null
+    _min: ReminderMinAggregateOutputType | null
+    _max: ReminderMaxAggregateOutputType | null
+  }
+
+  export type ReminderAvgAggregateOutputType = {
+    repeatOnDates: number | null
+    remindBefore: number | null
+  }
+
+  export type ReminderSumAggregateOutputType = {
+    repeatOnDates: number[]
+    remindBefore: number | null
+  }
+
+  export type ReminderMinAggregateOutputType = {
+    id: string | null
+    message: string | null
+    nextTriggerAt: Date | null
+    repeatEvery: $Enums.RepeatInterval | null
+    isActive: boolean | null
+    projectId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    remindBefore: number | null
+  }
+
+  export type ReminderMaxAggregateOutputType = {
+    id: string | null
+    message: string | null
+    nextTriggerAt: Date | null
+    repeatEvery: $Enums.RepeatInterval | null
+    isActive: boolean | null
+    projectId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    remindBefore: number | null
+  }
+
+  export type ReminderCountAggregateOutputType = {
+    id: number
+    message: number
+    nextTriggerAt: number
+    repeatEvery: number
+    isActive: number
+    projectId: number
+    createdAt: number
+    updatedAt: number
+    repeatOnDays: number
+    repeatOnDates: number
+    remindBefore: number
+    _all: number
+  }
+
+
+  export type ReminderAvgAggregateInputType = {
+    repeatOnDates?: true
+    remindBefore?: true
+  }
+
+  export type ReminderSumAggregateInputType = {
+    repeatOnDates?: true
+    remindBefore?: true
+  }
+
+  export type ReminderMinAggregateInputType = {
+    id?: true
+    message?: true
+    nextTriggerAt?: true
+    repeatEvery?: true
+    isActive?: true
+    projectId?: true
+    createdAt?: true
+    updatedAt?: true
+    remindBefore?: true
+  }
+
+  export type ReminderMaxAggregateInputType = {
+    id?: true
+    message?: true
+    nextTriggerAt?: true
+    repeatEvery?: true
+    isActive?: true
+    projectId?: true
+    createdAt?: true
+    updatedAt?: true
+    remindBefore?: true
+  }
+
+  export type ReminderCountAggregateInputType = {
+    id?: true
+    message?: true
+    nextTriggerAt?: true
+    repeatEvery?: true
+    isActive?: true
+    projectId?: true
+    createdAt?: true
+    updatedAt?: true
+    repeatOnDays?: true
+    repeatOnDates?: true
+    remindBefore?: true
+    _all?: true
+  }
+
+  export type ReminderAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Reminder to aggregate.
+     */
+    where?: ReminderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reminders to fetch.
+     */
+    orderBy?: ReminderOrderByWithRelationInput | ReminderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReminderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reminders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reminders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Reminders
+    **/
+    _count?: true | ReminderCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ReminderAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ReminderSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReminderMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReminderMaxAggregateInputType
+  }
+
+  export type GetReminderAggregateType<T extends ReminderAggregateArgs> = {
+        [P in keyof T & keyof AggregateReminder]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReminder[P]>
+      : GetScalarType<T[P], AggregateReminder[P]>
+  }
+
+
+
+
+  export type ReminderGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReminderWhereInput
+    orderBy?: ReminderOrderByWithAggregationInput | ReminderOrderByWithAggregationInput[]
+    by: ReminderScalarFieldEnum[] | ReminderScalarFieldEnum
+    having?: ReminderScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReminderCountAggregateInputType | true
+    _avg?: ReminderAvgAggregateInputType
+    _sum?: ReminderSumAggregateInputType
+    _min?: ReminderMinAggregateInputType
+    _max?: ReminderMaxAggregateInputType
+  }
+
+  export type ReminderGroupByOutputType = {
+    id: string
+    message: string
+    nextTriggerAt: Date | null
+    repeatEvery: $Enums.RepeatInterval | null
+    isActive: boolean
+    projectId: string
+    createdAt: Date
+    updatedAt: Date
+    repeatOnDays: $Enums.DayOfWeek[]
+    repeatOnDates: number[]
+    remindBefore: number | null
+    _count: ReminderCountAggregateOutputType | null
+    _avg: ReminderAvgAggregateOutputType | null
+    _sum: ReminderSumAggregateOutputType | null
+    _min: ReminderMinAggregateOutputType | null
+    _max: ReminderMaxAggregateOutputType | null
+  }
+
+  type GetReminderGroupByPayload<T extends ReminderGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReminderGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReminderGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReminderGroupByOutputType[P]>
+            : GetScalarType<T[P], ReminderGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReminderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    nextTriggerAt?: boolean
+    repeatEvery?: boolean
+    isActive?: boolean
+    projectId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repeatOnDays?: boolean
+    repeatOnDates?: boolean
+    remindBefore?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["reminder"]>
+
+  export type ReminderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    nextTriggerAt?: boolean
+    repeatEvery?: boolean
+    isActive?: boolean
+    projectId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repeatOnDays?: boolean
+    repeatOnDates?: boolean
+    remindBefore?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["reminder"]>
+
+  export type ReminderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    nextTriggerAt?: boolean
+    repeatEvery?: boolean
+    isActive?: boolean
+    projectId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repeatOnDays?: boolean
+    repeatOnDates?: boolean
+    remindBefore?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["reminder"]>
+
+  export type ReminderSelectScalar = {
+    id?: boolean
+    message?: boolean
+    nextTriggerAt?: boolean
+    repeatEvery?: boolean
+    isActive?: boolean
+    projectId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repeatOnDays?: boolean
+    repeatOnDates?: boolean
+    remindBefore?: boolean
+  }
+
+  export type ReminderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "message" | "nextTriggerAt" | "repeatEvery" | "isActive" | "projectId" | "createdAt" | "updatedAt" | "repeatOnDays" | "repeatOnDates" | "remindBefore", ExtArgs["result"]["reminder"]>
+  export type ReminderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+  export type ReminderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+  export type ReminderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+
+  export type $ReminderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Reminder"
+    objects: {
+      project: Prisma.$ProjectPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      message: string
+      nextTriggerAt: Date | null
+      repeatEvery: $Enums.RepeatInterval | null
+      isActive: boolean
+      projectId: string
+      createdAt: Date
+      updatedAt: Date
+      repeatOnDays: $Enums.DayOfWeek[]
+      repeatOnDates: number[]
+      remindBefore: number | null
+    }, ExtArgs["result"]["reminder"]>
+    composites: {}
+  }
+
+  type ReminderGetPayload<S extends boolean | null | undefined | ReminderDefaultArgs> = $Result.GetResult<Prisma.$ReminderPayload, S>
+
+  type ReminderCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReminderFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReminderCountAggregateInputType | true
+    }
+
+  export interface ReminderDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Reminder'], meta: { name: 'Reminder' } }
+    /**
+     * Find zero or one Reminder that matches the filter.
+     * @param {ReminderFindUniqueArgs} args - Arguments to find a Reminder
+     * @example
+     * // Get one Reminder
+     * const reminder = await prisma.reminder.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReminderFindUniqueArgs>(args: SelectSubset<T, ReminderFindUniqueArgs<ExtArgs>>): Prisma__ReminderClient<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Reminder that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReminderFindUniqueOrThrowArgs} args - Arguments to find a Reminder
+     * @example
+     * // Get one Reminder
+     * const reminder = await prisma.reminder.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReminderFindUniqueOrThrowArgs>(args: SelectSubset<T, ReminderFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReminderClient<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Reminder that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReminderFindFirstArgs} args - Arguments to find a Reminder
+     * @example
+     * // Get one Reminder
+     * const reminder = await prisma.reminder.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReminderFindFirstArgs>(args?: SelectSubset<T, ReminderFindFirstArgs<ExtArgs>>): Prisma__ReminderClient<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Reminder that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReminderFindFirstOrThrowArgs} args - Arguments to find a Reminder
+     * @example
+     * // Get one Reminder
+     * const reminder = await prisma.reminder.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReminderFindFirstOrThrowArgs>(args?: SelectSubset<T, ReminderFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReminderClient<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Reminders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReminderFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Reminders
+     * const reminders = await prisma.reminder.findMany()
+     * 
+     * // Get first 10 Reminders
+     * const reminders = await prisma.reminder.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const reminderWithIdOnly = await prisma.reminder.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReminderFindManyArgs>(args?: SelectSubset<T, ReminderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Reminder.
+     * @param {ReminderCreateArgs} args - Arguments to create a Reminder.
+     * @example
+     * // Create one Reminder
+     * const Reminder = await prisma.reminder.create({
+     *   data: {
+     *     // ... data to create a Reminder
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReminderCreateArgs>(args: SelectSubset<T, ReminderCreateArgs<ExtArgs>>): Prisma__ReminderClient<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Reminders.
+     * @param {ReminderCreateManyArgs} args - Arguments to create many Reminders.
+     * @example
+     * // Create many Reminders
+     * const reminder = await prisma.reminder.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReminderCreateManyArgs>(args?: SelectSubset<T, ReminderCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Reminders and returns the data saved in the database.
+     * @param {ReminderCreateManyAndReturnArgs} args - Arguments to create many Reminders.
+     * @example
+     * // Create many Reminders
+     * const reminder = await prisma.reminder.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Reminders and only return the `id`
+     * const reminderWithIdOnly = await prisma.reminder.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReminderCreateManyAndReturnArgs>(args?: SelectSubset<T, ReminderCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Reminder.
+     * @param {ReminderDeleteArgs} args - Arguments to delete one Reminder.
+     * @example
+     * // Delete one Reminder
+     * const Reminder = await prisma.reminder.delete({
+     *   where: {
+     *     // ... filter to delete one Reminder
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReminderDeleteArgs>(args: SelectSubset<T, ReminderDeleteArgs<ExtArgs>>): Prisma__ReminderClient<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Reminder.
+     * @param {ReminderUpdateArgs} args - Arguments to update one Reminder.
+     * @example
+     * // Update one Reminder
+     * const reminder = await prisma.reminder.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReminderUpdateArgs>(args: SelectSubset<T, ReminderUpdateArgs<ExtArgs>>): Prisma__ReminderClient<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Reminders.
+     * @param {ReminderDeleteManyArgs} args - Arguments to filter Reminders to delete.
+     * @example
+     * // Delete a few Reminders
+     * const { count } = await prisma.reminder.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReminderDeleteManyArgs>(args?: SelectSubset<T, ReminderDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Reminders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReminderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Reminders
+     * const reminder = await prisma.reminder.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReminderUpdateManyArgs>(args: SelectSubset<T, ReminderUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Reminders and returns the data updated in the database.
+     * @param {ReminderUpdateManyAndReturnArgs} args - Arguments to update many Reminders.
+     * @example
+     * // Update many Reminders
+     * const reminder = await prisma.reminder.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Reminders and only return the `id`
+     * const reminderWithIdOnly = await prisma.reminder.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ReminderUpdateManyAndReturnArgs>(args: SelectSubset<T, ReminderUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Reminder.
+     * @param {ReminderUpsertArgs} args - Arguments to update or create a Reminder.
+     * @example
+     * // Update or create a Reminder
+     * const reminder = await prisma.reminder.upsert({
+     *   create: {
+     *     // ... data to create a Reminder
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Reminder we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReminderUpsertArgs>(args: SelectSubset<T, ReminderUpsertArgs<ExtArgs>>): Prisma__ReminderClient<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Reminders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReminderCountArgs} args - Arguments to filter Reminders to count.
+     * @example
+     * // Count the number of Reminders
+     * const count = await prisma.reminder.count({
+     *   where: {
+     *     // ... the filter for the Reminders we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReminderCountArgs>(
+      args?: Subset<T, ReminderCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReminderCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Reminder.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReminderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReminderAggregateArgs>(args: Subset<T, ReminderAggregateArgs>): Prisma.PrismaPromise<GetReminderAggregateType<T>>
+
+    /**
+     * Group by Reminder.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReminderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReminderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReminderGroupByArgs['orderBy'] }
+        : { orderBy?: ReminderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReminderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReminderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Reminder model
+   */
+  readonly fields: ReminderFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Reminder.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReminderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Reminder model
+   */
+  interface ReminderFieldRefs {
+    readonly id: FieldRef<"Reminder", 'String'>
+    readonly message: FieldRef<"Reminder", 'String'>
+    readonly nextTriggerAt: FieldRef<"Reminder", 'DateTime'>
+    readonly repeatEvery: FieldRef<"Reminder", 'RepeatInterval'>
+    readonly isActive: FieldRef<"Reminder", 'Boolean'>
+    readonly projectId: FieldRef<"Reminder", 'String'>
+    readonly createdAt: FieldRef<"Reminder", 'DateTime'>
+    readonly updatedAt: FieldRef<"Reminder", 'DateTime'>
+    readonly repeatOnDays: FieldRef<"Reminder", 'DayOfWeek[]'>
+    readonly repeatOnDates: FieldRef<"Reminder", 'Int[]'>
+    readonly remindBefore: FieldRef<"Reminder", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Reminder findUnique
+   */
+  export type ReminderFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * Filter, which Reminder to fetch.
+     */
+    where: ReminderWhereUniqueInput
+  }
+
+  /**
+   * Reminder findUniqueOrThrow
+   */
+  export type ReminderFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * Filter, which Reminder to fetch.
+     */
+    where: ReminderWhereUniqueInput
+  }
+
+  /**
+   * Reminder findFirst
+   */
+  export type ReminderFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * Filter, which Reminder to fetch.
+     */
+    where?: ReminderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reminders to fetch.
+     */
+    orderBy?: ReminderOrderByWithRelationInput | ReminderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Reminders.
+     */
+    cursor?: ReminderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reminders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reminders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Reminders.
+     */
+    distinct?: ReminderScalarFieldEnum | ReminderScalarFieldEnum[]
+  }
+
+  /**
+   * Reminder findFirstOrThrow
+   */
+  export type ReminderFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * Filter, which Reminder to fetch.
+     */
+    where?: ReminderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reminders to fetch.
+     */
+    orderBy?: ReminderOrderByWithRelationInput | ReminderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Reminders.
+     */
+    cursor?: ReminderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reminders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reminders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Reminders.
+     */
+    distinct?: ReminderScalarFieldEnum | ReminderScalarFieldEnum[]
+  }
+
+  /**
+   * Reminder findMany
+   */
+  export type ReminderFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * Filter, which Reminders to fetch.
+     */
+    where?: ReminderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reminders to fetch.
+     */
+    orderBy?: ReminderOrderByWithRelationInput | ReminderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Reminders.
+     */
+    cursor?: ReminderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reminders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reminders.
+     */
+    skip?: number
+    distinct?: ReminderScalarFieldEnum | ReminderScalarFieldEnum[]
+  }
+
+  /**
+   * Reminder create
+   */
+  export type ReminderCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Reminder.
+     */
+    data: XOR<ReminderCreateInput, ReminderUncheckedCreateInput>
+  }
+
+  /**
+   * Reminder createMany
+   */
+  export type ReminderCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Reminders.
+     */
+    data: ReminderCreateManyInput | ReminderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Reminder createManyAndReturn
+   */
+  export type ReminderCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * The data used to create many Reminders.
+     */
+    data: ReminderCreateManyInput | ReminderCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Reminder update
+   */
+  export type ReminderUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Reminder.
+     */
+    data: XOR<ReminderUpdateInput, ReminderUncheckedUpdateInput>
+    /**
+     * Choose, which Reminder to update.
+     */
+    where: ReminderWhereUniqueInput
+  }
+
+  /**
+   * Reminder updateMany
+   */
+  export type ReminderUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Reminders.
+     */
+    data: XOR<ReminderUpdateManyMutationInput, ReminderUncheckedUpdateManyInput>
+    /**
+     * Filter which Reminders to update
+     */
+    where?: ReminderWhereInput
+    /**
+     * Limit how many Reminders to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Reminder updateManyAndReturn
+   */
+  export type ReminderUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * The data used to update Reminders.
+     */
+    data: XOR<ReminderUpdateManyMutationInput, ReminderUncheckedUpdateManyInput>
+    /**
+     * Filter which Reminders to update
+     */
+    where?: ReminderWhereInput
+    /**
+     * Limit how many Reminders to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Reminder upsert
+   */
+  export type ReminderUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Reminder to update in case it exists.
+     */
+    where: ReminderWhereUniqueInput
+    /**
+     * In case the Reminder found by the `where` argument doesn't exist, create a new Reminder with this data.
+     */
+    create: XOR<ReminderCreateInput, ReminderUncheckedCreateInput>
+    /**
+     * In case the Reminder was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReminderUpdateInput, ReminderUncheckedUpdateInput>
+  }
+
+  /**
+   * Reminder delete
+   */
+  export type ReminderDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+    /**
+     * Filter which Reminder to delete.
+     */
+    where: ReminderWhereUniqueInput
+  }
+
+  /**
+   * Reminder deleteMany
+   */
+  export type ReminderDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Reminders to delete
+     */
+    where?: ReminderWhereInput
+    /**
+     * Limit how many Reminders to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Reminder without action
+   */
+  export type ReminderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Reminder
+     */
+    select?: ReminderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Reminder
+     */
+    omit?: ReminderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReminderInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Sheet
+   */
+
+  export type AggregateSheet = {
+    _count: SheetCountAggregateOutputType | null
+    _min: SheetMinAggregateOutputType | null
+    _max: SheetMaxAggregateOutputType | null
+  }
+
+  export type SheetMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SheetMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SheetCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SheetMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SheetMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SheetCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SheetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sheet to aggregate.
+     */
+    where?: SheetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sheets to fetch.
+     */
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SheetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sheets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sheets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Sheets
+    **/
+    _count?: true | SheetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SheetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SheetMaxAggregateInputType
+  }
+
+  export type GetSheetAggregateType<T extends SheetAggregateArgs> = {
+        [P in keyof T & keyof AggregateSheet]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSheet[P]>
+      : GetScalarType<T[P], AggregateSheet[P]>
+  }
+
+
+
+
+  export type SheetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SheetWhereInput
+    orderBy?: SheetOrderByWithAggregationInput | SheetOrderByWithAggregationInput[]
+    by: SheetScalarFieldEnum[] | SheetScalarFieldEnum
+    having?: SheetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SheetCountAggregateInputType | true
+    _min?: SheetMinAggregateInputType
+    _max?: SheetMaxAggregateInputType
+  }
+
+  export type SheetGroupByOutputType = {
+    id: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: SheetCountAggregateOutputType | null
+    _min: SheetMinAggregateOutputType | null
+    _max: SheetMaxAggregateOutputType | null
+  }
+
+  type GetSheetGroupByPayload<T extends SheetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SheetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SheetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SheetGroupByOutputType[P]>
+            : GetScalarType<T[P], SheetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SheetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    cells?: boolean | Sheet$cellsArgs<ExtArgs>
+    snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
+    _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sheet"]>
+
+  export type SheetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["sheet"]>
+
+  export type SheetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["sheet"]>
+
+  export type SheetSelectScalar = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SheetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["sheet"]>
+  export type SheetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    cells?: boolean | Sheet$cellsArgs<ExtArgs>
+    snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
+    _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SheetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SheetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Sheet"
+    objects: {
+      cells: Prisma.$CellPayload<ExtArgs>[]
+      snapshots: Prisma.$SheetSnapshotPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["sheet"]>
+    composites: {}
+  }
+
+  type SheetGetPayload<S extends boolean | null | undefined | SheetDefaultArgs> = $Result.GetResult<Prisma.$SheetPayload, S>
+
+  type SheetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SheetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SheetCountAggregateInputType | true
+    }
+
+  export interface SheetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Sheet'], meta: { name: 'Sheet' } }
+    /**
+     * Find zero or one Sheet that matches the filter.
+     * @param {SheetFindUniqueArgs} args - Arguments to find a Sheet
+     * @example
+     * // Get one Sheet
+     * const sheet = await prisma.sheet.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SheetFindUniqueArgs>(args: SelectSubset<T, SheetFindUniqueArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Sheet that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SheetFindUniqueOrThrowArgs} args - Arguments to find a Sheet
+     * @example
+     * // Get one Sheet
+     * const sheet = await prisma.sheet.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SheetFindUniqueOrThrowArgs>(args: SelectSubset<T, SheetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sheet that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetFindFirstArgs} args - Arguments to find a Sheet
+     * @example
+     * // Get one Sheet
+     * const sheet = await prisma.sheet.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SheetFindFirstArgs>(args?: SelectSubset<T, SheetFindFirstArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Sheet that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetFindFirstOrThrowArgs} args - Arguments to find a Sheet
+     * @example
+     * // Get one Sheet
+     * const sheet = await prisma.sheet.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SheetFindFirstOrThrowArgs>(args?: SelectSubset<T, SheetFindFirstOrThrowArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Sheets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Sheets
+     * const sheets = await prisma.sheet.findMany()
+     * 
+     * // Get first 10 Sheets
+     * const sheets = await prisma.sheet.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sheetWithIdOnly = await prisma.sheet.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SheetFindManyArgs>(args?: SelectSubset<T, SheetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Sheet.
+     * @param {SheetCreateArgs} args - Arguments to create a Sheet.
+     * @example
+     * // Create one Sheet
+     * const Sheet = await prisma.sheet.create({
+     *   data: {
+     *     // ... data to create a Sheet
+     *   }
+     * })
+     * 
+     */
+    create<T extends SheetCreateArgs>(args: SelectSubset<T, SheetCreateArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Sheets.
+     * @param {SheetCreateManyArgs} args - Arguments to create many Sheets.
+     * @example
+     * // Create many Sheets
+     * const sheet = await prisma.sheet.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SheetCreateManyArgs>(args?: SelectSubset<T, SheetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Sheets and returns the data saved in the database.
+     * @param {SheetCreateManyAndReturnArgs} args - Arguments to create many Sheets.
+     * @example
+     * // Create many Sheets
+     * const sheet = await prisma.sheet.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Sheets and only return the `id`
+     * const sheetWithIdOnly = await prisma.sheet.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SheetCreateManyAndReturnArgs>(args?: SelectSubset<T, SheetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Sheet.
+     * @param {SheetDeleteArgs} args - Arguments to delete one Sheet.
+     * @example
+     * // Delete one Sheet
+     * const Sheet = await prisma.sheet.delete({
+     *   where: {
+     *     // ... filter to delete one Sheet
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SheetDeleteArgs>(args: SelectSubset<T, SheetDeleteArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Sheet.
+     * @param {SheetUpdateArgs} args - Arguments to update one Sheet.
+     * @example
+     * // Update one Sheet
+     * const sheet = await prisma.sheet.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SheetUpdateArgs>(args: SelectSubset<T, SheetUpdateArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Sheets.
+     * @param {SheetDeleteManyArgs} args - Arguments to filter Sheets to delete.
+     * @example
+     * // Delete a few Sheets
+     * const { count } = await prisma.sheet.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SheetDeleteManyArgs>(args?: SelectSubset<T, SheetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sheets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Sheets
+     * const sheet = await prisma.sheet.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SheetUpdateManyArgs>(args: SelectSubset<T, SheetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Sheets and returns the data updated in the database.
+     * @param {SheetUpdateManyAndReturnArgs} args - Arguments to update many Sheets.
+     * @example
+     * // Update many Sheets
+     * const sheet = await prisma.sheet.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Sheets and only return the `id`
+     * const sheetWithIdOnly = await prisma.sheet.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SheetUpdateManyAndReturnArgs>(args: SelectSubset<T, SheetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Sheet.
+     * @param {SheetUpsertArgs} args - Arguments to update or create a Sheet.
+     * @example
+     * // Update or create a Sheet
+     * const sheet = await prisma.sheet.upsert({
+     *   create: {
+     *     // ... data to create a Sheet
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Sheet we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SheetUpsertArgs>(args: SelectSubset<T, SheetUpsertArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Sheets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetCountArgs} args - Arguments to filter Sheets to count.
+     * @example
+     * // Count the number of Sheets
+     * const count = await prisma.sheet.count({
+     *   where: {
+     *     // ... the filter for the Sheets we want to count
+     *   }
+     * })
+    **/
+    count<T extends SheetCountArgs>(
+      args?: Subset<T, SheetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SheetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Sheet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SheetAggregateArgs>(args: Subset<T, SheetAggregateArgs>): Prisma.PrismaPromise<GetSheetAggregateType<T>>
+
+    /**
+     * Group by Sheet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SheetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SheetGroupByArgs['orderBy'] }
+        : { orderBy?: SheetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SheetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSheetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Sheet model
+   */
+  readonly fields: SheetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Sheet.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SheetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    cells<T extends Sheet$cellsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$cellsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    snapshots<T extends Sheet$snapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Sheet model
+   */
+  interface SheetFieldRefs {
+    readonly id: FieldRef<"Sheet", 'String'>
+    readonly name: FieldRef<"Sheet", 'String'>
+    readonly createdAt: FieldRef<"Sheet", 'DateTime'>
+    readonly updatedAt: FieldRef<"Sheet", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Sheet findUnique
+   */
+  export type SheetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheet to fetch.
+     */
+    where: SheetWhereUniqueInput
+  }
+
+  /**
+   * Sheet findUniqueOrThrow
+   */
+  export type SheetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheet to fetch.
+     */
+    where: SheetWhereUniqueInput
+  }
+
+  /**
+   * Sheet findFirst
+   */
+  export type SheetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheet to fetch.
+     */
+    where?: SheetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sheets to fetch.
+     */
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sheets.
+     */
+    cursor?: SheetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sheets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sheets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sheets.
+     */
+    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet findFirstOrThrow
+   */
+  export type SheetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheet to fetch.
+     */
+    where?: SheetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sheets to fetch.
+     */
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Sheets.
+     */
+    cursor?: SheetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sheets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sheets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Sheets.
+     */
+    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet findMany
+   */
+  export type SheetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter, which Sheets to fetch.
+     */
+    where?: SheetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Sheets to fetch.
+     */
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Sheets.
+     */
+    cursor?: SheetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Sheets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Sheets.
+     */
+    skip?: number
+    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet create
+   */
+  export type SheetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Sheet.
+     */
+    data: XOR<SheetCreateInput, SheetUncheckedCreateInput>
+  }
+
+  /**
+   * Sheet createMany
+   */
+  export type SheetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Sheets.
+     */
+    data: SheetCreateManyInput | SheetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Sheet createManyAndReturn
+   */
+  export type SheetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * The data used to create many Sheets.
+     */
+    data: SheetCreateManyInput | SheetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Sheet update
+   */
+  export type SheetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Sheet.
+     */
+    data: XOR<SheetUpdateInput, SheetUncheckedUpdateInput>
+    /**
+     * Choose, which Sheet to update.
+     */
+    where: SheetWhereUniqueInput
+  }
+
+  /**
+   * Sheet updateMany
+   */
+  export type SheetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Sheets.
+     */
+    data: XOR<SheetUpdateManyMutationInput, SheetUncheckedUpdateManyInput>
+    /**
+     * Filter which Sheets to update
+     */
+    where?: SheetWhereInput
+    /**
+     * Limit how many Sheets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sheet updateManyAndReturn
+   */
+  export type SheetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * The data used to update Sheets.
+     */
+    data: XOR<SheetUpdateManyMutationInput, SheetUncheckedUpdateManyInput>
+    /**
+     * Filter which Sheets to update
+     */
+    where?: SheetWhereInput
+    /**
+     * Limit how many Sheets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sheet upsert
+   */
+  export type SheetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Sheet to update in case it exists.
+     */
+    where: SheetWhereUniqueInput
+    /**
+     * In case the Sheet found by the `where` argument doesn't exist, create a new Sheet with this data.
+     */
+    create: XOR<SheetCreateInput, SheetUncheckedCreateInput>
+    /**
+     * In case the Sheet was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SheetUpdateInput, SheetUncheckedUpdateInput>
+  }
+
+  /**
+   * Sheet delete
+   */
+  export type SheetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    /**
+     * Filter which Sheet to delete.
+     */
+    where: SheetWhereUniqueInput
+  }
+
+  /**
+   * Sheet deleteMany
+   */
+  export type SheetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Sheets to delete
+     */
+    where?: SheetWhereInput
+    /**
+     * Limit how many Sheets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Sheet.cells
+   */
+  export type Sheet$cellsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    where?: CellWhereInput
+    orderBy?: CellOrderByWithRelationInput | CellOrderByWithRelationInput[]
+    cursor?: CellWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CellScalarFieldEnum | CellScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet.snapshots
+   */
+  export type Sheet$snapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    where?: SheetSnapshotWhereInput
+    orderBy?: SheetSnapshotOrderByWithRelationInput | SheetSnapshotOrderByWithRelationInput[]
+    cursor?: SheetSnapshotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SheetSnapshotScalarFieldEnum | SheetSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet without action
+   */
+  export type SheetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Cell
+   */
+
+  export type AggregateCell = {
+    _count: CellCountAggregateOutputType | null
+    _avg: CellAvgAggregateOutputType | null
+    _sum: CellSumAggregateOutputType | null
+    _min: CellMinAggregateOutputType | null
+    _max: CellMaxAggregateOutputType | null
+  }
+
+  export type CellAvgAggregateOutputType = {
+    row: number | null
+    col: number | null
+  }
+
+  export type CellSumAggregateOutputType = {
+    row: number | null
+    col: number | null
+  }
+
+  export type CellMinAggregateOutputType = {
+    id: string | null
+    row: number | null
+    col: number | null
+    value: string | null
+    sheetId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CellMaxAggregateOutputType = {
+    id: string | null
+    row: number | null
+    col: number | null
+    value: string | null
+    sheetId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CellCountAggregateOutputType = {
+    id: number
+    row: number
+    col: number
+    value: number
+    sheetId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CellAvgAggregateInputType = {
+    row?: true
+    col?: true
+  }
+
+  export type CellSumAggregateInputType = {
+    row?: true
+    col?: true
+  }
+
+  export type CellMinAggregateInputType = {
+    id?: true
+    row?: true
+    col?: true
+    value?: true
+    sheetId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CellMaxAggregateInputType = {
+    id?: true
+    row?: true
+    col?: true
+    value?: true
+    sheetId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CellCountAggregateInputType = {
+    id?: true
+    row?: true
+    col?: true
+    value?: true
+    sheetId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CellAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cell to aggregate.
+     */
+    where?: CellWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cells to fetch.
+     */
+    orderBy?: CellOrderByWithRelationInput | CellOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CellWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cells from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cells.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cells
+    **/
+    _count?: true | CellCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CellAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CellSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CellMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CellMaxAggregateInputType
+  }
+
+  export type GetCellAggregateType<T extends CellAggregateArgs> = {
+        [P in keyof T & keyof AggregateCell]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCell[P]>
+      : GetScalarType<T[P], AggregateCell[P]>
+  }
+
+
+
+
+  export type CellGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CellWhereInput
+    orderBy?: CellOrderByWithAggregationInput | CellOrderByWithAggregationInput[]
+    by: CellScalarFieldEnum[] | CellScalarFieldEnum
+    having?: CellScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CellCountAggregateInputType | true
+    _avg?: CellAvgAggregateInputType
+    _sum?: CellSumAggregateInputType
+    _min?: CellMinAggregateInputType
+    _max?: CellMaxAggregateInputType
+  }
+
+  export type CellGroupByOutputType = {
+    id: string
+    row: number
+    col: number
+    value: string
+    sheetId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: CellCountAggregateOutputType | null
+    _avg: CellAvgAggregateOutputType | null
+    _sum: CellSumAggregateOutputType | null
+    _min: CellMinAggregateOutputType | null
+    _max: CellMaxAggregateOutputType | null
+  }
+
+  type GetCellGroupByPayload<T extends CellGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CellGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CellGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CellGroupByOutputType[P]>
+            : GetScalarType<T[P], CellGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CellSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    row?: boolean
+    col?: boolean
+    value?: boolean
+    sheetId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cell"]>
+
+  export type CellSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    row?: boolean
+    col?: boolean
+    value?: boolean
+    sheetId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cell"]>
+
+  export type CellSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    row?: boolean
+    col?: boolean
+    value?: boolean
+    sheetId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cell"]>
+
+  export type CellSelectScalar = {
+    id?: boolean
+    row?: boolean
+    col?: boolean
+    value?: boolean
+    sheetId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CellOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "row" | "col" | "value" | "sheetId" | "createdAt" | "updatedAt", ExtArgs["result"]["cell"]>
+  export type CellInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }
+  export type CellIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }
+  export type CellIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }
+
+  export type $CellPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cell"
+    objects: {
+      sheet: Prisma.$SheetPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      row: number
+      col: number
+      value: string
+      sheetId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["cell"]>
+    composites: {}
+  }
+
+  type CellGetPayload<S extends boolean | null | undefined | CellDefaultArgs> = $Result.GetResult<Prisma.$CellPayload, S>
+
+  type CellCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CellFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CellCountAggregateInputType | true
+    }
+
+  export interface CellDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cell'], meta: { name: 'Cell' } }
+    /**
+     * Find zero or one Cell that matches the filter.
+     * @param {CellFindUniqueArgs} args - Arguments to find a Cell
+     * @example
+     * // Get one Cell
+     * const cell = await prisma.cell.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CellFindUniqueArgs>(args: SelectSubset<T, CellFindUniqueArgs<ExtArgs>>): Prisma__CellClient<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Cell that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CellFindUniqueOrThrowArgs} args - Arguments to find a Cell
+     * @example
+     * // Get one Cell
+     * const cell = await prisma.cell.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CellFindUniqueOrThrowArgs>(args: SelectSubset<T, CellFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CellClient<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cell that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CellFindFirstArgs} args - Arguments to find a Cell
+     * @example
+     * // Get one Cell
+     * const cell = await prisma.cell.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CellFindFirstArgs>(args?: SelectSubset<T, CellFindFirstArgs<ExtArgs>>): Prisma__CellClient<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cell that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CellFindFirstOrThrowArgs} args - Arguments to find a Cell
+     * @example
+     * // Get one Cell
+     * const cell = await prisma.cell.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CellFindFirstOrThrowArgs>(args?: SelectSubset<T, CellFindFirstOrThrowArgs<ExtArgs>>): Prisma__CellClient<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Cells that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CellFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cells
+     * const cells = await prisma.cell.findMany()
+     * 
+     * // Get first 10 Cells
+     * const cells = await prisma.cell.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cellWithIdOnly = await prisma.cell.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CellFindManyArgs>(args?: SelectSubset<T, CellFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Cell.
+     * @param {CellCreateArgs} args - Arguments to create a Cell.
+     * @example
+     * // Create one Cell
+     * const Cell = await prisma.cell.create({
+     *   data: {
+     *     // ... data to create a Cell
+     *   }
+     * })
+     * 
+     */
+    create<T extends CellCreateArgs>(args: SelectSubset<T, CellCreateArgs<ExtArgs>>): Prisma__CellClient<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Cells.
+     * @param {CellCreateManyArgs} args - Arguments to create many Cells.
+     * @example
+     * // Create many Cells
+     * const cell = await prisma.cell.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CellCreateManyArgs>(args?: SelectSubset<T, CellCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cells and returns the data saved in the database.
+     * @param {CellCreateManyAndReturnArgs} args - Arguments to create many Cells.
+     * @example
+     * // Create many Cells
+     * const cell = await prisma.cell.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cells and only return the `id`
+     * const cellWithIdOnly = await prisma.cell.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CellCreateManyAndReturnArgs>(args?: SelectSubset<T, CellCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Cell.
+     * @param {CellDeleteArgs} args - Arguments to delete one Cell.
+     * @example
+     * // Delete one Cell
+     * const Cell = await prisma.cell.delete({
+     *   where: {
+     *     // ... filter to delete one Cell
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CellDeleteArgs>(args: SelectSubset<T, CellDeleteArgs<ExtArgs>>): Prisma__CellClient<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Cell.
+     * @param {CellUpdateArgs} args - Arguments to update one Cell.
+     * @example
+     * // Update one Cell
+     * const cell = await prisma.cell.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CellUpdateArgs>(args: SelectSubset<T, CellUpdateArgs<ExtArgs>>): Prisma__CellClient<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Cells.
+     * @param {CellDeleteManyArgs} args - Arguments to filter Cells to delete.
+     * @example
+     * // Delete a few Cells
+     * const { count } = await prisma.cell.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CellDeleteManyArgs>(args?: SelectSubset<T, CellDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cells.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CellUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cells
+     * const cell = await prisma.cell.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CellUpdateManyArgs>(args: SelectSubset<T, CellUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cells and returns the data updated in the database.
+     * @param {CellUpdateManyAndReturnArgs} args - Arguments to update many Cells.
+     * @example
+     * // Update many Cells
+     * const cell = await prisma.cell.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Cells and only return the `id`
+     * const cellWithIdOnly = await prisma.cell.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CellUpdateManyAndReturnArgs>(args: SelectSubset<T, CellUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Cell.
+     * @param {CellUpsertArgs} args - Arguments to update or create a Cell.
+     * @example
+     * // Update or create a Cell
+     * const cell = await prisma.cell.upsert({
+     *   create: {
+     *     // ... data to create a Cell
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cell we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CellUpsertArgs>(args: SelectSubset<T, CellUpsertArgs<ExtArgs>>): Prisma__CellClient<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Cells.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CellCountArgs} args - Arguments to filter Cells to count.
+     * @example
+     * // Count the number of Cells
+     * const count = await prisma.cell.count({
+     *   where: {
+     *     // ... the filter for the Cells we want to count
+     *   }
+     * })
+    **/
+    count<T extends CellCountArgs>(
+      args?: Subset<T, CellCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CellCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cell.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CellAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CellAggregateArgs>(args: Subset<T, CellAggregateArgs>): Prisma.PrismaPromise<GetCellAggregateType<T>>
+
+    /**
+     * Group by Cell.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CellGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CellGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CellGroupByArgs['orderBy'] }
+        : { orderBy?: CellGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CellGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCellGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cell model
+   */
+  readonly fields: CellFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cell.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CellClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sheet<T extends SheetDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SheetDefaultArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cell model
+   */
+  interface CellFieldRefs {
+    readonly id: FieldRef<"Cell", 'String'>
+    readonly row: FieldRef<"Cell", 'Int'>
+    readonly col: FieldRef<"Cell", 'Int'>
+    readonly value: FieldRef<"Cell", 'String'>
+    readonly sheetId: FieldRef<"Cell", 'String'>
+    readonly createdAt: FieldRef<"Cell", 'DateTime'>
+    readonly updatedAt: FieldRef<"Cell", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cell findUnique
+   */
+  export type CellFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * Filter, which Cell to fetch.
+     */
+    where: CellWhereUniqueInput
+  }
+
+  /**
+   * Cell findUniqueOrThrow
+   */
+  export type CellFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * Filter, which Cell to fetch.
+     */
+    where: CellWhereUniqueInput
+  }
+
+  /**
+   * Cell findFirst
+   */
+  export type CellFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * Filter, which Cell to fetch.
+     */
+    where?: CellWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cells to fetch.
+     */
+    orderBy?: CellOrderByWithRelationInput | CellOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cells.
+     */
+    cursor?: CellWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cells from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cells.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cells.
+     */
+    distinct?: CellScalarFieldEnum | CellScalarFieldEnum[]
+  }
+
+  /**
+   * Cell findFirstOrThrow
+   */
+  export type CellFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * Filter, which Cell to fetch.
+     */
+    where?: CellWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cells to fetch.
+     */
+    orderBy?: CellOrderByWithRelationInput | CellOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cells.
+     */
+    cursor?: CellWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cells from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cells.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cells.
+     */
+    distinct?: CellScalarFieldEnum | CellScalarFieldEnum[]
+  }
+
+  /**
+   * Cell findMany
+   */
+  export type CellFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * Filter, which Cells to fetch.
+     */
+    where?: CellWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cells to fetch.
+     */
+    orderBy?: CellOrderByWithRelationInput | CellOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cells.
+     */
+    cursor?: CellWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cells from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cells.
+     */
+    skip?: number
+    distinct?: CellScalarFieldEnum | CellScalarFieldEnum[]
+  }
+
+  /**
+   * Cell create
+   */
+  export type CellCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cell.
+     */
+    data: XOR<CellCreateInput, CellUncheckedCreateInput>
+  }
+
+  /**
+   * Cell createMany
+   */
+  export type CellCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cells.
+     */
+    data: CellCreateManyInput | CellCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cell createManyAndReturn
+   */
+  export type CellCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * The data used to create many Cells.
+     */
+    data: CellCreateManyInput | CellCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cell update
+   */
+  export type CellUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cell.
+     */
+    data: XOR<CellUpdateInput, CellUncheckedUpdateInput>
+    /**
+     * Choose, which Cell to update.
+     */
+    where: CellWhereUniqueInput
+  }
+
+  /**
+   * Cell updateMany
+   */
+  export type CellUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cells.
+     */
+    data: XOR<CellUpdateManyMutationInput, CellUncheckedUpdateManyInput>
+    /**
+     * Filter which Cells to update
+     */
+    where?: CellWhereInput
+    /**
+     * Limit how many Cells to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Cell updateManyAndReturn
+   */
+  export type CellUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * The data used to update Cells.
+     */
+    data: XOR<CellUpdateManyMutationInput, CellUncheckedUpdateManyInput>
+    /**
+     * Filter which Cells to update
+     */
+    where?: CellWhereInput
+    /**
+     * Limit how many Cells to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cell upsert
+   */
+  export type CellUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cell to update in case it exists.
+     */
+    where: CellWhereUniqueInput
+    /**
+     * In case the Cell found by the `where` argument doesn't exist, create a new Cell with this data.
+     */
+    create: XOR<CellCreateInput, CellUncheckedCreateInput>
+    /**
+     * In case the Cell was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CellUpdateInput, CellUncheckedUpdateInput>
+  }
+
+  /**
+   * Cell delete
+   */
+  export type CellDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+    /**
+     * Filter which Cell to delete.
+     */
+    where: CellWhereUniqueInput
+  }
+
+  /**
+   * Cell deleteMany
+   */
+  export type CellDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cells to delete
+     */
+    where?: CellWhereInput
+    /**
+     * Limit how many Cells to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Cell without action
+   */
+  export type CellDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cell
+     */
+    select?: CellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cell
+     */
+    omit?: CellOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CellInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SheetSnapshot
+   */
+
+  export type AggregateSheetSnapshot = {
+    _count: SheetSnapshotCountAggregateOutputType | null
+    _min: SheetSnapshotMinAggregateOutputType | null
+    _max: SheetSnapshotMaxAggregateOutputType | null
+  }
+
+  export type SheetSnapshotMinAggregateOutputType = {
+    id: string | null
+    sheetId: string | null
+    createdAt: Date | null
+  }
+
+  export type SheetSnapshotMaxAggregateOutputType = {
+    id: string | null
+    sheetId: string | null
+    createdAt: Date | null
+  }
+
+  export type SheetSnapshotCountAggregateOutputType = {
+    id: number
+    sheetId: number
+    data: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SheetSnapshotMinAggregateInputType = {
+    id?: true
+    sheetId?: true
+    createdAt?: true
+  }
+
+  export type SheetSnapshotMaxAggregateInputType = {
+    id?: true
+    sheetId?: true
+    createdAt?: true
+  }
+
+  export type SheetSnapshotCountAggregateInputType = {
+    id?: true
+    sheetId?: true
+    data?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SheetSnapshotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SheetSnapshot to aggregate.
+     */
+    where?: SheetSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SheetSnapshots to fetch.
+     */
+    orderBy?: SheetSnapshotOrderByWithRelationInput | SheetSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SheetSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SheetSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SheetSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SheetSnapshots
+    **/
+    _count?: true | SheetSnapshotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SheetSnapshotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SheetSnapshotMaxAggregateInputType
+  }
+
+  export type GetSheetSnapshotAggregateType<T extends SheetSnapshotAggregateArgs> = {
+        [P in keyof T & keyof AggregateSheetSnapshot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSheetSnapshot[P]>
+      : GetScalarType<T[P], AggregateSheetSnapshot[P]>
+  }
+
+
+
+
+  export type SheetSnapshotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SheetSnapshotWhereInput
+    orderBy?: SheetSnapshotOrderByWithAggregationInput | SheetSnapshotOrderByWithAggregationInput[]
+    by: SheetSnapshotScalarFieldEnum[] | SheetSnapshotScalarFieldEnum
+    having?: SheetSnapshotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SheetSnapshotCountAggregateInputType | true
+    _min?: SheetSnapshotMinAggregateInputType
+    _max?: SheetSnapshotMaxAggregateInputType
+  }
+
+  export type SheetSnapshotGroupByOutputType = {
+    id: string
+    sheetId: string
+    data: JsonValue
+    createdAt: Date
+    _count: SheetSnapshotCountAggregateOutputType | null
+    _min: SheetSnapshotMinAggregateOutputType | null
+    _max: SheetSnapshotMaxAggregateOutputType | null
+  }
+
+  type GetSheetSnapshotGroupByPayload<T extends SheetSnapshotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SheetSnapshotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SheetSnapshotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SheetSnapshotGroupByOutputType[P]>
+            : GetScalarType<T[P], SheetSnapshotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SheetSnapshotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sheetId?: boolean
+    data?: boolean
+    createdAt?: boolean
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sheetSnapshot"]>
+
+  export type SheetSnapshotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sheetId?: boolean
+    data?: boolean
+    createdAt?: boolean
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sheetSnapshot"]>
+
+  export type SheetSnapshotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sheetId?: boolean
+    data?: boolean
+    createdAt?: boolean
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["sheetSnapshot"]>
+
+  export type SheetSnapshotSelectScalar = {
+    id?: boolean
+    sheetId?: boolean
+    data?: boolean
+    createdAt?: boolean
+  }
+
+  export type SheetSnapshotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sheetId" | "data" | "createdAt", ExtArgs["result"]["sheetSnapshot"]>
+  export type SheetSnapshotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }
+  export type SheetSnapshotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }
+  export type SheetSnapshotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | SheetDefaultArgs<ExtArgs>
+  }
+
+  export type $SheetSnapshotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SheetSnapshot"
+    objects: {
+      sheet: Prisma.$SheetPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      sheetId: string
+      data: Prisma.JsonValue
+      createdAt: Date
+    }, ExtArgs["result"]["sheetSnapshot"]>
+    composites: {}
+  }
+
+  type SheetSnapshotGetPayload<S extends boolean | null | undefined | SheetSnapshotDefaultArgs> = $Result.GetResult<Prisma.$SheetSnapshotPayload, S>
+
+  type SheetSnapshotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SheetSnapshotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SheetSnapshotCountAggregateInputType | true
+    }
+
+  export interface SheetSnapshotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SheetSnapshot'], meta: { name: 'SheetSnapshot' } }
+    /**
+     * Find zero or one SheetSnapshot that matches the filter.
+     * @param {SheetSnapshotFindUniqueArgs} args - Arguments to find a SheetSnapshot
+     * @example
+     * // Get one SheetSnapshot
+     * const sheetSnapshot = await prisma.sheetSnapshot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SheetSnapshotFindUniqueArgs>(args: SelectSubset<T, SheetSnapshotFindUniqueArgs<ExtArgs>>): Prisma__SheetSnapshotClient<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SheetSnapshot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SheetSnapshotFindUniqueOrThrowArgs} args - Arguments to find a SheetSnapshot
+     * @example
+     * // Get one SheetSnapshot
+     * const sheetSnapshot = await prisma.sheetSnapshot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SheetSnapshotFindUniqueOrThrowArgs>(args: SelectSubset<T, SheetSnapshotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SheetSnapshotClient<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SheetSnapshot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetSnapshotFindFirstArgs} args - Arguments to find a SheetSnapshot
+     * @example
+     * // Get one SheetSnapshot
+     * const sheetSnapshot = await prisma.sheetSnapshot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SheetSnapshotFindFirstArgs>(args?: SelectSubset<T, SheetSnapshotFindFirstArgs<ExtArgs>>): Prisma__SheetSnapshotClient<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SheetSnapshot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetSnapshotFindFirstOrThrowArgs} args - Arguments to find a SheetSnapshot
+     * @example
+     * // Get one SheetSnapshot
+     * const sheetSnapshot = await prisma.sheetSnapshot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SheetSnapshotFindFirstOrThrowArgs>(args?: SelectSubset<T, SheetSnapshotFindFirstOrThrowArgs<ExtArgs>>): Prisma__SheetSnapshotClient<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SheetSnapshots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetSnapshotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SheetSnapshots
+     * const sheetSnapshots = await prisma.sheetSnapshot.findMany()
+     * 
+     * // Get first 10 SheetSnapshots
+     * const sheetSnapshots = await prisma.sheetSnapshot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const sheetSnapshotWithIdOnly = await prisma.sheetSnapshot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SheetSnapshotFindManyArgs>(args?: SelectSubset<T, SheetSnapshotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SheetSnapshot.
+     * @param {SheetSnapshotCreateArgs} args - Arguments to create a SheetSnapshot.
+     * @example
+     * // Create one SheetSnapshot
+     * const SheetSnapshot = await prisma.sheetSnapshot.create({
+     *   data: {
+     *     // ... data to create a SheetSnapshot
+     *   }
+     * })
+     * 
+     */
+    create<T extends SheetSnapshotCreateArgs>(args: SelectSubset<T, SheetSnapshotCreateArgs<ExtArgs>>): Prisma__SheetSnapshotClient<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SheetSnapshots.
+     * @param {SheetSnapshotCreateManyArgs} args - Arguments to create many SheetSnapshots.
+     * @example
+     * // Create many SheetSnapshots
+     * const sheetSnapshot = await prisma.sheetSnapshot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SheetSnapshotCreateManyArgs>(args?: SelectSubset<T, SheetSnapshotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SheetSnapshots and returns the data saved in the database.
+     * @param {SheetSnapshotCreateManyAndReturnArgs} args - Arguments to create many SheetSnapshots.
+     * @example
+     * // Create many SheetSnapshots
+     * const sheetSnapshot = await prisma.sheetSnapshot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SheetSnapshots and only return the `id`
+     * const sheetSnapshotWithIdOnly = await prisma.sheetSnapshot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SheetSnapshotCreateManyAndReturnArgs>(args?: SelectSubset<T, SheetSnapshotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SheetSnapshot.
+     * @param {SheetSnapshotDeleteArgs} args - Arguments to delete one SheetSnapshot.
+     * @example
+     * // Delete one SheetSnapshot
+     * const SheetSnapshot = await prisma.sheetSnapshot.delete({
+     *   where: {
+     *     // ... filter to delete one SheetSnapshot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SheetSnapshotDeleteArgs>(args: SelectSubset<T, SheetSnapshotDeleteArgs<ExtArgs>>): Prisma__SheetSnapshotClient<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SheetSnapshot.
+     * @param {SheetSnapshotUpdateArgs} args - Arguments to update one SheetSnapshot.
+     * @example
+     * // Update one SheetSnapshot
+     * const sheetSnapshot = await prisma.sheetSnapshot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SheetSnapshotUpdateArgs>(args: SelectSubset<T, SheetSnapshotUpdateArgs<ExtArgs>>): Prisma__SheetSnapshotClient<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SheetSnapshots.
+     * @param {SheetSnapshotDeleteManyArgs} args - Arguments to filter SheetSnapshots to delete.
+     * @example
+     * // Delete a few SheetSnapshots
+     * const { count } = await prisma.sheetSnapshot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SheetSnapshotDeleteManyArgs>(args?: SelectSubset<T, SheetSnapshotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SheetSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetSnapshotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SheetSnapshots
+     * const sheetSnapshot = await prisma.sheetSnapshot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SheetSnapshotUpdateManyArgs>(args: SelectSubset<T, SheetSnapshotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SheetSnapshots and returns the data updated in the database.
+     * @param {SheetSnapshotUpdateManyAndReturnArgs} args - Arguments to update many SheetSnapshots.
+     * @example
+     * // Update many SheetSnapshots
+     * const sheetSnapshot = await prisma.sheetSnapshot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SheetSnapshots and only return the `id`
+     * const sheetSnapshotWithIdOnly = await prisma.sheetSnapshot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SheetSnapshotUpdateManyAndReturnArgs>(args: SelectSubset<T, SheetSnapshotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SheetSnapshot.
+     * @param {SheetSnapshotUpsertArgs} args - Arguments to update or create a SheetSnapshot.
+     * @example
+     * // Update or create a SheetSnapshot
+     * const sheetSnapshot = await prisma.sheetSnapshot.upsert({
+     *   create: {
+     *     // ... data to create a SheetSnapshot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SheetSnapshot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SheetSnapshotUpsertArgs>(args: SelectSubset<T, SheetSnapshotUpsertArgs<ExtArgs>>): Prisma__SheetSnapshotClient<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SheetSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetSnapshotCountArgs} args - Arguments to filter SheetSnapshots to count.
+     * @example
+     * // Count the number of SheetSnapshots
+     * const count = await prisma.sheetSnapshot.count({
+     *   where: {
+     *     // ... the filter for the SheetSnapshots we want to count
+     *   }
+     * })
+    **/
+    count<T extends SheetSnapshotCountArgs>(
+      args?: Subset<T, SheetSnapshotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SheetSnapshotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SheetSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetSnapshotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SheetSnapshotAggregateArgs>(args: Subset<T, SheetSnapshotAggregateArgs>): Prisma.PrismaPromise<GetSheetSnapshotAggregateType<T>>
+
+    /**
+     * Group by SheetSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SheetSnapshotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SheetSnapshotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SheetSnapshotGroupByArgs['orderBy'] }
+        : { orderBy?: SheetSnapshotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SheetSnapshotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSheetSnapshotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SheetSnapshot model
+   */
+  readonly fields: SheetSnapshotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SheetSnapshot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SheetSnapshotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sheet<T extends SheetDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SheetDefaultArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SheetSnapshot model
+   */
+  interface SheetSnapshotFieldRefs {
+    readonly id: FieldRef<"SheetSnapshot", 'String'>
+    readonly sheetId: FieldRef<"SheetSnapshot", 'String'>
+    readonly data: FieldRef<"SheetSnapshot", 'Json'>
+    readonly createdAt: FieldRef<"SheetSnapshot", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SheetSnapshot findUnique
+   */
+  export type SheetSnapshotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which SheetSnapshot to fetch.
+     */
+    where: SheetSnapshotWhereUniqueInput
+  }
+
+  /**
+   * SheetSnapshot findUniqueOrThrow
+   */
+  export type SheetSnapshotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which SheetSnapshot to fetch.
+     */
+    where: SheetSnapshotWhereUniqueInput
+  }
+
+  /**
+   * SheetSnapshot findFirst
+   */
+  export type SheetSnapshotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which SheetSnapshot to fetch.
+     */
+    where?: SheetSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SheetSnapshots to fetch.
+     */
+    orderBy?: SheetSnapshotOrderByWithRelationInput | SheetSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SheetSnapshots.
+     */
+    cursor?: SheetSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SheetSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SheetSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SheetSnapshots.
+     */
+    distinct?: SheetSnapshotScalarFieldEnum | SheetSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * SheetSnapshot findFirstOrThrow
+   */
+  export type SheetSnapshotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which SheetSnapshot to fetch.
+     */
+    where?: SheetSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SheetSnapshots to fetch.
+     */
+    orderBy?: SheetSnapshotOrderByWithRelationInput | SheetSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SheetSnapshots.
+     */
+    cursor?: SheetSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SheetSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SheetSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SheetSnapshots.
+     */
+    distinct?: SheetSnapshotScalarFieldEnum | SheetSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * SheetSnapshot findMany
+   */
+  export type SheetSnapshotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which SheetSnapshots to fetch.
+     */
+    where?: SheetSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SheetSnapshots to fetch.
+     */
+    orderBy?: SheetSnapshotOrderByWithRelationInput | SheetSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SheetSnapshots.
+     */
+    cursor?: SheetSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SheetSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SheetSnapshots.
+     */
+    skip?: number
+    distinct?: SheetSnapshotScalarFieldEnum | SheetSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * SheetSnapshot create
+   */
+  export type SheetSnapshotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SheetSnapshot.
+     */
+    data: XOR<SheetSnapshotCreateInput, SheetSnapshotUncheckedCreateInput>
+  }
+
+  /**
+   * SheetSnapshot createMany
+   */
+  export type SheetSnapshotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SheetSnapshots.
+     */
+    data: SheetSnapshotCreateManyInput | SheetSnapshotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SheetSnapshot createManyAndReturn
+   */
+  export type SheetSnapshotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to create many SheetSnapshots.
+     */
+    data: SheetSnapshotCreateManyInput | SheetSnapshotCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SheetSnapshot update
+   */
+  export type SheetSnapshotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SheetSnapshot.
+     */
+    data: XOR<SheetSnapshotUpdateInput, SheetSnapshotUncheckedUpdateInput>
+    /**
+     * Choose, which SheetSnapshot to update.
+     */
+    where: SheetSnapshotWhereUniqueInput
+  }
+
+  /**
+   * SheetSnapshot updateMany
+   */
+  export type SheetSnapshotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SheetSnapshots.
+     */
+    data: XOR<SheetSnapshotUpdateManyMutationInput, SheetSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which SheetSnapshots to update
+     */
+    where?: SheetSnapshotWhereInput
+    /**
+     * Limit how many SheetSnapshots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SheetSnapshot updateManyAndReturn
+   */
+  export type SheetSnapshotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to update SheetSnapshots.
+     */
+    data: XOR<SheetSnapshotUpdateManyMutationInput, SheetSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which SheetSnapshots to update
+     */
+    where?: SheetSnapshotWhereInput
+    /**
+     * Limit how many SheetSnapshots to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SheetSnapshot upsert
+   */
+  export type SheetSnapshotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SheetSnapshot to update in case it exists.
+     */
+    where: SheetSnapshotWhereUniqueInput
+    /**
+     * In case the SheetSnapshot found by the `where` argument doesn't exist, create a new SheetSnapshot with this data.
+     */
+    create: XOR<SheetSnapshotCreateInput, SheetSnapshotUncheckedCreateInput>
+    /**
+     * In case the SheetSnapshot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SheetSnapshotUpdateInput, SheetSnapshotUncheckedUpdateInput>
+  }
+
+  /**
+   * SheetSnapshot delete
+   */
+  export type SheetSnapshotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter which SheetSnapshot to delete.
+     */
+    where: SheetSnapshotWhereUniqueInput
+  }
+
+  /**
+   * SheetSnapshot deleteMany
+   */
+  export type SheetSnapshotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SheetSnapshots to delete
+     */
+    where?: SheetSnapshotWhereInput
+    /**
+     * Limit how many SheetSnapshots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SheetSnapshot without action
+   */
+  export type SheetSnapshotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SheetSnapshot
+     */
+    select?: SheetSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SheetSnapshot
+     */
+    omit?: SheetSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetSnapshotInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -38381,6 +42018,7 @@ export namespace Prisma {
     id: 'id',
     senderId: 'senderId',
     receiverIds: 'receiverIds',
+    projectId: 'projectId',
     context: 'context',
     type: 'type',
     isRead: 'isRead',
@@ -38501,13 +42139,7 @@ export namespace Prisma {
     id: 'id',
     programId: 'programId',
     name: 'name',
-    uploadbeforeday: 'uploadbeforeday',
-    uploadCycle: 'uploadCycle',
     description: 'description',
-    dataReceivedTime: 'dataReceivedTime',
-    beforeSubmitData: 'beforeSubmitData',
-    weakuploadData: 'weakuploadData',
-    monthlyuploadData: 'monthlyuploadData',
     status: 'status',
     priority: 'priority',
     deadline: 'deadline',
@@ -38548,16 +42180,6 @@ export namespace Prisma {
   };
 
   export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
-
-
-  export const SheetScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type SheetScalarFieldEnum = (typeof SheetScalarFieldEnum)[keyof typeof SheetScalarFieldEnum]
 
 
   export const SubmissionReturnScalarFieldEnum: {
@@ -38715,6 +42337,56 @@ export namespace Prisma {
   export type ViewerScalarFieldEnum = (typeof ViewerScalarFieldEnum)[keyof typeof ViewerScalarFieldEnum]
 
 
+  export const ReminderScalarFieldEnum: {
+    id: 'id',
+    message: 'message',
+    nextTriggerAt: 'nextTriggerAt',
+    repeatEvery: 'repeatEvery',
+    isActive: 'isActive',
+    projectId: 'projectId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    repeatOnDays: 'repeatOnDays',
+    repeatOnDates: 'repeatOnDates',
+    remindBefore: 'remindBefore'
+  };
+
+  export type ReminderScalarFieldEnum = (typeof ReminderScalarFieldEnum)[keyof typeof ReminderScalarFieldEnum]
+
+
+  export const SheetScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SheetScalarFieldEnum = (typeof SheetScalarFieldEnum)[keyof typeof SheetScalarFieldEnum]
+
+
+  export const CellScalarFieldEnum: {
+    id: 'id',
+    row: 'row',
+    col: 'col',
+    value: 'value',
+    sheetId: 'sheetId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CellScalarFieldEnum = (typeof CellScalarFieldEnum)[keyof typeof CellScalarFieldEnum]
+
+
+  export const SheetSnapshotScalarFieldEnum: {
+    id: 'id',
+    sheetId: 'sheetId',
+    data: 'data',
+    createdAt: 'createdAt'
+  };
+
+  export type SheetSnapshotScalarFieldEnum = (typeof SheetSnapshotScalarFieldEnum)[keyof typeof SheetSnapshotScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -38729,6 +42401,13 @@ export namespace Prisma {
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -38863,20 +42542,6 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'ProjectCycle'
-   */
-  export type EnumProjectCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCycle'>
-    
-
-
-  /**
-   * Reference to a field of type 'ProjectCycle[]'
-   */
-  export type ListEnumProjectCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCycle[]'>
     
 
 
@@ -39017,6 +42682,34 @@ export namespace Prisma {
    * Reference to a field of type 'UserStatus[]'
    */
   export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'RepeatInterval'
+   */
+  export type EnumRepeatIntervalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepeatInterval'>
+    
+
+
+  /**
+   * Reference to a field of type 'RepeatInterval[]'
+   */
+  export type ListEnumRepeatIntervalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepeatInterval[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DayOfWeek[]'
+   */
+  export type ListEnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DayOfWeek[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DayOfWeek'
+   */
+  export type EnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DayOfWeek'>
     
   /**
    * Deep Input Types
@@ -39541,6 +43234,7 @@ export namespace Prisma {
     id?: StringFilter<"Notification"> | string
     senderId?: StringFilter<"Notification"> | string
     receiverIds?: StringNullableListFilter<"Notification">
+    projectId?: StringNullableFilter<"Notification"> | string | null
     context?: StringFilter<"Notification"> | string
     type?: StringFilter<"Notification"> | string
     isRead?: BoolFilter<"Notification"> | boolean
@@ -39553,6 +43247,7 @@ export namespace Prisma {
     id?: SortOrder
     senderId?: SortOrder
     receiverIds?: SortOrder
+    projectId?: SortOrderInput | SortOrder
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -39568,6 +43263,7 @@ export namespace Prisma {
     NOT?: NotificationWhereInput | NotificationWhereInput[]
     senderId?: StringFilter<"Notification"> | string
     receiverIds?: StringNullableListFilter<"Notification">
+    projectId?: StringNullableFilter<"Notification"> | string | null
     context?: StringFilter<"Notification"> | string
     type?: StringFilter<"Notification"> | string
     isRead?: BoolFilter<"Notification"> | boolean
@@ -39580,6 +43276,7 @@ export namespace Prisma {
     id?: SortOrder
     senderId?: SortOrder
     receiverIds?: SortOrder
+    projectId?: SortOrderInput | SortOrder
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -39597,6 +43294,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Notification"> | string
     senderId?: StringWithAggregatesFilter<"Notification"> | string
     receiverIds?: StringNullableListFilter<"Notification">
+    projectId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     context?: StringWithAggregatesFilter<"Notification"> | string
     type?: StringWithAggregatesFilter<"Notification"> | string
     isRead?: BoolWithAggregatesFilter<"Notification"> | boolean
@@ -40150,13 +43848,7 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-    uploadbeforeday?: StringFilter<"Project"> | string
-    uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
-    dataReceivedTime?: StringNullableFilter<"Project"> | string | null
-    beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    weakuploadData?: StringNullableListFilter<"Project">
-    monthlyuploadData?: StringNullableListFilter<"Project">
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -40179,19 +43871,14 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
     submitted?: SubmittedListRelationFilter
+    reminders?: ReminderListRelationFilter
   }
 
   export type ProjectOrderByWithRelationInput = {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    uploadbeforeday?: SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrderInput | SortOrder
-    beforeSubmitData?: SortOrderInput | SortOrder
-    weakuploadData?: SortOrder
-    monthlyuploadData?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -40214,6 +43901,7 @@ export namespace Prisma {
     reviews?: ReviewOrderByRelationAggregateInput
     requestsToAddProjectMember?: RequestToAddProjectMemberOrderByRelationAggregateInput
     submitted?: SubmittedOrderByRelationAggregateInput
+    reminders?: ReminderOrderByRelationAggregateInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -40223,13 +43911,7 @@ export namespace Prisma {
     NOT?: ProjectWhereInput | ProjectWhereInput[]
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-    uploadbeforeday?: StringFilter<"Project"> | string
-    uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
-    dataReceivedTime?: StringNullableFilter<"Project"> | string | null
-    beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    weakuploadData?: StringNullableListFilter<"Project">
-    monthlyuploadData?: StringNullableListFilter<"Project">
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -40252,19 +43934,14 @@ export namespace Prisma {
     reviews?: ReviewListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
     submitted?: SubmittedListRelationFilter
+    reminders?: ReminderListRelationFilter
   }, "id">
 
   export type ProjectOrderByWithAggregationInput = {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    uploadbeforeday?: SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrderInput | SortOrder
-    beforeSubmitData?: SortOrderInput | SortOrder
-    weakuploadData?: SortOrder
-    monthlyuploadData?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -40293,13 +43970,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Project"> | string
     programId?: StringWithAggregatesFilter<"Project"> | string
     name?: StringWithAggregatesFilter<"Project"> | string
-    uploadbeforeday?: StringWithAggregatesFilter<"Project"> | string
-    uploadCycle?: EnumProjectCycleWithAggregatesFilter<"Project"> | $Enums.ProjectCycle
     description?: StringWithAggregatesFilter<"Project"> | string
-    dataReceivedTime?: StringNullableWithAggregatesFilter<"Project"> | string | null
-    beforeSubmitData?: IntNullableWithAggregatesFilter<"Project"> | number | null
-    weakuploadData?: StringNullableListFilter<"Project">
-    monthlyuploadData?: StringNullableListFilter<"Project">
     status?: EnumProjectStatusWithAggregatesFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityWithAggregatesFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeWithAggregatesFilter<"Project"> | Date | string
@@ -40435,56 +44106,6 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
   }
 
-  export type SheetWhereInput = {
-    AND?: SheetWhereInput | SheetWhereInput[]
-    OR?: SheetWhereInput[]
-    NOT?: SheetWhereInput | SheetWhereInput[]
-    id?: StringFilter<"Sheet"> | string
-    name?: StringFilter<"Sheet"> | string
-    createdAt?: DateTimeFilter<"Sheet"> | Date | string
-    updatedAt?: DateTimeFilter<"Sheet"> | Date | string
-    submitted?: SubmittedListRelationFilter
-  }
-
-  export type SheetOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    submitted?: SubmittedOrderByRelationAggregateInput
-  }
-
-  export type SheetWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: SheetWhereInput | SheetWhereInput[]
-    OR?: SheetWhereInput[]
-    NOT?: SheetWhereInput | SheetWhereInput[]
-    name?: StringFilter<"Sheet"> | string
-    createdAt?: DateTimeFilter<"Sheet"> | Date | string
-    updatedAt?: DateTimeFilter<"Sheet"> | Date | string
-    submitted?: SubmittedListRelationFilter
-  }, "id">
-
-  export type SheetOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: SheetCountOrderByAggregateInput
-    _max?: SheetMaxOrderByAggregateInput
-    _min?: SheetMinOrderByAggregateInput
-  }
-
-  export type SheetScalarWhereWithAggregatesInput = {
-    AND?: SheetScalarWhereWithAggregatesInput | SheetScalarWhereWithAggregatesInput[]
-    OR?: SheetScalarWhereWithAggregatesInput[]
-    NOT?: SheetScalarWhereWithAggregatesInput | SheetScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Sheet"> | string
-    name?: StringWithAggregatesFilter<"Sheet"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
-  }
-
   export type SubmissionReturnWhereInput = {
     AND?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
     OR?: SubmissionReturnWhereInput[]
@@ -40545,7 +44166,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Submitted"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
-    sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
     submissionReturn?: XOR<SubmissionReturnNullableScalarRelationFilter, SubmissionReturnWhereInput> | null
   }
 
@@ -40561,7 +44181,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
     employee?: EmployeeOrderByWithRelationInput
     project?: ProjectOrderByWithRelationInput
-    sheet?: SheetOrderByWithRelationInput
     submissionReturn?: SubmissionReturnOrderByWithRelationInput
   }
 
@@ -40580,7 +44199,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Submitted"> | Date | string
     employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
-    sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
     submissionReturn?: XOR<SubmissionReturnNullableScalarRelationFilter, SubmissionReturnWhereInput> | null
   }, "id">
 
@@ -41323,6 +44941,264 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Viewer"> | Date | string
   }
 
+  export type ReminderWhereInput = {
+    AND?: ReminderWhereInput | ReminderWhereInput[]
+    OR?: ReminderWhereInput[]
+    NOT?: ReminderWhereInput | ReminderWhereInput[]
+    id?: StringFilter<"Reminder"> | string
+    message?: StringFilter<"Reminder"> | string
+    nextTriggerAt?: DateTimeNullableFilter<"Reminder"> | Date | string | null
+    repeatEvery?: EnumRepeatIntervalNullableFilter<"Reminder"> | $Enums.RepeatInterval | null
+    isActive?: BoolFilter<"Reminder"> | boolean
+    projectId?: StringFilter<"Reminder"> | string
+    createdAt?: DateTimeFilter<"Reminder"> | Date | string
+    updatedAt?: DateTimeFilter<"Reminder"> | Date | string
+    repeatOnDays?: EnumDayOfWeekNullableListFilter<"Reminder">
+    repeatOnDates?: IntNullableListFilter<"Reminder">
+    remindBefore?: IntNullableFilter<"Reminder"> | number | null
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+  }
+
+  export type ReminderOrderByWithRelationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    nextTriggerAt?: SortOrderInput | SortOrder
+    repeatEvery?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    projectId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    repeatOnDays?: SortOrder
+    repeatOnDates?: SortOrder
+    remindBefore?: SortOrderInput | SortOrder
+    project?: ProjectOrderByWithRelationInput
+  }
+
+  export type ReminderWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ReminderWhereInput | ReminderWhereInput[]
+    OR?: ReminderWhereInput[]
+    NOT?: ReminderWhereInput | ReminderWhereInput[]
+    message?: StringFilter<"Reminder"> | string
+    nextTriggerAt?: DateTimeNullableFilter<"Reminder"> | Date | string | null
+    repeatEvery?: EnumRepeatIntervalNullableFilter<"Reminder"> | $Enums.RepeatInterval | null
+    isActive?: BoolFilter<"Reminder"> | boolean
+    projectId?: StringFilter<"Reminder"> | string
+    createdAt?: DateTimeFilter<"Reminder"> | Date | string
+    updatedAt?: DateTimeFilter<"Reminder"> | Date | string
+    repeatOnDays?: EnumDayOfWeekNullableListFilter<"Reminder">
+    repeatOnDates?: IntNullableListFilter<"Reminder">
+    remindBefore?: IntNullableFilter<"Reminder"> | number | null
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+  }, "id">
+
+  export type ReminderOrderByWithAggregationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    nextTriggerAt?: SortOrderInput | SortOrder
+    repeatEvery?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    projectId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    repeatOnDays?: SortOrder
+    repeatOnDates?: SortOrder
+    remindBefore?: SortOrderInput | SortOrder
+    _count?: ReminderCountOrderByAggregateInput
+    _avg?: ReminderAvgOrderByAggregateInput
+    _max?: ReminderMaxOrderByAggregateInput
+    _min?: ReminderMinOrderByAggregateInput
+    _sum?: ReminderSumOrderByAggregateInput
+  }
+
+  export type ReminderScalarWhereWithAggregatesInput = {
+    AND?: ReminderScalarWhereWithAggregatesInput | ReminderScalarWhereWithAggregatesInput[]
+    OR?: ReminderScalarWhereWithAggregatesInput[]
+    NOT?: ReminderScalarWhereWithAggregatesInput | ReminderScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Reminder"> | string
+    message?: StringWithAggregatesFilter<"Reminder"> | string
+    nextTriggerAt?: DateTimeNullableWithAggregatesFilter<"Reminder"> | Date | string | null
+    repeatEvery?: EnumRepeatIntervalNullableWithAggregatesFilter<"Reminder"> | $Enums.RepeatInterval | null
+    isActive?: BoolWithAggregatesFilter<"Reminder"> | boolean
+    projectId?: StringWithAggregatesFilter<"Reminder"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Reminder"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Reminder"> | Date | string
+    repeatOnDays?: EnumDayOfWeekNullableListFilter<"Reminder">
+    repeatOnDates?: IntNullableListFilter<"Reminder">
+    remindBefore?: IntNullableWithAggregatesFilter<"Reminder"> | number | null
+  }
+
+  export type SheetWhereInput = {
+    AND?: SheetWhereInput | SheetWhereInput[]
+    OR?: SheetWhereInput[]
+    NOT?: SheetWhereInput | SheetWhereInput[]
+    id?: StringFilter<"Sheet"> | string
+    name?: StringFilter<"Sheet"> | string
+    createdAt?: DateTimeFilter<"Sheet"> | Date | string
+    updatedAt?: DateTimeFilter<"Sheet"> | Date | string
+    cells?: CellListRelationFilter
+    snapshots?: SheetSnapshotListRelationFilter
+  }
+
+  export type SheetOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    cells?: CellOrderByRelationAggregateInput
+    snapshots?: SheetSnapshotOrderByRelationAggregateInput
+  }
+
+  export type SheetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SheetWhereInput | SheetWhereInput[]
+    OR?: SheetWhereInput[]
+    NOT?: SheetWhereInput | SheetWhereInput[]
+    name?: StringFilter<"Sheet"> | string
+    createdAt?: DateTimeFilter<"Sheet"> | Date | string
+    updatedAt?: DateTimeFilter<"Sheet"> | Date | string
+    cells?: CellListRelationFilter
+    snapshots?: SheetSnapshotListRelationFilter
+  }, "id">
+
+  export type SheetOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SheetCountOrderByAggregateInput
+    _max?: SheetMaxOrderByAggregateInput
+    _min?: SheetMinOrderByAggregateInput
+  }
+
+  export type SheetScalarWhereWithAggregatesInput = {
+    AND?: SheetScalarWhereWithAggregatesInput | SheetScalarWhereWithAggregatesInput[]
+    OR?: SheetScalarWhereWithAggregatesInput[]
+    NOT?: SheetScalarWhereWithAggregatesInput | SheetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Sheet"> | string
+    name?: StringWithAggregatesFilter<"Sheet"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
+  }
+
+  export type CellWhereInput = {
+    AND?: CellWhereInput | CellWhereInput[]
+    OR?: CellWhereInput[]
+    NOT?: CellWhereInput | CellWhereInput[]
+    id?: StringFilter<"Cell"> | string
+    row?: IntFilter<"Cell"> | number
+    col?: IntFilter<"Cell"> | number
+    value?: StringFilter<"Cell"> | string
+    sheetId?: StringFilter<"Cell"> | string
+    createdAt?: DateTimeFilter<"Cell"> | Date | string
+    updatedAt?: DateTimeFilter<"Cell"> | Date | string
+    sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
+  }
+
+  export type CellOrderByWithRelationInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sheet?: SheetOrderByWithRelationInput
+  }
+
+  export type CellWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    sheetId_row_col?: CellSheetIdRowColCompoundUniqueInput
+    AND?: CellWhereInput | CellWhereInput[]
+    OR?: CellWhereInput[]
+    NOT?: CellWhereInput | CellWhereInput[]
+    row?: IntFilter<"Cell"> | number
+    col?: IntFilter<"Cell"> | number
+    value?: StringFilter<"Cell"> | string
+    sheetId?: StringFilter<"Cell"> | string
+    createdAt?: DateTimeFilter<"Cell"> | Date | string
+    updatedAt?: DateTimeFilter<"Cell"> | Date | string
+    sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
+  }, "id" | "sheetId_row_col">
+
+  export type CellOrderByWithAggregationInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CellCountOrderByAggregateInput
+    _avg?: CellAvgOrderByAggregateInput
+    _max?: CellMaxOrderByAggregateInput
+    _min?: CellMinOrderByAggregateInput
+    _sum?: CellSumOrderByAggregateInput
+  }
+
+  export type CellScalarWhereWithAggregatesInput = {
+    AND?: CellScalarWhereWithAggregatesInput | CellScalarWhereWithAggregatesInput[]
+    OR?: CellScalarWhereWithAggregatesInput[]
+    NOT?: CellScalarWhereWithAggregatesInput | CellScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Cell"> | string
+    row?: IntWithAggregatesFilter<"Cell"> | number
+    col?: IntWithAggregatesFilter<"Cell"> | number
+    value?: StringWithAggregatesFilter<"Cell"> | string
+    sheetId?: StringWithAggregatesFilter<"Cell"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Cell"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Cell"> | Date | string
+  }
+
+  export type SheetSnapshotWhereInput = {
+    AND?: SheetSnapshotWhereInput | SheetSnapshotWhereInput[]
+    OR?: SheetSnapshotWhereInput[]
+    NOT?: SheetSnapshotWhereInput | SheetSnapshotWhereInput[]
+    id?: StringFilter<"SheetSnapshot"> | string
+    sheetId?: StringFilter<"SheetSnapshot"> | string
+    data?: JsonFilter<"SheetSnapshot">
+    createdAt?: DateTimeFilter<"SheetSnapshot"> | Date | string
+    sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
+  }
+
+  export type SheetSnapshotOrderByWithRelationInput = {
+    id?: SortOrder
+    sheetId?: SortOrder
+    data?: SortOrder
+    createdAt?: SortOrder
+    sheet?: SheetOrderByWithRelationInput
+  }
+
+  export type SheetSnapshotWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SheetSnapshotWhereInput | SheetSnapshotWhereInput[]
+    OR?: SheetSnapshotWhereInput[]
+    NOT?: SheetSnapshotWhereInput | SheetSnapshotWhereInput[]
+    sheetId?: StringFilter<"SheetSnapshot"> | string
+    data?: JsonFilter<"SheetSnapshot">
+    createdAt?: DateTimeFilter<"SheetSnapshot"> | Date | string
+    sheet?: XOR<SheetScalarRelationFilter, SheetWhereInput>
+  }, "id">
+
+  export type SheetSnapshotOrderByWithAggregationInput = {
+    id?: SortOrder
+    sheetId?: SortOrder
+    data?: SortOrder
+    createdAt?: SortOrder
+    _count?: SheetSnapshotCountOrderByAggregateInput
+    _max?: SheetSnapshotMaxOrderByAggregateInput
+    _min?: SheetSnapshotMinOrderByAggregateInput
+  }
+
+  export type SheetSnapshotScalarWhereWithAggregatesInput = {
+    AND?: SheetSnapshotScalarWhereWithAggregatesInput | SheetSnapshotScalarWhereWithAggregatesInput[]
+    OR?: SheetSnapshotScalarWhereWithAggregatesInput[]
+    NOT?: SheetSnapshotScalarWhereWithAggregatesInput | SheetSnapshotScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SheetSnapshot"> | string
+    sheetId?: StringWithAggregatesFilter<"SheetSnapshot"> | string
+    data?: JsonWithAggregatesFilter<"SheetSnapshot">
+    createdAt?: DateTimeWithAggregatesFilter<"SheetSnapshot"> | Date | string
+  }
+
   export type ActivityCreateInput = {
     id?: string
     timestamp?: Date | string
@@ -41898,6 +45774,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
+    projectId?: string | null
     context: string
     type: string
     isRead?: boolean
@@ -41910,6 +45787,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
+    projectId?: string | null
     context: string
     type: string
     isRead?: boolean
@@ -41922,6 +45800,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -41934,6 +45813,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -41946,6 +45826,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
+    projectId?: string | null
     context: string
     type: string
     isRead?: boolean
@@ -41957,6 +45838,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -41968,6 +45850,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -42548,13 +46431,7 @@ export namespace Prisma {
   export type ProjectCreateInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -42576,19 +46453,14 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -42609,18 +46481,13 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42642,19 +46509,14 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42675,19 +46537,14 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateManyInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -42707,13 +46564,7 @@ export namespace Prisma {
   export type ProjectUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42733,13 +46584,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42872,59 +46717,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SheetCreateInput = {
-    id?: string
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    submitted?: SubmittedCreateNestedManyWithoutSheetInput
-  }
-
-  export type SheetUncheckedCreateInput = {
-    id?: string
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    submitted?: SubmittedUncheckedCreateNestedManyWithoutSheetInput
-  }
-
-  export type SheetUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    submitted?: SubmittedUpdateManyWithoutSheetNestedInput
-  }
-
-  export type SheetUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    submitted?: SubmittedUncheckedUpdateManyWithoutSheetNestedInput
-  }
-
-  export type SheetCreateManyInput = {
-    id?: string
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SheetUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SheetUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type SubmissionReturnCreateInput = {
     id?: string
     returnedAt?: Date | string
@@ -42971,11 +46763,11 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
+    sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutSubmittedInput
     project: ProjectCreateNestedOneWithoutSubmittedInput
-    sheet: SheetCreateNestedOneWithoutSubmittedInput
     submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
 
@@ -42997,11 +46789,11 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
-    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
     submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
 
@@ -43035,6 +46827,7 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43834,6 +47627,277 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ReminderCreateInput = {
+    id?: string
+    message: string
+    nextTriggerAt?: Date | string | null
+    repeatEvery?: $Enums.RepeatInterval | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repeatOnDays?: ReminderCreaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderCreaterepeatOnDatesInput | number[]
+    remindBefore?: number | null
+    project: ProjectCreateNestedOneWithoutRemindersInput
+  }
+
+  export type ReminderUncheckedCreateInput = {
+    id?: string
+    message: string
+    nextTriggerAt?: Date | string | null
+    repeatEvery?: $Enums.RepeatInterval | null
+    isActive?: boolean
+    projectId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repeatOnDays?: ReminderCreaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderCreaterepeatOnDatesInput | number[]
+    remindBefore?: number | null
+  }
+
+  export type ReminderUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    nextTriggerAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repeatEvery?: NullableEnumRepeatIntervalFieldUpdateOperationsInput | $Enums.RepeatInterval | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeatOnDays?: ReminderUpdaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderUpdaterepeatOnDatesInput | number[]
+    remindBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    project?: ProjectUpdateOneRequiredWithoutRemindersNestedInput
+  }
+
+  export type ReminderUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    nextTriggerAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repeatEvery?: NullableEnumRepeatIntervalFieldUpdateOperationsInput | $Enums.RepeatInterval | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    projectId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeatOnDays?: ReminderUpdaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderUpdaterepeatOnDatesInput | number[]
+    remindBefore?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReminderCreateManyInput = {
+    id?: string
+    message: string
+    nextTriggerAt?: Date | string | null
+    repeatEvery?: $Enums.RepeatInterval | null
+    isActive?: boolean
+    projectId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repeatOnDays?: ReminderCreaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderCreaterepeatOnDatesInput | number[]
+    remindBefore?: number | null
+  }
+
+  export type ReminderUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    nextTriggerAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repeatEvery?: NullableEnumRepeatIntervalFieldUpdateOperationsInput | $Enums.RepeatInterval | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeatOnDays?: ReminderUpdaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderUpdaterepeatOnDatesInput | number[]
+    remindBefore?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ReminderUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    nextTriggerAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repeatEvery?: NullableEnumRepeatIntervalFieldUpdateOperationsInput | $Enums.RepeatInterval | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    projectId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeatOnDays?: ReminderUpdaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderUpdaterepeatOnDatesInput | number[]
+    remindBefore?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type SheetCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cells?: CellCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetUncheckedCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cells?: CellUncheckedCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cells?: CellUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetCreateManyInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SheetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CellCreateInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sheet: SheetCreateNestedOneWithoutCellsInput
+  }
+
+  export type CellUncheckedCreateInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CellUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheet?: SheetUpdateOneRequiredWithoutCellsNestedInput
+  }
+
+  export type CellUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CellCreateManyInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    sheetId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CellUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CellUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetSnapshotCreateInput = {
+    id?: string
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    sheet: SheetCreateNestedOneWithoutSnapshotsInput
+  }
+
+  export type SheetSnapshotUncheckedCreateInput = {
+    id?: string
+    sheetId: string
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SheetSnapshotUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheet?: SheetUpdateOneRequiredWithoutSnapshotsNestedInput
+  }
+
+  export type SheetSnapshotUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetSnapshotCreateManyInput = {
+    id?: string
+    sheetId: string
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SheetSnapshotUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetSnapshotUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -44433,6 +48497,7 @@ export namespace Prisma {
     id?: SortOrder
     senderId?: SortOrder
     receiverIds?: SortOrder
+    projectId?: SortOrder
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -44443,6 +48508,7 @@ export namespace Prisma {
   export type NotificationMaxOrderByAggregateInput = {
     id?: SortOrder
     senderId?: SortOrder
+    projectId?: SortOrder
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -44453,6 +48519,7 @@ export namespace Prisma {
   export type NotificationMinOrderByAggregateInput = {
     id?: SortOrder
     senderId?: SortOrder
+    projectId?: SortOrder
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -44734,13 +48801,6 @@ export namespace Prisma {
     progress?: SortOrder
   }
 
-  export type EnumProjectCycleFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectCycleFilter<$PrismaModel> | $Enums.ProjectCycle
-  }
-
   export type EnumProjectStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
@@ -44805,6 +48865,12 @@ export namespace Prisma {
     none?: ReviewWhereInput
   }
 
+  export type ReminderListRelationFilter = {
+    every?: ReminderWhereInput
+    some?: ReminderWhereInput
+    none?: ReminderWhereInput
+  }
+
   export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -44817,17 +48883,15 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ReminderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ProjectCountOrderByAggregateInput = {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    uploadbeforeday?: SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrder
-    beforeSubmitData?: SortOrder
-    weakuploadData?: SortOrder
-    monthlyuploadData?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -44845,7 +48909,6 @@ export namespace Prisma {
   }
 
   export type ProjectAvgOrderByAggregateInput = {
-    beforeSubmitData?: SortOrder
     progress?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -44855,11 +48918,7 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    uploadbeforeday?: SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrder
-    beforeSubmitData?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -44879,11 +48938,7 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-    uploadbeforeday?: SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrder
-    beforeSubmitData?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -44900,20 +48955,9 @@ export namespace Prisma {
   }
 
   export type ProjectSumOrderByAggregateInput = {
-    beforeSubmitData?: SortOrder
     progress?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
-  }
-
-  export type EnumProjectCycleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectCycleWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCycle
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumProjectCycleFilter<$PrismaModel>
-    _max?: NestedEnumProjectCycleFilter<$PrismaModel>
   }
 
   export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -45027,27 +49071,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type SheetCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type SheetMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type SheetMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
   export type SubmittedScalarRelationFilter = {
     is?: SubmittedWhereInput
     isNot?: SubmittedWhereInput
@@ -45076,11 +49099,6 @@ export namespace Prisma {
     in?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumSubmittedStatusFilter<$PrismaModel> | $Enums.SubmittedStatus
-  }
-
-  export type SheetScalarRelationFilter = {
-    is?: SheetWhereInput
-    isNot?: SheetWhereInput
   }
 
   export type SubmissionReturnNullableScalarRelationFilter = {
@@ -45652,6 +49670,274 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumRepeatIntervalNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.RepeatInterval | EnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    in?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumRepeatIntervalNullableFilter<$PrismaModel> | $Enums.RepeatInterval | null
+  }
+
+  export type EnumDayOfWeekNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel> | null
+    has?: $Enums.DayOfWeek | EnumDayOfWeekFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.DayOfWeek[] | ListEnumDayOfWeekFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type IntNullableListFilter<$PrismaModel = never> = {
+    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    has?: number | IntFieldRefInput<$PrismaModel> | null
+    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
+    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type ReminderCountOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    nextTriggerAt?: SortOrder
+    repeatEvery?: SortOrder
+    isActive?: SortOrder
+    projectId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    repeatOnDays?: SortOrder
+    repeatOnDates?: SortOrder
+    remindBefore?: SortOrder
+  }
+
+  export type ReminderAvgOrderByAggregateInput = {
+    repeatOnDates?: SortOrder
+    remindBefore?: SortOrder
+  }
+
+  export type ReminderMaxOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    nextTriggerAt?: SortOrder
+    repeatEvery?: SortOrder
+    isActive?: SortOrder
+    projectId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    remindBefore?: SortOrder
+  }
+
+  export type ReminderMinOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    nextTriggerAt?: SortOrder
+    repeatEvery?: SortOrder
+    isActive?: SortOrder
+    projectId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    remindBefore?: SortOrder
+  }
+
+  export type ReminderSumOrderByAggregateInput = {
+    repeatOnDates?: SortOrder
+    remindBefore?: SortOrder
+  }
+
+  export type EnumRepeatIntervalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RepeatInterval | EnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    in?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumRepeatIntervalNullableWithAggregatesFilter<$PrismaModel> | $Enums.RepeatInterval | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumRepeatIntervalNullableFilter<$PrismaModel>
+    _max?: NestedEnumRepeatIntervalNullableFilter<$PrismaModel>
+  }
+
+  export type CellListRelationFilter = {
+    every?: CellWhereInput
+    some?: CellWhereInput
+    none?: CellWhereInput
+  }
+
+  export type SheetSnapshotListRelationFilter = {
+    every?: SheetSnapshotWhereInput
+    some?: SheetSnapshotWhereInput
+    none?: SheetSnapshotWhereInput
+  }
+
+  export type CellOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SheetSnapshotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SheetCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SheetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SheetMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type SheetScalarRelationFilter = {
+    is?: SheetWhereInput
+    isNot?: SheetWhereInput
+  }
+
+  export type CellSheetIdRowColCompoundUniqueInput = {
+    sheetId: string
+    row: number
+    col: number
+  }
+
+  export type CellCountOrderByAggregateInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CellAvgOrderByAggregateInput = {
+    row?: SortOrder
+    col?: SortOrder
+  }
+
+  export type CellMaxOrderByAggregateInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CellMinOrderByAggregateInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CellSumOrderByAggregateInput = {
+    row?: SortOrder
+    col?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type SheetSnapshotCountOrderByAggregateInput = {
+    id?: SortOrder
+    sheetId?: SortOrder
+    data?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SheetSnapshotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SheetSnapshotMinOrderByAggregateInput = {
+    id?: SortOrder
+    sheetId?: SortOrder
+    createdAt?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type ProjectCreateNestedOneWithoutActivitiesInput = {
@@ -46364,14 +50650,6 @@ export namespace Prisma {
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
   }
 
-  export type ProjectCreateweakuploadDataInput = {
-    set: string[]
-  }
-
-  export type ProjectCreatemonthlyuploadDataInput = {
-    set: string[]
-  }
-
   export type ProjectCreatechartListInput = {
     set: string[]
   }
@@ -46430,6 +50708,13 @@ export namespace Prisma {
     connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
   }
 
+  export type ReminderCreateNestedManyWithoutProjectInput = {
+    create?: XOR<ReminderCreateWithoutProjectInput, ReminderUncheckedCreateWithoutProjectInput> | ReminderCreateWithoutProjectInput[] | ReminderUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ReminderCreateOrConnectWithoutProjectInput | ReminderCreateOrConnectWithoutProjectInput[]
+    createMany?: ReminderCreateManyProjectInputEnvelope
+    connect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+  }
+
   export type ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<ProjectEmployeeCreateWithoutProjectInput, ProjectEmployeeUncheckedCreateWithoutProjectInput> | ProjectEmployeeCreateWithoutProjectInput[] | ProjectEmployeeUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutProjectInput | ProjectEmployeeCreateOrConnectWithoutProjectInput[]
@@ -46472,18 +50757,11 @@ export namespace Prisma {
     connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
   }
 
-  export type EnumProjectCycleFieldUpdateOperationsInput = {
-    set?: $Enums.ProjectCycle
-  }
-
-  export type ProjectUpdateweakuploadDataInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type ProjectUpdatemonthlyuploadDataInput = {
-    set?: string[]
-    push?: string | string[]
+  export type ReminderUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<ReminderCreateWithoutProjectInput, ReminderUncheckedCreateWithoutProjectInput> | ReminderCreateWithoutProjectInput[] | ReminderUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ReminderCreateOrConnectWithoutProjectInput | ReminderCreateOrConnectWithoutProjectInput[]
+    createMany?: ReminderCreateManyProjectInputEnvelope
+    connect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
   }
 
   export type EnumProjectStatusFieldUpdateOperationsInput = {
@@ -46611,6 +50889,20 @@ export namespace Prisma {
     deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
   }
 
+  export type ReminderUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<ReminderCreateWithoutProjectInput, ReminderUncheckedCreateWithoutProjectInput> | ReminderCreateWithoutProjectInput[] | ReminderUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ReminderCreateOrConnectWithoutProjectInput | ReminderCreateOrConnectWithoutProjectInput[]
+    upsert?: ReminderUpsertWithWhereUniqueWithoutProjectInput | ReminderUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: ReminderCreateManyProjectInputEnvelope
+    set?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+    disconnect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+    delete?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+    connect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+    update?: ReminderUpdateWithWhereUniqueWithoutProjectInput | ReminderUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: ReminderUpdateManyWithWhereWithoutProjectInput | ReminderUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
+  }
+
   export type ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<ProjectEmployeeCreateWithoutProjectInput, ProjectEmployeeUncheckedCreateWithoutProjectInput> | ProjectEmployeeCreateWithoutProjectInput[] | ProjectEmployeeUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutProjectInput | ProjectEmployeeCreateOrConnectWithoutProjectInput[]
@@ -46695,6 +50987,20 @@ export namespace Prisma {
     deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
   }
 
+  export type ReminderUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<ReminderCreateWithoutProjectInput, ReminderUncheckedCreateWithoutProjectInput> | ReminderCreateWithoutProjectInput[] | ReminderUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ReminderCreateOrConnectWithoutProjectInput | ReminderCreateOrConnectWithoutProjectInput[]
+    upsert?: ReminderUpsertWithWhereUniqueWithoutProjectInput | ReminderUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: ReminderCreateManyProjectInputEnvelope
+    set?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+    disconnect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+    delete?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+    connect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+    update?: ReminderUpdateWithWhereUniqueWithoutProjectInput | ReminderUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: ReminderUpdateManyWithWhereWithoutProjectInput | ReminderUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
+  }
+
   export type ProjectCreateNestedOneWithoutProjectEmployeesInput = {
     create?: XOR<ProjectCreateWithoutProjectEmployeesInput, ProjectUncheckedCreateWithoutProjectEmployeesInput>
     connectOrCreate?: ProjectCreateOrConnectWithoutProjectEmployeesInput
@@ -46737,48 +51043,6 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutReviewsInput, ProjectUpdateWithoutReviewsInput>, ProjectUncheckedUpdateWithoutReviewsInput>
   }
 
-  export type SubmittedCreateNestedManyWithoutSheetInput = {
-    create?: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput> | SubmittedCreateWithoutSheetInput[] | SubmittedUncheckedCreateWithoutSheetInput[]
-    connectOrCreate?: SubmittedCreateOrConnectWithoutSheetInput | SubmittedCreateOrConnectWithoutSheetInput[]
-    createMany?: SubmittedCreateManySheetInputEnvelope
-    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-  }
-
-  export type SubmittedUncheckedCreateNestedManyWithoutSheetInput = {
-    create?: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput> | SubmittedCreateWithoutSheetInput[] | SubmittedUncheckedCreateWithoutSheetInput[]
-    connectOrCreate?: SubmittedCreateOrConnectWithoutSheetInput | SubmittedCreateOrConnectWithoutSheetInput[]
-    createMany?: SubmittedCreateManySheetInputEnvelope
-    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-  }
-
-  export type SubmittedUpdateManyWithoutSheetNestedInput = {
-    create?: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput> | SubmittedCreateWithoutSheetInput[] | SubmittedUncheckedCreateWithoutSheetInput[]
-    connectOrCreate?: SubmittedCreateOrConnectWithoutSheetInput | SubmittedCreateOrConnectWithoutSheetInput[]
-    upsert?: SubmittedUpsertWithWhereUniqueWithoutSheetInput | SubmittedUpsertWithWhereUniqueWithoutSheetInput[]
-    createMany?: SubmittedCreateManySheetInputEnvelope
-    set?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-    disconnect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-    delete?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-    update?: SubmittedUpdateWithWhereUniqueWithoutSheetInput | SubmittedUpdateWithWhereUniqueWithoutSheetInput[]
-    updateMany?: SubmittedUpdateManyWithWhereWithoutSheetInput | SubmittedUpdateManyWithWhereWithoutSheetInput[]
-    deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
-  }
-
-  export type SubmittedUncheckedUpdateManyWithoutSheetNestedInput = {
-    create?: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput> | SubmittedCreateWithoutSheetInput[] | SubmittedUncheckedCreateWithoutSheetInput[]
-    connectOrCreate?: SubmittedCreateOrConnectWithoutSheetInput | SubmittedCreateOrConnectWithoutSheetInput[]
-    upsert?: SubmittedUpsertWithWhereUniqueWithoutSheetInput | SubmittedUpsertWithWhereUniqueWithoutSheetInput[]
-    createMany?: SubmittedCreateManySheetInputEnvelope
-    set?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-    disconnect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-    delete?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-    connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
-    update?: SubmittedUpdateWithWhereUniqueWithoutSheetInput | SubmittedUpdateWithWhereUniqueWithoutSheetInput[]
-    updateMany?: SubmittedUpdateManyWithWhereWithoutSheetInput | SubmittedUpdateManyWithWhereWithoutSheetInput[]
-    deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
-  }
-
   export type SubmittedCreateNestedOneWithoutSubmissionReturnInput = {
     create?: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
     connectOrCreate?: SubmittedCreateOrConnectWithoutSubmissionReturnInput
@@ -46803,12 +51067,6 @@ export namespace Prisma {
     create?: XOR<ProjectCreateWithoutSubmittedInput, ProjectUncheckedCreateWithoutSubmittedInput>
     connectOrCreate?: ProjectCreateOrConnectWithoutSubmittedInput
     connect?: ProjectWhereUniqueInput
-  }
-
-  export type SheetCreateNestedOneWithoutSubmittedInput = {
-    create?: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
-    connectOrCreate?: SheetCreateOrConnectWithoutSubmittedInput
-    connect?: SheetWhereUniqueInput
   }
 
   export type SubmissionReturnCreateNestedOneWithoutSubmittedInput = {
@@ -46841,14 +51099,6 @@ export namespace Prisma {
     upsert?: ProjectUpsertWithoutSubmittedInput
     connect?: ProjectWhereUniqueInput
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutSubmittedInput, ProjectUpdateWithoutSubmittedInput>, ProjectUncheckedUpdateWithoutSubmittedInput>
-  }
-
-  export type SheetUpdateOneRequiredWithoutSubmittedNestedInput = {
-    create?: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
-    connectOrCreate?: SheetCreateOrConnectWithoutSubmittedInput
-    upsert?: SheetUpsertWithoutSubmittedInput
-    connect?: SheetWhereUniqueInput
-    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutSubmittedInput, SheetUpdateWithoutSubmittedInput>, SheetUncheckedUpdateWithoutSubmittedInput>
   }
 
   export type SubmissionReturnUpdateOneWithoutSubmittedNestedInput = {
@@ -47612,6 +51862,162 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutViewerInput, UserUpdateWithoutViewerInput>, UserUncheckedUpdateWithoutViewerInput>
   }
 
+  export type ReminderCreaterepeatOnDaysInput = {
+    set: $Enums.DayOfWeek[]
+  }
+
+  export type ReminderCreaterepeatOnDatesInput = {
+    set: number[]
+  }
+
+  export type ProjectCreateNestedOneWithoutRemindersInput = {
+    create?: XOR<ProjectCreateWithoutRemindersInput, ProjectUncheckedCreateWithoutRemindersInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutRemindersInput
+    connect?: ProjectWhereUniqueInput
+  }
+
+  export type NullableEnumRepeatIntervalFieldUpdateOperationsInput = {
+    set?: $Enums.RepeatInterval | null
+  }
+
+  export type ReminderUpdaterepeatOnDaysInput = {
+    set?: $Enums.DayOfWeek[]
+    push?: $Enums.DayOfWeek | $Enums.DayOfWeek[]
+  }
+
+  export type ReminderUpdaterepeatOnDatesInput = {
+    set?: number[]
+    push?: number | number[]
+  }
+
+  export type ProjectUpdateOneRequiredWithoutRemindersNestedInput = {
+    create?: XOR<ProjectCreateWithoutRemindersInput, ProjectUncheckedCreateWithoutRemindersInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutRemindersInput
+    upsert?: ProjectUpsertWithoutRemindersInput
+    connect?: ProjectWhereUniqueInput
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutRemindersInput, ProjectUpdateWithoutRemindersInput>, ProjectUncheckedUpdateWithoutRemindersInput>
+  }
+
+  export type CellCreateNestedManyWithoutSheetInput = {
+    create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
+    createMany?: CellCreateManySheetInputEnvelope
+    connect?: CellWhereUniqueInput | CellWhereUniqueInput[]
+  }
+
+  export type SheetSnapshotCreateNestedManyWithoutSheetInput = {
+    create?: XOR<SheetSnapshotCreateWithoutSheetInput, SheetSnapshotUncheckedCreateWithoutSheetInput> | SheetSnapshotCreateWithoutSheetInput[] | SheetSnapshotUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: SheetSnapshotCreateOrConnectWithoutSheetInput | SheetSnapshotCreateOrConnectWithoutSheetInput[]
+    createMany?: SheetSnapshotCreateManySheetInputEnvelope
+    connect?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+  }
+
+  export type CellUncheckedCreateNestedManyWithoutSheetInput = {
+    create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
+    createMany?: CellCreateManySheetInputEnvelope
+    connect?: CellWhereUniqueInput | CellWhereUniqueInput[]
+  }
+
+  export type SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput = {
+    create?: XOR<SheetSnapshotCreateWithoutSheetInput, SheetSnapshotUncheckedCreateWithoutSheetInput> | SheetSnapshotCreateWithoutSheetInput[] | SheetSnapshotUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: SheetSnapshotCreateOrConnectWithoutSheetInput | SheetSnapshotCreateOrConnectWithoutSheetInput[]
+    createMany?: SheetSnapshotCreateManySheetInputEnvelope
+    connect?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+  }
+
+  export type CellUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
+    upsert?: CellUpsertWithWhereUniqueWithoutSheetInput | CellUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: CellCreateManySheetInputEnvelope
+    set?: CellWhereUniqueInput | CellWhereUniqueInput[]
+    disconnect?: CellWhereUniqueInput | CellWhereUniqueInput[]
+    delete?: CellWhereUniqueInput | CellWhereUniqueInput[]
+    connect?: CellWhereUniqueInput | CellWhereUniqueInput[]
+    update?: CellUpdateWithWhereUniqueWithoutSheetInput | CellUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: CellUpdateManyWithWhereWithoutSheetInput | CellUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: CellScalarWhereInput | CellScalarWhereInput[]
+  }
+
+  export type SheetSnapshotUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<SheetSnapshotCreateWithoutSheetInput, SheetSnapshotUncheckedCreateWithoutSheetInput> | SheetSnapshotCreateWithoutSheetInput[] | SheetSnapshotUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: SheetSnapshotCreateOrConnectWithoutSheetInput | SheetSnapshotCreateOrConnectWithoutSheetInput[]
+    upsert?: SheetSnapshotUpsertWithWhereUniqueWithoutSheetInput | SheetSnapshotUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: SheetSnapshotCreateManySheetInputEnvelope
+    set?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+    disconnect?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+    delete?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+    connect?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+    update?: SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput | SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: SheetSnapshotUpdateManyWithWhereWithoutSheetInput | SheetSnapshotUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: SheetSnapshotScalarWhereInput | SheetSnapshotScalarWhereInput[]
+  }
+
+  export type CellUncheckedUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
+    upsert?: CellUpsertWithWhereUniqueWithoutSheetInput | CellUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: CellCreateManySheetInputEnvelope
+    set?: CellWhereUniqueInput | CellWhereUniqueInput[]
+    disconnect?: CellWhereUniqueInput | CellWhereUniqueInput[]
+    delete?: CellWhereUniqueInput | CellWhereUniqueInput[]
+    connect?: CellWhereUniqueInput | CellWhereUniqueInput[]
+    update?: CellUpdateWithWhereUniqueWithoutSheetInput | CellUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: CellUpdateManyWithWhereWithoutSheetInput | CellUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: CellScalarWhereInput | CellScalarWhereInput[]
+  }
+
+  export type SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<SheetSnapshotCreateWithoutSheetInput, SheetSnapshotUncheckedCreateWithoutSheetInput> | SheetSnapshotCreateWithoutSheetInput[] | SheetSnapshotUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: SheetSnapshotCreateOrConnectWithoutSheetInput | SheetSnapshotCreateOrConnectWithoutSheetInput[]
+    upsert?: SheetSnapshotUpsertWithWhereUniqueWithoutSheetInput | SheetSnapshotUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: SheetSnapshotCreateManySheetInputEnvelope
+    set?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+    disconnect?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+    delete?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+    connect?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
+    update?: SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput | SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: SheetSnapshotUpdateManyWithWhereWithoutSheetInput | SheetSnapshotUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: SheetSnapshotScalarWhereInput | SheetSnapshotScalarWhereInput[]
+  }
+
+  export type SheetCreateNestedOneWithoutCellsInput = {
+    create?: XOR<SheetCreateWithoutCellsInput, SheetUncheckedCreateWithoutCellsInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutCellsInput
+    connect?: SheetWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type SheetUpdateOneRequiredWithoutCellsNestedInput = {
+    create?: XOR<SheetCreateWithoutCellsInput, SheetUncheckedCreateWithoutCellsInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutCellsInput
+    upsert?: SheetUpsertWithoutCellsInput
+    connect?: SheetWhereUniqueInput
+    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutCellsInput, SheetUpdateWithoutCellsInput>, SheetUncheckedUpdateWithoutCellsInput>
+  }
+
+  export type SheetCreateNestedOneWithoutSnapshotsInput = {
+    create?: XOR<SheetCreateWithoutSnapshotsInput, SheetUncheckedCreateWithoutSnapshotsInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutSnapshotsInput
+    connect?: SheetWhereUniqueInput
+  }
+
+  export type SheetUpdateOneRequiredWithoutSnapshotsNestedInput = {
+    create?: XOR<SheetCreateWithoutSnapshotsInput, SheetUncheckedCreateWithoutSnapshotsInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutSnapshotsInput
+    upsert?: SheetUpsertWithoutSnapshotsInput
+    connect?: SheetWhereUniqueInput
+    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutSnapshotsInput, SheetUpdateWithoutSnapshotsInput>, SheetUncheckedUpdateWithoutSnapshotsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -47845,13 +52251,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedEnumProjectCycleFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectCycleFilter<$PrismaModel> | $Enums.ProjectCycle
-  }
-
   export type NestedEnumProjectStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
@@ -47875,16 +52274,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedEnumProjectCycleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectCycleWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCycle
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumProjectCycleFilter<$PrismaModel>
-    _max?: NestedEnumProjectCycleFilter<$PrismaModel>
   }
 
   export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -48073,16 +52462,66 @@ export namespace Prisma {
     _max?: NestedEnumUserStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumRepeatIntervalNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.RepeatInterval | EnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    in?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumRepeatIntervalNullableFilter<$PrismaModel> | $Enums.RepeatInterval | null
+  }
+
+  export type NestedEnumRepeatIntervalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RepeatInterval | EnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    in?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumRepeatIntervalNullableWithAggregatesFilter<$PrismaModel> | $Enums.RepeatInterval | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumRepeatIntervalNullableFilter<$PrismaModel>
+    _max?: NestedEnumRepeatIntervalNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type ProjectCreateWithoutActivitiesInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -48103,19 +52542,14 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutActivitiesInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -48135,6 +52569,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutActivitiesInput = {
@@ -48225,13 +52660,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutActivitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48252,19 +52681,14 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutActivitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48284,6 +52708,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type UserUpsertWithoutActivitiesInput = {
@@ -48847,10 +53272,10 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
+    sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutSubmittedInput
-    sheet: SheetCreateNestedOneWithoutSubmittedInput
     submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
 
@@ -49368,13 +53793,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutManagerInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -49395,19 +53814,14 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutManagerInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -49427,6 +53841,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutManagerInput = {
@@ -49563,13 +53978,7 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-    uploadbeforeday?: StringFilter<"Project"> | string
-    uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
-    dataReceivedTime?: StringNullableFilter<"Project"> | string | null
-    beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    weakuploadData?: StringNullableListFilter<"Project">
-    monthlyuploadData?: StringNullableListFilter<"Project">
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -49729,6 +54138,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
+    projectId?: string | null
     context: string
     type: string
     isRead?: boolean
@@ -49740,6 +54150,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
+    projectId?: string | null
     context: string
     type: string
     isRead?: boolean
@@ -49842,6 +54253,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -49853,6 +54265,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
+    projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -50708,13 +55121,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutProgramInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -50735,18 +55142,13 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutProgramInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -50767,6 +55169,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutProgramInput = {
@@ -51073,10 +55476,10 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
+    sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutSubmittedInput
-    sheet: SheetCreateNestedOneWithoutSubmittedInput
     submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
 
@@ -51099,6 +55502,42 @@ export namespace Prisma {
 
   export type SubmittedCreateManyProjectInputEnvelope = {
     data: SubmittedCreateManyProjectInput | SubmittedCreateManyProjectInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReminderCreateWithoutProjectInput = {
+    id?: string
+    message: string
+    nextTriggerAt?: Date | string | null
+    repeatEvery?: $Enums.RepeatInterval | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repeatOnDays?: ReminderCreaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderCreaterepeatOnDatesInput | number[]
+    remindBefore?: number | null
+  }
+
+  export type ReminderUncheckedCreateWithoutProjectInput = {
+    id?: string
+    message: string
+    nextTriggerAt?: Date | string | null
+    repeatEvery?: $Enums.RepeatInterval | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repeatOnDays?: ReminderCreaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderCreaterepeatOnDatesInput | number[]
+    remindBefore?: number | null
+  }
+
+  export type ReminderCreateOrConnectWithoutProjectInput = {
+    where: ReminderWhereUniqueInput
+    create: XOR<ReminderCreateWithoutProjectInput, ReminderUncheckedCreateWithoutProjectInput>
+  }
+
+  export type ReminderCreateManyProjectInputEnvelope = {
+    data: ReminderCreateManyProjectInput | ReminderCreateManyProjectInput[]
     skipDuplicates?: boolean
   }
 
@@ -51313,16 +55752,43 @@ export namespace Prisma {
     data: XOR<SubmittedUpdateManyMutationInput, SubmittedUncheckedUpdateManyWithoutProjectInput>
   }
 
+  export type ReminderUpsertWithWhereUniqueWithoutProjectInput = {
+    where: ReminderWhereUniqueInput
+    update: XOR<ReminderUpdateWithoutProjectInput, ReminderUncheckedUpdateWithoutProjectInput>
+    create: XOR<ReminderCreateWithoutProjectInput, ReminderUncheckedCreateWithoutProjectInput>
+  }
+
+  export type ReminderUpdateWithWhereUniqueWithoutProjectInput = {
+    where: ReminderWhereUniqueInput
+    data: XOR<ReminderUpdateWithoutProjectInput, ReminderUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type ReminderUpdateManyWithWhereWithoutProjectInput = {
+    where: ReminderScalarWhereInput
+    data: XOR<ReminderUpdateManyMutationInput, ReminderUncheckedUpdateManyWithoutProjectInput>
+  }
+
+  export type ReminderScalarWhereInput = {
+    AND?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
+    OR?: ReminderScalarWhereInput[]
+    NOT?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
+    id?: StringFilter<"Reminder"> | string
+    message?: StringFilter<"Reminder"> | string
+    nextTriggerAt?: DateTimeNullableFilter<"Reminder"> | Date | string | null
+    repeatEvery?: EnumRepeatIntervalNullableFilter<"Reminder"> | $Enums.RepeatInterval | null
+    isActive?: BoolFilter<"Reminder"> | boolean
+    projectId?: StringFilter<"Reminder"> | string
+    createdAt?: DateTimeFilter<"Reminder"> | Date | string
+    updatedAt?: DateTimeFilter<"Reminder"> | Date | string
+    repeatOnDays?: EnumDayOfWeekNullableListFilter<"Reminder">
+    repeatOnDates?: IntNullableListFilter<"Reminder">
+    remindBefore?: IntNullableFilter<"Reminder"> | number | null
+  }
+
   export type ProjectCreateWithoutProjectEmployeesInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51343,19 +55809,14 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutProjectEmployeesInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51375,6 +55836,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutProjectEmployeesInput = {
@@ -51423,13 +55885,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutProjectEmployeesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51450,19 +55906,14 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutProjectEmployeesInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51482,6 +55933,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type EmployeeUpsertWithoutProjectEmployeesInput = {
@@ -51520,13 +55972,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutReviewsInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51547,19 +55993,14 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutReviewsInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51579,6 +56020,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutReviewsInput = {
@@ -51600,13 +56042,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51627,19 +56063,14 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51659,56 +56090,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
-  }
-
-  export type SubmittedCreateWithoutSheetInput = {
-    id?: string
-    information: string
-    submission: string
-    status?: $Enums.SubmittedStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    employee: EmployeeCreateNestedOneWithoutSubmittedInput
-    project: ProjectCreateNestedOneWithoutSubmittedInput
-    submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
-  }
-
-  export type SubmittedUncheckedCreateWithoutSheetInput = {
-    id?: string
-    information: string
-    submission: string
-    status?: $Enums.SubmittedStatus
-    employeeId: string
-    projectId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
-  }
-
-  export type SubmittedCreateOrConnectWithoutSheetInput = {
-    where: SubmittedWhereUniqueInput
-    create: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput>
-  }
-
-  export type SubmittedCreateManySheetInputEnvelope = {
-    data: SubmittedCreateManySheetInput | SubmittedCreateManySheetInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type SubmittedUpsertWithWhereUniqueWithoutSheetInput = {
-    where: SubmittedWhereUniqueInput
-    update: XOR<SubmittedUpdateWithoutSheetInput, SubmittedUncheckedUpdateWithoutSheetInput>
-    create: XOR<SubmittedCreateWithoutSheetInput, SubmittedUncheckedCreateWithoutSheetInput>
-  }
-
-  export type SubmittedUpdateWithWhereUniqueWithoutSheetInput = {
-    where: SubmittedWhereUniqueInput
-    data: XOR<SubmittedUpdateWithoutSheetInput, SubmittedUncheckedUpdateWithoutSheetInput>
-  }
-
-  export type SubmittedUpdateManyWithWhereWithoutSheetInput = {
-    where: SubmittedScalarWhereInput
-    data: XOR<SubmittedUpdateManyMutationInput, SubmittedUncheckedUpdateManyWithoutSheetInput>
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type SubmittedCreateWithoutSubmissionReturnInput = {
@@ -51716,11 +56098,11 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
+    sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     employee: EmployeeCreateNestedOneWithoutSubmittedInput
     project: ProjectCreateNestedOneWithoutSubmittedInput
-    sheet: SheetCreateNestedOneWithoutSubmittedInput
   }
 
   export type SubmittedUncheckedCreateWithoutSubmissionReturnInput = {
@@ -51756,11 +56138,11 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
-    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
   }
 
   export type SubmittedUncheckedUpdateWithoutSubmissionReturnInput = {
@@ -51805,13 +56187,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutSubmittedInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51832,19 +56208,14 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutSubmittedInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -51864,30 +56235,12 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutSubmittedInput = {
     where: ProjectWhereUniqueInput
     create: XOR<ProjectCreateWithoutSubmittedInput, ProjectUncheckedCreateWithoutSubmittedInput>
-  }
-
-  export type SheetCreateWithoutSubmittedInput = {
-    id?: string
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SheetUncheckedCreateWithoutSubmittedInput = {
-    id?: string
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SheetCreateOrConnectWithoutSubmittedInput = {
-    where: SheetWhereUniqueInput
-    create: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
   }
 
   export type SubmissionReturnCreateWithoutSubmittedInput = {
@@ -51952,13 +56305,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutSubmittedInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51979,19 +56326,14 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutSubmittedInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52011,31 +56353,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
-  }
-
-  export type SheetUpsertWithoutSubmittedInput = {
-    update: XOR<SheetUpdateWithoutSubmittedInput, SheetUncheckedUpdateWithoutSubmittedInput>
-    create: XOR<SheetCreateWithoutSubmittedInput, SheetUncheckedCreateWithoutSubmittedInput>
-    where?: SheetWhereInput
-  }
-
-  export type SheetUpdateToOneWithWhereWithoutSubmittedInput = {
-    where?: SheetWhereInput
-    data: XOR<SheetUpdateWithoutSubmittedInput, SheetUncheckedUpdateWithoutSubmittedInput>
-  }
-
-  export type SheetUpdateWithoutSubmittedInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SheetUncheckedUpdateWithoutSubmittedInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type SubmissionReturnUpsertWithoutSubmittedInput = {
@@ -52402,13 +56720,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutTasksInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -52429,19 +56741,14 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutTasksInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -52461,6 +56768,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutTasksInput = {
@@ -52482,13 +56790,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52509,19 +56811,14 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52541,6 +56838,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ClientCreateWithoutTicketsInput = {
@@ -53828,13 +58126,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutRequestsToAddProjectMemberInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -53855,19 +58147,14 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutRequestsToAddProjectMemberInput = {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -53887,6 +58174,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutRequestsToAddProjectMemberInput = {
@@ -53935,13 +58223,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutRequestsToAddProjectMemberInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53962,19 +58244,14 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutRequestsToAddProjectMemberInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53994,6 +58271,7 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ManagerUpsertWithoutRequestsToAddProjectMemberInput = {
@@ -54171,6 +58449,331 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ProjectCreateWithoutRemindersInput = {
+    id?: string
+    name: string
+    description: string
+    status?: $Enums.ProjectStatus
+    priority: $Enums.Priority
+    deadline: Date | string
+    startDate?: Date | string | null
+    progress?: number | null
+    chartList?: ProjectCreatechartListInput | string[]
+    estimatedCompletedDate?: Date | string | null
+    currentRate?: string | null
+    budget?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    program: ProgramCreateNestedOneWithoutProjectsInput
+    manager: ManagerCreateNestedOneWithoutProjectsInput
+    projectEmployees?: ProjectEmployeeCreateNestedManyWithoutProjectInput
+    tasks?: TaskCreateNestedManyWithoutProjectInput
+    activities?: ActivityCreateNestedManyWithoutProjectInput
+    reviews?: ReviewCreateNestedManyWithoutProjectInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectUncheckedCreateWithoutRemindersInput = {
+    id?: string
+    programId: string
+    name: string
+    description: string
+    status?: $Enums.ProjectStatus
+    priority: $Enums.Priority
+    deadline: Date | string
+    managerId: string
+    startDate?: Date | string | null
+    progress?: number | null
+    chartList?: ProjectCreatechartListInput | string[]
+    estimatedCompletedDate?: Date | string | null
+    currentRate?: string | null
+    budget?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    projectEmployees?: ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectCreateOrConnectWithoutRemindersInput = {
+    where: ProjectWhereUniqueInput
+    create: XOR<ProjectCreateWithoutRemindersInput, ProjectUncheckedCreateWithoutRemindersInput>
+  }
+
+  export type ProjectUpsertWithoutRemindersInput = {
+    update: XOR<ProjectUpdateWithoutRemindersInput, ProjectUncheckedUpdateWithoutRemindersInput>
+    create: XOR<ProjectCreateWithoutRemindersInput, ProjectUncheckedCreateWithoutRemindersInput>
+    where?: ProjectWhereInput
+  }
+
+  export type ProjectUpdateToOneWithWhereWithoutRemindersInput = {
+    where?: ProjectWhereInput
+    data: XOR<ProjectUpdateWithoutRemindersInput, ProjectUncheckedUpdateWithoutRemindersInput>
+  }
+
+  export type ProjectUpdateWithoutRemindersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    chartList?: ProjectUpdatechartListInput | string[]
+    estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRate?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    program?: ProgramUpdateOneRequiredWithoutProjectsNestedInput
+    manager?: ManagerUpdateOneRequiredWithoutProjectsNestedInput
+    projectEmployees?: ProjectEmployeeUpdateManyWithoutProjectNestedInput
+    tasks?: TaskUpdateManyWithoutProjectNestedInput
+    activities?: ActivityUpdateManyWithoutProjectNestedInput
+    reviews?: ReviewUpdateManyWithoutProjectNestedInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateWithoutRemindersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    programId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    managerId?: StringFieldUpdateOperationsInput | string
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    chartList?: ProjectUpdatechartListInput | string[]
+    estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRate?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectEmployees?: ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type CellCreateWithoutSheetInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CellUncheckedCreateWithoutSheetInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CellCreateOrConnectWithoutSheetInput = {
+    where: CellWhereUniqueInput
+    create: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput>
+  }
+
+  export type CellCreateManySheetInputEnvelope = {
+    data: CellCreateManySheetInput | CellCreateManySheetInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SheetSnapshotCreateWithoutSheetInput = {
+    id?: string
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SheetSnapshotUncheckedCreateWithoutSheetInput = {
+    id?: string
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type SheetSnapshotCreateOrConnectWithoutSheetInput = {
+    where: SheetSnapshotWhereUniqueInput
+    create: XOR<SheetSnapshotCreateWithoutSheetInput, SheetSnapshotUncheckedCreateWithoutSheetInput>
+  }
+
+  export type SheetSnapshotCreateManySheetInputEnvelope = {
+    data: SheetSnapshotCreateManySheetInput | SheetSnapshotCreateManySheetInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CellUpsertWithWhereUniqueWithoutSheetInput = {
+    where: CellWhereUniqueInput
+    update: XOR<CellUpdateWithoutSheetInput, CellUncheckedUpdateWithoutSheetInput>
+    create: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput>
+  }
+
+  export type CellUpdateWithWhereUniqueWithoutSheetInput = {
+    where: CellWhereUniqueInput
+    data: XOR<CellUpdateWithoutSheetInput, CellUncheckedUpdateWithoutSheetInput>
+  }
+
+  export type CellUpdateManyWithWhereWithoutSheetInput = {
+    where: CellScalarWhereInput
+    data: XOR<CellUpdateManyMutationInput, CellUncheckedUpdateManyWithoutSheetInput>
+  }
+
+  export type CellScalarWhereInput = {
+    AND?: CellScalarWhereInput | CellScalarWhereInput[]
+    OR?: CellScalarWhereInput[]
+    NOT?: CellScalarWhereInput | CellScalarWhereInput[]
+    id?: StringFilter<"Cell"> | string
+    row?: IntFilter<"Cell"> | number
+    col?: IntFilter<"Cell"> | number
+    value?: StringFilter<"Cell"> | string
+    sheetId?: StringFilter<"Cell"> | string
+    createdAt?: DateTimeFilter<"Cell"> | Date | string
+    updatedAt?: DateTimeFilter<"Cell"> | Date | string
+  }
+
+  export type SheetSnapshotUpsertWithWhereUniqueWithoutSheetInput = {
+    where: SheetSnapshotWhereUniqueInput
+    update: XOR<SheetSnapshotUpdateWithoutSheetInput, SheetSnapshotUncheckedUpdateWithoutSheetInput>
+    create: XOR<SheetSnapshotCreateWithoutSheetInput, SheetSnapshotUncheckedCreateWithoutSheetInput>
+  }
+
+  export type SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput = {
+    where: SheetSnapshotWhereUniqueInput
+    data: XOR<SheetSnapshotUpdateWithoutSheetInput, SheetSnapshotUncheckedUpdateWithoutSheetInput>
+  }
+
+  export type SheetSnapshotUpdateManyWithWhereWithoutSheetInput = {
+    where: SheetSnapshotScalarWhereInput
+    data: XOR<SheetSnapshotUpdateManyMutationInput, SheetSnapshotUncheckedUpdateManyWithoutSheetInput>
+  }
+
+  export type SheetSnapshotScalarWhereInput = {
+    AND?: SheetSnapshotScalarWhereInput | SheetSnapshotScalarWhereInput[]
+    OR?: SheetSnapshotScalarWhereInput[]
+    NOT?: SheetSnapshotScalarWhereInput | SheetSnapshotScalarWhereInput[]
+    id?: StringFilter<"SheetSnapshot"> | string
+    sheetId?: StringFilter<"SheetSnapshot"> | string
+    data?: JsonFilter<"SheetSnapshot">
+    createdAt?: DateTimeFilter<"SheetSnapshot"> | Date | string
+  }
+
+  export type SheetCreateWithoutCellsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetUncheckedCreateWithoutCellsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetCreateOrConnectWithoutCellsInput = {
+    where: SheetWhereUniqueInput
+    create: XOR<SheetCreateWithoutCellsInput, SheetUncheckedCreateWithoutCellsInput>
+  }
+
+  export type SheetUpsertWithoutCellsInput = {
+    update: XOR<SheetUpdateWithoutCellsInput, SheetUncheckedUpdateWithoutCellsInput>
+    create: XOR<SheetCreateWithoutCellsInput, SheetUncheckedCreateWithoutCellsInput>
+    where?: SheetWhereInput
+  }
+
+  export type SheetUpdateToOneWithWhereWithoutCellsInput = {
+    where?: SheetWhereInput
+    data: XOR<SheetUpdateWithoutCellsInput, SheetUncheckedUpdateWithoutCellsInput>
+  }
+
+  export type SheetUpdateWithoutCellsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetUncheckedUpdateWithoutCellsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetCreateWithoutSnapshotsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cells?: CellCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetUncheckedCreateWithoutSnapshotsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cells?: CellUncheckedCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetCreateOrConnectWithoutSnapshotsInput = {
+    where: SheetWhereUniqueInput
+    create: XOR<SheetCreateWithoutSnapshotsInput, SheetUncheckedCreateWithoutSnapshotsInput>
+  }
+
+  export type SheetUpsertWithoutSnapshotsInput = {
+    update: XOR<SheetUpdateWithoutSnapshotsInput, SheetUncheckedUpdateWithoutSnapshotsInput>
+    create: XOR<SheetCreateWithoutSnapshotsInput, SheetUncheckedCreateWithoutSnapshotsInput>
+    where?: SheetWhereInput
+  }
+
+  export type SheetUpdateToOneWithWhereWithoutSnapshotsInput = {
+    where?: SheetWhereInput
+    data: XOR<SheetUpdateWithoutSnapshotsInput, SheetUncheckedUpdateWithoutSnapshotsInput>
+  }
+
+  export type SheetUpdateWithoutSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cells?: CellUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetUncheckedUpdateWithoutSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type ReferredPersonCreateManyClientInput = {
@@ -54367,10 +58970,10 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
-    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
     submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
 
@@ -54401,13 +59004,7 @@ export namespace Prisma {
     id?: string
     programId: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -54434,13 +59031,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54461,19 +59052,14 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54493,19 +59079,14 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54564,13 +59145,7 @@ export namespace Prisma {
   export type ProjectCreateManyProgramInput = {
     id?: string
     name: string
-    uploadbeforeday: string
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    weakuploadData?: ProjectCreateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectCreatemonthlyuploadDataInput | string[]
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -54590,13 +59165,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54617,18 +59186,13 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54649,18 +59213,13 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    uploadbeforeday?: StringFieldUpdateOperationsInput | string
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    weakuploadData?: ProjectUpdateweakuploadDataInput | string[]
-    monthlyuploadData?: ProjectUpdatemonthlyuploadDataInput | string[]
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54733,6 +59292,19 @@ export namespace Prisma {
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type ReminderCreateManyProjectInput = {
+    id?: string
+    message: string
+    nextTriggerAt?: Date | string | null
+    repeatEvery?: $Enums.RepeatInterval | null
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repeatOnDays?: ReminderCreaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderCreaterepeatOnDatesInput | number[]
+    remindBefore?: number | null
   }
 
   export type ProjectEmployeeUpdateWithoutProjectInput = {
@@ -54881,10 +59453,10 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
-    sheet?: SheetUpdateOneRequiredWithoutSubmittedNestedInput
     submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
 
@@ -54911,50 +59483,43 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SubmittedCreateManySheetInput = {
-    id?: string
-    information: string
-    submission: string
-    status?: $Enums.SubmittedStatus
-    employeeId: string
-    projectId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SubmittedUpdateWithoutSheetInput = {
+  export type ReminderUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
-    information?: StringFieldUpdateOperationsInput | string
-    submission?: StringFieldUpdateOperationsInput | string
-    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
+    message?: StringFieldUpdateOperationsInput | string
+    nextTriggerAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repeatEvery?: NullableEnumRepeatIntervalFieldUpdateOperationsInput | $Enums.RepeatInterval | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
-    project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
-    submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
+    repeatOnDays?: ReminderUpdaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderUpdaterepeatOnDatesInput | number[]
+    remindBefore?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type SubmittedUncheckedUpdateWithoutSheetInput = {
+  export type ReminderUncheckedUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
-    information?: StringFieldUpdateOperationsInput | string
-    submission?: StringFieldUpdateOperationsInput | string
-    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
-    employeeId?: StringFieldUpdateOperationsInput | string
-    projectId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    nextTriggerAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repeatEvery?: NullableEnumRepeatIntervalFieldUpdateOperationsInput | $Enums.RepeatInterval | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
+    repeatOnDays?: ReminderUpdaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderUpdaterepeatOnDatesInput | number[]
+    remindBefore?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type SubmittedUncheckedUpdateManyWithoutSheetInput = {
+  export type ReminderUncheckedUpdateManyWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
-    information?: StringFieldUpdateOperationsInput | string
-    submission?: StringFieldUpdateOperationsInput | string
-    status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
-    employeeId?: StringFieldUpdateOperationsInput | string
-    projectId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    nextTriggerAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repeatEvery?: NullableEnumRepeatIntervalFieldUpdateOperationsInput | $Enums.RepeatInterval | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repeatOnDays?: ReminderUpdaterepeatOnDaysInput | $Enums.DayOfWeek[]
+    repeatOnDates?: ReminderUpdaterepeatOnDatesInput | number[]
+    remindBefore?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type NotificationProvisionCreateManyUserInput = {
@@ -55051,6 +59616,66 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CellCreateManySheetInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SheetSnapshotCreateManySheetInput = {
+    id?: string
+    data: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CellUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CellUncheckedUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CellUncheckedUpdateManyWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetSnapshotUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetSnapshotUncheckedUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SheetSnapshotUncheckedUpdateManyWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

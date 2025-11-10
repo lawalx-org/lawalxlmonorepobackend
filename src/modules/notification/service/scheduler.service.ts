@@ -39,7 +39,7 @@ export class SchedulerService {
           const currentDay = nextDate.day();
           let nextDayIndex = -1;
 
-          // Find the next valid day in the current week
+          // Find the next valid weekday
           for (let i = 0; i < 7; i++) {
             const dayIndex = (currentDay + i) % 7;
             if (repeatOnDays.includes(weekDays[dayIndex])) {
@@ -58,13 +58,13 @@ export class SchedulerService {
           nextDate = nextDate.add(1, 'week');
         }
         break;
+
       case 'BI_WEEKLY':
       case 'MONTHLY':
         if (repeatOnDates && repeatOnDates.length > 0) {
           const currentMonthDate = nextDate.date();
           let nextMonthDate = -1;
 
-          // Find the next valid date in the current month
           for (const date of repeatOnDates) {
             if (date > currentMonthDate) {
               nextMonthDate = date;
@@ -90,35 +90,56 @@ export class SchedulerService {
     return nextDate.toDate();
   }
 
-  @Cron('*/1 * * * *')
+  @Cron('*/1 * * * *') // runs every minute
   async handleCron() {
     this.logger.log('Scheduler running...');
     const now = dayjs().toDate();
 
-    // 1. Fetch due tasks
+    // 1. Fetch reminders that need to trigger now or earlier
     const dueTasks = await this.prisma.reminder.findMany({
       where: {
         isActive: true,
         nextTriggerAt: { lte: now },
         project: {
-          status: 'ACTIVE',
+          status: 'LIVE',
         },
       },
       include: {
-        project: true,
+        project: {
+          include: {
+            projectEmployees: {
+              select: { employeeId: true },
+            },
+          },
+        },
       },
     });
 
     if (!dueTasks.length) return;
 
-    // 2. Push to queue
+    // 2. For each task, send notifications to all employees + manager
     for (const task of dueTasks) {
-      await this.notificationQueue.add('send', {
-        userId: task.project.userId,
-        message: task.message,
-      });
+      const employeeList = task.project.projectEmployees ?? [];
 
-      // 3. Reschedule next trigger if repeatable
+      // Notify all employees in the project
+      for (const emp of employeeList) {
+        await this.notificationQueue.add('send', {
+          userId: emp.employeeId,
+          message: task.message,
+          projectId: task.projectId,
+        });
+      }
+
+      // Also notify the project manager
+      if (task.project.managerId) {
+        await this.notificationQueue.add('send', {
+          userId: task.project.managerId,
+          message: task.message,
+          projectId: task.projectId,
+        });
+      }
+
+      // 3. Reschedule the next trigger if repeatable
       if (task.repeatEvery && task.nextTriggerAt) {
         const nextDate = this.calculateNextTriggerAt(
           task.repeatEvery,
@@ -137,6 +158,6 @@ export class SchedulerService {
       }
     }
 
-    this.logger.log(`Queued ${dueTasks.length} tasks`);
+    this.logger.log(`Queued ${dueTasks.length} reminder tasks`);
   }
 }

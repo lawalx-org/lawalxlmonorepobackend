@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { SchedulerService } from '../notification/scheduler.service';
-import { CreateReminderDto, RepeatInterval } from '../project/dto/create-reminder.dto';
-import { DayOfWeek } from '../../../generated/prisma';
+import { SchedulerService } from './scheduler.service';
+import { CreateReminderDto, RepeatInterval } from '../dto/create-reminder.dto';
+import { DayOfWeek, Prisma } from 'generated/prisma';
 
 @Injectable()
 export class ReminderService {
@@ -11,7 +11,16 @@ export class ReminderService {
     private readonly schedulerService: SchedulerService,
   ) {}
 
+
   async createReminder(createReminderDto: CreateReminderDto) {
+    return this.createReminderWithTx(this.prisma, createReminderDto);
+  }
+
+ 
+  async createReminderWithTx(
+    tx: Prisma.TransactionClient,
+    createReminderDto: CreateReminderDto,
+  ) {
     const {
       message,
       repeatEvery,
@@ -21,6 +30,7 @@ export class ReminderService {
       repeatOnDates,
       remindBefore,
     } = createReminderDto;
+
 
     let nextTriggerAt: Date;
 
@@ -42,7 +52,8 @@ export class ReminderService {
       );
     }
 
-    return this.prisma.reminder.create({
+    
+    return tx.reminder.create({
       data: {
         message,
         repeatEvery,

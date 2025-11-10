@@ -123,6 +123,7 @@ model Notification {
   id          String   @id @default(uuid())
   senderId    String
   receiverIds String[]
+  projectId   String?
   context     String
   type        String
   isRead      Boolean  @default(false)
@@ -148,6 +149,9 @@ model NotificationProvision {
   @@map("notification_provisions")
 }
 
+// reminder
+//employadd
+//manageradd
 model NotificationPermissionEmployee {
   id               String   @id @default(uuid())
   userId           String   @unique
@@ -270,13 +274,13 @@ model Project {
   id                     String        @id @default(uuid())
   programId              String
   name                   String
-  uploadbeforeday        String
-  uploadCycle            ProjectCycle
+  // uploadbeforeday           String
+  // uploadCycle               ProjectCycle
   description            String
-  dataReceivedTime       String?
-  beforeSubmitData       Int?
-  weakuploadData         String[]
-  monthlyuploadData      String[]
+  // dataReceivedTime          String?
+  // beforeSubmitData          Int?
+  // weakuploadData            String[]
+  // monthlyuploadData         String[]
   status                 ProjectStatus @default(PENDING)
   priority               Priority
   deadline               DateTime
@@ -301,6 +305,7 @@ model Project {
   reviews                    Review[]
   requestsToAddProjectMember RequestToAddProjectMember[]
   submitted                  Submitted[]
+  reminders                  Reminder[]
 
   @@map("projects")
 }
@@ -334,14 +339,6 @@ model Review {
   @@map("reviews")
 }
 
-model Sheet {
-  id        String      @id @default(cuid())
-  name      String
-  submitted Submitted[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-}
-
 model SubmissionReturn {
   id          String    @id @default(cuid())
   submitted   Submitted @relation(fields: [submittedId], references: [id])
@@ -360,7 +357,6 @@ model Submitted {
   employeeId       String
   project          Project           @relation(fields: [projectId], references: [id])
   projectId        String
-  sheet            Sheet             @relation(fields: [sheetId], references: [id])
   sheetId          String
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
@@ -657,6 +653,67 @@ enum SubmittedStatus {
 enum NotificationType {
   NEW_EMPLOYEE_ASSIGNED
   NEW_MANAGER_ASSIGNED
+}
+
+model Reminder {
+  id            String          @id @default(uuid())
+  message       String
+  nextTriggerAt DateTime?
+  repeatEvery   RepeatInterval?
+  isActive      Boolean         @default(true)
+  projectId     String
+  project       Project         @relation(fields: [projectId], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  repeatOnDays  DayOfWeek[]
+  repeatOnDates Int[]
+  remindBefore  Int?
+}
+
+enum RepeatInterval {
+  WEEKLY
+  BI_WEEKLY
+  MONTHLY
+}
+
+enum DayOfWeek {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+model Sheet {
+  id        String          @id @default(cuid())
+  name      String
+  cells     Cell[]
+  snapshots SheetSnapshot[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+model Cell {
+  id        String   @id @default(cuid())
+  row       Int
+  col       Int
+  value     String
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sheetId, row, col])
+}
+
+model SheetSnapshot {
+  id        String   @id @default(cuid())
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId   String
+  data      Json
+  createdAt DateTime @default(now())
 }
 
 // Prisma client generator

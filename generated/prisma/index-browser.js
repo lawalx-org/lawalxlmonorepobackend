@@ -202,6 +202,7 @@ exports.Prisma.NotificationScalarFieldEnum = {
   id: 'id',
   senderId: 'senderId',
   receiverIds: 'receiverIds',
+  projectId: 'projectId',
   context: 'context',
   type: 'type',
   isRead: 'isRead',
@@ -295,13 +296,7 @@ exports.Prisma.ProjectScalarFieldEnum = {
   id: 'id',
   programId: 'programId',
   name: 'name',
-  uploadbeforeday: 'uploadbeforeday',
-  uploadCycle: 'uploadCycle',
   description: 'description',
-  dataReceivedTime: 'dataReceivedTime',
-  beforeSubmitData: 'beforeSubmitData',
-  weakuploadData: 'weakuploadData',
-  monthlyuploadData: 'monthlyuploadData',
   status: 'status',
   priority: 'priority',
   deadline: 'deadline',
@@ -331,13 +326,6 @@ exports.Prisma.ReviewScalarFieldEnum = {
   taskAssignId: 'taskAssignId',
   status: 'status',
   managerId: 'managerId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SheetScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -464,6 +452,44 @@ exports.Prisma.ViewerScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ReminderScalarFieldEnum = {
+  id: 'id',
+  message: 'message',
+  nextTriggerAt: 'nextTriggerAt',
+  repeatEvery: 'repeatEvery',
+  isActive: 'isActive',
+  projectId: 'projectId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  repeatOnDays: 'repeatOnDays',
+  repeatOnDates: 'repeatOnDates',
+  remindBefore: 'remindBefore'
+};
+
+exports.Prisma.SheetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CellScalarFieldEnum = {
+  id: 'id',
+  row: 'row',
+  col: 'col',
+  value: 'value',
+  sheetId: 'sheetId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SheetSnapshotScalarFieldEnum = {
+  id: 'id',
+  sheetId: 'sheetId',
+  data: 'data',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -471,6 +497,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -516,12 +546,6 @@ exports.IndustryCategory = exports.$Enums.IndustryCategory = {
   RENEWABLE_ENERGY: 'RENEWABLE_ENERGY',
   TRAVEL_AGENCY: 'TRAVEL_AGENCY',
   BEAUTY_AND_WELLNESS: 'BEAUTY_AND_WELLNESS'
-};
-
-exports.ProjectCycle = exports.$Enums.ProjectCycle = {
-  WEEKLY: 'WEEKLY',
-  BI_WEEKLY: 'BI_WEEKLY',
-  MONTHLY: 'MONTHLY'
 };
 
 exports.ProjectStatus = exports.$Enums.ProjectStatus = {
@@ -594,6 +618,22 @@ exports.UserStatus = exports.$Enums.UserStatus = {
   SUSPENDED: 'SUSPENDED'
 };
 
+exports.RepeatInterval = exports.$Enums.RepeatInterval = {
+  WEEKLY: 'WEEKLY',
+  BI_WEEKLY: 'BI_WEEKLY',
+  MONTHLY: 'MONTHLY'
+};
+
+exports.DayOfWeek = exports.$Enums.DayOfWeek = {
+  SUNDAY: 'SUNDAY',
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY',
+  SATURDAY: 'SATURDAY'
+};
+
 exports.Prisma.ModelName = {
   Activity: 'Activity',
   Client: 'Client',
@@ -613,7 +653,6 @@ exports.Prisma.ModelName = {
   Project: 'Project',
   ProjectEmployee: 'ProjectEmployee',
   Review: 'Review',
-  Sheet: 'Sheet',
   SubmissionReturn: 'SubmissionReturn',
   Submitted: 'Submitted',
   SuperAdmin: 'SuperAdmin',
@@ -624,7 +663,11 @@ exports.Prisma.ModelName = {
   Tag: 'Tag',
   ReferredPerson: 'ReferredPerson',
   RequestToAddProjectMember: 'RequestToAddProjectMember',
-  Viewer: 'Viewer'
+  Viewer: 'Viewer',
+  Reminder: 'Reminder',
+  Sheet: 'Sheet',
+  Cell: 'Cell',
+  SheetSnapshot: 'SheetSnapshot'
 };
 
 /**
