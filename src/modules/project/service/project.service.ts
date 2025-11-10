@@ -5,10 +5,14 @@ import { CreateProjectDto } from '../dto/create-project.dto';
 import { FindAllProjectsDto } from '../dto/find-all-projects.dto';
 import { buildProjectFilter } from '../utils/project-filter-builder';
 import { SearchProjectByNameDto } from '../dto/search-project.dto';
+import { ReminderService } from 'src/modules/notification/service/reminder';
 
 @Injectable()
 export class ProjectService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly reminderService: ReminderService, 
+  ) {}
 
   async create(createProjectDto: CreateProjectDto) {
     const { employeeIds, managerId, programId, ...projectData } =
@@ -39,7 +43,7 @@ export class ProjectService {
       }
     }
 
-    return this.prisma.project.create({
+     const project = await this.prisma.project.create({
       data: {
         ...projectData,
         manager: {
@@ -59,6 +63,12 @@ export class ProjectService {
         },
       },
     });
+
+    await this.reminderService.createReminder({
+    // ...reminderDto,
+    projectId: project.id,
+  });
+    return project;
   }
 
   async findAll(query: FindAllProjectsDto) {

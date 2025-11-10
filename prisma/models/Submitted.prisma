@@ -7,7 +7,6 @@ model Submitted {
   employeeId         String
   project            Project           @relation(fields: [projectId], references: [id])
   projectId          String
-  sheet              Sheet             @relation(fields: [sheetId], references: [id])
   sheetId            String
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt

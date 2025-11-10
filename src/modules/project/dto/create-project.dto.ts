@@ -30,14 +30,7 @@ export class CreateProjectDto {
   @IsNotEmpty()
   programId: string;
 
-  @ApiProperty({
-    description: 'The upload cycle for the project',
-    enum: ProjectCycle,
-    example: ProjectCycle.WEEKLY,
-  })
-  @IsEnum(ProjectCycle)
-  @IsNotEmpty()
-  uploadCycle: ProjectCycle;
+
 
   @ApiProperty({ description: 'Day to upload before', example: 'Monday' })
   @IsString()

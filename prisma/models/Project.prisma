@@ -34,7 +34,7 @@ model Project {
   reviews                   Review[]
   requestsToAddProjectMember RequestToAddProjectMember[]
   submitted                 Submitted[]
-
+   reminders Reminder[]
   @@map("projects")
 }
 
