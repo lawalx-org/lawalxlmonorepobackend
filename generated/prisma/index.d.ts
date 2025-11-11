@@ -159,6 +159,11 @@ export type RequestToAddProjectMember = $Result.DefaultSelection<Prisma.$Request
  */
 export type Viewer = $Result.DefaultSelection<Prisma.$ViewerPayload>
 /**
+ * Model ChartTable
+ * 
+ */
+export type ChartTable = $Result.DefaultSelection<Prisma.$ChartTablePayload>
+/**
  * Model Reminder
  * 
  */
@@ -183,7 +188,38 @@ export type SheetSnapshot = $Result.DefaultSelection<Prisma.$SheetSnapshotPayloa
  * Enums
  */
 export namespace $Enums {
-  export const Role: {
+  export const ChartStatus: {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  DEPRECATED: 'DEPRECATED'
+};
+
+export type ChartStatus = (typeof ChartStatus)[keyof typeof ChartStatus]
+
+
+export const ChartName: {
+  BAR: 'BAR',
+  LINE: 'LINE',
+  PIE: 'PIE',
+  DOUGHNUT: 'DOUGHNUT',
+  RADAR: 'RADAR',
+  POLAR_AREA: 'POLAR_AREA',
+  BUBBLE: 'BUBBLE',
+  SCATTER: 'SCATTER',
+  AREA: 'AREA',
+  MIXED: 'MIXED',
+  GAUGE: 'GAUGE',
+  FUNNEL: 'FUNNEL',
+  TREEMAP: 'TREEMAP',
+  SUNBURST: 'SUNBURST',
+  SANKEY: 'SANKEY',
+  TABLE: 'TABLE'
+};
+
+export type ChartName = (typeof ChartName)[keyof typeof ChartName]
+
+
+export const Role: {
   VIEWER: 'VIEWER',
   EMPLOYEE: 'EMPLOYEE',
   SUPPORTER: 'SUPPORTER',
@@ -368,6 +404,14 @@ export const DayOfWeek: {
 export type DayOfWeek = (typeof DayOfWeek)[keyof typeof DayOfWeek]
 
 }
+
+export type ChartStatus = $Enums.ChartStatus
+
+export const ChartStatus: typeof $Enums.ChartStatus
+
+export type ChartName = $Enums.ChartName
+
+export const ChartName: typeof $Enums.ChartName
 
 export type Role = $Enums.Role
 
@@ -844,6 +888,16 @@ export class PrismaClient<
     * ```
     */
   get viewer(): Prisma.ViewerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.chartTable`: Exposes CRUD operations for the **ChartTable** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChartTables
+    * const chartTables = await prisma.chartTable.findMany()
+    * ```
+    */
+  get chartTable(): Prisma.ChartTableDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.reminder`: Exposes CRUD operations for the **Reminder** model.
@@ -1354,6 +1408,7 @@ export namespace Prisma {
     ReferredPerson: 'ReferredPerson',
     RequestToAddProjectMember: 'RequestToAddProjectMember',
     Viewer: 'Viewer',
+    ChartTable: 'ChartTable',
     Reminder: 'Reminder',
     Sheet: 'Sheet',
     Cell: 'Cell',
@@ -1376,7 +1431,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer" | "reminder" | "sheet" | "cell" | "sheetSnapshot"
+      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer" | "chartTable" | "reminder" | "sheet" | "cell" | "sheetSnapshot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3526,6 +3581,80 @@ export namespace Prisma {
           }
         }
       }
+      ChartTable: {
+        payload: Prisma.$ChartTablePayload<ExtArgs>
+        fields: Prisma.ChartTableFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChartTableFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChartTableFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>
+          }
+          findFirst: {
+            args: Prisma.ChartTableFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChartTableFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>
+          }
+          findMany: {
+            args: Prisma.ChartTableFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>[]
+          }
+          create: {
+            args: Prisma.ChartTableCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>
+          }
+          createMany: {
+            args: Prisma.ChartTableCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChartTableCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>[]
+          }
+          delete: {
+            args: Prisma.ChartTableDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>
+          }
+          update: {
+            args: Prisma.ChartTableUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>
+          }
+          deleteMany: {
+            args: Prisma.ChartTableDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChartTableUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ChartTableUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>[]
+          }
+          upsert: {
+            args: Prisma.ChartTableUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChartTablePayload>
+          }
+          aggregate: {
+            args: Prisma.ChartTableAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChartTable>
+          }
+          groupBy: {
+            args: Prisma.ChartTableGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChartTableGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChartTableCountArgs<ExtArgs>
+            result: $Utils.Optional<ChartTableCountAggregateOutputType> | number
+          }
+        }
+      }
       Reminder: {
         payload: Prisma.$ReminderPayload<ExtArgs>
         fields: Prisma.ReminderFieldRefs
@@ -3947,6 +4076,7 @@ export namespace Prisma {
     referredPerson?: ReferredPersonOmit
     requestToAddProjectMember?: RequestToAddProjectMemberOmit
     viewer?: ViewerOmit
+    chartTable?: ChartTableOmit
     reminder?: ReminderOmit
     sheet?: SheetOmit
     cell?: CellOmit
@@ -37491,6 +37621,1109 @@ export namespace Prisma {
 
 
   /**
+   * Model ChartTable
+   */
+
+  export type AggregateChartTable = {
+    _count: ChartTableCountAggregateOutputType | null
+    _min: ChartTableMinAggregateOutputType | null
+    _max: ChartTableMaxAggregateOutputType | null
+  }
+
+  export type ChartTableMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    status: $Enums.ChartStatus | null
+    category: $Enums.ChartName | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChartTableMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    status: $Enums.ChartStatus | null
+    category: $Enums.ChartName | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChartTableCountAggregateOutputType = {
+    id: number
+    title: number
+    status: number
+    category: number
+    xAxis: number
+    yAxis: number
+    zAxis: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ChartTableMinAggregateInputType = {
+    id?: true
+    title?: true
+    status?: true
+    category?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChartTableMaxAggregateInputType = {
+    id?: true
+    title?: true
+    status?: true
+    category?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChartTableCountAggregateInputType = {
+    id?: true
+    title?: true
+    status?: true
+    category?: true
+    xAxis?: true
+    yAxis?: true
+    zAxis?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ChartTableAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChartTable to aggregate.
+     */
+    where?: ChartTableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChartTables to fetch.
+     */
+    orderBy?: ChartTableOrderByWithRelationInput | ChartTableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChartTableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChartTables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChartTables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChartTables
+    **/
+    _count?: true | ChartTableCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChartTableMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChartTableMaxAggregateInputType
+  }
+
+  export type GetChartTableAggregateType<T extends ChartTableAggregateArgs> = {
+        [P in keyof T & keyof AggregateChartTable]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChartTable[P]>
+      : GetScalarType<T[P], AggregateChartTable[P]>
+  }
+
+
+
+
+  export type ChartTableGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChartTableWhereInput
+    orderBy?: ChartTableOrderByWithAggregationInput | ChartTableOrderByWithAggregationInput[]
+    by: ChartTableScalarFieldEnum[] | ChartTableScalarFieldEnum
+    having?: ChartTableScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChartTableCountAggregateInputType | true
+    _min?: ChartTableMinAggregateInputType
+    _max?: ChartTableMaxAggregateInputType
+  }
+
+  export type ChartTableGroupByOutputType = {
+    id: string
+    title: string
+    status: $Enums.ChartStatus
+    category: $Enums.ChartName
+    xAxis: JsonValue
+    yAxis: JsonValue
+    zAxis: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ChartTableCountAggregateOutputType | null
+    _min: ChartTableMinAggregateOutputType | null
+    _max: ChartTableMaxAggregateOutputType | null
+  }
+
+  type GetChartTableGroupByPayload<T extends ChartTableGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChartTableGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChartTableGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChartTableGroupByOutputType[P]>
+            : GetScalarType<T[P], ChartTableGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChartTableSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    status?: boolean
+    category?: boolean
+    xAxis?: boolean
+    yAxis?: boolean
+    zAxis?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sheet?: boolean | ChartTable$sheetArgs<ExtArgs>
+  }, ExtArgs["result"]["chartTable"]>
+
+  export type ChartTableSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    status?: boolean
+    category?: boolean
+    xAxis?: boolean
+    yAxis?: boolean
+    zAxis?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["chartTable"]>
+
+  export type ChartTableSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    status?: boolean
+    category?: boolean
+    xAxis?: boolean
+    yAxis?: boolean
+    zAxis?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["chartTable"]>
+
+  export type ChartTableSelectScalar = {
+    id?: boolean
+    title?: boolean
+    status?: boolean
+    category?: boolean
+    xAxis?: boolean
+    yAxis?: boolean
+    zAxis?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ChartTableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "status" | "category" | "xAxis" | "yAxis" | "zAxis" | "createdAt" | "updatedAt", ExtArgs["result"]["chartTable"]>
+  export type ChartTableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | ChartTable$sheetArgs<ExtArgs>
+  }
+  export type ChartTableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ChartTableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ChartTablePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChartTable"
+    objects: {
+      sheet: Prisma.$SheetPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      status: $Enums.ChartStatus
+      category: $Enums.ChartName
+      xAxis: Prisma.JsonValue
+      yAxis: Prisma.JsonValue
+      zAxis: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["chartTable"]>
+    composites: {}
+  }
+
+  type ChartTableGetPayload<S extends boolean | null | undefined | ChartTableDefaultArgs> = $Result.GetResult<Prisma.$ChartTablePayload, S>
+
+  type ChartTableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ChartTableFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ChartTableCountAggregateInputType | true
+    }
+
+  export interface ChartTableDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChartTable'], meta: { name: 'ChartTable' } }
+    /**
+     * Find zero or one ChartTable that matches the filter.
+     * @param {ChartTableFindUniqueArgs} args - Arguments to find a ChartTable
+     * @example
+     * // Get one ChartTable
+     * const chartTable = await prisma.chartTable.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChartTableFindUniqueArgs>(args: SelectSubset<T, ChartTableFindUniqueArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ChartTable that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ChartTableFindUniqueOrThrowArgs} args - Arguments to find a ChartTable
+     * @example
+     * // Get one ChartTable
+     * const chartTable = await prisma.chartTable.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChartTableFindUniqueOrThrowArgs>(args: SelectSubset<T, ChartTableFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChartTable that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChartTableFindFirstArgs} args - Arguments to find a ChartTable
+     * @example
+     * // Get one ChartTable
+     * const chartTable = await prisma.chartTable.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChartTableFindFirstArgs>(args?: SelectSubset<T, ChartTableFindFirstArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChartTable that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChartTableFindFirstOrThrowArgs} args - Arguments to find a ChartTable
+     * @example
+     * // Get one ChartTable
+     * const chartTable = await prisma.chartTable.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChartTableFindFirstOrThrowArgs>(args?: SelectSubset<T, ChartTableFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ChartTables that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChartTableFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChartTables
+     * const chartTables = await prisma.chartTable.findMany()
+     * 
+     * // Get first 10 ChartTables
+     * const chartTables = await prisma.chartTable.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const chartTableWithIdOnly = await prisma.chartTable.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChartTableFindManyArgs>(args?: SelectSubset<T, ChartTableFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ChartTable.
+     * @param {ChartTableCreateArgs} args - Arguments to create a ChartTable.
+     * @example
+     * // Create one ChartTable
+     * const ChartTable = await prisma.chartTable.create({
+     *   data: {
+     *     // ... data to create a ChartTable
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChartTableCreateArgs>(args: SelectSubset<T, ChartTableCreateArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ChartTables.
+     * @param {ChartTableCreateManyArgs} args - Arguments to create many ChartTables.
+     * @example
+     * // Create many ChartTables
+     * const chartTable = await prisma.chartTable.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChartTableCreateManyArgs>(args?: SelectSubset<T, ChartTableCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ChartTables and returns the data saved in the database.
+     * @param {ChartTableCreateManyAndReturnArgs} args - Arguments to create many ChartTables.
+     * @example
+     * // Create many ChartTables
+     * const chartTable = await prisma.chartTable.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ChartTables and only return the `id`
+     * const chartTableWithIdOnly = await prisma.chartTable.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChartTableCreateManyAndReturnArgs>(args?: SelectSubset<T, ChartTableCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ChartTable.
+     * @param {ChartTableDeleteArgs} args - Arguments to delete one ChartTable.
+     * @example
+     * // Delete one ChartTable
+     * const ChartTable = await prisma.chartTable.delete({
+     *   where: {
+     *     // ... filter to delete one ChartTable
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChartTableDeleteArgs>(args: SelectSubset<T, ChartTableDeleteArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ChartTable.
+     * @param {ChartTableUpdateArgs} args - Arguments to update one ChartTable.
+     * @example
+     * // Update one ChartTable
+     * const chartTable = await prisma.chartTable.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChartTableUpdateArgs>(args: SelectSubset<T, ChartTableUpdateArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ChartTables.
+     * @param {ChartTableDeleteManyArgs} args - Arguments to filter ChartTables to delete.
+     * @example
+     * // Delete a few ChartTables
+     * const { count } = await prisma.chartTable.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChartTableDeleteManyArgs>(args?: SelectSubset<T, ChartTableDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChartTables.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChartTableUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChartTables
+     * const chartTable = await prisma.chartTable.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChartTableUpdateManyArgs>(args: SelectSubset<T, ChartTableUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChartTables and returns the data updated in the database.
+     * @param {ChartTableUpdateManyAndReturnArgs} args - Arguments to update many ChartTables.
+     * @example
+     * // Update many ChartTables
+     * const chartTable = await prisma.chartTable.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ChartTables and only return the `id`
+     * const chartTableWithIdOnly = await prisma.chartTable.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ChartTableUpdateManyAndReturnArgs>(args: SelectSubset<T, ChartTableUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ChartTable.
+     * @param {ChartTableUpsertArgs} args - Arguments to update or create a ChartTable.
+     * @example
+     * // Update or create a ChartTable
+     * const chartTable = await prisma.chartTable.upsert({
+     *   create: {
+     *     // ... data to create a ChartTable
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChartTable we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChartTableUpsertArgs>(args: SelectSubset<T, ChartTableUpsertArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ChartTables.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChartTableCountArgs} args - Arguments to filter ChartTables to count.
+     * @example
+     * // Count the number of ChartTables
+     * const count = await prisma.chartTable.count({
+     *   where: {
+     *     // ... the filter for the ChartTables we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChartTableCountArgs>(
+      args?: Subset<T, ChartTableCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChartTableCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChartTable.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChartTableAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChartTableAggregateArgs>(args: Subset<T, ChartTableAggregateArgs>): Prisma.PrismaPromise<GetChartTableAggregateType<T>>
+
+    /**
+     * Group by ChartTable.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChartTableGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChartTableGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChartTableGroupByArgs['orderBy'] }
+        : { orderBy?: ChartTableGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChartTableGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChartTableGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChartTable model
+   */
+  readonly fields: ChartTableFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChartTable.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChartTableClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sheet<T extends ChartTable$sheetArgs<ExtArgs> = {}>(args?: Subset<T, ChartTable$sheetArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChartTable model
+   */
+  interface ChartTableFieldRefs {
+    readonly id: FieldRef<"ChartTable", 'String'>
+    readonly title: FieldRef<"ChartTable", 'String'>
+    readonly status: FieldRef<"ChartTable", 'ChartStatus'>
+    readonly category: FieldRef<"ChartTable", 'ChartName'>
+    readonly xAxis: FieldRef<"ChartTable", 'Json'>
+    readonly yAxis: FieldRef<"ChartTable", 'Json'>
+    readonly zAxis: FieldRef<"ChartTable", 'Json'>
+    readonly createdAt: FieldRef<"ChartTable", 'DateTime'>
+    readonly updatedAt: FieldRef<"ChartTable", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChartTable findUnique
+   */
+  export type ChartTableFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * Filter, which ChartTable to fetch.
+     */
+    where: ChartTableWhereUniqueInput
+  }
+
+  /**
+   * ChartTable findUniqueOrThrow
+   */
+  export type ChartTableFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * Filter, which ChartTable to fetch.
+     */
+    where: ChartTableWhereUniqueInput
+  }
+
+  /**
+   * ChartTable findFirst
+   */
+  export type ChartTableFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * Filter, which ChartTable to fetch.
+     */
+    where?: ChartTableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChartTables to fetch.
+     */
+    orderBy?: ChartTableOrderByWithRelationInput | ChartTableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChartTables.
+     */
+    cursor?: ChartTableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChartTables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChartTables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChartTables.
+     */
+    distinct?: ChartTableScalarFieldEnum | ChartTableScalarFieldEnum[]
+  }
+
+  /**
+   * ChartTable findFirstOrThrow
+   */
+  export type ChartTableFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * Filter, which ChartTable to fetch.
+     */
+    where?: ChartTableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChartTables to fetch.
+     */
+    orderBy?: ChartTableOrderByWithRelationInput | ChartTableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChartTables.
+     */
+    cursor?: ChartTableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChartTables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChartTables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChartTables.
+     */
+    distinct?: ChartTableScalarFieldEnum | ChartTableScalarFieldEnum[]
+  }
+
+  /**
+   * ChartTable findMany
+   */
+  export type ChartTableFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * Filter, which ChartTables to fetch.
+     */
+    where?: ChartTableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChartTables to fetch.
+     */
+    orderBy?: ChartTableOrderByWithRelationInput | ChartTableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChartTables.
+     */
+    cursor?: ChartTableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChartTables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChartTables.
+     */
+    skip?: number
+    distinct?: ChartTableScalarFieldEnum | ChartTableScalarFieldEnum[]
+  }
+
+  /**
+   * ChartTable create
+   */
+  export type ChartTableCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ChartTable.
+     */
+    data: XOR<ChartTableCreateInput, ChartTableUncheckedCreateInput>
+  }
+
+  /**
+   * ChartTable createMany
+   */
+  export type ChartTableCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChartTables.
+     */
+    data: ChartTableCreateManyInput | ChartTableCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChartTable createManyAndReturn
+   */
+  export type ChartTableCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * The data used to create many ChartTables.
+     */
+    data: ChartTableCreateManyInput | ChartTableCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChartTable update
+   */
+  export type ChartTableUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ChartTable.
+     */
+    data: XOR<ChartTableUpdateInput, ChartTableUncheckedUpdateInput>
+    /**
+     * Choose, which ChartTable to update.
+     */
+    where: ChartTableWhereUniqueInput
+  }
+
+  /**
+   * ChartTable updateMany
+   */
+  export type ChartTableUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChartTables.
+     */
+    data: XOR<ChartTableUpdateManyMutationInput, ChartTableUncheckedUpdateManyInput>
+    /**
+     * Filter which ChartTables to update
+     */
+    where?: ChartTableWhereInput
+    /**
+     * Limit how many ChartTables to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChartTable updateManyAndReturn
+   */
+  export type ChartTableUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * The data used to update ChartTables.
+     */
+    data: XOR<ChartTableUpdateManyMutationInput, ChartTableUncheckedUpdateManyInput>
+    /**
+     * Filter which ChartTables to update
+     */
+    where?: ChartTableWhereInput
+    /**
+     * Limit how many ChartTables to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChartTable upsert
+   */
+  export type ChartTableUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ChartTable to update in case it exists.
+     */
+    where: ChartTableWhereUniqueInput
+    /**
+     * In case the ChartTable found by the `where` argument doesn't exist, create a new ChartTable with this data.
+     */
+    create: XOR<ChartTableCreateInput, ChartTableUncheckedCreateInput>
+    /**
+     * In case the ChartTable was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChartTableUpdateInput, ChartTableUncheckedUpdateInput>
+  }
+
+  /**
+   * ChartTable delete
+   */
+  export type ChartTableDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    /**
+     * Filter which ChartTable to delete.
+     */
+    where: ChartTableWhereUniqueInput
+  }
+
+  /**
+   * ChartTable deleteMany
+   */
+  export type ChartTableDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChartTables to delete
+     */
+    where?: ChartTableWhereInput
+    /**
+     * Limit how many ChartTables to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChartTable.sheet
+   */
+  export type ChartTable$sheetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    where?: SheetWhereInput
+  }
+
+  /**
+   * ChartTable without action
+   */
+  export type ChartTableDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Reminder
    */
 
@@ -38671,6 +39904,7 @@ export namespace Prisma {
     name: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    chartId: string | null
   }
 
   export type SheetMaxAggregateOutputType = {
@@ -38678,6 +39912,7 @@ export namespace Prisma {
     name: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    chartId: string | null
   }
 
   export type SheetCountAggregateOutputType = {
@@ -38685,6 +39920,7 @@ export namespace Prisma {
     name: number
     createdAt: number
     updatedAt: number
+    chartId: number
     _all: number
   }
 
@@ -38694,6 +39930,7 @@ export namespace Prisma {
     name?: true
     createdAt?: true
     updatedAt?: true
+    chartId?: true
   }
 
   export type SheetMaxAggregateInputType = {
@@ -38701,6 +39938,7 @@ export namespace Prisma {
     name?: true
     createdAt?: true
     updatedAt?: true
+    chartId?: true
   }
 
   export type SheetCountAggregateInputType = {
@@ -38708,6 +39946,7 @@ export namespace Prisma {
     name?: true
     createdAt?: true
     updatedAt?: true
+    chartId?: true
     _all?: true
   }
 
@@ -38788,6 +40027,7 @@ export namespace Prisma {
     name: string
     createdAt: Date
     updatedAt: Date
+    chartId: string
     _count: SheetCountAggregateOutputType | null
     _min: SheetMinAggregateOutputType | null
     _max: SheetMaxAggregateOutputType | null
@@ -38812,8 +40052,10 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    chartId?: boolean
     cells?: boolean | Sheet$cellsArgs<ExtArgs>
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
+    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
@@ -38822,6 +40064,8 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    chartId?: boolean
+    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
   export type SheetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -38829,6 +40073,8 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    chartId?: boolean
+    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
   export type SheetSelectScalar = {
@@ -38836,28 +40082,36 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    chartId?: boolean
   }
 
-  export type SheetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["sheet"]>
+  export type SheetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "chartId", ExtArgs["result"]["sheet"]>
   export type SheetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cells?: boolean | Sheet$cellsArgs<ExtArgs>
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
+    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type SheetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+  }
+  export type SheetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+  }
 
   export type $SheetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Sheet"
     objects: {
       cells: Prisma.$CellPayload<ExtArgs>[]
       snapshots: Prisma.$SheetSnapshotPayload<ExtArgs>[]
+      chart: Prisma.$ChartTablePayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       createdAt: Date
       updatedAt: Date
+      chartId: string
     }, ExtArgs["result"]["sheet"]>
     composites: {}
   }
@@ -39254,6 +40508,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     cells<T extends Sheet$cellsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$cellsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     snapshots<T extends Sheet$snapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    chart<T extends ChartTableDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChartTableDefaultArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -39287,6 +40542,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Sheet", 'String'>
     readonly createdAt: FieldRef<"Sheet", 'DateTime'>
     readonly updatedAt: FieldRef<"Sheet", 'DateTime'>
+    readonly chartId: FieldRef<"Sheet", 'String'>
   }
     
 
@@ -39536,6 +40792,10 @@ export namespace Prisma {
      */
     data: SheetCreateManyInput | SheetCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -39606,6 +40866,10 @@ export namespace Prisma {
      * Limit how many Sheets to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -42337,6 +43601,21 @@ export namespace Prisma {
   export type ViewerScalarFieldEnum = (typeof ViewerScalarFieldEnum)[keyof typeof ViewerScalarFieldEnum]
 
 
+  export const ChartTableScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    status: 'status',
+    category: 'category',
+    xAxis: 'xAxis',
+    yAxis: 'yAxis',
+    zAxis: 'zAxis',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ChartTableScalarFieldEnum = (typeof ChartTableScalarFieldEnum)[keyof typeof ChartTableScalarFieldEnum]
+
+
   export const ReminderScalarFieldEnum: {
     id: 'id',
     message: 'message',
@@ -42358,7 +43637,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    chartId: 'chartId'
   };
 
   export type SheetScalarFieldEnum = (typeof SheetScalarFieldEnum)[keyof typeof SheetScalarFieldEnum]
@@ -42682,6 +43962,34 @@ export namespace Prisma {
    * Reference to a field of type 'UserStatus[]'
    */
   export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChartStatus'
+   */
+  export type EnumChartStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChartStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChartStatus[]'
+   */
+  export type ListEnumChartStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChartStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChartName'
+   */
+  export type EnumChartNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChartName'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChartName[]'
+   */
+  export type ListEnumChartNameFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChartName[]'>
     
 
 
@@ -44941,6 +46249,81 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Viewer"> | Date | string
   }
 
+  export type ChartTableWhereInput = {
+    AND?: ChartTableWhereInput | ChartTableWhereInput[]
+    OR?: ChartTableWhereInput[]
+    NOT?: ChartTableWhereInput | ChartTableWhereInput[]
+    id?: StringFilter<"ChartTable"> | string
+    title?: StringFilter<"ChartTable"> | string
+    status?: EnumChartStatusFilter<"ChartTable"> | $Enums.ChartStatus
+    category?: EnumChartNameFilter<"ChartTable"> | $Enums.ChartName
+    xAxis?: JsonFilter<"ChartTable">
+    yAxis?: JsonFilter<"ChartTable">
+    zAxis?: JsonNullableFilter<"ChartTable">
+    createdAt?: DateTimeFilter<"ChartTable"> | Date | string
+    updatedAt?: DateTimeFilter<"ChartTable"> | Date | string
+    sheet?: XOR<SheetNullableScalarRelationFilter, SheetWhereInput> | null
+  }
+
+  export type ChartTableOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    category?: SortOrder
+    xAxis?: SortOrder
+    yAxis?: SortOrder
+    zAxis?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sheet?: SheetOrderByWithRelationInput
+  }
+
+  export type ChartTableWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChartTableWhereInput | ChartTableWhereInput[]
+    OR?: ChartTableWhereInput[]
+    NOT?: ChartTableWhereInput | ChartTableWhereInput[]
+    title?: StringFilter<"ChartTable"> | string
+    status?: EnumChartStatusFilter<"ChartTable"> | $Enums.ChartStatus
+    category?: EnumChartNameFilter<"ChartTable"> | $Enums.ChartName
+    xAxis?: JsonFilter<"ChartTable">
+    yAxis?: JsonFilter<"ChartTable">
+    zAxis?: JsonNullableFilter<"ChartTable">
+    createdAt?: DateTimeFilter<"ChartTable"> | Date | string
+    updatedAt?: DateTimeFilter<"ChartTable"> | Date | string
+    sheet?: XOR<SheetNullableScalarRelationFilter, SheetWhereInput> | null
+  }, "id">
+
+  export type ChartTableOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    category?: SortOrder
+    xAxis?: SortOrder
+    yAxis?: SortOrder
+    zAxis?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ChartTableCountOrderByAggregateInput
+    _max?: ChartTableMaxOrderByAggregateInput
+    _min?: ChartTableMinOrderByAggregateInput
+  }
+
+  export type ChartTableScalarWhereWithAggregatesInput = {
+    AND?: ChartTableScalarWhereWithAggregatesInput | ChartTableScalarWhereWithAggregatesInput[]
+    OR?: ChartTableScalarWhereWithAggregatesInput[]
+    NOT?: ChartTableScalarWhereWithAggregatesInput | ChartTableScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChartTable"> | string
+    title?: StringWithAggregatesFilter<"ChartTable"> | string
+    status?: EnumChartStatusWithAggregatesFilter<"ChartTable"> | $Enums.ChartStatus
+    category?: EnumChartNameWithAggregatesFilter<"ChartTable"> | $Enums.ChartName
+    xAxis?: JsonWithAggregatesFilter<"ChartTable">
+    yAxis?: JsonWithAggregatesFilter<"ChartTable">
+    zAxis?: JsonNullableWithAggregatesFilter<"ChartTable">
+    createdAt?: DateTimeWithAggregatesFilter<"ChartTable"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ChartTable"> | Date | string
+  }
+
   export type ReminderWhereInput = {
     AND?: ReminderWhereInput | ReminderWhereInput[]
     OR?: ReminderWhereInput[]
@@ -45036,8 +46419,10 @@ export namespace Prisma {
     name?: StringFilter<"Sheet"> | string
     createdAt?: DateTimeFilter<"Sheet"> | Date | string
     updatedAt?: DateTimeFilter<"Sheet"> | Date | string
+    chartId?: StringFilter<"Sheet"> | string
     cells?: CellListRelationFilter
     snapshots?: SheetSnapshotListRelationFilter
+    chart?: XOR<ChartTableScalarRelationFilter, ChartTableWhereInput>
   }
 
   export type SheetOrderByWithRelationInput = {
@@ -45045,12 +46430,15 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    chartId?: SortOrder
     cells?: CellOrderByRelationAggregateInput
     snapshots?: SheetSnapshotOrderByRelationAggregateInput
+    chart?: ChartTableOrderByWithRelationInput
   }
 
   export type SheetWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    chartId?: string
     AND?: SheetWhereInput | SheetWhereInput[]
     OR?: SheetWhereInput[]
     NOT?: SheetWhereInput | SheetWhereInput[]
@@ -45059,13 +46447,15 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Sheet"> | Date | string
     cells?: CellListRelationFilter
     snapshots?: SheetSnapshotListRelationFilter
-  }, "id">
+    chart?: XOR<ChartTableScalarRelationFilter, ChartTableWhereInput>
+  }, "id" | "chartId">
 
   export type SheetOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    chartId?: SortOrder
     _count?: SheetCountOrderByAggregateInput
     _max?: SheetMaxOrderByAggregateInput
     _min?: SheetMinOrderByAggregateInput
@@ -45079,6 +46469,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Sheet"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
+    chartId?: StringWithAggregatesFilter<"Sheet"> | string
   }
 
   export type CellWhereInput = {
@@ -47627,6 +49018,94 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ChartTableCreateInput = {
+    id?: string
+    title: string
+    status: $Enums.ChartStatus
+    category: $Enums.ChartName
+    xAxis: JsonNullValueInput | InputJsonValue
+    yAxis: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sheet?: SheetCreateNestedOneWithoutChartInput
+  }
+
+  export type ChartTableUncheckedCreateInput = {
+    id?: string
+    title: string
+    status: $Enums.ChartStatus
+    category: $Enums.ChartName
+    xAxis: JsonNullValueInput | InputJsonValue
+    yAxis: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sheet?: SheetUncheckedCreateNestedOneWithoutChartInput
+  }
+
+  export type ChartTableUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumChartStatusFieldUpdateOperationsInput | $Enums.ChartStatus
+    category?: EnumChartNameFieldUpdateOperationsInput | $Enums.ChartName
+    xAxis?: JsonNullValueInput | InputJsonValue
+    yAxis?: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheet?: SheetUpdateOneWithoutChartNestedInput
+  }
+
+  export type ChartTableUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumChartStatusFieldUpdateOperationsInput | $Enums.ChartStatus
+    category?: EnumChartNameFieldUpdateOperationsInput | $Enums.ChartName
+    xAxis?: JsonNullValueInput | InputJsonValue
+    yAxis?: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheet?: SheetUncheckedUpdateOneWithoutChartNestedInput
+  }
+
+  export type ChartTableCreateManyInput = {
+    id?: string
+    title: string
+    status: $Enums.ChartStatus
+    category: $Enums.ChartName
+    xAxis: JsonNullValueInput | InputJsonValue
+    yAxis: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChartTableUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumChartStatusFieldUpdateOperationsInput | $Enums.ChartStatus
+    category?: EnumChartNameFieldUpdateOperationsInput | $Enums.ChartName
+    xAxis?: JsonNullValueInput | InputJsonValue
+    yAxis?: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChartTableUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumChartStatusFieldUpdateOperationsInput | $Enums.ChartStatus
+    category?: EnumChartNameFieldUpdateOperationsInput | $Enums.ChartName
+    xAxis?: JsonNullValueInput | InputJsonValue
+    yAxis?: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ReminderCreateInput = {
     id?: string
     message: string
@@ -47731,6 +49210,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+    chart: ChartTableCreateNestedOneWithoutSheetInput
   }
 
   export type SheetUncheckedCreateInput = {
@@ -47738,6 +49218,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
   }
@@ -47749,6 +49230,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateInput = {
@@ -47756,6 +49238,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
   }
@@ -47765,6 +49248,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
   }
 
   export type SheetUpdateManyMutationInput = {
@@ -47779,6 +49263,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CellCreateInput = {
@@ -49672,6 +51157,124 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type EnumChartStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChartStatus | EnumChartStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChartStatusFilter<$PrismaModel> | $Enums.ChartStatus
+  }
+
+  export type EnumChartNameFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChartName | EnumChartNameFieldRefInput<$PrismaModel>
+    in?: $Enums.ChartName[] | ListEnumChartNameFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChartName[] | ListEnumChartNameFieldRefInput<$PrismaModel>
+    not?: NestedEnumChartNameFilter<$PrismaModel> | $Enums.ChartName
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type SheetNullableScalarRelationFilter = {
+    is?: SheetWhereInput | null
+    isNot?: SheetWhereInput | null
+  }
+
+  export type ChartTableCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    category?: SortOrder
+    xAxis?: SortOrder
+    yAxis?: SortOrder
+    zAxis?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChartTableMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChartTableMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumChartStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChartStatus | EnumChartStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChartStatusWithAggregatesFilter<$PrismaModel> | $Enums.ChartStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChartStatusFilter<$PrismaModel>
+    _max?: NestedEnumChartStatusFilter<$PrismaModel>
+  }
+
+  export type EnumChartNameWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChartName | EnumChartNameFieldRefInput<$PrismaModel>
+    in?: $Enums.ChartName[] | ListEnumChartNameFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChartName[] | ListEnumChartNameFieldRefInput<$PrismaModel>
+    not?: NestedEnumChartNameWithAggregatesFilter<$PrismaModel> | $Enums.ChartName
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChartNameFilter<$PrismaModel>
+    _max?: NestedEnumChartNameFilter<$PrismaModel>
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
   export type EnumRepeatIntervalNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.RepeatInterval | EnumRepeatIntervalFieldRefInput<$PrismaModel> | null
     in?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
@@ -49765,6 +51368,11 @@ export namespace Prisma {
     none?: SheetSnapshotWhereInput
   }
 
+  export type ChartTableScalarRelationFilter = {
+    is?: ChartTableWhereInput
+    isNot?: ChartTableWhereInput
+  }
+
   export type CellOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -49778,6 +51386,7 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    chartId?: SortOrder
   }
 
   export type SheetMaxOrderByAggregateInput = {
@@ -49785,6 +51394,7 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    chartId?: SortOrder
   }
 
   export type SheetMinOrderByAggregateInput = {
@@ -49792,6 +51402,7 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    chartId?: SortOrder
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -49871,29 +51482,6 @@ export namespace Prisma {
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
   }
-  export type JsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type SheetSnapshotCountOrderByAggregateInput = {
     id?: SortOrder
@@ -49912,32 +51500,6 @@ export namespace Prisma {
     id?: SortOrder
     sheetId?: SortOrder
     createdAt?: SortOrder
-  }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type ProjectCreateNestedOneWithoutActivitiesInput = {
@@ -51862,6 +53424,46 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutViewerInput, UserUpdateWithoutViewerInput>, UserUncheckedUpdateWithoutViewerInput>
   }
 
+  export type SheetCreateNestedOneWithoutChartInput = {
+    create?: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutChartInput
+    connect?: SheetWhereUniqueInput
+  }
+
+  export type SheetUncheckedCreateNestedOneWithoutChartInput = {
+    create?: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutChartInput
+    connect?: SheetWhereUniqueInput
+  }
+
+  export type EnumChartStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ChartStatus
+  }
+
+  export type EnumChartNameFieldUpdateOperationsInput = {
+    set?: $Enums.ChartName
+  }
+
+  export type SheetUpdateOneWithoutChartNestedInput = {
+    create?: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutChartInput
+    upsert?: SheetUpsertWithoutChartInput
+    disconnect?: SheetWhereInput | boolean
+    delete?: SheetWhereInput | boolean
+    connect?: SheetWhereUniqueInput
+    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutChartInput, SheetUpdateWithoutChartInput>, SheetUncheckedUpdateWithoutChartInput>
+  }
+
+  export type SheetUncheckedUpdateOneWithoutChartNestedInput = {
+    create?: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutChartInput
+    upsert?: SheetUpsertWithoutChartInput
+    disconnect?: SheetWhereInput | boolean
+    delete?: SheetWhereInput | boolean
+    connect?: SheetWhereUniqueInput
+    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutChartInput, SheetUpdateWithoutChartInput>, SheetUncheckedUpdateWithoutChartInput>
+  }
+
   export type ReminderCreaterepeatOnDaysInput = {
     set: $Enums.DayOfWeek[]
   }
@@ -51912,6 +53514,12 @@ export namespace Prisma {
     connect?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
   }
 
+  export type ChartTableCreateNestedOneWithoutSheetInput = {
+    create?: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
+    connectOrCreate?: ChartTableCreateOrConnectWithoutSheetInput
+    connect?: ChartTableWhereUniqueInput
+  }
+
   export type CellUncheckedCreateNestedManyWithoutSheetInput = {
     create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
     connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
@@ -51952,6 +53560,14 @@ export namespace Prisma {
     update?: SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput | SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput[]
     updateMany?: SheetSnapshotUpdateManyWithWhereWithoutSheetInput | SheetSnapshotUpdateManyWithWhereWithoutSheetInput[]
     deleteMany?: SheetSnapshotScalarWhereInput | SheetSnapshotScalarWhereInput[]
+  }
+
+  export type ChartTableUpdateOneRequiredWithoutSheetNestedInput = {
+    create?: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
+    connectOrCreate?: ChartTableCreateOrConnectWithoutSheetInput
+    upsert?: ChartTableUpsertWithoutSheetInput
+    connect?: ChartTableWhereUniqueInput
+    update?: XOR<XOR<ChartTableUpdateToOneWithWhereWithoutSheetInput, ChartTableUpdateWithoutSheetInput>, ChartTableUncheckedUpdateWithoutSheetInput>
   }
 
   export type CellUncheckedUpdateManyWithoutSheetNestedInput = {
@@ -52462,6 +54078,63 @@ export namespace Prisma {
     _max?: NestedEnumUserStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumChartStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChartStatus | EnumChartStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChartStatusFilter<$PrismaModel> | $Enums.ChartStatus
+  }
+
+  export type NestedEnumChartNameFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChartName | EnumChartNameFieldRefInput<$PrismaModel>
+    in?: $Enums.ChartName[] | ListEnumChartNameFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChartName[] | ListEnumChartNameFieldRefInput<$PrismaModel>
+    not?: NestedEnumChartNameFilter<$PrismaModel> | $Enums.ChartName
+  }
+
+  export type NestedEnumChartStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChartStatus | EnumChartStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumChartStatusWithAggregatesFilter<$PrismaModel> | $Enums.ChartStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChartStatusFilter<$PrismaModel>
+    _max?: NestedEnumChartStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumChartNameWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChartName | EnumChartNameFieldRefInput<$PrismaModel>
+    in?: $Enums.ChartName[] | ListEnumChartNameFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChartName[] | ListEnumChartNameFieldRefInput<$PrismaModel>
+    not?: NestedEnumChartNameWithAggregatesFilter<$PrismaModel> | $Enums.ChartName
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChartNameFilter<$PrismaModel>
+    _max?: NestedEnumChartNameFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type NestedEnumRepeatIntervalNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.RepeatInterval | EnumRepeatIntervalFieldRefInput<$PrismaModel> | null
     in?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
@@ -52493,29 +54166,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-  export type NestedJsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type ProjectCreateWithoutActivitiesInput = {
@@ -58451,6 +60101,58 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type SheetCreateWithoutChartInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cells?: CellCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetUncheckedCreateWithoutChartInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cells?: CellUncheckedCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetCreateOrConnectWithoutChartInput = {
+    where: SheetWhereUniqueInput
+    create: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
+  }
+
+  export type SheetUpsertWithoutChartInput = {
+    update: XOR<SheetUpdateWithoutChartInput, SheetUncheckedUpdateWithoutChartInput>
+    create: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
+    where?: SheetWhereInput
+  }
+
+  export type SheetUpdateToOneWithWhereWithoutChartInput = {
+    where?: SheetWhereInput
+    data: XOR<SheetUpdateWithoutChartInput, SheetUncheckedUpdateWithoutChartInput>
+  }
+
+  export type SheetUpdateWithoutChartInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cells?: CellUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetUncheckedUpdateWithoutChartInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+  }
+
   export type ProjectCreateWithoutRemindersInput = {
     id?: string
     name: string
@@ -58625,6 +60327,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ChartTableCreateWithoutSheetInput = {
+    id?: string
+    title: string
+    status: $Enums.ChartStatus
+    category: $Enums.ChartName
+    xAxis: JsonNullValueInput | InputJsonValue
+    yAxis: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChartTableUncheckedCreateWithoutSheetInput = {
+    id?: string
+    title: string
+    status: $Enums.ChartStatus
+    category: $Enums.ChartName
+    xAxis: JsonNullValueInput | InputJsonValue
+    yAxis: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChartTableCreateOrConnectWithoutSheetInput = {
+    where: ChartTableWhereUniqueInput
+    create: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
+  }
+
   export type CellUpsertWithWhereUniqueWithoutSheetInput = {
     where: CellWhereUniqueInput
     update: XOR<CellUpdateWithoutSheetInput, CellUncheckedUpdateWithoutSheetInput>
@@ -58680,12 +60411,48 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"SheetSnapshot"> | Date | string
   }
 
+  export type ChartTableUpsertWithoutSheetInput = {
+    update: XOR<ChartTableUpdateWithoutSheetInput, ChartTableUncheckedUpdateWithoutSheetInput>
+    create: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
+    where?: ChartTableWhereInput
+  }
+
+  export type ChartTableUpdateToOneWithWhereWithoutSheetInput = {
+    where?: ChartTableWhereInput
+    data: XOR<ChartTableUpdateWithoutSheetInput, ChartTableUncheckedUpdateWithoutSheetInput>
+  }
+
+  export type ChartTableUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumChartStatusFieldUpdateOperationsInput | $Enums.ChartStatus
+    category?: EnumChartNameFieldUpdateOperationsInput | $Enums.ChartName
+    xAxis?: JsonNullValueInput | InputJsonValue
+    yAxis?: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChartTableUncheckedUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumChartStatusFieldUpdateOperationsInput | $Enums.ChartStatus
+    category?: EnumChartNameFieldUpdateOperationsInput | $Enums.ChartName
+    xAxis?: JsonNullValueInput | InputJsonValue
+    yAxis?: JsonNullValueInput | InputJsonValue
+    zAxis?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SheetCreateWithoutCellsInput = {
     id?: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+    chart: ChartTableCreateNestedOneWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutCellsInput = {
@@ -58693,6 +60460,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
   }
 
@@ -58718,6 +60486,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutCellsInput = {
@@ -58725,6 +60494,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
   }
 
@@ -58734,6 +60504,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     cells?: CellCreateNestedManyWithoutSheetInput
+    chart: ChartTableCreateNestedOneWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutSnapshotsInput = {
@@ -58741,6 +60512,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
   }
 
@@ -58766,6 +60538,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cells?: CellUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutSnapshotsInput = {
@@ -58773,6 +60546,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
   }
 

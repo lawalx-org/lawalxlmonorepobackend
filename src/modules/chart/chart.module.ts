@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ChartService } from './chart.service';
-import { ChartController } from './chart.controller';
+
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { ChartController } from './controller/chart.controller';
+import { ChartMainController } from './controller/chart.man.controller';
+import { ChartService } from './service/chart.service';
+import { ChartMainService } from './service/chart.main.service';
 
 @Module({
   imports: [PrismaModule],
-  providers: [ChartService],
-  controllers: [ChartController],
-  exports: [ChartService],
+  controllers: [ChartMainController, ChartController],
+  providers: [ChartService,ChartMainService],
 })
 export class ChartModule {}

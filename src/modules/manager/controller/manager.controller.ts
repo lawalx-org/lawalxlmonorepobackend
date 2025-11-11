@@ -10,7 +10,7 @@ import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { RequestWithUser } from 'src/types/RequestWithUser';
-import { ChartService } from '../../chart/chart.service';
+import { ChartService } from '../../chart/service/chart.service';
 import { ManagerService } from '../service/manager.service';
 
 @Controller('manager')

@@ -67,7 +67,7 @@ import { NotificationProcessor } from './service/notification.processor';
     SchedulerService,
     NotificationProcessor,
   ],
-  exports: [NotificationService, BullModule, SchedulerService],
+  exports: [NotificationService, BullModule, SchedulerService,Gateway],
 })
 export class NotificationModule {}
 

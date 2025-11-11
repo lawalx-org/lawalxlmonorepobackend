@@ -1,0 +1,42 @@
+model ChartTable {
+  id        String    @id @default(cuid())
+  title     String
+  status    ChartStatus
+  category  ChartName
+  xAxis    Json
+  yAxis    Json
+  zAxis    Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  sheet     Sheet?
+}
+
+
+
+enum ChartStatus {
+  ACTIVE
+  INACTIVE
+  DEPRECATED
+}
+
+
+
+enum ChartName {
+  BAR
+  LINE
+  PIE
+  DOUGHNUT
+  RADAR
+  POLAR_AREA
+  BUBBLE
+  SCATTER
+  AREA
+  MIXED
+  GAUGE
+  FUNNEL
+  TREEMAP
+  SUNBURST
+  SANKEY
+  TABLE
+}

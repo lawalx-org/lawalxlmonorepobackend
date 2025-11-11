@@ -90,7 +90,7 @@ export class SchedulerService {
     return nextDate.toDate();
   }
 
-  @Cron('*/1 * * * *') // runs every minute
+  @Cron('* * * * *') // runs every minute
   async handleCron() {
     this.logger.log('Scheduler running...');
     const now = dayjs().toDate();

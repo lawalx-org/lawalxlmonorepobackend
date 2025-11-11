@@ -106,7 +106,6 @@ export class SubmittedService {
       include: {
         employee: true,
         project: true,
-        sheet: true,
       },
     });
     if (!submitted) {

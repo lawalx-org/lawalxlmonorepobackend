@@ -15,7 +15,8 @@ import { EmployModule } from './modules/employ/employ.module';
 import { ActivityModule } from './modules/activity/activity.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { RedisModule } from './common/db/redis/redis.module';
-import { ChartModule } from './modules/chart/chart.module';
+import { BullModule } from '@nestjs/bullmq';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -23,6 +24,14 @@ import { ChartModule } from './modules/chart/chart.module';
       isGlobal: true,
       load: [configuration],
     }),
+    ScheduleModule.forRoot(),
+    BullModule.forRoot({
+  connection: {
+    host: process.env.REDIS_HOST || 'redis_cache',
+    port: Number(process.env.REDIS_PORT) || 6379,
+  },
+}),
+    BullModule.registerQueue({ name: 'notification' }),
     PrismaModule,
     UtilsModule,
     UserModule,
@@ -35,7 +44,6 @@ import { ChartModule } from './modules/chart/chart.module';
     ActivityModule,
     NotificationModule,
     RedisModule,
-    ChartModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],

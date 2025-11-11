@@ -452,6 +452,18 @@ exports.Prisma.ViewerScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ChartTableScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  status: 'status',
+  category: 'category',
+  xAxis: 'xAxis',
+  yAxis: 'yAxis',
+  zAxis: 'zAxis',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ReminderScalarFieldEnum = {
   id: 'id',
   message: 'message',
@@ -470,7 +482,8 @@ exports.Prisma.SheetScalarFieldEnum = {
   id: 'id',
   name: 'name',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  chartId: 'chartId'
 };
 
 exports.Prisma.CellScalarFieldEnum = {
@@ -618,6 +631,31 @@ exports.UserStatus = exports.$Enums.UserStatus = {
   SUSPENDED: 'SUSPENDED'
 };
 
+exports.ChartStatus = exports.$Enums.ChartStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  DEPRECATED: 'DEPRECATED'
+};
+
+exports.ChartName = exports.$Enums.ChartName = {
+  BAR: 'BAR',
+  LINE: 'LINE',
+  PIE: 'PIE',
+  DOUGHNUT: 'DOUGHNUT',
+  RADAR: 'RADAR',
+  POLAR_AREA: 'POLAR_AREA',
+  BUBBLE: 'BUBBLE',
+  SCATTER: 'SCATTER',
+  AREA: 'AREA',
+  MIXED: 'MIXED',
+  GAUGE: 'GAUGE',
+  FUNNEL: 'FUNNEL',
+  TREEMAP: 'TREEMAP',
+  SUNBURST: 'SUNBURST',
+  SANKEY: 'SANKEY',
+  TABLE: 'TABLE'
+};
+
 exports.RepeatInterval = exports.$Enums.RepeatInterval = {
   WEEKLY: 'WEEKLY',
   BI_WEEKLY: 'BI_WEEKLY',
@@ -664,6 +702,7 @@ exports.Prisma.ModelName = {
   ReferredPerson: 'ReferredPerson',
   RequestToAddProjectMember: 'RequestToAddProjectMember',
   Viewer: 'Viewer',
+  ChartTable: 'ChartTable',
   Reminder: 'Reminder',
   Sheet: 'Sheet',
   Cell: 'Cell',

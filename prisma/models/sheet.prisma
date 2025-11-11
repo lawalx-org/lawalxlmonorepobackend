@@ -5,6 +5,10 @@ model Sheet {
   snapshots SheetSnapshot[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+
+  chartId    String      @unique
+  chart      ChartTable  @relation(fields: [chartId], references: [id])
 }
 
 model Cell {

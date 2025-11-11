@@ -152,6 +152,7 @@ model NotificationProvision {
 // reminder
 //employadd
 //manageradd
+//PROJECT_CREATED
 model NotificationPermissionEmployee {
   id               String   @id @default(uuid())
   userId           String   @unique
@@ -537,6 +538,45 @@ model Viewer {
   @@map("viewers")
 }
 
+model ChartTable {
+  id        String      @id @default(cuid())
+  title     String
+  status    ChartStatus
+  category  ChartName
+  xAxis     Json
+  yAxis     Json
+  zAxis     Json?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  sheet Sheet?
+}
+
+enum ChartStatus {
+  ACTIVE
+  INACTIVE
+  DEPRECATED
+}
+
+enum ChartName {
+  BAR
+  LINE
+  PIE
+  DOUGHNUT
+  RADAR
+  POLAR_AREA
+  BUBBLE
+  SCATTER
+  AREA
+  MIXED
+  GAUGE
+  FUNNEL
+  TREEMAP
+  SUNBURST
+  SANKEY
+  TABLE
+}
+
 enum Role {
   VIEWER
   EMPLOYEE
@@ -693,6 +733,9 @@ model Sheet {
   snapshots SheetSnapshot[]
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
+
+  chartId String     @unique
+  chart   ChartTable @relation(fields: [chartId], references: [id])
 }
 
 model Cell {

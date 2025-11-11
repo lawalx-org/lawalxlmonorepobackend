@@ -4,12 +4,14 @@ import { ProgramModule } from 'src/modules/program/program.module';
 import { ProjectModule } from 'src/modules/project/project.module';
 import { SubmittedModule } from 'src/modules/submitted/submitted.module';
 import { ManagerModule } from 'src/modules/manager/manager.module';
+import { ChartModule } from 'src/modules/chart/chart.module';
 
 export const userBase = [
-  ProgramModule,
-  ProjectModule,
-  NotificationModule,
-  EmployModule,
-  SubmittedModule,
-  ManagerModule,
+  // ProgramModule,
+  // ProjectModule,
+  // NotificationModule,
+  // EmployModule,
+  // SubmittedModule,
+  // ManagerModule,
+  // ChartModule
 ];

@@ -5,7 +5,7 @@ import {
   Req,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ChartService } from './chart.service';
+import { ChartService } from '../service/chart.service';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 
 @Controller('charts')

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ProjectStatus, TaskStatus } from '../../../generated/prisma';
+import { ProjectStatus, TaskStatus } from '../../../../generated/prisma';
 
 @Injectable()
 export class ChartService {
