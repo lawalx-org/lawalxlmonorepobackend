@@ -1,5 +1,5 @@
 model ChartTable {
-  id        String    @id @default(cuid())
+  id        String    @id @default(uuid())
   title     String
   status    ChartStatus
   category  ChartName

@@ -14,14 +14,7 @@ export class SheetService {
       return;
     }
 
-    await this.prisma.sheet.upsert({
-      where: { id: sheetId },
-      update: {},
-      create: {
-        id: sheetId,
-        name: 'My Sheet',
-      },
-    });
+
 
     const cellUpserts = updateCellDtos.map((updateCellDto) => {
       const { sheetId, row, col, value } = updateCellDto;

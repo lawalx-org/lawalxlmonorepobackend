@@ -307,6 +307,7 @@ model Project {
   requestsToAddProjectMember RequestToAddProjectMember[]
   submitted                  Submitted[]
   reminders                  Reminder[]
+  sheets                     Sheet[]
 
   @@map("projects")
 }
@@ -341,7 +342,7 @@ model Review {
 }
 
 model SubmissionReturn {
-  id          String    @id @default(cuid())
+  id          String    @id @default(uuid())
   submitted   Submitted @relation(fields: [submittedId], references: [id])
   submittedId String    @unique
   returnedAt  DateTime  @default(now())
@@ -350,7 +351,7 @@ model SubmissionReturn {
 }
 
 model Submitted {
-  id               String            @id @default(cuid())
+  id               String            @id @default(uuid())
   information      String
   submission       String
   status           SubmittedStatus   @default(PENDING)
@@ -539,7 +540,7 @@ model Viewer {
 }
 
 model ChartTable {
-  id        String      @id @default(cuid())
+  id        String      @id @default(uuid())
   title     String
   status    ChartStatus
   category  ChartName
@@ -727,19 +728,21 @@ enum DayOfWeek {
 }
 
 model Sheet {
-  id        String          @id @default(cuid())
+  id        String          @id @default(uuid())
   name      String
   cells     Cell[]
   snapshots SheetSnapshot[]
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
 
-  chartId String     @unique
-  chart   ChartTable @relation(fields: [chartId], references: [id])
+  chartId   String     @unique
+  projectId String     @unique
+  chart     ChartTable @relation(fields: [chartId], references: [id])
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Cell {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   row       Int
   col       Int
   value     String
@@ -752,7 +755,7 @@ model Cell {
 }
 
 model SheetSnapshot {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   sheet     Sheet    @relation(fields: [sheetId], references: [id])
   sheetId   String
   data      Json

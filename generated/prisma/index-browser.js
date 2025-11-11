@@ -483,7 +483,8 @@ exports.Prisma.SheetScalarFieldEnum = {
   name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  chartId: 'chartId'
+  chartId: 'chartId',
+  projectId: 'projectId'
 };
 
 exports.Prisma.CellScalarFieldEnum = {

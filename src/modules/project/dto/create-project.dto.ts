@@ -102,7 +102,7 @@ export class CreateProjectDto extends CreateReminderDto {
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
-  chartList?: string[];
+  chartList: string[];
 
   @ApiProperty({ description: 'Estimated completion date', required: false })
   @IsDate()

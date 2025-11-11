@@ -76,6 +76,7 @@ export class ProjectService {
 
   async create(createProjectDto: CreateProjectDto) {
     const {
+      chartList,
       employeeIds,
       managerId,
       programId,
@@ -121,6 +122,7 @@ export class ProjectService {
     // --- Main transaction ---
     const project = await this.prisma.$transaction(async (tx) => {
    
+      // Create the new project
       const newProject = await tx.project.create({
         data: {
           ...projectData,
@@ -140,7 +142,41 @@ export class ProjectService {
         },
       });
 
-      
+
+
+      //create sheets for the project based on chartList
+      if (chartList && chartList.length > 0) {
+ 
+          const existingSheets = await tx.sheet.findMany({
+            where: {
+              projectId: newProject.id,
+              chartId: { in: chartList },
+            },
+            select: { chartId: true },
+          });
+
+        
+          const existingChartIds = existingSheets.map((s) => s.chartId);
+
+          
+          const missingChartIds = chartList.filter(
+            (chartId) => !existingChartIds.includes(chartId),
+          );
+
+
+          if (missingChartIds.length > 0) {
+            await tx.sheet.createMany({
+              data: missingChartIds.map((chartId) => ({
+                name: 'My Sheet',
+                chartId,
+                projectId: newProject.id,
+              })),
+            });
+          }
+        }
+
+
+      // Create reminder linked to the new project
       await this.reminderService.createReminderWithTx(tx, {
         message,
         nextTriggerAt,
@@ -157,6 +193,7 @@ export class ProjectService {
 
    
     try {
+      //send notification to manager and employees
       const receiverIds = [
         project.manager.user.id,
         ...(project.projectEmployees?.map((e) => e.employee.user.id) || []),

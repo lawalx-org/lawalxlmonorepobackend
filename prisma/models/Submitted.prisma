@@ -1,5 +1,5 @@
 model Submitted {
-  id                 String            @id @default(cuid())
+  id                 String            @id @default(uuid())
   information        String
   submission         String
   status             SubmittedStatus   @default(PENDING)

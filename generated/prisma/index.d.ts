@@ -4359,6 +4359,7 @@ export namespace Prisma {
     requestsToAddProjectMember: number
     submitted: number
     reminders: number
+    sheets: number
   }
 
   export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4369,6 +4370,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: boolean | ProjectCountOutputTypeCountRequestsToAddProjectMemberArgs
     submitted?: boolean | ProjectCountOutputTypeCountSubmittedArgs
     reminders?: boolean | ProjectCountOutputTypeCountRemindersArgs
+    sheets?: boolean | ProjectCountOutputTypeCountSheetsArgs
   }
 
   // Custom InputTypes
@@ -4429,6 +4431,13 @@ export namespace Prisma {
    */
   export type ProjectCountOutputTypeCountRemindersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReminderWhereInput
+  }
+
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeCountSheetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SheetWhereInput
   }
 
 
@@ -21759,6 +21768,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: boolean | Project$requestsToAddProjectMemberArgs<ExtArgs>
     submitted?: boolean | Project$submittedArgs<ExtArgs>
     reminders?: boolean | Project$remindersArgs<ExtArgs>
+    sheets?: boolean | Project$sheetsArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
@@ -21840,6 +21850,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: boolean | Project$requestsToAddProjectMemberArgs<ExtArgs>
     submitted?: boolean | Project$submittedArgs<ExtArgs>
     reminders?: boolean | Project$remindersArgs<ExtArgs>
+    sheets?: boolean | Project$sheetsArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -21863,6 +21874,7 @@ export namespace Prisma {
       requestsToAddProjectMember: Prisma.$RequestToAddProjectMemberPayload<ExtArgs>[]
       submitted: Prisma.$SubmittedPayload<ExtArgs>[]
       reminders: Prisma.$ReminderPayload<ExtArgs>[]
+      sheets: Prisma.$SheetPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -22286,6 +22298,7 @@ export namespace Prisma {
     requestsToAddProjectMember<T extends Project$requestsToAddProjectMemberArgs<ExtArgs> = {}>(args?: Subset<T, Project$requestsToAddProjectMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestToAddProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     submitted<T extends Project$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Project$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reminders<T extends Project$remindersArgs<ExtArgs> = {}>(args?: Subset<T, Project$remindersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sheets<T extends Project$sheetsArgs<ExtArgs> = {}>(args?: Subset<T, Project$sheetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22894,6 +22907,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ReminderScalarFieldEnum | ReminderScalarFieldEnum[]
+  }
+
+  /**
+   * Project.sheets
+   */
+  export type Project$sheetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    where?: SheetWhereInput
+    orderBy?: SheetOrderByWithRelationInput | SheetOrderByWithRelationInput[]
+    cursor?: SheetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SheetScalarFieldEnum | SheetScalarFieldEnum[]
   }
 
   /**
@@ -39905,6 +39942,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     chartId: string | null
+    projectId: string | null
   }
 
   export type SheetMaxAggregateOutputType = {
@@ -39913,6 +39951,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     chartId: string | null
+    projectId: string | null
   }
 
   export type SheetCountAggregateOutputType = {
@@ -39921,6 +39960,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     chartId: number
+    projectId: number
     _all: number
   }
 
@@ -39931,6 +39971,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     chartId?: true
+    projectId?: true
   }
 
   export type SheetMaxAggregateInputType = {
@@ -39939,6 +39980,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     chartId?: true
+    projectId?: true
   }
 
   export type SheetCountAggregateInputType = {
@@ -39947,6 +39989,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     chartId?: true
+    projectId?: true
     _all?: true
   }
 
@@ -40028,6 +40071,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     chartId: string
+    projectId: string
     _count: SheetCountAggregateOutputType | null
     _min: SheetMinAggregateOutputType | null
     _max: SheetMaxAggregateOutputType | null
@@ -40053,9 +40097,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     chartId?: boolean
+    projectId?: boolean
     cells?: boolean | Sheet$cellsArgs<ExtArgs>
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
     chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
@@ -40065,7 +40111,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     chartId?: boolean
+    projectId?: boolean
     chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
   export type SheetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -40074,7 +40122,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     chartId?: boolean
+    projectId?: boolean
     chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
   export type SheetSelectScalar = {
@@ -40083,20 +40133,24 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     chartId?: boolean
+    projectId?: boolean
   }
 
-  export type SheetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "chartId", ExtArgs["result"]["sheet"]>
+  export type SheetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "chartId" | "projectId", ExtArgs["result"]["sheet"]>
   export type SheetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cells?: boolean | Sheet$cellsArgs<ExtArgs>
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
     chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
   }
   export type SheetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
   }
 
   export type $SheetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -40105,6 +40159,7 @@ export namespace Prisma {
       cells: Prisma.$CellPayload<ExtArgs>[]
       snapshots: Prisma.$SheetSnapshotPayload<ExtArgs>[]
       chart: Prisma.$ChartTablePayload<ExtArgs>
+      project: Prisma.$ProjectPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -40112,6 +40167,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       chartId: string
+      projectId: string
     }, ExtArgs["result"]["sheet"]>
     composites: {}
   }
@@ -40509,6 +40565,7 @@ export namespace Prisma {
     cells<T extends Sheet$cellsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$cellsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     snapshots<T extends Sheet$snapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chart<T extends ChartTableDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChartTableDefaultArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -40543,6 +40600,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Sheet", 'DateTime'>
     readonly updatedAt: FieldRef<"Sheet", 'DateTime'>
     readonly chartId: FieldRef<"Sheet", 'String'>
+    readonly projectId: FieldRef<"Sheet", 'String'>
   }
     
 
@@ -43638,7 +43696,8 @@ export namespace Prisma {
     name: 'name',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    chartId: 'chartId'
+    chartId: 'chartId',
+    projectId: 'projectId'
   };
 
   export type SheetScalarFieldEnum = (typeof SheetScalarFieldEnum)[keyof typeof SheetScalarFieldEnum]
@@ -45180,6 +45239,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
     submitted?: SubmittedListRelationFilter
     reminders?: ReminderListRelationFilter
+    sheets?: SheetListRelationFilter
   }
 
   export type ProjectOrderByWithRelationInput = {
@@ -45210,6 +45270,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberOrderByRelationAggregateInput
     submitted?: SubmittedOrderByRelationAggregateInput
     reminders?: ReminderOrderByRelationAggregateInput
+    sheets?: SheetOrderByRelationAggregateInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -45243,6 +45304,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
     submitted?: SubmittedListRelationFilter
     reminders?: ReminderListRelationFilter
+    sheets?: SheetListRelationFilter
   }, "id">
 
   export type ProjectOrderByWithAggregationInput = {
@@ -46420,9 +46482,11 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Sheet"> | Date | string
     updatedAt?: DateTimeFilter<"Sheet"> | Date | string
     chartId?: StringFilter<"Sheet"> | string
+    projectId?: StringFilter<"Sheet"> | string
     cells?: CellListRelationFilter
     snapshots?: SheetSnapshotListRelationFilter
     chart?: XOR<ChartTableScalarRelationFilter, ChartTableWhereInput>
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
   }
 
   export type SheetOrderByWithRelationInput = {
@@ -46431,14 +46495,17 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     chartId?: SortOrder
+    projectId?: SortOrder
     cells?: CellOrderByRelationAggregateInput
     snapshots?: SheetSnapshotOrderByRelationAggregateInput
     chart?: ChartTableOrderByWithRelationInput
+    project?: ProjectOrderByWithRelationInput
   }
 
   export type SheetWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     chartId?: string
+    projectId?: string
     AND?: SheetWhereInput | SheetWhereInput[]
     OR?: SheetWhereInput[]
     NOT?: SheetWhereInput | SheetWhereInput[]
@@ -46448,7 +46515,8 @@ export namespace Prisma {
     cells?: CellListRelationFilter
     snapshots?: SheetSnapshotListRelationFilter
     chart?: XOR<ChartTableScalarRelationFilter, ChartTableWhereInput>
-  }, "id" | "chartId">
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+  }, "id" | "chartId" | "projectId">
 
   export type SheetOrderByWithAggregationInput = {
     id?: SortOrder
@@ -46456,6 +46524,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     chartId?: SortOrder
+    projectId?: SortOrder
     _count?: SheetCountOrderByAggregateInput
     _max?: SheetMaxOrderByAggregateInput
     _min?: SheetMinOrderByAggregateInput
@@ -46470,6 +46539,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Sheet"> | Date | string
     chartId?: StringWithAggregatesFilter<"Sheet"> | string
+    projectId?: StringWithAggregatesFilter<"Sheet"> | string
   }
 
   export type CellWhereInput = {
@@ -47845,6 +47915,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateInput = {
@@ -47873,6 +47944,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUpdateInput = {
@@ -47901,6 +47973,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
@@ -47929,6 +48002,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateManyInput = {
@@ -49211,6 +49285,7 @@ export namespace Prisma {
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     chart: ChartTableCreateNestedOneWithoutSheetInput
+    project: ProjectCreateNestedOneWithoutSheetsInput
   }
 
   export type SheetUncheckedCreateInput = {
@@ -49219,6 +49294,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chartId: string
+    projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
   }
@@ -49231,6 +49307,7 @@ export namespace Prisma {
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
   }
 
   export type SheetUncheckedUpdateInput = {
@@ -49239,6 +49316,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chartId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
   }
@@ -49249,6 +49327,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chartId: string
+    projectId: string
   }
 
   export type SheetUpdateManyMutationInput = {
@@ -49264,6 +49343,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chartId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CellCreateInput = {
@@ -50356,6 +50436,12 @@ export namespace Prisma {
     none?: ReminderWhereInput
   }
 
+  export type SheetListRelationFilter = {
+    every?: SheetWhereInput
+    some?: SheetWhereInput
+    none?: SheetWhereInput
+  }
+
   export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -50369,6 +50455,10 @@ export namespace Prisma {
   }
 
   export type ReminderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SheetOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -51387,6 +51477,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     chartId?: SortOrder
+    projectId?: SortOrder
   }
 
   export type SheetMaxOrderByAggregateInput = {
@@ -51395,6 +51486,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     chartId?: SortOrder
+    projectId?: SortOrder
   }
 
   export type SheetMinOrderByAggregateInput = {
@@ -51403,6 +51495,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     chartId?: SortOrder
+    projectId?: SortOrder
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -52277,6 +52370,13 @@ export namespace Prisma {
     connect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
   }
 
+  export type SheetCreateNestedManyWithoutProjectInput = {
+    create?: XOR<SheetCreateWithoutProjectInput, SheetUncheckedCreateWithoutProjectInput> | SheetCreateWithoutProjectInput[] | SheetUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: SheetCreateOrConnectWithoutProjectInput | SheetCreateOrConnectWithoutProjectInput[]
+    createMany?: SheetCreateManyProjectInputEnvelope
+    connect?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+  }
+
   export type ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<ProjectEmployeeCreateWithoutProjectInput, ProjectEmployeeUncheckedCreateWithoutProjectInput> | ProjectEmployeeCreateWithoutProjectInput[] | ProjectEmployeeUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutProjectInput | ProjectEmployeeCreateOrConnectWithoutProjectInput[]
@@ -52324,6 +52424,13 @@ export namespace Prisma {
     connectOrCreate?: ReminderCreateOrConnectWithoutProjectInput | ReminderCreateOrConnectWithoutProjectInput[]
     createMany?: ReminderCreateManyProjectInputEnvelope
     connect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+  }
+
+  export type SheetUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<SheetCreateWithoutProjectInput, SheetUncheckedCreateWithoutProjectInput> | SheetCreateWithoutProjectInput[] | SheetUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: SheetCreateOrConnectWithoutProjectInput | SheetCreateOrConnectWithoutProjectInput[]
+    createMany?: SheetCreateManyProjectInputEnvelope
+    connect?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
   }
 
   export type EnumProjectStatusFieldUpdateOperationsInput = {
@@ -52465,6 +52572,20 @@ export namespace Prisma {
     deleteMany?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
   }
 
+  export type SheetUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<SheetCreateWithoutProjectInput, SheetUncheckedCreateWithoutProjectInput> | SheetCreateWithoutProjectInput[] | SheetUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: SheetCreateOrConnectWithoutProjectInput | SheetCreateOrConnectWithoutProjectInput[]
+    upsert?: SheetUpsertWithWhereUniqueWithoutProjectInput | SheetUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: SheetCreateManyProjectInputEnvelope
+    set?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+    disconnect?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+    delete?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+    connect?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+    update?: SheetUpdateWithWhereUniqueWithoutProjectInput | SheetUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: SheetUpdateManyWithWhereWithoutProjectInput | SheetUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: SheetScalarWhereInput | SheetScalarWhereInput[]
+  }
+
   export type ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<ProjectEmployeeCreateWithoutProjectInput, ProjectEmployeeUncheckedCreateWithoutProjectInput> | ProjectEmployeeCreateWithoutProjectInput[] | ProjectEmployeeUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutProjectInput | ProjectEmployeeCreateOrConnectWithoutProjectInput[]
@@ -52561,6 +52682,20 @@ export namespace Prisma {
     update?: ReminderUpdateWithWhereUniqueWithoutProjectInput | ReminderUpdateWithWhereUniqueWithoutProjectInput[]
     updateMany?: ReminderUpdateManyWithWhereWithoutProjectInput | ReminderUpdateManyWithWhereWithoutProjectInput[]
     deleteMany?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
+  }
+
+  export type SheetUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<SheetCreateWithoutProjectInput, SheetUncheckedCreateWithoutProjectInput> | SheetCreateWithoutProjectInput[] | SheetUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: SheetCreateOrConnectWithoutProjectInput | SheetCreateOrConnectWithoutProjectInput[]
+    upsert?: SheetUpsertWithWhereUniqueWithoutProjectInput | SheetUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: SheetCreateManyProjectInputEnvelope
+    set?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+    disconnect?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+    delete?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+    connect?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
+    update?: SheetUpdateWithWhereUniqueWithoutProjectInput | SheetUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: SheetUpdateManyWithWhereWithoutProjectInput | SheetUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: SheetScalarWhereInput | SheetScalarWhereInput[]
   }
 
   export type ProjectCreateNestedOneWithoutProjectEmployeesInput = {
@@ -53520,6 +53655,12 @@ export namespace Prisma {
     connect?: ChartTableWhereUniqueInput
   }
 
+  export type ProjectCreateNestedOneWithoutSheetsInput = {
+    create?: XOR<ProjectCreateWithoutSheetsInput, ProjectUncheckedCreateWithoutSheetsInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutSheetsInput
+    connect?: ProjectWhereUniqueInput
+  }
+
   export type CellUncheckedCreateNestedManyWithoutSheetInput = {
     create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
     connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
@@ -53568,6 +53709,14 @@ export namespace Prisma {
     upsert?: ChartTableUpsertWithoutSheetInput
     connect?: ChartTableWhereUniqueInput
     update?: XOR<XOR<ChartTableUpdateToOneWithWhereWithoutSheetInput, ChartTableUpdateWithoutSheetInput>, ChartTableUncheckedUpdateWithoutSheetInput>
+  }
+
+  export type ProjectUpdateOneRequiredWithoutSheetsNestedInput = {
+    create?: XOR<ProjectCreateWithoutSheetsInput, ProjectUncheckedCreateWithoutSheetsInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutSheetsInput
+    upsert?: ProjectUpsertWithoutSheetsInput
+    connect?: ProjectWhereUniqueInput
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutSheetsInput, ProjectUpdateWithoutSheetsInput>, ProjectUncheckedUpdateWithoutSheetsInput>
   }
 
   export type CellUncheckedUpdateManyWithoutSheetNestedInput = {
@@ -54193,6 +54342,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutActivitiesInput = {
@@ -54220,6 +54370,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutActivitiesInput = {
@@ -54332,6 +54483,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutActivitiesInput = {
@@ -54359,6 +54511,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type UserUpsertWithoutActivitiesInput = {
@@ -55465,6 +55618,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutManagerInput = {
@@ -55492,6 +55646,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutManagerInput = {
@@ -56793,6 +56948,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutProgramInput = {
@@ -56820,6 +56976,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutProgramInput = {
@@ -57191,6 +57348,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SheetCreateWithoutProjectInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cells?: CellCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+    chart: ChartTableCreateNestedOneWithoutSheetInput
+  }
+
+  export type SheetUncheckedCreateWithoutProjectInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chartId: string
+    cells?: CellUncheckedCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+  }
+
+  export type SheetCreateOrConnectWithoutProjectInput = {
+    where: SheetWhereUniqueInput
+    create: XOR<SheetCreateWithoutProjectInput, SheetUncheckedCreateWithoutProjectInput>
+  }
+
+  export type SheetCreateManyProjectInputEnvelope = {
+    data: SheetCreateManyProjectInput | SheetCreateManyProjectInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ProgramUpsertWithoutProjectsInput = {
     update: XOR<ProgramUpdateWithoutProjectsInput, ProgramUncheckedUpdateWithoutProjectsInput>
     create: XOR<ProgramCreateWithoutProjectsInput, ProgramUncheckedCreateWithoutProjectsInput>
@@ -57435,6 +57622,34 @@ export namespace Prisma {
     remindBefore?: IntNullableFilter<"Reminder"> | number | null
   }
 
+  export type SheetUpsertWithWhereUniqueWithoutProjectInput = {
+    where: SheetWhereUniqueInput
+    update: XOR<SheetUpdateWithoutProjectInput, SheetUncheckedUpdateWithoutProjectInput>
+    create: XOR<SheetCreateWithoutProjectInput, SheetUncheckedCreateWithoutProjectInput>
+  }
+
+  export type SheetUpdateWithWhereUniqueWithoutProjectInput = {
+    where: SheetWhereUniqueInput
+    data: XOR<SheetUpdateWithoutProjectInput, SheetUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type SheetUpdateManyWithWhereWithoutProjectInput = {
+    where: SheetScalarWhereInput
+    data: XOR<SheetUpdateManyMutationInput, SheetUncheckedUpdateManyWithoutProjectInput>
+  }
+
+  export type SheetScalarWhereInput = {
+    AND?: SheetScalarWhereInput | SheetScalarWhereInput[]
+    OR?: SheetScalarWhereInput[]
+    NOT?: SheetScalarWhereInput | SheetScalarWhereInput[]
+    id?: StringFilter<"Sheet"> | string
+    name?: StringFilter<"Sheet"> | string
+    createdAt?: DateTimeFilter<"Sheet"> | Date | string
+    updatedAt?: DateTimeFilter<"Sheet"> | Date | string
+    chartId?: StringFilter<"Sheet"> | string
+    projectId?: StringFilter<"Sheet"> | string
+  }
+
   export type ProjectCreateWithoutProjectEmployeesInput = {
     id?: string
     name: string
@@ -57460,6 +57675,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutProjectEmployeesInput = {
@@ -57487,6 +57703,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutProjectEmployeesInput = {
@@ -57557,6 +57774,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutProjectEmployeesInput = {
@@ -57584,6 +57802,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type EmployeeUpsertWithoutProjectEmployeesInput = {
@@ -57644,6 +57863,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutReviewsInput = {
@@ -57671,6 +57891,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutReviewsInput = {
@@ -57714,6 +57935,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutReviewsInput = {
@@ -57741,6 +57963,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type SubmittedCreateWithoutSubmissionReturnInput = {
@@ -57859,6 +58082,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutSubmittedInput = {
@@ -57886,6 +58110,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutSubmittedInput = {
@@ -57977,6 +58202,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutSubmittedInput = {
@@ -58004,6 +58230,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type SubmissionReturnUpsertWithoutSubmittedInput = {
@@ -58392,6 +58619,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutTasksInput = {
@@ -58419,6 +58647,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutTasksInput = {
@@ -58462,6 +58691,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutTasksInput = {
@@ -58489,6 +58719,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ClientCreateWithoutTicketsInput = {
@@ -59798,6 +60029,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutRequestsToAddProjectMemberInput = {
@@ -59825,6 +60057,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutRequestsToAddProjectMemberInput = {
@@ -59895,6 +60128,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutRequestsToAddProjectMemberInput = {
@@ -59922,6 +60156,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ManagerUpsertWithoutRequestsToAddProjectMemberInput = {
@@ -60108,6 +60343,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+    project: ProjectCreateNestedOneWithoutSheetsInput
   }
 
   export type SheetUncheckedCreateWithoutChartInput = {
@@ -60115,6 +60351,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
   }
@@ -60142,6 +60379,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutChartInput = {
@@ -60149,6 +60387,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
   }
@@ -60178,6 +60417,7 @@ export namespace Prisma {
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    sheets?: SheetCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutRemindersInput = {
@@ -60205,6 +60445,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutRemindersInput = {
@@ -60248,6 +60489,7 @@ export namespace Prisma {
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutRemindersInput = {
@@ -60275,6 +60517,7 @@ export namespace Prisma {
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type CellCreateWithoutSheetInput = {
@@ -60354,6 +60597,67 @@ export namespace Prisma {
   export type ChartTableCreateOrConnectWithoutSheetInput = {
     where: ChartTableWhereUniqueInput
     create: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
+  }
+
+  export type ProjectCreateWithoutSheetsInput = {
+    id?: string
+    name: string
+    description: string
+    status?: $Enums.ProjectStatus
+    priority: $Enums.Priority
+    deadline: Date | string
+    startDate?: Date | string | null
+    progress?: number | null
+    chartList?: ProjectCreatechartListInput | string[]
+    estimatedCompletedDate?: Date | string | null
+    currentRate?: string | null
+    budget?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    program: ProgramCreateNestedOneWithoutProjectsInput
+    manager: ManagerCreateNestedOneWithoutProjectsInput
+    projectEmployees?: ProjectEmployeeCreateNestedManyWithoutProjectInput
+    tasks?: TaskCreateNestedManyWithoutProjectInput
+    activities?: ActivityCreateNestedManyWithoutProjectInput
+    reviews?: ReviewCreateNestedManyWithoutProjectInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectUncheckedCreateWithoutSheetsInput = {
+    id?: string
+    programId: string
+    name: string
+    description: string
+    status?: $Enums.ProjectStatus
+    priority: $Enums.Priority
+    deadline: Date | string
+    managerId: string
+    startDate?: Date | string | null
+    progress?: number | null
+    chartList?: ProjectCreatechartListInput | string[]
+    estimatedCompletedDate?: Date | string | null
+    currentRate?: string | null
+    budget?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    latitude?: number | null
+    longitude?: number | null
+    projectEmployees?: ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
+    submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectCreateOrConnectWithoutSheetsInput = {
+    where: ProjectWhereUniqueInput
+    create: XOR<ProjectCreateWithoutSheetsInput, ProjectUncheckedCreateWithoutSheetsInput>
   }
 
   export type CellUpsertWithWhereUniqueWithoutSheetInput = {
@@ -60446,6 +60750,73 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProjectUpsertWithoutSheetsInput = {
+    update: XOR<ProjectUpdateWithoutSheetsInput, ProjectUncheckedUpdateWithoutSheetsInput>
+    create: XOR<ProjectCreateWithoutSheetsInput, ProjectUncheckedCreateWithoutSheetsInput>
+    where?: ProjectWhereInput
+  }
+
+  export type ProjectUpdateToOneWithWhereWithoutSheetsInput = {
+    where?: ProjectWhereInput
+    data: XOR<ProjectUpdateWithoutSheetsInput, ProjectUncheckedUpdateWithoutSheetsInput>
+  }
+
+  export type ProjectUpdateWithoutSheetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    chartList?: ProjectUpdatechartListInput | string[]
+    estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRate?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    program?: ProgramUpdateOneRequiredWithoutProjectsNestedInput
+    manager?: ManagerUpdateOneRequiredWithoutProjectsNestedInput
+    projectEmployees?: ProjectEmployeeUpdateManyWithoutProjectNestedInput
+    tasks?: TaskUpdateManyWithoutProjectNestedInput
+    activities?: ActivityUpdateManyWithoutProjectNestedInput
+    reviews?: ReviewUpdateManyWithoutProjectNestedInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateWithoutSheetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    programId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    managerId?: StringFieldUpdateOperationsInput | string
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
+    chartList?: ProjectUpdatechartListInput | string[]
+    estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    currentRate?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectEmployees?: ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
+    requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
+    submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
   export type SheetCreateWithoutCellsInput = {
     id?: string
     name: string
@@ -60453,6 +60824,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     chart: ChartTableCreateNestedOneWithoutSheetInput
+    project: ProjectCreateNestedOneWithoutSheetsInput
   }
 
   export type SheetUncheckedCreateWithoutCellsInput = {
@@ -60461,6 +60833,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chartId: string
+    projectId: string
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
   }
 
@@ -60487,6 +60860,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutCellsInput = {
@@ -60495,6 +60869,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chartId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
   }
 
@@ -60505,6 +60880,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     cells?: CellCreateNestedManyWithoutSheetInput
     chart: ChartTableCreateNestedOneWithoutSheetInput
+    project: ProjectCreateNestedOneWithoutSheetsInput
   }
 
   export type SheetUncheckedCreateWithoutSnapshotsInput = {
@@ -60513,6 +60889,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chartId: string
+    projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
   }
 
@@ -60539,6 +60916,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cells?: CellUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutSnapshotsInput = {
@@ -60547,6 +60925,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chartId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
   }
 
@@ -60827,6 +61206,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutManagerInput = {
@@ -60854,6 +61234,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutManagerInput = {
@@ -60961,6 +61342,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutProgramInput = {
@@ -60988,6 +61370,7 @@ export namespace Prisma {
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
+    sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutProgramInput = {
@@ -61079,6 +61462,14 @@ export namespace Prisma {
     repeatOnDays?: ReminderCreaterepeatOnDaysInput | $Enums.DayOfWeek[]
     repeatOnDates?: ReminderCreaterepeatOnDatesInput | number[]
     remindBefore?: number | null
+  }
+
+  export type SheetCreateManyProjectInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chartId: string
   }
 
   export type ProjectEmployeeUpdateWithoutProjectInput = {
@@ -61294,6 +61685,34 @@ export namespace Prisma {
     repeatOnDays?: ReminderUpdaterepeatOnDaysInput | $Enums.DayOfWeek[]
     repeatOnDates?: ReminderUpdaterepeatOnDatesInput | number[]
     remindBefore?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type SheetUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cells?: CellUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
+  }
+
+  export type SheetUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
+    cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+  }
+
+  export type SheetUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
   }
 
   export type NotificationProvisionCreateManyUserInput = {

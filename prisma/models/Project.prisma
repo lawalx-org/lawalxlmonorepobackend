@@ -35,6 +35,7 @@ model Project {
   requestsToAddProjectMember RequestToAddProjectMember[]
   submitted                 Submitted[]
   reminders Reminder[]
+  sheets                    Sheet[] 
   @@map("projects")
 }
 
