@@ -33,7 +33,13 @@
 // }
 
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+} from '@nestjs/swagger';
 import { SheetService } from '../service/sheet.service';
 import { UpdateCellDto } from '../dto/update-cell.dto';
 
@@ -76,7 +82,10 @@ export class SheetController {
   @Get('snapshot/:snapshotId')
   @ApiOperation({ summary: 'Get a specific sheet snapshot by ID' })
   @ApiParam({ name: 'snapshotId', type: String, example: 'snapshot_98765xyz' })
-  @ApiResponse({ status: 200, description: 'Returns the requested snapshot data' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns the requested snapshot data',
+  })
   getSnapshot(@Param('snapshotId') snapshotId: string) {
     return this.sheetService.getSnapshot(snapshotId);
   }
@@ -89,4 +98,3 @@ export class SheetController {
     return this.sheetService.getSheet(sheetId);
   }
 }
-

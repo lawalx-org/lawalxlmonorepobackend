@@ -6,10 +6,9 @@ import { ChartModule } from '../chart/chart.module';
 import { ChartController } from '../chart/controller/chart.controller';
 import { ChartService } from '../chart/service/chart.service';
 
-
 @Module({
-  imports: [SubmittedModule,],
-  controllers: [EmployController, ChartController],
-  providers: [EmployService,ChartService],
+  imports: [SubmittedModule, ChartModule], // ✅ import module, don’t re-declare
+  controllers: [EmployController], // ✅ only your own controller
+  providers: [EmployService], // ✅ only your own service
 })
 export class EmployModule {}

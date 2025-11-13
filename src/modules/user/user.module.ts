@@ -6,9 +6,17 @@ import { EmployeeService } from './service/employee.service';
 import { ViewerService } from './service/viewer.service';
 import { UserController } from './controller/user.controller';
 import { NotificationModule } from '../notification/notification.module';
+import { ClientEmployeeController } from './controller/employ.controller';
+import { ClientManagerController } from './controller/manager.controller';
+import { ClientViewerController } from './controller/viewer.controller';
 
 @Module({
-  controllers: [UserController],
+  controllers: [
+    UserController,
+    ClientEmployeeController,
+    ClientManagerController,
+    ClientViewerController,
+  ],
   providers: [UserService, ManagerService, EmployeeService, ViewerService],
   exports: [UserService, ManagerService, EmployeeService, ViewerService],
   imports: [ConfigModule, NotificationModule],

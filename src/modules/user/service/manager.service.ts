@@ -11,6 +11,10 @@ import { CreateManagerDto } from '../dto/create-manager.dto';
 import { EmailService } from '../../utils/services/emailService';
 import { welcomeEmailTemplate } from '../../utils/template/welcometempleted';
 import { NotificationService } from '../../notification/service/notification.service';
+import {
+  paginate,
+  PaginatedResult,
+} from 'src/modules/utils/pagination/pagination.utils';
 
 @Injectable()
 export class ManagerService {
@@ -138,12 +142,19 @@ export class ManagerService {
     };
   }
 
-  async findAll() {
-    const managers = await this.prisma.manager.findMany({
-      include: { user: true },
-    });
+  async findAll(
+    query: { page: number; limit: number } = { page: 1, limit: 10 },
+  ): Promise<PaginatedResult<any>> {
+    const paginatedManagers = await paginate(
+      this.prisma,
+      'manager',
+      {
+        include: { user: true },
+      },
+      { page: query.page, limit: query.limit },
+    );
 
-    return managers.map((manager) => {
+    paginatedManagers.data = paginatedManagers.data.map((manager: any) => {
       const { user } = manager;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
@@ -152,5 +163,7 @@ export class ManagerService {
         user: userWithoutPassword,
       };
     });
+
+    return paginatedManagers;
   }
 }

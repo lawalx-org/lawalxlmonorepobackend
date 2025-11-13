@@ -32,7 +32,4 @@ export class UpdateCellDto {
   @IsNotEmpty()
   @IsString()
   sheetId: string;
-
-
-  
 }

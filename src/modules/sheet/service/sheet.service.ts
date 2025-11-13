@@ -14,8 +14,6 @@ export class SheetService {
       return;
     }
 
-
-
     const cellUpserts = updateCellDtos.map((updateCellDto) => {
       const { sheetId, row, col, value } = updateCellDto;
       return this.prisma.cell.upsert({
@@ -74,7 +72,10 @@ export class SheetService {
       this.logger.log(`Found ${history.length} history records.`);
       return history;
     } catch (error) {
-      this.logger.error(`Failed to fetch history for sheetId: ${sheetId}`, error.stack);
+      this.logger.error(
+        `Failed to fetch history for sheetId: ${sheetId}`,
+        error.stack,
+      );
       throw error;
     }
   }

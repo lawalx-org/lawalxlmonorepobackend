@@ -17,6 +17,9 @@ import { NotificationModule } from './modules/notification/notification.module';
 import { RedisModule } from './common/db/redis/redis.module';
 import { BullModule } from '@nestjs/bullmq';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ChartModule } from './modules/chart/chart.module';
+import { ManagerModule } from './modules/manager/manager.module';
+import { SeedService } from './common/seed/seed.services';
 
 @Module({
   imports: [
@@ -25,13 +28,23 @@ import { ScheduleModule } from '@nestjs/schedule';
       load: [configuration],
     }),
     ScheduleModule.forRoot(),
-    BullModule.forRoot({
-  connection: {
-    host: process.env.REDIS_HOST || 'redis_cache',
-    port: Number(process.env.REDIS_PORT) || 6379,
-  },
-}),
+
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        const redisConfig = configService.get('redis');
+        return {
+          connection: {
+            host: redisConfig.host,
+            port: redisConfig.port,
+          },
+        };
+      },
+      inject: [ConfigService],
+    }),
+
     BullModule.registerQueue({ name: 'notification' }),
+
     PrismaModule,
     UtilsModule,
     UserModule,
@@ -41,11 +54,13 @@ import { ScheduleModule } from '@nestjs/schedule';
     SubmittedModule,
     ClientModule,
     EmployModule,
+    ManagerModule,
     ActivityModule,
     NotificationModule,
     RedisModule,
+    ChartModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigService],
+  providers: [AppService, ConfigService, SeedService],
 })
 export class AppModule {}

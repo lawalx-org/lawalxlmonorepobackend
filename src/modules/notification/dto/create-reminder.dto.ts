@@ -42,7 +42,8 @@ export class CreateReminderDto {
   repeatEvery: RepeatInterval;
 
   @ApiPropertyOptional({
-    description: 'Days of the week the reminder repeats (for weekly or bi-weekly)',
+    description:
+      'Days of the week the reminder repeats (for weekly or bi-weekly)',
     example: ['MONDAY', 'FRIDAY'],
   })
   @IsArray()

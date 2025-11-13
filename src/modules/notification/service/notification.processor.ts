@@ -22,7 +22,7 @@ import { Role } from 'generated/prisma';
 import { Gateway } from './notification.getway';
 
 interface NotificationJobData {
-  userId: string; 
+  userId: string;
   message: string;
   projectId: string;
 }
@@ -39,7 +39,6 @@ export class NotificationProcessor extends WorkerHost {
   async process(job: Job<NotificationJobData>): Promise<void> {
     const { userId, message, projectId } = job.data;
 
-    
     const clientUser = await this.prisma.user.findFirst({
       where: { role: Role.CLIENT },
     });
@@ -52,7 +51,7 @@ export class NotificationProcessor extends WorkerHost {
     // Create a notification record for this client (optional, if you store them)
     const notification = await this.prisma.notification.create({
       data: {
-        senderId: clientUser.id, 
+        senderId: clientUser.id,
         receiverIds: [userId],
         projectId,
         context: message,
@@ -67,9 +66,12 @@ export class NotificationProcessor extends WorkerHost {
     });
 
     // Emit real-time event to the receiver (employee or project owner)
-    await this.notificationGateway.emitToUsers([userId], 'REMINDER', notification);
+    await this.notificationGateway.emitToUsers(
+      [userId],
+      'REMINDER',
+      notification,
+    );
 
     console.log(`✅ Notification sent to user ${userId}: ${message}`);
   }
 }
-

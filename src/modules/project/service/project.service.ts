@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException,  Logger, } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
@@ -13,7 +13,7 @@ export class ProjectService {
   private readonly logger = new Logger(ProjectService.name);
   constructor(
     private readonly prisma: PrismaService,
-    private readonly reminderService: ReminderService, 
+    private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
   ) {}
 
@@ -121,7 +121,6 @@ export class ProjectService {
 
     // --- Main transaction ---
     const project = await this.prisma.$transaction(async (tx) => {
-   
       // Create the new project
       const newProject = await tx.project.create({
         data: {
@@ -138,43 +137,38 @@ export class ProjectService {
         include: {
           manager: { include: { user: true } },
           program: true,
-          projectEmployees: { include: { employee: { include: { user: true } } } },
+          projectEmployees: {
+            include: { employee: { include: { user: true } } },
+          },
         },
       });
 
-
-
       //create sheets for the project based on chartList
       if (chartList && chartList.length > 0) {
- 
-          const existingSheets = await tx.sheet.findMany({
-            where: {
+        const existingSheets = await tx.sheet.findMany({
+          where: {
+            projectId: newProject.id,
+            chartId: { in: chartList },
+          },
+          select: { chartId: true },
+        });
+
+        const existingChartIds = existingSheets.map((s) => s.chartId);
+
+        const missingChartIds = chartList.filter(
+          (chartId) => !existingChartIds.includes(chartId),
+        );
+
+        if (missingChartIds.length > 0) {
+          await tx.sheet.createMany({
+            data: missingChartIds.map((chartId) => ({
+              name: 'My Sheet',
+              chartId,
               projectId: newProject.id,
-              chartId: { in: chartList },
-            },
-            select: { chartId: true },
+            })),
           });
-
-        
-          const existingChartIds = existingSheets.map((s) => s.chartId);
-
-          
-          const missingChartIds = chartList.filter(
-            (chartId) => !existingChartIds.includes(chartId),
-          );
-
-
-          if (missingChartIds.length > 0) {
-            await tx.sheet.createMany({
-              data: missingChartIds.map((chartId) => ({
-                name: 'My Sheet',
-                chartId,
-                projectId: newProject.id,
-              })),
-            });
-          }
         }
-
+      }
 
       // Create reminder linked to the new project
       await this.reminderService.createReminderWithTx(tx, {
@@ -191,7 +185,6 @@ export class ProjectService {
       return newProject;
     });
 
-   
     try {
       //send notification to manager and employees
       const receiverIds = [
@@ -199,7 +192,6 @@ export class ProjectService {
         ...(project.projectEmployees?.map((e) => e.employee.user.id) || []),
       ];
 
-    
       const uniqueReceivers = [...new Set(receiverIds)];
 
       await this.notificationService.create(
@@ -215,7 +207,6 @@ export class ProjectService {
         `Notification sent for project "${project.name}" to manager and employees.`,
       );
     } catch (err) {
-      
       this.logger.error(
         `Failed to send project creation notifications: ${err.message}`,
       );

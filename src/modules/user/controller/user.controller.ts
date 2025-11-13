@@ -1,29 +1,26 @@
 import {
   Controller,
-  Post,
   Body,
-  HttpCode,
-  HttpStatus,
   Get,
-  Query,
   Param,
   Delete,
-  Put,
   Patch,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { ManagerService } from '../service/manager.service';
 import { EmployeeService } from '../service/employee.service';
 import { ViewerService } from '../service/viewer.service';
-import { CreateManagerDto } from '../dto/create-manager.dto';
-import { CreateEmployeeDto } from '../dto/create-employee.dto';
-import { CreateViewerDto } from '../dto/create-viewer.dto';
-import { ConvertEmployeeToManagerDto } from '../dto/convert-employee-to-manager.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
+import { Roles } from 'src/common/jwt/roles.decorator';
+import { Role } from 'generated/prisma';
+import { PaginationDto } from 'src/modules/utils/pagination/pagination.dto';
 
 @Controller('users')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -32,43 +29,36 @@ export class UserController {
     private readonly viewerService: ViewerService,
   ) {}
 
-  @Post('/create-manager')
-  @HttpCode(HttpStatus.CREATED)
-  async createManager(@Body() createManagerDto: CreateManagerDto) {
-    return this.managerService.create(createManagerDto);
-  }
-
-  @Post('/create-employee')
-  @HttpCode(HttpStatus.CREATED)
-  async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto) {
-    return this.employeeService.create(createEmployeeDto);
-  }
-
-  // @UseGuards(JwtAuthGuard)
-  @Post('/create-viewer')
-  @HttpCode(HttpStatus.CREATED)
-  async createViewer(@Body() createViewerDto: CreateViewerDto) {
-    return this.viewerService.create(createViewerDto);
-  }
-
   @Get()
-  async findAll() {
-    return this.userService.findAll();
+  @Roles(Role.CLIENT)
+  async findAll(@Query() query: PaginationDto) {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 10;
+    return this.userService.findAll({ page, limit });
   }
 
   @Get('managers')
-  async findAllManagers() {
-    return this.managerService.findAll();
+  @Roles(Role.CLIENT)
+  async findAllManagers(@Query() query: PaginationDto) {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 10;
+    return this.managerService.findAll({ page, limit });
   }
 
   @Get('employees')
-  async findAllEmployees() {
-    return this.employeeService.findAll();
+  @Roles(Role.CLIENT)
+  async findAllEmployees(@Query() query: PaginationDto) {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 10;
+    return this.employeeService.findAll({ page, limit });
   }
 
   @Get('viewers')
-  async findAllViewers() {
-    return this.viewerService.findAll();
+  @Roles(Role.CLIENT)
+  async findAllViewers(@Query() query: PaginationDto) {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 10;
+    return this.viewerService.findAll({ page, limit });
   }
 
   @Get(':id')

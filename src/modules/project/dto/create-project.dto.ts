@@ -31,7 +31,6 @@ export class CreateProjectDto extends CreateReminderDto {
   @IsNotEmpty()
   programId: string;
 
-
   @ApiProperty({
     description: 'The description of the project',
     example: 'This is a project to do something important.',

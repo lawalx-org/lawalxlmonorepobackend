@@ -9,6 +9,7 @@ import { ChartMainService } from './service/chart.main.service';
 @Module({
   imports: [PrismaModule],
   controllers: [ChartMainController, ChartController],
-  providers: [ChartService,ChartMainService],
+  providers: [ChartService, ChartMainService],
+  exports: [ChartService], // ✅ export service so others can use it
 })
 export class ChartModule {}

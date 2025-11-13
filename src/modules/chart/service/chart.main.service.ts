@@ -4,11 +4,9 @@ import { CreateChartDto } from '../dto/create-chart.dto';
 import { UpdateChartDto } from '../dto/update-chart.dto';
 import { ChartStatus, Prisma } from 'generated/prisma';
 
-
 @Injectable()
 export class ChartMainService {
   constructor(private readonly prisma: PrismaService) {}
-
 
   //create chart
   create(createChartDto: CreateChartDto) {
@@ -23,7 +21,6 @@ export class ChartMainService {
     });
   }
 
-   
   //find all active charts
   async findAllActive() {
     const activeCharts = await this.prisma.chartTable.findMany({
@@ -37,8 +34,6 @@ export class ChartMainService {
 
     return activeCharts;
   }
-
-
 
   //find all inactive charts
   async findAllInactive() {
@@ -70,9 +65,9 @@ export class ChartMainService {
     if (yAxis) {
       data.yAxis = JSON.parse(yAxis);
     }
-    
+
     if (updateChartDto.hasOwnProperty('zAxis')) {
-        data.zAxis = zAxis ? JSON.parse(zAxis) : Prisma.JsonNull;
+      data.zAxis = zAxis ? JSON.parse(zAxis) : Prisma.JsonNull;
     }
 
     return this.prisma.chartTable.update({
@@ -80,7 +75,6 @@ export class ChartMainService {
       data,
     });
   }
-
 
   //delete chart
   remove(id: string) {

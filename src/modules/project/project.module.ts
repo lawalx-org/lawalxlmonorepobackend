@@ -9,7 +9,12 @@ import { NotificationModule } from '../notification/notification.module';
 @Module({
   imports: [NotificationModule],
   controllers: [ProjectController],
-  providers: [ProjectService,SchedulerService,ReminderService,NotificationService],
+  providers: [
+    ProjectService,
+    SchedulerService,
+    ReminderService,
+    NotificationService,
+  ],
   exports: [ReminderService],
 })
 export class ProjectModule {}

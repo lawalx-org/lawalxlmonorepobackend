@@ -26,8 +26,6 @@
 // })
 // export class NotificationModule {}
 
-
-
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
 import { JwtModule } from '@nestjs/jwt';
@@ -41,7 +39,6 @@ import { NotificationService } from './service/notification.service';
 import { Gateway } from './service/notification.getway';
 import { SchedulerService } from './service/scheduler.service';
 import { NotificationProcessor } from './service/notification.processor';
-
 
 @Module({
   imports: [
@@ -67,7 +64,6 @@ import { NotificationProcessor } from './service/notification.processor';
     SchedulerService,
     NotificationProcessor,
   ],
-  exports: [NotificationService, BullModule, SchedulerService,Gateway],
+  exports: [NotificationService, BullModule, SchedulerService, Gateway],
 })
 export class NotificationModule {}
-

@@ -7,7 +7,9 @@ import {
 } from '@nestjs/common';
 import { ChartService } from '../service/chart.service';
 import { RequestWithUser } from 'src/types/RequestWithUser';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('charts')
 @Controller('charts')
 export class ChartController {
   constructor(private readonly chartService: ChartService) {}

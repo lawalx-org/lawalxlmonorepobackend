@@ -1,32 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsOptional,
-  IsString,
-  IsNumber,
-  Min,
-  IsDateString,
-} from 'class-validator';
+import { IsOptional, IsString, IsDateString } from 'class-validator';
 import { SubmittedStatus } from '../../../../generated/prisma';
+import { PaginationDto } from 'src/modules/utils/pagination/pagination.dto';
 
-export class GetAllSubmissionsDto {
-  @ApiPropertyOptional({
-    description: 'Page number for pagination',
-    default: 1,
-  })
-  @IsOptional()
-  @IsNumber()
-  @Min(1)
-  page?: number;
-
-  @ApiPropertyOptional({
-    description: 'Number of items per page',
-    default: 10,
-  })
-  @IsOptional()
-  @IsNumber()
-  @Min(1)
-  limit?: number;
-
+export class GetAllSubmissionsDto extends PaginationDto {
   @ApiPropertyOptional({
     description: 'Search by project name',
   })

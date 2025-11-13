@@ -1,25 +1,20 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { ChartMainService } from '../service/chart.main.service';
-
+import { Roles } from 'src/common/jwt/roles.decorator';
+import { Role } from 'generated/prisma';
 
 @ApiTags('chart')
 @Controller('chart')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard('jwt'))
 export class ChartMainController {
   constructor(private readonly chartService: ChartMainService) {}
 
-    @Post()
+  @Post()
+  @Roles(Role.CLIENT)
   async create(@Body() createChartDto: CreateChartDto) {
     const result = await this.chartService.create(createChartDto);
     return {
@@ -28,8 +23,9 @@ export class ChartMainController {
     };
   }
 
-  @Get()
- async findAllInactive() {
+  @Get('activeInChart')
+  @Roles(Role.CLIENT)
+  async findAllInactive() {
     const result = await this.chartService.findAllInactive();
     return {
       message: 'All inactive charts fetched successfully',
@@ -37,9 +33,8 @@ export class ChartMainController {
     };
   }
 
-
-  @Get()
- async findAllActive() {
+  @Get('activechart')
+  async findAllActive() {
     const result = await this.chartService.findAllActive();
     return {
       message: 'All charts active fetched successfully',
@@ -51,6 +46,4 @@ export class ChartMainController {
   findOne(@Param('id') id: string) {
     return this.chartService.findOne(id);
   }
-
-
 }

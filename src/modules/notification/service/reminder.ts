@@ -11,12 +11,10 @@ export class ReminderService {
     private readonly schedulerService: SchedulerService,
   ) {}
 
-
   async createReminder(createReminderDto: CreateReminderDto) {
     return this.createReminderWithTx(this.prisma, createReminderDto);
   }
 
- 
   async createReminderWithTx(
     tx: Prisma.TransactionClient,
     createReminderDto: CreateReminderDto,
@@ -30,7 +28,6 @@ export class ReminderService {
       repeatOnDates,
       remindBefore,
     } = createReminderDto;
-
 
     let nextTriggerAt: Date;
 
@@ -52,7 +49,6 @@ export class ReminderService {
       );
     }
 
-    
     return tx.reminder.create({
       data: {
         message,

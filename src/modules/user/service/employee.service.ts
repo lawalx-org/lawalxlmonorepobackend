@@ -11,6 +11,10 @@ import { CreateEmployeeDto } from '../dto/create-employee.dto';
 import { EmailService } from 'src/modules/utils/services/emailService';
 import { welcomeEmailTemplate } from 'src/modules/utils/template/welcometempleted';
 import { NotificationService } from 'src/modules/notification/service/notification.service';
+import {
+  paginate,
+  PaginatedResult,
+} from 'src/modules/utils/pagination/pagination.utils';
 
 @Injectable()
 export class EmployeeService {
@@ -151,12 +155,19 @@ export class EmployeeService {
     };
   }
 
-  async findAll() {
-    const employees = await this.prisma.employee.findMany({
-      include: { user: true },
-    });
+  async findAll(
+    query: { page: number; limit: number } = { page: 1, limit: 10 },
+  ): Promise<PaginatedResult<any>> {
+    const paginatedEmployees = await paginate(
+      this.prisma,
+      'employee',
+      {
+        include: { user: true },
+      },
+      { page: query.page, limit: query.limit },
+    );
 
-    return employees.map((employee) => {
+    paginatedEmployees.data = paginatedEmployees.data.map((employee: any) => {
       const { user } = employee;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
@@ -165,5 +176,7 @@ export class EmployeeService {
         user: userWithoutPassword,
       };
     });
+
+    return paginatedEmployees;
   }
 }

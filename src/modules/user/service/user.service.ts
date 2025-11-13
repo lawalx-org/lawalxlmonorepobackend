@@ -16,6 +16,10 @@ import { buildDynamicPrismaFilter } from 'src/modules/utils/queryBuilder/prisma-
 import { Role } from 'generated/prisma';
 import { ConvertEmployeeToManagerDto } from '../dto/convert-employee-to-manager.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import {
+  paginate,
+  PaginatedResult,
+} from 'src/modules/utils/pagination/pagination.utils';
 
 @Injectable()
 export class UserService {
@@ -56,12 +60,22 @@ export class UserService {
     }
   }
 
-  async findAll() {
-    const users = await this.prisma.user.findMany();
-    return users.map((user) => {
+  async findAll(
+    query: { page: number; limit: number } = { page: 1, limit: 10 },
+  ): Promise<PaginatedResult<any>> {
+    const paginatedUsers = await paginate(
+      this.prisma,
+      'user',
+      {},
+      { page: query.page, limit: query.limit },
+    );
+
+    paginatedUsers.data = paginatedUsers.data.map((user: any) => {
       const { password, ...result } = user;
       return result;
     });
+
+    return paginatedUsers;
   }
 
   async findOne(id: string) {
