@@ -19,7 +19,7 @@ model Activity {
 
 model Client {
   id                String           @id @default(uuid())
-  userId            String           @unique
+  userId            String?          @unique
   email             String           @unique
   contactPersonName String?
   clientLogo        String?
@@ -44,7 +44,7 @@ model Client {
   updatedAt         DateTime         @updatedAt
 
   // Relations
-  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user            User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
   // managers              Manager[]
   // employees             Employee[]
   // viewers               Viewer[]
@@ -58,7 +58,7 @@ model Client {
 
 model Employee {
   id          String   @id @default(uuid())
-  userId      String   @unique
+  userId      String?  @unique
   // clientId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -67,7 +67,7 @@ model Employee {
   skills      String[]
 
   // Relations
-  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user             User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
   // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   projectEmployees ProjectEmployee[]
   submitted        Submitted[]
@@ -91,8 +91,8 @@ model Payment {
   id            String   @id @default(uuid())
   amount        Float
   transactionId String   @unique
-  userId        String
-  user          User     @relation(fields: [userId], references: [id])
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -101,7 +101,7 @@ model Payment {
 
 model Manager {
   id          String   @id @default(uuid())
-  userId      String   @unique
+  userId      String?  @unique
   // clientId    String
   skills      String[]
   createdAt   DateTime @default(now())
@@ -110,7 +110,7 @@ model Manager {
   joinedDate  String
 
   // Relations
-  user                       User                        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                       User?                       @relation(fields: [userId], references: [id], onDelete: SetNull)
   // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   projects                   Project[]
   requestsToAddProjectMember RequestToAddProjectMember[]
@@ -355,8 +355,8 @@ model Submitted {
   information      String
   submission       String
   status           SubmittedStatus   @default(PENDING)
-  employee         Employee          @relation(fields: [employeeId], references: [id])
-  employeeId       String
+  employee         Employee?         @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  employeeId       String?
   project          Project           @relation(fields: [projectId], references: [id])
   projectId        String
   sheetId          String
@@ -367,7 +367,7 @@ model Submitted {
 
 model SuperAdmin {
   id             String   @id @default(uuid())
-  userId         String   @unique
+  userId         String?  @unique
   clientLogo     String?
   favicon        String?
   primaryColor   String?
@@ -376,7 +376,7 @@ model SuperAdmin {
   updatedAt      DateTime @updatedAt
 
   // Relations
-  user                             User                              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                             User?                             @relation(fields: [userId], references: [id], onDelete: SetNull)
   notificationPermissionSuperAdmin NotificationPermissionSuperAdmin?
 
   @@map("super_admins")
@@ -384,7 +384,7 @@ model SuperAdmin {
 
 model Supporter {
   id            String        @id @default(uuid())
-  userId        String        @unique
+  userId        String?       @unique
   supporterRole SupporterRole
   skills        String[]
   workload      Int? // Max number 4
@@ -393,7 +393,7 @@ model Supporter {
   updatedAt     DateTime      @updatedAt
 
   // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@map("supporters")
 }
@@ -527,13 +527,13 @@ model RequestToAddProjectMember {
 
 model Viewer {
   id        String   @id @default(uuid())
-  userId    String   @unique
+  userId    String?  @unique
   // clientId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
   // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
   @@map("viewers")

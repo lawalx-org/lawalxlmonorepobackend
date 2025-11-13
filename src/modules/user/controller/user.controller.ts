@@ -101,7 +101,7 @@ export class UserController {
     if (file) {
       updateUserDto.profileImage = file.path;
     }
-
+    
     const result = await this.userService.update(userId, updateUserDto);
     return { message: 'User updated successfully', data: result };
   }

@@ -71,6 +71,11 @@ export class ViewerService {
     }
 
     const { user } = viewer;
+    if (!user) {
+      throw new NotFoundException(
+        `User associated with viewer ID "${id}" not found`,
+      );
+    }
     const { password, ...userWithoutPassword } = user;
 
     return {
@@ -93,6 +98,11 @@ export class ViewerService {
 
     paginatedViewers.data = paginatedViewers.data.map((viewer: any) => {
       const { user } = viewer;
+      if (!user) {
+        throw new NotFoundException(
+          `User not found for viewer with id ${viewer.id}`,
+        );
+      }
       const { password, ...userWithoutPassword } = user;
       return {
         ...viewer,

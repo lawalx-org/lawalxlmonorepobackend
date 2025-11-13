@@ -186,10 +186,22 @@ export class ProjectService {
     });
 
     try {
+      if (!project.manager || !project.manager.user) {
+        throw new NotFoundException(
+          'Manager or associated user not found for the project.',
+        );
+      }
       //send notification to manager and employees
       const receiverIds = [
         project.manager.user.id,
-        ...(project.projectEmployees?.map((e) => e.employee.user.id) || []),
+        ...(project.projectEmployees?.map((e) => {
+          if (!e.employee || !e.employee.user) {
+            throw new NotFoundException(
+              'Employee or associated user not found for project employee record.',
+            );
+          }
+          return e.employee.user.id;
+        }) || []),
       ];
 
       const uniqueReceivers = [...new Set(receiverIds)];

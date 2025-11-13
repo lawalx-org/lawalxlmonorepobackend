@@ -5946,7 +5946,7 @@ export namespace Prisma {
 
   export type ClientGroupByOutputType = {
     id: string
-    userId: string
+    userId: string | null
     email: string
     contactPersonName: string | null
     clientLogo: string | null
@@ -6015,7 +6015,7 @@ export namespace Prisma {
     trialPeriod?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Client$userArgs<ExtArgs>
     referredPersons?: boolean | Client$referredPersonsArgs<ExtArgs>
     tickets?: boolean | Client$ticketsArgs<ExtArgs>
     programs?: boolean | Client$programsArgs<ExtArgs>
@@ -6048,7 +6048,7 @@ export namespace Prisma {
     trialPeriod?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Client$userArgs<ExtArgs>
   }, ExtArgs["result"]["client"]>
 
   export type ClientSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6076,7 +6076,7 @@ export namespace Prisma {
     trialPeriod?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Client$userArgs<ExtArgs>
   }, ExtArgs["result"]["client"]>
 
   export type ClientSelectScalar = {
@@ -6108,7 +6108,7 @@ export namespace Prisma {
 
   export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "email" | "contactPersonName" | "clientLogo" | "favicon" | "primaryColor" | "secondaryColor" | "footerText" | "supportMail" | "subdomain" | "serverLocation" | "category" | "onboarding" | "welcomeDashboard" | "chartList" | "storage" | "threshold" | "archiveAfter" | "userWarning" | "adminNote" | "trialPeriod" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
   export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Client$userArgs<ExtArgs>
     referredPersons?: boolean | Client$referredPersonsArgs<ExtArgs>
     tickets?: boolean | Client$ticketsArgs<ExtArgs>
     programs?: boolean | Client$programsArgs<ExtArgs>
@@ -6116,16 +6116,16 @@ export namespace Prisma {
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Client$userArgs<ExtArgs>
   }
   export type ClientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Client$userArgs<ExtArgs>
   }
 
   export type $ClientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Client"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
       referredPersons: Prisma.$ReferredPersonPayload<ExtArgs>[]
       tickets: Prisma.$TicketPayload<ExtArgs>[]
       programs: Prisma.$ProgramPayload<ExtArgs>[]
@@ -6133,7 +6133,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      userId: string | null
       email: string
       contactPersonName: string | null
       clientLogo: string | null
@@ -6550,7 +6550,7 @@ export namespace Prisma {
    */
   export interface Prisma__ClientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends Client$userArgs<ExtArgs> = {}>(args?: Subset<T, Client$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     referredPersons<T extends Client$referredPersonsArgs<ExtArgs> = {}>(args?: Subset<T, Client$referredPersonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReferredPersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tickets<T extends Client$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, Client$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     programs<T extends Client$programsArgs<ExtArgs> = {}>(args?: Subset<T, Client$programsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7004,6 +7004,25 @@ export namespace Prisma {
   }
 
   /**
+   * Client.user
+   */
+  export type Client$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Client.referredPersons
    */
   export type Client$referredPersonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7256,7 +7275,7 @@ export namespace Prisma {
 
   export type EmployeeGroupByOutputType = {
     id: string
-    userId: string
+    userId: string | null
     createdAt: Date
     updatedAt: Date
     description: string
@@ -7289,7 +7308,7 @@ export namespace Prisma {
     description?: boolean
     joinedDate?: boolean
     skills?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Employee$userArgs<ExtArgs>
     projectEmployees?: boolean | Employee$projectEmployeesArgs<ExtArgs>
     submitted?: boolean | Employee$submittedArgs<ExtArgs>
     _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
@@ -7303,7 +7322,7 @@ export namespace Prisma {
     description?: boolean
     joinedDate?: boolean
     skills?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Employee$userArgs<ExtArgs>
   }, ExtArgs["result"]["employee"]>
 
   export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7314,7 +7333,7 @@ export namespace Prisma {
     description?: boolean
     joinedDate?: boolean
     skills?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Employee$userArgs<ExtArgs>
   }, ExtArgs["result"]["employee"]>
 
   export type EmployeeSelectScalar = {
@@ -7329,28 +7348,28 @@ export namespace Prisma {
 
   export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt" | "description" | "joinedDate" | "skills", ExtArgs["result"]["employee"]>
   export type EmployeeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Employee$userArgs<ExtArgs>
     projectEmployees?: boolean | Employee$projectEmployeesArgs<ExtArgs>
     submitted?: boolean | Employee$submittedArgs<ExtArgs>
     _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EmployeeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Employee$userArgs<ExtArgs>
   }
   export type EmployeeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Employee$userArgs<ExtArgs>
   }
 
   export type $EmployeePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Employee"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
       projectEmployees: Prisma.$ProjectEmployeePayload<ExtArgs>[]
       submitted: Prisma.$SubmittedPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      userId: string | null
       createdAt: Date
       updatedAt: Date
       description: string
@@ -7750,7 +7769,7 @@ export namespace Prisma {
    */
   export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends Employee$userArgs<ExtArgs> = {}>(args?: Subset<T, Employee$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     projectEmployees<T extends Employee$projectEmployeesArgs<ExtArgs> = {}>(args?: Subset<T, Employee$projectEmployeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectEmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     submitted<T extends Employee$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Employee$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -8182,6 +8201,25 @@ export namespace Prisma {
      * Limit how many Employees to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Employee.user
+   */
+  export type Employee$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -9497,7 +9535,7 @@ export namespace Prisma {
     id: string
     amount: number
     transactionId: string
-    userId: string
+    userId: string | null
     createdAt: Date
     updatedAt: Date
     _count: PaymentCountAggregateOutputType | null
@@ -9528,7 +9566,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Payment$userArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9538,7 +9576,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Payment$userArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9548,7 +9586,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Payment$userArgs<ExtArgs>
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectScalar = {
@@ -9562,25 +9600,25 @@ export namespace Prisma {
 
   export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "transactionId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Payment$userArgs<ExtArgs>
   }
   export type PaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Payment$userArgs<ExtArgs>
   }
   export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Payment$userArgs<ExtArgs>
   }
 
   export type $PaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Payment"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       amount: number
       transactionId: string
-      userId: string
+      userId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["payment"]>
@@ -9977,7 +10015,7 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends Payment$userArgs<ExtArgs> = {}>(args?: Subset<T, Payment$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10409,6 +10447,25 @@ export namespace Prisma {
   }
 
   /**
+   * Payment.user
+   */
+  export type Payment$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Payment without action
    */
   export type PaymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10570,7 +10627,7 @@ export namespace Prisma {
 
   export type ManagerGroupByOutputType = {
     id: string
-    userId: string
+    userId: string | null
     skills: string[]
     createdAt: Date
     updatedAt: Date
@@ -10603,7 +10660,7 @@ export namespace Prisma {
     updatedAt?: boolean
     description?: boolean
     joinedDate?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Manager$userArgs<ExtArgs>
     projects?: boolean | Manager$projectsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Manager$requestsToAddProjectMemberArgs<ExtArgs>
     _count?: boolean | ManagerCountOutputTypeDefaultArgs<ExtArgs>
@@ -10617,7 +10674,7 @@ export namespace Prisma {
     updatedAt?: boolean
     description?: boolean
     joinedDate?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Manager$userArgs<ExtArgs>
   }, ExtArgs["result"]["manager"]>
 
   export type ManagerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10628,7 +10685,7 @@ export namespace Prisma {
     updatedAt?: boolean
     description?: boolean
     joinedDate?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Manager$userArgs<ExtArgs>
   }, ExtArgs["result"]["manager"]>
 
   export type ManagerSelectScalar = {
@@ -10643,28 +10700,28 @@ export namespace Prisma {
 
   export type ManagerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "skills" | "createdAt" | "updatedAt" | "description" | "joinedDate", ExtArgs["result"]["manager"]>
   export type ManagerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Manager$userArgs<ExtArgs>
     projects?: boolean | Manager$projectsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Manager$requestsToAddProjectMemberArgs<ExtArgs>
     _count?: boolean | ManagerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ManagerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Manager$userArgs<ExtArgs>
   }
   export type ManagerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Manager$userArgs<ExtArgs>
   }
 
   export type $ManagerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Manager"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
       projects: Prisma.$ProjectPayload<ExtArgs>[]
       requestsToAddProjectMember: Prisma.$RequestToAddProjectMemberPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      userId: string | null
       skills: string[]
       createdAt: Date
       updatedAt: Date
@@ -11064,7 +11121,7 @@ export namespace Prisma {
    */
   export interface Prisma__ManagerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends Manager$userArgs<ExtArgs> = {}>(args?: Subset<T, Manager$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     projects<T extends Manager$projectsArgs<ExtArgs> = {}>(args?: Subset<T, Manager$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     requestsToAddProjectMember<T extends Manager$requestsToAddProjectMemberArgs<ExtArgs> = {}>(args?: Subset<T, Manager$requestsToAddProjectMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestToAddProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -11496,6 +11553,25 @@ export namespace Prisma {
      * Limit how many Managers to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Manager.user
+   */
+  export type Manager$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -26283,7 +26359,7 @@ export namespace Prisma {
     information: string
     submission: string
     status: $Enums.SubmittedStatus
-    employeeId: string
+    employeeId: string | null
     projectId: string
     sheetId: string
     createdAt: Date
@@ -26317,7 +26393,7 @@ export namespace Prisma {
     sheetId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    employee?: boolean | Submitted$employeeArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
     submissionReturn?: boolean | Submitted$submissionReturnArgs<ExtArgs>
   }, ExtArgs["result"]["submitted"]>
@@ -26332,7 +26408,7 @@ export namespace Prisma {
     sheetId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    employee?: boolean | Submitted$employeeArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["submitted"]>
 
@@ -26346,7 +26422,7 @@ export namespace Prisma {
     sheetId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    employee?: boolean | Submitted$employeeArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["submitted"]>
 
@@ -26364,23 +26440,23 @@ export namespace Prisma {
 
   export type SubmittedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "information" | "submission" | "status" | "employeeId" | "projectId" | "sheetId" | "createdAt" | "updatedAt", ExtArgs["result"]["submitted"]>
   export type SubmittedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    employee?: boolean | Submitted$employeeArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
     submissionReturn?: boolean | Submitted$submissionReturnArgs<ExtArgs>
   }
   export type SubmittedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    employee?: boolean | Submitted$employeeArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
   }
   export type SubmittedIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    employee?: boolean | EmployeeDefaultArgs<ExtArgs>
+    employee?: boolean | Submitted$employeeArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
   }
 
   export type $SubmittedPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Submitted"
     objects: {
-      employee: Prisma.$EmployeePayload<ExtArgs>
+      employee: Prisma.$EmployeePayload<ExtArgs> | null
       project: Prisma.$ProjectPayload<ExtArgs>
       submissionReturn: Prisma.$SubmissionReturnPayload<ExtArgs> | null
     }
@@ -26389,7 +26465,7 @@ export namespace Prisma {
       information: string
       submission: string
       status: $Enums.SubmittedStatus
-      employeeId: string
+      employeeId: string | null
       projectId: string
       sheetId: string
       createdAt: Date
@@ -26788,7 +26864,7 @@ export namespace Prisma {
    */
   export interface Prisma__SubmittedClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    employee<T extends EmployeeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmployeeDefaultArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    employee<T extends Submitted$employeeArgs<ExtArgs> = {}>(args?: Subset<T, Submitted$employeeArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     submissionReturn<T extends Submitted$submissionReturnArgs<ExtArgs> = {}>(args?: Subset<T, Submitted$submissionReturnArgs<ExtArgs>>): Prisma__SubmissionReturnClient<$Result.GetResult<Prisma.$SubmissionReturnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -27225,6 +27301,25 @@ export namespace Prisma {
   }
 
   /**
+   * Submitted.employee
+   */
+  export type Submitted$employeeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Employee
+     */
+    select?: EmployeeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Employee
+     */
+    omit?: EmployeeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EmployeeInclude<ExtArgs> | null
+    where?: EmployeeWhereInput
+  }
+
+  /**
    * Submitted.submissionReturn
    */
   export type Submitted$submissionReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -27415,7 +27510,7 @@ export namespace Prisma {
 
   export type SuperAdminGroupByOutputType = {
     id: string
-    userId: string
+    userId: string | null
     clientLogo: string | null
     favicon: string | null
     primaryColor: string | null
@@ -27450,7 +27545,7 @@ export namespace Prisma {
     secondaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | SuperAdmin$userArgs<ExtArgs>
     notificationPermissionSuperAdmin?: boolean | SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs>
   }, ExtArgs["result"]["superAdmin"]>
 
@@ -27463,7 +27558,7 @@ export namespace Prisma {
     secondaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | SuperAdmin$userArgs<ExtArgs>
   }, ExtArgs["result"]["superAdmin"]>
 
   export type SuperAdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -27475,7 +27570,7 @@ export namespace Prisma {
     secondaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | SuperAdmin$userArgs<ExtArgs>
   }, ExtArgs["result"]["superAdmin"]>
 
   export type SuperAdminSelectScalar = {
@@ -27491,25 +27586,25 @@ export namespace Prisma {
 
   export type SuperAdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "clientLogo" | "favicon" | "primaryColor" | "secondaryColor" | "createdAt" | "updatedAt", ExtArgs["result"]["superAdmin"]>
   export type SuperAdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | SuperAdmin$userArgs<ExtArgs>
     notificationPermissionSuperAdmin?: boolean | SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs>
   }
   export type SuperAdminIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | SuperAdmin$userArgs<ExtArgs>
   }
   export type SuperAdminIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | SuperAdmin$userArgs<ExtArgs>
   }
 
   export type $SuperAdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SuperAdmin"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
       notificationPermissionSuperAdmin: Prisma.$NotificationPermissionSuperAdminPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      userId: string | null
       clientLogo: string | null
       favicon: string | null
       primaryColor: string | null
@@ -27910,7 +28005,7 @@ export namespace Prisma {
    */
   export interface Prisma__SuperAdminClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends SuperAdmin$userArgs<ExtArgs> = {}>(args?: Subset<T, SuperAdmin$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     notificationPermissionSuperAdmin<T extends SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs> = {}>(args?: Subset<T, SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs>>): Prisma__NotificationPermissionSuperAdminClient<$Result.GetResult<Prisma.$NotificationPermissionSuperAdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -28345,6 +28440,25 @@ export namespace Prisma {
   }
 
   /**
+   * SuperAdmin.user
+   */
+  export type SuperAdmin$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * SuperAdmin.notificationPermissionSuperAdmin
    */
   export type SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -28559,7 +28673,7 @@ export namespace Prisma {
 
   export type SupporterGroupByOutputType = {
     id: string
-    userId: string
+    userId: string | null
     supporterRole: $Enums.SupporterRole
     skills: string[]
     workload: number | null
@@ -28596,7 +28710,7 @@ export namespace Prisma {
     workItems?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Supporter$userArgs<ExtArgs>
   }, ExtArgs["result"]["supporter"]>
 
   export type SupporterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -28608,7 +28722,7 @@ export namespace Prisma {
     workItems?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Supporter$userArgs<ExtArgs>
   }, ExtArgs["result"]["supporter"]>
 
   export type SupporterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -28620,7 +28734,7 @@ export namespace Prisma {
     workItems?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Supporter$userArgs<ExtArgs>
   }, ExtArgs["result"]["supporter"]>
 
   export type SupporterSelectScalar = {
@@ -28636,23 +28750,23 @@ export namespace Prisma {
 
   export type SupporterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "supporterRole" | "skills" | "workload" | "workItems" | "createdAt" | "updatedAt", ExtArgs["result"]["supporter"]>
   export type SupporterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Supporter$userArgs<ExtArgs>
   }
   export type SupporterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Supporter$userArgs<ExtArgs>
   }
   export type SupporterIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Supporter$userArgs<ExtArgs>
   }
 
   export type $SupporterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Supporter"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      userId: string | null
       supporterRole: $Enums.SupporterRole
       skills: string[]
       workload: number | null
@@ -29053,7 +29167,7 @@ export namespace Prisma {
    */
   export interface Prisma__SupporterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends Supporter$userArgs<ExtArgs> = {}>(args?: Subset<T, Supporter$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -29484,6 +29598,25 @@ export namespace Prisma {
      * Limit how many Supporters to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Supporter.user
+   */
+  export type Supporter$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -36741,7 +36874,7 @@ export namespace Prisma {
 
   export type ViewerGroupByOutputType = {
     id: string
-    userId: string
+    userId: string | null
     createdAt: Date
     updatedAt: Date
     _count: ViewerCountAggregateOutputType | null
@@ -36768,7 +36901,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Viewer$userArgs<ExtArgs>
   }, ExtArgs["result"]["viewer"]>
 
   export type ViewerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -36776,7 +36909,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Viewer$userArgs<ExtArgs>
   }, ExtArgs["result"]["viewer"]>
 
   export type ViewerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -36784,7 +36917,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Viewer$userArgs<ExtArgs>
   }, ExtArgs["result"]["viewer"]>
 
   export type ViewerSelectScalar = {
@@ -36796,23 +36929,23 @@ export namespace Prisma {
 
   export type ViewerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["viewer"]>
   export type ViewerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Viewer$userArgs<ExtArgs>
   }
   export type ViewerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Viewer$userArgs<ExtArgs>
   }
   export type ViewerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | Viewer$userArgs<ExtArgs>
   }
 
   export type $ViewerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Viewer"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      userId: string
+      userId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["viewer"]>
@@ -37209,7 +37342,7 @@ export namespace Prisma {
    */
   export interface Prisma__ViewerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends Viewer$userArgs<ExtArgs> = {}>(args?: Subset<T, Viewer$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -37636,6 +37769,25 @@ export namespace Prisma {
      * Limit how many Viewers to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Viewer.user
+   */
+  export type Viewer$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -44171,7 +44323,7 @@ export namespace Prisma {
     OR?: ClientWhereInput[]
     NOT?: ClientWhereInput | ClientWhereInput[]
     id?: StringFilter<"Client"> | string
-    userId?: StringFilter<"Client"> | string
+    userId?: StringNullableFilter<"Client"> | string | null
     email?: StringFilter<"Client"> | string
     contactPersonName?: StringNullableFilter<"Client"> | string | null
     clientLogo?: StringNullableFilter<"Client"> | string | null
@@ -44194,7 +44346,7 @@ export namespace Prisma {
     trialPeriod?: IntNullableFilter<"Client"> | number | null
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     referredPersons?: ReferredPersonListRelationFilter
     tickets?: TicketListRelationFilter
     programs?: ProgramListRelationFilter
@@ -44203,7 +44355,7 @@ export namespace Prisma {
 
   export type ClientOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     email?: SortOrder
     contactPersonName?: SortOrderInput | SortOrder
     clientLogo?: SortOrderInput | SortOrder
@@ -44261,7 +44413,7 @@ export namespace Prisma {
     trialPeriod?: IntNullableFilter<"Client"> | number | null
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     referredPersons?: ReferredPersonListRelationFilter
     tickets?: TicketListRelationFilter
     programs?: ProgramListRelationFilter
@@ -44270,7 +44422,7 @@ export namespace Prisma {
 
   export type ClientOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     email?: SortOrder
     contactPersonName?: SortOrderInput | SortOrder
     clientLogo?: SortOrderInput | SortOrder
@@ -44305,7 +44457,7 @@ export namespace Prisma {
     OR?: ClientScalarWhereWithAggregatesInput[]
     NOT?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Client"> | string
-    userId?: StringWithAggregatesFilter<"Client"> | string
+    userId?: StringNullableWithAggregatesFilter<"Client"> | string | null
     email?: StringWithAggregatesFilter<"Client"> | string
     contactPersonName?: StringNullableWithAggregatesFilter<"Client"> | string | null
     clientLogo?: StringNullableWithAggregatesFilter<"Client"> | string | null
@@ -44335,20 +44487,20 @@ export namespace Prisma {
     OR?: EmployeeWhereInput[]
     NOT?: EmployeeWhereInput | EmployeeWhereInput[]
     id?: StringFilter<"Employee"> | string
-    userId?: StringFilter<"Employee"> | string
+    userId?: StringNullableFilter<"Employee"> | string | null
     createdAt?: DateTimeFilter<"Employee"> | Date | string
     updatedAt?: DateTimeFilter<"Employee"> | Date | string
     description?: StringFilter<"Employee"> | string
     joinedDate?: StringFilter<"Employee"> | string
     skills?: StringNullableListFilter<"Employee">
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     projectEmployees?: ProjectEmployeeListRelationFilter
     submitted?: SubmittedListRelationFilter
   }
 
   export type EmployeeOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     description?: SortOrder
@@ -44370,14 +44522,14 @@ export namespace Prisma {
     description?: StringFilter<"Employee"> | string
     joinedDate?: StringFilter<"Employee"> | string
     skills?: StringNullableListFilter<"Employee">
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     projectEmployees?: ProjectEmployeeListRelationFilter
     submitted?: SubmittedListRelationFilter
   }, "id" | "userId">
 
   export type EmployeeOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     description?: SortOrder
@@ -44393,7 +44545,7 @@ export namespace Prisma {
     OR?: EmployeeScalarWhereWithAggregatesInput[]
     NOT?: EmployeeScalarWhereWithAggregatesInput | EmployeeScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Employee"> | string
-    userId?: StringWithAggregatesFilter<"Employee"> | string
+    userId?: StringNullableWithAggregatesFilter<"Employee"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
     description?: StringWithAggregatesFilter<"Employee"> | string
@@ -44468,17 +44620,17 @@ export namespace Prisma {
     id?: StringFilter<"Payment"> | string
     amount?: FloatFilter<"Payment"> | number
     transactionId?: StringFilter<"Payment"> | string
-    userId?: StringFilter<"Payment"> | string
+    userId?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type PaymentOrderByWithRelationInput = {
     id?: SortOrder
     amount?: SortOrder
     transactionId?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -44491,17 +44643,17 @@ export namespace Prisma {
     OR?: PaymentWhereInput[]
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     amount?: FloatFilter<"Payment"> | number
-    userId?: StringFilter<"Payment"> | string
+    userId?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "transactionId">
 
   export type PaymentOrderByWithAggregationInput = {
     id?: SortOrder
     amount?: SortOrder
     transactionId?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PaymentCountOrderByAggregateInput
@@ -44518,7 +44670,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Payment"> | string
     amount?: FloatWithAggregatesFilter<"Payment"> | number
     transactionId?: StringWithAggregatesFilter<"Payment"> | string
-    userId?: StringWithAggregatesFilter<"Payment"> | string
+    userId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
   }
@@ -44528,20 +44680,20 @@ export namespace Prisma {
     OR?: ManagerWhereInput[]
     NOT?: ManagerWhereInput | ManagerWhereInput[]
     id?: StringFilter<"Manager"> | string
-    userId?: StringFilter<"Manager"> | string
+    userId?: StringNullableFilter<"Manager"> | string | null
     skills?: StringNullableListFilter<"Manager">
     createdAt?: DateTimeFilter<"Manager"> | Date | string
     updatedAt?: DateTimeFilter<"Manager"> | Date | string
     description?: StringFilter<"Manager"> | string
     joinedDate?: StringFilter<"Manager"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     projects?: ProjectListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
   }
 
   export type ManagerOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     skills?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -44563,14 +44715,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Manager"> | Date | string
     description?: StringFilter<"Manager"> | string
     joinedDate?: StringFilter<"Manager"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     projects?: ProjectListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
   }, "id" | "userId">
 
   export type ManagerOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     skills?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -44586,7 +44738,7 @@ export namespace Prisma {
     OR?: ManagerScalarWhereWithAggregatesInput[]
     NOT?: ManagerScalarWhereWithAggregatesInput | ManagerScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Manager"> | string
-    userId?: StringWithAggregatesFilter<"Manager"> | string
+    userId?: StringNullableWithAggregatesFilter<"Manager"> | string | null
     skills?: StringNullableListFilter<"Manager">
     createdAt?: DateTimeWithAggregatesFilter<"Manager"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Manager"> | Date | string
@@ -45529,12 +45681,12 @@ export namespace Prisma {
     information?: StringFilter<"Submitted"> | string
     submission?: StringFilter<"Submitted"> | string
     status?: EnumSubmittedStatusFilter<"Submitted"> | $Enums.SubmittedStatus
-    employeeId?: StringFilter<"Submitted"> | string
+    employeeId?: StringNullableFilter<"Submitted"> | string | null
     projectId?: StringFilter<"Submitted"> | string
     sheetId?: StringFilter<"Submitted"> | string
     createdAt?: DateTimeFilter<"Submitted"> | Date | string
     updatedAt?: DateTimeFilter<"Submitted"> | Date | string
-    employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
+    employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
     submissionReturn?: XOR<SubmissionReturnNullableScalarRelationFilter, SubmissionReturnWhereInput> | null
   }
@@ -45544,7 +45696,7 @@ export namespace Prisma {
     information?: SortOrder
     submission?: SortOrder
     status?: SortOrder
-    employeeId?: SortOrder
+    employeeId?: SortOrderInput | SortOrder
     projectId?: SortOrder
     sheetId?: SortOrder
     createdAt?: SortOrder
@@ -45562,12 +45714,12 @@ export namespace Prisma {
     information?: StringFilter<"Submitted"> | string
     submission?: StringFilter<"Submitted"> | string
     status?: EnumSubmittedStatusFilter<"Submitted"> | $Enums.SubmittedStatus
-    employeeId?: StringFilter<"Submitted"> | string
+    employeeId?: StringNullableFilter<"Submitted"> | string | null
     projectId?: StringFilter<"Submitted"> | string
     sheetId?: StringFilter<"Submitted"> | string
     createdAt?: DateTimeFilter<"Submitted"> | Date | string
     updatedAt?: DateTimeFilter<"Submitted"> | Date | string
-    employee?: XOR<EmployeeScalarRelationFilter, EmployeeWhereInput>
+    employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
     submissionReturn?: XOR<SubmissionReturnNullableScalarRelationFilter, SubmissionReturnWhereInput> | null
   }, "id">
@@ -45577,7 +45729,7 @@ export namespace Prisma {
     information?: SortOrder
     submission?: SortOrder
     status?: SortOrder
-    employeeId?: SortOrder
+    employeeId?: SortOrderInput | SortOrder
     projectId?: SortOrder
     sheetId?: SortOrder
     createdAt?: SortOrder
@@ -45595,7 +45747,7 @@ export namespace Prisma {
     information?: StringWithAggregatesFilter<"Submitted"> | string
     submission?: StringWithAggregatesFilter<"Submitted"> | string
     status?: EnumSubmittedStatusWithAggregatesFilter<"Submitted"> | $Enums.SubmittedStatus
-    employeeId?: StringWithAggregatesFilter<"Submitted"> | string
+    employeeId?: StringNullableWithAggregatesFilter<"Submitted"> | string | null
     projectId?: StringWithAggregatesFilter<"Submitted"> | string
     sheetId?: StringWithAggregatesFilter<"Submitted"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Submitted"> | Date | string
@@ -45607,20 +45759,20 @@ export namespace Prisma {
     OR?: SuperAdminWhereInput[]
     NOT?: SuperAdminWhereInput | SuperAdminWhereInput[]
     id?: StringFilter<"SuperAdmin"> | string
-    userId?: StringFilter<"SuperAdmin"> | string
+    userId?: StringNullableFilter<"SuperAdmin"> | string | null
     clientLogo?: StringNullableFilter<"SuperAdmin"> | string | null
     favicon?: StringNullableFilter<"SuperAdmin"> | string | null
     primaryColor?: StringNullableFilter<"SuperAdmin"> | string | null
     secondaryColor?: StringNullableFilter<"SuperAdmin"> | string | null
     createdAt?: DateTimeFilter<"SuperAdmin"> | Date | string
     updatedAt?: DateTimeFilter<"SuperAdmin"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     notificationPermissionSuperAdmin?: XOR<NotificationPermissionSuperAdminNullableScalarRelationFilter, NotificationPermissionSuperAdminWhereInput> | null
   }
 
   export type SuperAdminOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     clientLogo?: SortOrderInput | SortOrder
     favicon?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
@@ -45643,13 +45795,13 @@ export namespace Prisma {
     secondaryColor?: StringNullableFilter<"SuperAdmin"> | string | null
     createdAt?: DateTimeFilter<"SuperAdmin"> | Date | string
     updatedAt?: DateTimeFilter<"SuperAdmin"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     notificationPermissionSuperAdmin?: XOR<NotificationPermissionSuperAdminNullableScalarRelationFilter, NotificationPermissionSuperAdminWhereInput> | null
   }, "id" | "userId">
 
   export type SuperAdminOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     clientLogo?: SortOrderInput | SortOrder
     favicon?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
@@ -45666,7 +45818,7 @@ export namespace Prisma {
     OR?: SuperAdminScalarWhereWithAggregatesInput[]
     NOT?: SuperAdminScalarWhereWithAggregatesInput | SuperAdminScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"SuperAdmin"> | string
-    userId?: StringWithAggregatesFilter<"SuperAdmin"> | string
+    userId?: StringNullableWithAggregatesFilter<"SuperAdmin"> | string | null
     clientLogo?: StringNullableWithAggregatesFilter<"SuperAdmin"> | string | null
     favicon?: StringNullableWithAggregatesFilter<"SuperAdmin"> | string | null
     primaryColor?: StringNullableWithAggregatesFilter<"SuperAdmin"> | string | null
@@ -45680,19 +45832,19 @@ export namespace Prisma {
     OR?: SupporterWhereInput[]
     NOT?: SupporterWhereInput | SupporterWhereInput[]
     id?: StringFilter<"Supporter"> | string
-    userId?: StringFilter<"Supporter"> | string
+    userId?: StringNullableFilter<"Supporter"> | string | null
     supporterRole?: EnumSupporterRoleFilter<"Supporter"> | $Enums.SupporterRole
     skills?: StringNullableListFilter<"Supporter">
     workload?: IntNullableFilter<"Supporter"> | number | null
     workItems?: StringNullableListFilter<"Supporter">
     createdAt?: DateTimeFilter<"Supporter"> | Date | string
     updatedAt?: DateTimeFilter<"Supporter"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type SupporterOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     supporterRole?: SortOrder
     skills?: SortOrder
     workload?: SortOrderInput | SortOrder
@@ -45714,12 +45866,12 @@ export namespace Prisma {
     workItems?: StringNullableListFilter<"Supporter">
     createdAt?: DateTimeFilter<"Supporter"> | Date | string
     updatedAt?: DateTimeFilter<"Supporter"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "userId">
 
   export type SupporterOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     supporterRole?: SortOrder
     skills?: SortOrder
     workload?: SortOrderInput | SortOrder
@@ -45738,7 +45890,7 @@ export namespace Prisma {
     OR?: SupporterScalarWhereWithAggregatesInput[]
     NOT?: SupporterScalarWhereWithAggregatesInput | SupporterScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Supporter"> | string
-    userId?: StringWithAggregatesFilter<"Supporter"> | string
+    userId?: StringNullableWithAggregatesFilter<"Supporter"> | string | null
     supporterRole?: EnumSupporterRoleWithAggregatesFilter<"Supporter"> | $Enums.SupporterRole
     skills?: StringNullableListFilter<"Supporter">
     workload?: IntNullableWithAggregatesFilter<"Supporter"> | number | null
@@ -46266,15 +46418,15 @@ export namespace Prisma {
     OR?: ViewerWhereInput[]
     NOT?: ViewerWhereInput | ViewerWhereInput[]
     id?: StringFilter<"Viewer"> | string
-    userId?: StringFilter<"Viewer"> | string
+    userId?: StringNullableFilter<"Viewer"> | string | null
     createdAt?: DateTimeFilter<"Viewer"> | Date | string
     updatedAt?: DateTimeFilter<"Viewer"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type ViewerOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -46288,12 +46440,12 @@ export namespace Prisma {
     NOT?: ViewerWhereInput | ViewerWhereInput[]
     createdAt?: DateTimeFilter<"Viewer"> | Date | string
     updatedAt?: DateTimeFilter<"Viewer"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "userId">
 
   export type ViewerOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ViewerCountOrderByAggregateInput
@@ -46306,7 +46458,7 @@ export namespace Prisma {
     OR?: ViewerScalarWhereWithAggregatesInput[]
     NOT?: ViewerScalarWhereWithAggregatesInput | ViewerScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Viewer"> | string
-    userId?: StringWithAggregatesFilter<"Viewer"> | string
+    userId?: StringNullableWithAggregatesFilter<"Viewer"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Viewer"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Viewer"> | Date | string
   }
@@ -46773,7 +46925,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutClientInput
+    user?: UserCreateNestedOneWithoutClientInput
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
@@ -46782,7 +46934,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateInput = {
     id?: string
-    userId: string
+    userId?: string | null
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -46835,7 +46987,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
+    user?: UserUpdateOneWithoutClientNestedInput
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
@@ -46844,7 +46996,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46875,7 +47027,7 @@ export namespace Prisma {
 
   export type ClientCreateManyInput = {
     id?: string
-    userId: string
+    userId?: string | null
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -46928,7 +47080,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46960,14 +47112,14 @@ export namespace Prisma {
     description: string
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
-    user: UserCreateNestedOneWithoutEmployeeInput
+    user?: UserCreateNestedOneWithoutEmployeeInput
     projectEmployees?: ProjectEmployeeCreateNestedManyWithoutEmployeeInput
     submitted?: SubmittedCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeUncheckedCreateInput = {
     id?: string
-    userId: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     description: string
@@ -46984,14 +47136,14 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
-    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    user?: UserUpdateOneWithoutEmployeeNestedInput
     projectEmployees?: ProjectEmployeeUpdateManyWithoutEmployeeNestedInput
     submitted?: SubmittedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type EmployeeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
@@ -47003,7 +47155,7 @@ export namespace Prisma {
 
   export type EmployeeCreateManyInput = {
     id?: string
-    userId: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     description: string
@@ -47022,7 +47174,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
@@ -47098,14 +47250,14 @@ export namespace Prisma {
     transactionId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutPaymentsInput
+    user?: UserCreateNestedOneWithoutPaymentsInput
   }
 
   export type PaymentUncheckedCreateInput = {
     id?: string
     amount: number
     transactionId: string
-    userId: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47116,14 +47268,14 @@ export namespace Prisma {
     transactionId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutPaymentsNestedInput
+    user?: UserUpdateOneWithoutPaymentsNestedInput
   }
 
   export type PaymentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     transactionId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47132,7 +47284,7 @@ export namespace Prisma {
     id?: string
     amount: number
     transactionId: string
-    userId: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47149,7 +47301,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     transactionId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -47161,14 +47313,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     description: string
     joinedDate: string
-    user: UserCreateNestedOneWithoutManagerInput
+    user?: UserCreateNestedOneWithoutManagerInput
     projects?: ProjectCreateNestedManyWithoutManagerInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutManagerInput
   }
 
   export type ManagerUncheckedCreateInput = {
     id?: string
-    userId: string
+    userId?: string | null
     skills?: ManagerCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -47185,14 +47337,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutManagerNestedInput
+    user?: UserUpdateOneWithoutManagerNestedInput
     projects?: ProjectUpdateManyWithoutManagerNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutManagerNestedInput
   }
 
   export type ManagerUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ManagerUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47204,7 +47356,7 @@ export namespace Prisma {
 
   export type ManagerCreateManyInput = {
     id?: string
-    userId: string
+    userId?: string | null
     skills?: ManagerCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -47223,7 +47375,7 @@ export namespace Prisma {
 
   export type ManagerUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ManagerUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48231,7 +48383,7 @@ export namespace Prisma {
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    employee: EmployeeCreateNestedOneWithoutSubmittedInput
+    employee?: EmployeeCreateNestedOneWithoutSubmittedInput
     project: ProjectCreateNestedOneWithoutSubmittedInput
     submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
@@ -48241,7 +48393,7 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
-    employeeId: string
+    employeeId?: string | null
     projectId: string
     sheetId: string
     createdAt?: Date | string
@@ -48257,7 +48409,7 @@ export namespace Prisma {
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
+    employee?: EmployeeUpdateOneWithoutSubmittedNestedInput
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
     submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
@@ -48267,7 +48419,7 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
-    employeeId?: StringFieldUpdateOperationsInput | string
+    employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     projectId?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48280,7 +48432,7 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
-    employeeId: string
+    employeeId?: string | null
     projectId: string
     sheetId: string
     createdAt?: Date | string
@@ -48302,7 +48454,7 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
-    employeeId?: StringFieldUpdateOperationsInput | string
+    employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     projectId?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48317,13 +48469,13 @@ export namespace Prisma {
     secondaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutSuperAdminInput
+    user?: UserCreateNestedOneWithoutSuperAdminInput
     notificationPermissionSuperAdmin?: NotificationPermissionSuperAdminCreateNestedOneWithoutUserInput
   }
 
   export type SuperAdminUncheckedCreateInput = {
     id?: string
-    userId: string
+    userId?: string | null
     clientLogo?: string | null
     favicon?: string | null
     primaryColor?: string | null
@@ -48341,13 +48493,13 @@ export namespace Prisma {
     secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutSuperAdminNestedInput
+    user?: UserUpdateOneWithoutSuperAdminNestedInput
     notificationPermissionSuperAdmin?: NotificationPermissionSuperAdminUpdateOneWithoutUserNestedInput
   }
 
   export type SuperAdminUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
     favicon?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48359,7 +48511,7 @@ export namespace Prisma {
 
   export type SuperAdminCreateManyInput = {
     id?: string
-    userId: string
+    userId?: string | null
     clientLogo?: string | null
     favicon?: string | null
     primaryColor?: string | null
@@ -48380,7 +48532,7 @@ export namespace Prisma {
 
   export type SuperAdminUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
     favicon?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48397,12 +48549,12 @@ export namespace Prisma {
     workItems?: SupporterCreateworkItemsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutSupporterInput
+    user?: UserCreateNestedOneWithoutSupporterInput
   }
 
   export type SupporterUncheckedCreateInput = {
     id?: string
-    userId: string
+    userId?: string | null
     supporterRole: $Enums.SupporterRole
     skills?: SupporterCreateskillsInput | string[]
     workload?: number | null
@@ -48419,12 +48571,12 @@ export namespace Prisma {
     workItems?: SupporterUpdateworkItemsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutSupporterNestedInput
+    user?: UserUpdateOneWithoutSupporterNestedInput
   }
 
   export type SupporterUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     supporterRole?: EnumSupporterRoleFieldUpdateOperationsInput | $Enums.SupporterRole
     skills?: SupporterUpdateskillsInput | string[]
     workload?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48435,7 +48587,7 @@ export namespace Prisma {
 
   export type SupporterCreateManyInput = {
     id?: string
-    userId: string
+    userId?: string | null
     supporterRole: $Enums.SupporterRole
     skills?: SupporterCreateskillsInput | string[]
     workload?: number | null
@@ -48456,7 +48608,7 @@ export namespace Prisma {
 
   export type SupporterUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     supporterRole?: EnumSupporterRoleFieldUpdateOperationsInput | $Enums.SupporterRole
     skills?: SupporterUpdateskillsInput | string[]
     workload?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49048,12 +49200,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutViewerInput
+    user?: UserCreateNestedOneWithoutViewerInput
   }
 
   export type ViewerUncheckedCreateInput = {
     id?: string
-    userId: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49062,19 +49214,19 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutViewerNestedInput
+    user?: UserUpdateOneWithoutViewerNestedInput
   }
 
   export type ViewerUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ViewerCreateManyInput = {
     id?: string
-    userId: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49087,7 +49239,7 @@ export namespace Prisma {
 
   export type ViewerUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49701,6 +49853,11 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
   }
 
   export type ReferredPersonListRelationFilter = {
@@ -50676,6 +50833,11 @@ export namespace Prisma {
     not?: NestedEnumSubmittedStatusFilter<$PrismaModel> | $Enums.SubmittedStatus
   }
 
+  export type EmployeeNullableScalarRelationFilter = {
+    is?: EmployeeWhereInput | null
+    isNot?: EmployeeWhereInput | null
+  }
+
   export type SubmissionReturnNullableScalarRelationFilter = {
     is?: SubmissionReturnWhereInput | null
     isNot?: SubmissionReturnWhereInput | null
@@ -50993,11 +51155,6 @@ export namespace Prisma {
   export type ManagerNullableScalarRelationFilter = {
     is?: ManagerWhereInput | null
     isNot?: ManagerWhereInput | null
-  }
-
-  export type EmployeeNullableScalarRelationFilter = {
-    is?: EmployeeWhereInput | null
-    isNot?: EmployeeWhereInput | null
   }
 
   export type ViewerNullableScalarRelationFilter = {
@@ -51724,10 +51881,12 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UserUpdateOneRequiredWithoutClientNestedInput = {
+  export type UserUpdateOneWithoutClientNestedInput = {
     create?: XOR<UserCreateWithoutClientInput, UserUncheckedCreateWithoutClientInput>
     connectOrCreate?: UserCreateOrConnectWithoutClientInput
     upsert?: UserUpsertWithoutClientInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClientInput, UserUpdateWithoutClientInput>, UserUncheckedUpdateWithoutClientInput>
   }
@@ -51879,10 +52038,12 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type UserUpdateOneRequiredWithoutEmployeeNestedInput = {
+  export type UserUpdateOneWithoutEmployeeNestedInput = {
     create?: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
     connectOrCreate?: UserCreateOrConnectWithoutEmployeeInput
     upsert?: UserUpsertWithoutEmployeeInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEmployeeInput, UserUpdateWithoutEmployeeInput>, UserUncheckedUpdateWithoutEmployeeInput>
   }
@@ -51971,10 +52132,12 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
+  export type UserUpdateOneWithoutPaymentsNestedInput = {
     create?: XOR<UserCreateWithoutPaymentsInput, UserUncheckedCreateWithoutPaymentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPaymentsInput
     upsert?: UserUpsertWithoutPaymentsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPaymentsInput, UserUpdateWithoutPaymentsInput>, UserUncheckedUpdateWithoutPaymentsInput>
   }
@@ -52022,10 +52185,12 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type UserUpdateOneRequiredWithoutManagerNestedInput = {
+  export type UserUpdateOneWithoutManagerNestedInput = {
     create?: XOR<UserCreateWithoutManagerInput, UserUncheckedCreateWithoutManagerInput>
     connectOrCreate?: UserCreateOrConnectWithoutManagerInput
     upsert?: UserUpsertWithoutManagerInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutManagerInput, UserUpdateWithoutManagerInput>, UserUncheckedUpdateWithoutManagerInput>
   }
@@ -52782,10 +52947,12 @@ export namespace Prisma {
     set?: $Enums.SubmittedStatus
   }
 
-  export type EmployeeUpdateOneRequiredWithoutSubmittedNestedInput = {
+  export type EmployeeUpdateOneWithoutSubmittedNestedInput = {
     create?: XOR<EmployeeCreateWithoutSubmittedInput, EmployeeUncheckedCreateWithoutSubmittedInput>
     connectOrCreate?: EmployeeCreateOrConnectWithoutSubmittedInput
     upsert?: EmployeeUpsertWithoutSubmittedInput
+    disconnect?: EmployeeWhereInput | boolean
+    delete?: EmployeeWhereInput | boolean
     connect?: EmployeeWhereUniqueInput
     update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutSubmittedInput, EmployeeUpdateWithoutSubmittedInput>, EmployeeUncheckedUpdateWithoutSubmittedInput>
   }
@@ -52836,10 +53003,12 @@ export namespace Prisma {
     connect?: NotificationPermissionSuperAdminWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutSuperAdminNestedInput = {
+  export type UserUpdateOneWithoutSuperAdminNestedInput = {
     create?: XOR<UserCreateWithoutSuperAdminInput, UserUncheckedCreateWithoutSuperAdminInput>
     connectOrCreate?: UserCreateOrConnectWithoutSuperAdminInput
     upsert?: UserUpsertWithoutSuperAdminInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSuperAdminInput, UserUpdateWithoutSuperAdminInput>, UserUncheckedUpdateWithoutSuperAdminInput>
   }
@@ -52892,10 +53061,12 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type UserUpdateOneRequiredWithoutSupporterNestedInput = {
+  export type UserUpdateOneWithoutSupporterNestedInput = {
     create?: XOR<UserCreateWithoutSupporterInput, UserUncheckedCreateWithoutSupporterInput>
     connectOrCreate?: UserCreateOrConnectWithoutSupporterInput
     upsert?: UserUpsertWithoutSupporterInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSupporterInput, UserUpdateWithoutSupporterInput>, UserUncheckedUpdateWithoutSupporterInput>
   }
@@ -53551,10 +53722,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneRequiredWithoutViewerNestedInput = {
+  export type UserUpdateOneWithoutViewerNestedInput = {
     create?: XOR<UserCreateWithoutViewerInput, UserUncheckedCreateWithoutViewerInput>
     connectOrCreate?: UserCreateOrConnectWithoutViewerInput
     upsert?: UserUpsertWithoutViewerInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutViewerInput, UserUpdateWithoutViewerInput>, UserUncheckedUpdateWithoutViewerInput>
   }
@@ -55229,7 +55402,7 @@ export namespace Prisma {
     information?: StringFilter<"Submitted"> | string
     submission?: StringFilter<"Submitted"> | string
     status?: EnumSubmittedStatusFilter<"Submitted"> | $Enums.SubmittedStatus
-    employeeId?: StringFilter<"Submitted"> | string
+    employeeId?: StringNullableFilter<"Submitted"> | string | null
     projectId?: StringFilter<"Submitted"> | string
     sheetId?: StringFilter<"Submitted"> | string
     createdAt?: DateTimeFilter<"Submitted"> | Date | string
@@ -56806,12 +56979,12 @@ export namespace Prisma {
     secondaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutSuperAdminInput
+    user?: UserCreateNestedOneWithoutSuperAdminInput
   }
 
   export type SuperAdminUncheckedCreateWithoutNotificationPermissionSuperAdminInput = {
     id?: string
-    userId: string
+    userId?: string | null
     clientLogo?: string | null
     favicon?: string | null
     primaryColor?: string | null
@@ -56844,12 +57017,12 @@ export namespace Prisma {
     secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutSuperAdminNestedInput
+    user?: UserUpdateOneWithoutSuperAdminNestedInput
   }
 
   export type SuperAdminUncheckedUpdateWithoutNotificationPermissionSuperAdminInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
     favicon?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56882,7 +57055,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutClientInput
+    user?: UserCreateNestedOneWithoutClientInput
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     tags?: TagCreateNestedOneWithoutClientInput
@@ -56890,7 +57063,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutProgramsInput = {
     id?: string
-    userId: string
+    userId?: string | null
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -57024,7 +57197,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
+    user?: UserUpdateOneWithoutClientNestedInput
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     tags?: TagUpdateOneWithoutClientNestedInput
@@ -57032,7 +57205,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutProgramsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -57114,13 +57287,13 @@ export namespace Prisma {
     updatedAt?: Date | string
     description: string
     joinedDate: string
-    user: UserCreateNestedOneWithoutManagerInput
+    user?: UserCreateNestedOneWithoutManagerInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutManagerInput
   }
 
   export type ManagerUncheckedCreateWithoutProjectsInput = {
     id?: string
-    userId: string
+    userId?: string | null
     skills?: ManagerCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57286,7 +57459,7 @@ export namespace Prisma {
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    employee: EmployeeCreateNestedOneWithoutSubmittedInput
+    employee?: EmployeeCreateNestedOneWithoutSubmittedInput
     submissionReturn?: SubmissionReturnCreateNestedOneWithoutSubmittedInput
   }
 
@@ -57295,7 +57468,7 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
-    employeeId: string
+    employeeId?: string | null
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57433,13 +57606,13 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutManagerNestedInput
+    user?: UserUpdateOneWithoutManagerNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutManagerNestedInput
   }
 
   export type ManagerUncheckedUpdateWithoutProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ManagerUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57718,13 +57891,13 @@ export namespace Prisma {
     description: string
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
-    user: UserCreateNestedOneWithoutEmployeeInput
+    user?: UserCreateNestedOneWithoutEmployeeInput
     submitted?: SubmittedCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeUncheckedCreateWithoutProjectEmployeesInput = {
     id?: string
-    userId: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     description: string
@@ -57823,13 +57996,13 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
-    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    user?: UserUpdateOneWithoutEmployeeNestedInput
     submitted?: SubmittedUpdateManyWithoutEmployeeNestedInput
   }
 
   export type EmployeeUncheckedUpdateWithoutProjectEmployeesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
@@ -57974,7 +58147,7 @@ export namespace Prisma {
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    employee: EmployeeCreateNestedOneWithoutSubmittedInput
+    employee?: EmployeeCreateNestedOneWithoutSubmittedInput
     project: ProjectCreateNestedOneWithoutSubmittedInput
   }
 
@@ -57983,7 +58156,7 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
-    employeeId: string
+    employeeId?: string | null
     projectId: string
     sheetId: string
     createdAt?: Date | string
@@ -58014,7 +58187,7 @@ export namespace Prisma {
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
+    employee?: EmployeeUpdateOneWithoutSubmittedNestedInput
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
   }
 
@@ -58023,7 +58196,7 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
-    employeeId?: StringFieldUpdateOperationsInput | string
+    employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     projectId?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -58037,13 +58210,13 @@ export namespace Prisma {
     description: string
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
-    user: UserCreateNestedOneWithoutEmployeeInput
+    user?: UserCreateNestedOneWithoutEmployeeInput
     projectEmployees?: ProjectEmployeeCreateNestedManyWithoutEmployeeInput
   }
 
   export type EmployeeUncheckedCreateWithoutSubmittedInput = {
     id?: string
-    userId: string
+    userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     description: string
@@ -58151,13 +58324,13 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
-    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
+    user?: UserUpdateOneWithoutEmployeeNestedInput
     projectEmployees?: ProjectEmployeeUpdateManyWithoutEmployeeNestedInput
   }
 
   export type EmployeeUncheckedUpdateWithoutSubmittedInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
@@ -58746,7 +58919,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutClientInput
+    user?: UserCreateNestedOneWithoutClientInput
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
     tags?: TagCreateNestedOneWithoutClientInput
@@ -58754,7 +58927,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutTicketsInput = {
     id?: string
-    userId: string
+    userId?: string | null
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -58822,7 +58995,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
+    user?: UserUpdateOneWithoutClientNestedInput
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
     tags?: TagUpdateOneWithoutClientNestedInput
@@ -58830,7 +59003,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutTicketsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59711,7 +59884,7 @@ export namespace Prisma {
     id?: StringFilter<"Payment"> | string
     amount?: FloatFilter<"Payment"> | number
     transactionId?: StringFilter<"Payment"> | string
-    userId?: StringFilter<"Payment"> | string
+    userId?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
   }
@@ -59756,7 +59929,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutClientInput
+    user?: UserCreateNestedOneWithoutClientInput
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
@@ -59764,7 +59937,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutTagsInput = {
     id?: string
-    userId: string
+    userId?: string | null
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -59832,7 +60005,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
+    user?: UserUpdateOneWithoutClientNestedInput
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
@@ -59840,7 +60013,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59892,7 +60065,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutClientInput
+    user?: UserCreateNestedOneWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
     tags?: TagCreateNestedOneWithoutClientInput
@@ -59900,7 +60073,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutReferredPersonsInput = {
     id?: string
-    userId: string
+    userId?: string | null
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -59968,7 +60141,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
+    user?: UserUpdateOneWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
     tags?: TagUpdateOneWithoutClientNestedInput
@@ -59976,7 +60149,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutReferredPersonsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60072,13 +60245,13 @@ export namespace Prisma {
     updatedAt?: Date | string
     description: string
     joinedDate: string
-    user: UserCreateNestedOneWithoutManagerInput
+    user?: UserCreateNestedOneWithoutManagerInput
     projects?: ProjectCreateNestedManyWithoutManagerInput
   }
 
   export type ManagerUncheckedCreateWithoutRequestsToAddProjectMemberInput = {
     id?: string
-    userId: string
+    userId?: string | null
     skills?: ManagerCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60177,13 +60350,13 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutManagerNestedInput
+    user?: UserUpdateOneWithoutManagerNestedInput
     projects?: ProjectUpdateManyWithoutManagerNestedInput
   }
 
   export type ManagerUncheckedUpdateWithoutRequestsToAddProjectMemberInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ManagerUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61445,7 +61618,7 @@ export namespace Prisma {
     information: string
     submission: string
     status?: $Enums.SubmittedStatus
-    employeeId: string
+    employeeId?: string | null
     sheetId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -61621,7 +61794,7 @@ export namespace Prisma {
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    employee?: EmployeeUpdateOneRequiredWithoutSubmittedNestedInput
+    employee?: EmployeeUpdateOneWithoutSubmittedNestedInput
     submissionReturn?: SubmissionReturnUpdateOneWithoutSubmittedNestedInput
   }
 
@@ -61630,7 +61803,7 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
-    employeeId?: StringFieldUpdateOperationsInput | string
+    employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61642,7 +61815,7 @@ export namespace Prisma {
     information?: StringFieldUpdateOperationsInput | string
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
-    employeeId?: StringFieldUpdateOperationsInput | string
+    employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     sheetId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

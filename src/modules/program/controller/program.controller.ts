@@ -6,6 +6,9 @@ import {
   Param,
   UseGuards,
   Req,
+  Query,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { ProgramService } from '../service/program.service';
 import { CreateProgramDto } from '../dto/create-program.dto';
@@ -13,6 +16,7 @@ import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
+import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
 
 @Controller('program')
 export class ProgramController {
@@ -32,8 +36,8 @@ export class ProgramController {
   }
 
   @Get()
-  findAll() {
-    return this.programService.findAll();
+  findAll(@Query() query: GetAllProgramsDto) {
+    return this.programService.findAll(query);
   }
 
   @Get(':id')

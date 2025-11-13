@@ -146,6 +146,11 @@ export class EmployeeService {
     }
 
     const { user } = employee;
+    if (!user) {
+      throw new NotFoundException(
+        `User associated with employee ID "${id}" not found`,
+      );
+    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user;
 
@@ -169,6 +174,11 @@ export class EmployeeService {
 
     paginatedEmployees.data = paginatedEmployees.data.map((employee: any) => {
       const { user } = employee;
+      if (!user) {
+        throw new NotFoundException(
+          `User not found for employee with id ${employee.id}`,
+        );
+      }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
       return {

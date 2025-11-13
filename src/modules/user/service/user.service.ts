@@ -20,6 +20,7 @@ import {
   paginate,
   PaginatedResult,
 } from 'src/modules/utils/pagination/pagination.utils';
+import { deleteProfileImage } from 'src/modules/utils/file.utils';
 
 @Injectable()
 export class UserService {
@@ -91,15 +92,31 @@ export class UserService {
     return result;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.prisma.user.update({
-      where: { id },
-      data: updateUserDto,
-    });
+ 
+async update(id: string, updateUserDto: UpdateUserDto) {
+ 
+  const userExists = await this.prisma.user.findUnique({
+    where: { id },
+  });
 
-    const { password, ...result } = user;
-    return result;
+  if (!userExists) {
+    throw new NotFoundException(`User with ID ${id} not found`);
   }
+ 
+  if (updateUserDto.profileImage && userExists.profileImage && updateUserDto.profileImage !== userExists.profileImage) {
+    deleteProfileImage(userExists.profileImage);
+  }
+ 
+  const user = await this.prisma.user.update({
+    where: { id },
+    data: updateUserDto,
+  });
+
+  
+  const { password, ...result } = user;
+  return result;
+}
+
 
   async remove(id: string) {
     const user = await this.prisma.user.findUnique({

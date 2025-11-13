@@ -133,6 +133,12 @@ export class ManagerService {
     }
 
     const { user } = manager;
+
+    if (!user) {
+      throw new NotFoundException(
+        `User associated with manager ID "${id}" not found`,
+      );
+    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user;
 
@@ -156,6 +162,11 @@ export class ManagerService {
 
     paginatedManagers.data = paginatedManagers.data.map((manager: any) => {
       const { user } = manager;
+      if (!user) {
+        throw new NotFoundException(
+          `User not found for manager with id ${manager.id}`,
+        );
+      }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userWithoutPassword } = user;
       return {
