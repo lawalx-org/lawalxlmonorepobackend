@@ -3,8 +3,8 @@ model Submitted {
   information        String
   submission         String
   status             SubmittedStatus   @default(PENDING)
-  employee           Employee          @relation(fields: [employeeId], references: [id])
-  employeeId         String
+  employee           Employee?         @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  employeeId         String?
   project            Project           @relation(fields: [projectId], references: [id])
   projectId          String
   sheetId            String
