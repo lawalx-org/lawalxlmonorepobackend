@@ -20368,7 +20368,7 @@ export namespace Prisma {
     programName: string | null
     datetime: string | null
     programDescription: string | null
-    priority: string | null
+    priority: $Enums.Priority | null
     deadline: string | null
     progress: number | null
     createdAt: Date | null
@@ -20381,7 +20381,7 @@ export namespace Prisma {
     programName: string | null
     datetime: string | null
     programDescription: string | null
-    priority: string | null
+    priority: $Enums.Priority | null
     deadline: string | null
     progress: number | null
     createdAt: Date | null
@@ -20543,7 +20543,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress: number | null
     createdAt: Date
@@ -20651,7 +20651,7 @@ export namespace Prisma {
       programName: string
       datetime: string
       programDescription: string
-      priority: string
+      priority: $Enums.Priority
       deadline: string
       progress: number | null
       createdAt: Date
@@ -21086,7 +21086,7 @@ export namespace Prisma {
     readonly programName: FieldRef<"Program", 'String'>
     readonly datetime: FieldRef<"Program", 'String'>
     readonly programDescription: FieldRef<"Program", 'String'>
-    readonly priority: FieldRef<"Program", 'String'>
+    readonly priority: FieldRef<"Program", 'Priority'>
     readonly deadline: FieldRef<"Program", 'String'>
     readonly progress: FieldRef<"Program", 'Int'>
     readonly createdAt: FieldRef<"Program", 'DateTime'>
@@ -44037,20 +44037,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ProjectStatus'
-   */
-  export type EnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'ProjectStatus[]'
-   */
-  export type ListEnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Priority'
    */
   export type EnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority'>
@@ -44061,6 +44047,20 @@ export namespace Prisma {
    * Reference to a field of type 'Priority[]'
    */
   export type ListEnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProjectStatus'
+   */
+  export type EnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ProjectStatus[]'
+   */
+  export type ListEnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus[]'>
     
 
 
@@ -45284,7 +45284,7 @@ export namespace Prisma {
     programName?: StringFilter<"Program"> | string
     datetime?: StringFilter<"Program"> | string
     programDescription?: StringFilter<"Program"> | string
-    priority?: StringFilter<"Program"> | string
+    priority?: EnumPriorityFilter<"Program"> | $Enums.Priority
     deadline?: StringFilter<"Program"> | string
     progress?: IntNullableFilter<"Program"> | number | null
     createdAt?: DateTimeFilter<"Program"> | Date | string
@@ -45317,7 +45317,7 @@ export namespace Prisma {
     programName?: StringFilter<"Program"> | string
     datetime?: StringFilter<"Program"> | string
     programDescription?: StringFilter<"Program"> | string
-    priority?: StringFilter<"Program"> | string
+    priority?: EnumPriorityFilter<"Program"> | $Enums.Priority
     deadline?: StringFilter<"Program"> | string
     progress?: IntNullableFilter<"Program"> | number | null
     createdAt?: DateTimeFilter<"Program"> | Date | string
@@ -45353,7 +45353,7 @@ export namespace Prisma {
     programName?: StringWithAggregatesFilter<"Program"> | string
     datetime?: StringWithAggregatesFilter<"Program"> | string
     programDescription?: StringWithAggregatesFilter<"Program"> | string
-    priority?: StringWithAggregatesFilter<"Program"> | string
+    priority?: EnumPriorityWithAggregatesFilter<"Program"> | $Enums.Priority
     deadline?: StringWithAggregatesFilter<"Program"> | string
     progress?: IntNullableWithAggregatesFilter<"Program"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Program"> | Date | string
@@ -47952,7 +47952,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -47967,7 +47967,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -47980,7 +47980,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -47995,7 +47995,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48009,7 +48009,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -48021,7 +48021,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48034,7 +48034,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50471,6 +50471,13 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type EnumPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
+  }
+
   export type ClientScalarRelationFilter = {
     is?: ClientWhereInput
     isNot?: ClientWhereInput
@@ -50523,18 +50530,21 @@ export namespace Prisma {
     progress?: SortOrder
   }
 
+  export type EnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumPriorityWithAggregatesFilter<$PrismaModel> | $Enums.Priority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPriorityFilter<$PrismaModel>
+    _max?: NestedEnumPriorityFilter<$PrismaModel>
+  }
+
   export type EnumProjectStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
-  }
-
-  export type EnumPriorityFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -50700,16 +50710,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumProjectStatusFilter<$PrismaModel>
     _max?: NestedEnumProjectStatusFilter<$PrismaModel>
-  }
-
-  export type EnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityWithAggregatesFilter<$PrismaModel> | $Enums.Priority
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPriorityFilter<$PrismaModel>
-    _max?: NestedEnumPriorityFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -52434,6 +52434,10 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
   }
 
+  export type EnumPriorityFieldUpdateOperationsInput = {
+    set?: $Enums.Priority
+  }
+
   export type ClientUpdateOneRequiredWithoutProgramsNestedInput = {
     create?: XOR<ClientCreateWithoutProgramsInput, ClientUncheckedCreateWithoutProgramsInput>
     connectOrCreate?: ClientCreateOrConnectWithoutProgramsInput
@@ -52600,10 +52604,6 @@ export namespace Prisma {
 
   export type EnumProjectStatusFieldUpdateOperationsInput = {
     set?: $Enums.ProjectStatus
-  }
-
-  export type EnumPriorityFieldUpdateOperationsInput = {
-    set?: $Enums.Priority
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -54189,18 +54189,28 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedEnumProjectStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
-  }
-
   export type NestedEnumPriorityFilter<$PrismaModel = never> = {
     equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
     notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
     not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
+  }
+
+  export type NestedEnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumPriorityWithAggregatesFilter<$PrismaModel> | $Enums.Priority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPriorityFilter<$PrismaModel>
+    _max?: NestedEnumPriorityFilter<$PrismaModel>
+  }
+
+  export type NestedEnumProjectStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -54222,16 +54232,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumProjectStatusFilter<$PrismaModel>
     _max?: NestedEnumProjectStatusFilter<$PrismaModel>
-  }
-
-  export type NestedEnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityWithAggregatesFilter<$PrismaModel> | $Enums.Priority
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPriorityFilter<$PrismaModel>
-    _max?: NestedEnumPriorityFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -54908,7 +54908,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -54921,7 +54921,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -55122,7 +55122,7 @@ export namespace Prisma {
     programName?: StringFilter<"Program"> | string
     datetime?: StringFilter<"Program"> | string
     programDescription?: StringFilter<"Program"> | string
-    priority?: StringFilter<"Program"> | string
+    priority?: EnumPriorityFilter<"Program"> | $Enums.Priority
     deadline?: StringFilter<"Program"> | string
     progress?: IntNullableFilter<"Program"> | number | null
     createdAt?: DateTimeFilter<"Program"> | Date | string
@@ -57254,7 +57254,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -57268,7 +57268,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -57567,7 +57567,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57581,7 +57581,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61133,7 +61133,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-    priority: string
+    priority: $Enums.Priority
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -61223,7 +61223,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61236,7 +61236,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61249,7 +61249,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-    priority?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

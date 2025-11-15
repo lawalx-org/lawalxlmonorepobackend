@@ -562,6 +562,13 @@ exports.IndustryCategory = exports.$Enums.IndustryCategory = {
   BEAUTY_AND_WELLNESS: 'BEAUTY_AND_WELLNESS'
 };
 
+exports.Priority = exports.$Enums.Priority = {
+  HIGH: 'HIGH',
+  MEDIUM: 'MEDIUM',
+  LOW: 'LOW',
+  NORMAL: 'NORMAL'
+};
+
 exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   PENDING: 'PENDING',
   LIVE: 'LIVE',
@@ -569,13 +576,6 @@ exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   OVERDUE: 'OVERDUE',
   PROBLEM: 'PROBLEM',
   COMPLETED: 'COMPLETED'
-};
-
-exports.Priority = exports.$Enums.Priority = {
-  HIGH: 'HIGH',
-  MEDIUM: 'MEDIUM',
-  LOW: 'LOW',
-  NORMAL: 'NORMAL'
 };
 
 exports.SubmittedStatus = exports.$Enums.SubmittedStatus = {
