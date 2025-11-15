@@ -461,7 +461,8 @@ exports.Prisma.ChartTableScalarFieldEnum = {
   yAxis: 'yAxis',
   zAxis: 'zAxis',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  sheetId: 'sheetId'
 };
 
 exports.Prisma.ReminderScalarFieldEnum = {

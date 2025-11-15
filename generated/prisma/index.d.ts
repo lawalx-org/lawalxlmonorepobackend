@@ -37826,6 +37826,7 @@ export namespace Prisma {
     category: $Enums.ChartName | null
     createdAt: Date | null
     updatedAt: Date | null
+    sheetId: string | null
   }
 
   export type ChartTableMaxAggregateOutputType = {
@@ -37835,6 +37836,7 @@ export namespace Prisma {
     category: $Enums.ChartName | null
     createdAt: Date | null
     updatedAt: Date | null
+    sheetId: string | null
   }
 
   export type ChartTableCountAggregateOutputType = {
@@ -37847,6 +37849,7 @@ export namespace Prisma {
     zAxis: number
     createdAt: number
     updatedAt: number
+    sheetId: number
     _all: number
   }
 
@@ -37858,6 +37861,7 @@ export namespace Prisma {
     category?: true
     createdAt?: true
     updatedAt?: true
+    sheetId?: true
   }
 
   export type ChartTableMaxAggregateInputType = {
@@ -37867,6 +37871,7 @@ export namespace Prisma {
     category?: true
     createdAt?: true
     updatedAt?: true
+    sheetId?: true
   }
 
   export type ChartTableCountAggregateInputType = {
@@ -37879,6 +37884,7 @@ export namespace Prisma {
     zAxis?: true
     createdAt?: true
     updatedAt?: true
+    sheetId?: true
     _all?: true
   }
 
@@ -37964,6 +37970,7 @@ export namespace Prisma {
     zAxis: JsonValue | null
     createdAt: Date
     updatedAt: Date
+    sheetId: string | null
     _count: ChartTableCountAggregateOutputType | null
     _min: ChartTableMinAggregateOutputType | null
     _max: ChartTableMaxAggregateOutputType | null
@@ -37993,6 +38000,7 @@ export namespace Prisma {
     zAxis?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sheetId?: boolean
     sheet?: boolean | ChartTable$sheetArgs<ExtArgs>
   }, ExtArgs["result"]["chartTable"]>
 
@@ -38006,6 +38014,8 @@ export namespace Prisma {
     zAxis?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sheetId?: boolean
+    sheet?: boolean | ChartTable$sheetArgs<ExtArgs>
   }, ExtArgs["result"]["chartTable"]>
 
   export type ChartTableSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -38018,6 +38028,8 @@ export namespace Prisma {
     zAxis?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sheetId?: boolean
+    sheet?: boolean | ChartTable$sheetArgs<ExtArgs>
   }, ExtArgs["result"]["chartTable"]>
 
   export type ChartTableSelectScalar = {
@@ -38030,14 +38042,19 @@ export namespace Prisma {
     zAxis?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sheetId?: boolean
   }
 
-  export type ChartTableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "status" | "category" | "xAxis" | "yAxis" | "zAxis" | "createdAt" | "updatedAt", ExtArgs["result"]["chartTable"]>
+  export type ChartTableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "status" | "category" | "xAxis" | "yAxis" | "zAxis" | "createdAt" | "updatedAt" | "sheetId", ExtArgs["result"]["chartTable"]>
   export type ChartTableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sheet?: boolean | ChartTable$sheetArgs<ExtArgs>
   }
-  export type ChartTableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ChartTableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ChartTableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | ChartTable$sheetArgs<ExtArgs>
+  }
+  export type ChartTableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sheet?: boolean | ChartTable$sheetArgs<ExtArgs>
+  }
 
   export type $ChartTablePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ChartTable"
@@ -38054,6 +38071,7 @@ export namespace Prisma {
       zAxis: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
+      sheetId: string | null
     }, ExtArgs["result"]["chartTable"]>
     composites: {}
   }
@@ -38487,6 +38505,7 @@ export namespace Prisma {
     readonly zAxis: FieldRef<"ChartTable", 'Json'>
     readonly createdAt: FieldRef<"ChartTable", 'DateTime'>
     readonly updatedAt: FieldRef<"ChartTable", 'DateTime'>
+    readonly sheetId: FieldRef<"ChartTable", 'String'>
   }
     
 
@@ -38736,6 +38755,10 @@ export namespace Prisma {
      */
     data: ChartTableCreateManyInput | ChartTableCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -38806,6 +38829,10 @@ export namespace Prisma {
      * Limit how many ChartTables to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -40252,7 +40279,7 @@ export namespace Prisma {
     projectId?: boolean
     cells?: boolean | Sheet$cellsArgs<ExtArgs>
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
-    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+    chart?: boolean | Sheet$chartArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
@@ -40264,7 +40291,6 @@ export namespace Prisma {
     updatedAt?: boolean
     chartId?: boolean
     projectId?: boolean
-    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
@@ -40275,7 +40301,6 @@ export namespace Prisma {
     updatedAt?: boolean
     chartId?: boolean
     projectId?: boolean
-    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
@@ -40292,16 +40317,14 @@ export namespace Prisma {
   export type SheetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cells?: boolean | Sheet$cellsArgs<ExtArgs>
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
-    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
+    chart?: boolean | Sheet$chartArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
   }
   export type SheetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    chart?: boolean | ChartTableDefaultArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
   }
 
@@ -40310,7 +40333,7 @@ export namespace Prisma {
     objects: {
       cells: Prisma.$CellPayload<ExtArgs>[]
       snapshots: Prisma.$SheetSnapshotPayload<ExtArgs>[]
-      chart: Prisma.$ChartTablePayload<ExtArgs>
+      chart: Prisma.$ChartTablePayload<ExtArgs> | null
       project: Prisma.$ProjectPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -40716,7 +40739,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     cells<T extends Sheet$cellsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$cellsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CellPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     snapshots<T extends Sheet$snapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    chart<T extends ChartTableDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChartTableDefaultArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    chart<T extends Sheet$chartArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$chartArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -41194,6 +41217,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SheetSnapshotScalarFieldEnum | SheetSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * Sheet.chart
+   */
+  export type Sheet$chartArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChartTable
+     */
+    select?: ChartTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChartTable
+     */
+    omit?: ChartTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChartTableInclude<ExtArgs> | null
+    where?: ChartTableWhereInput
   }
 
   /**
@@ -43820,7 +43862,8 @@ export namespace Prisma {
     yAxis: 'yAxis',
     zAxis: 'zAxis',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    sheetId: 'sheetId'
   };
 
   export type ChartTableScalarFieldEnum = (typeof ChartTableScalarFieldEnum)[keyof typeof ChartTableScalarFieldEnum]
@@ -46476,6 +46519,7 @@ export namespace Prisma {
     zAxis?: JsonNullableFilter<"ChartTable">
     createdAt?: DateTimeFilter<"ChartTable"> | Date | string
     updatedAt?: DateTimeFilter<"ChartTable"> | Date | string
+    sheetId?: StringNullableFilter<"ChartTable"> | string | null
     sheet?: XOR<SheetNullableScalarRelationFilter, SheetWhereInput> | null
   }
 
@@ -46489,11 +46533,13 @@ export namespace Prisma {
     zAxis?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrderInput | SortOrder
     sheet?: SheetOrderByWithRelationInput
   }
 
   export type ChartTableWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    sheetId?: string
     AND?: ChartTableWhereInput | ChartTableWhereInput[]
     OR?: ChartTableWhereInput[]
     NOT?: ChartTableWhereInput | ChartTableWhereInput[]
@@ -46506,7 +46552,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ChartTable"> | Date | string
     updatedAt?: DateTimeFilter<"ChartTable"> | Date | string
     sheet?: XOR<SheetNullableScalarRelationFilter, SheetWhereInput> | null
-  }, "id">
+  }, "id" | "sheetId">
 
   export type ChartTableOrderByWithAggregationInput = {
     id?: SortOrder
@@ -46518,6 +46564,7 @@ export namespace Prisma {
     zAxis?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrderInput | SortOrder
     _count?: ChartTableCountOrderByAggregateInput
     _max?: ChartTableMaxOrderByAggregateInput
     _min?: ChartTableMinOrderByAggregateInput
@@ -46536,6 +46583,7 @@ export namespace Prisma {
     zAxis?: JsonNullableWithAggregatesFilter<"ChartTable">
     createdAt?: DateTimeWithAggregatesFilter<"ChartTable"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ChartTable"> | Date | string
+    sheetId?: StringNullableWithAggregatesFilter<"ChartTable"> | string | null
   }
 
   export type ReminderWhereInput = {
@@ -46637,7 +46685,7 @@ export namespace Prisma {
     projectId?: StringFilter<"Sheet"> | string
     cells?: CellListRelationFilter
     snapshots?: SheetSnapshotListRelationFilter
-    chart?: XOR<ChartTableScalarRelationFilter, ChartTableWhereInput>
+    chart?: XOR<ChartTableNullableScalarRelationFilter, ChartTableWhereInput> | null
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
   }
 
@@ -46656,19 +46704,20 @@ export namespace Prisma {
 
   export type SheetWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    chartId?: string
-    projectId?: string
+    projectId_chartId?: SheetProjectIdChartIdCompoundUniqueInput
     AND?: SheetWhereInput | SheetWhereInput[]
     OR?: SheetWhereInput[]
     NOT?: SheetWhereInput | SheetWhereInput[]
     name?: StringFilter<"Sheet"> | string
     createdAt?: DateTimeFilter<"Sheet"> | Date | string
     updatedAt?: DateTimeFilter<"Sheet"> | Date | string
+    chartId?: StringFilter<"Sheet"> | string
+    projectId?: StringFilter<"Sheet"> | string
     cells?: CellListRelationFilter
     snapshots?: SheetSnapshotListRelationFilter
-    chart?: XOR<ChartTableScalarRelationFilter, ChartTableWhereInput>
+    chart?: XOR<ChartTableNullableScalarRelationFilter, ChartTableWhereInput> | null
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
-  }, "id" | "chartId" | "projectId">
+  }, "id" | "projectId_chartId">
 
   export type SheetOrderByWithAggregationInput = {
     id?: SortOrder
@@ -49267,7 +49316,7 @@ export namespace Prisma {
     zAxis?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    sheet?: SheetUncheckedCreateNestedOneWithoutChartInput
+    sheetId?: string | null
   }
 
   export type ChartTableUpdateInput = {
@@ -49293,7 +49342,7 @@ export namespace Prisma {
     zAxis?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sheet?: SheetUncheckedUpdateOneWithoutChartNestedInput
+    sheetId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ChartTableCreateManyInput = {
@@ -49306,6 +49355,7 @@ export namespace Prisma {
     zAxis?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    sheetId?: string | null
   }
 
   export type ChartTableUpdateManyMutationInput = {
@@ -49330,6 +49380,7 @@ export namespace Prisma {
     zAxis?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReminderCreateInput = {
@@ -49434,9 +49485,10 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
-    chart: ChartTableCreateNestedOneWithoutSheetInput
+    chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
   }
 
@@ -49449,6 +49501,7 @@ export namespace Prisma {
     projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+    chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
   }
 
   export type SheetUpdateInput = {
@@ -49456,9 +49509,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
-    chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
   }
 
@@ -49471,6 +49525,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
   }
 
   export type SheetCreateManyInput = {
@@ -49487,6 +49542,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SheetUncheckedUpdateManyInput = {
@@ -51456,6 +51512,7 @@ export namespace Prisma {
     zAxis?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrder
   }
 
   export type ChartTableMaxOrderByAggregateInput = {
@@ -51465,6 +51522,7 @@ export namespace Prisma {
     category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrder
   }
 
   export type ChartTableMinOrderByAggregateInput = {
@@ -51474,6 +51532,7 @@ export namespace Prisma {
     category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrder
   }
 
   export type EnumChartStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -51615,9 +51674,9 @@ export namespace Prisma {
     none?: SheetSnapshotWhereInput
   }
 
-  export type ChartTableScalarRelationFilter = {
-    is?: ChartTableWhereInput
-    isNot?: ChartTableWhereInput
+  export type ChartTableNullableScalarRelationFilter = {
+    is?: ChartTableWhereInput | null
+    isNot?: ChartTableWhereInput | null
   }
 
   export type CellOrderByRelationAggregateInput = {
@@ -51626,6 +51685,11 @@ export namespace Prisma {
 
   export type SheetSnapshotOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type SheetProjectIdChartIdCompoundUniqueInput = {
+    projectId: string
+    chartId: string
   }
 
   export type SheetCountOrderByAggregateInput = {
@@ -53738,12 +53802,6 @@ export namespace Prisma {
     connect?: SheetWhereUniqueInput
   }
 
-  export type SheetUncheckedCreateNestedOneWithoutChartInput = {
-    create?: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
-    connectOrCreate?: SheetCreateOrConnectWithoutChartInput
-    connect?: SheetWhereUniqueInput
-  }
-
   export type EnumChartStatusFieldUpdateOperationsInput = {
     set?: $Enums.ChartStatus
   }
@@ -53753,16 +53811,6 @@ export namespace Prisma {
   }
 
   export type SheetUpdateOneWithoutChartNestedInput = {
-    create?: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
-    connectOrCreate?: SheetCreateOrConnectWithoutChartInput
-    upsert?: SheetUpsertWithoutChartInput
-    disconnect?: SheetWhereInput | boolean
-    delete?: SheetWhereInput | boolean
-    connect?: SheetWhereUniqueInput
-    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutChartInput, SheetUpdateWithoutChartInput>, SheetUncheckedUpdateWithoutChartInput>
-  }
-
-  export type SheetUncheckedUpdateOneWithoutChartNestedInput = {
     create?: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
     connectOrCreate?: SheetCreateOrConnectWithoutChartInput
     upsert?: SheetUpsertWithoutChartInput
@@ -53848,6 +53896,12 @@ export namespace Prisma {
     connect?: SheetSnapshotWhereUniqueInput | SheetSnapshotWhereUniqueInput[]
   }
 
+  export type ChartTableUncheckedCreateNestedOneWithoutSheetInput = {
+    create?: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
+    connectOrCreate?: ChartTableCreateOrConnectWithoutSheetInput
+    connect?: ChartTableWhereUniqueInput
+  }
+
   export type CellUpdateManyWithoutSheetNestedInput = {
     create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
     connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
@@ -53876,10 +53930,12 @@ export namespace Prisma {
     deleteMany?: SheetSnapshotScalarWhereInput | SheetSnapshotScalarWhereInput[]
   }
 
-  export type ChartTableUpdateOneRequiredWithoutSheetNestedInput = {
+  export type ChartTableUpdateOneWithoutSheetNestedInput = {
     create?: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
     connectOrCreate?: ChartTableCreateOrConnectWithoutSheetInput
     upsert?: ChartTableUpsertWithoutSheetInput
+    disconnect?: ChartTableWhereInput | boolean
+    delete?: ChartTableWhereInput | boolean
     connect?: ChartTableWhereUniqueInput
     update?: XOR<XOR<ChartTableUpdateToOneWithWhereWithoutSheetInput, ChartTableUpdateWithoutSheetInput>, ChartTableUncheckedUpdateWithoutSheetInput>
   }
@@ -53918,6 +53974,16 @@ export namespace Prisma {
     update?: SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput | SheetSnapshotUpdateWithWhereUniqueWithoutSheetInput[]
     updateMany?: SheetSnapshotUpdateManyWithWhereWithoutSheetInput | SheetSnapshotUpdateManyWithWhereWithoutSheetInput[]
     deleteMany?: SheetSnapshotScalarWhereInput | SheetSnapshotScalarWhereInput[]
+  }
+
+  export type ChartTableUncheckedUpdateOneWithoutSheetNestedInput = {
+    create?: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
+    connectOrCreate?: ChartTableCreateOrConnectWithoutSheetInput
+    upsert?: ChartTableUpsertWithoutSheetInput
+    disconnect?: ChartTableWhereInput | boolean
+    delete?: ChartTableWhereInput | boolean
+    connect?: ChartTableWhereUniqueInput
+    update?: XOR<XOR<ChartTableUpdateToOneWithWhereWithoutSheetInput, ChartTableUpdateWithoutSheetInput>, ChartTableUncheckedUpdateWithoutSheetInput>
   }
 
   export type SheetCreateNestedOneWithoutCellsInput = {
@@ -57526,9 +57592,10 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
-    chart: ChartTableCreateNestedOneWithoutSheetInput
+    chart?: ChartTableCreateNestedOneWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutProjectInput = {
@@ -57539,6 +57606,7 @@ export namespace Prisma {
     chartId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+    chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutProjectInput = {
@@ -60514,6 +60582,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
@@ -60524,6 +60593,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
@@ -60550,6 +60620,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
@@ -60560,6 +60631,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
@@ -60995,8 +61067,9 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
-    chart: ChartTableCreateNestedOneWithoutSheetInput
+    chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
   }
 
@@ -61008,6 +61081,7 @@ export namespace Prisma {
     chartId: string
     projectId: string
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+    chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutCellsInput = {
@@ -61031,8 +61105,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
-    chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
   }
 
@@ -61044,6 +61119,7 @@ export namespace Prisma {
     chartId?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
   }
 
   export type SheetCreateWithoutSnapshotsInput = {
@@ -61051,8 +61127,9 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    chartId: string
     cells?: CellCreateNestedManyWithoutSheetInput
-    chart: ChartTableCreateNestedOneWithoutSheetInput
+    chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
   }
 
@@ -61064,6 +61141,7 @@ export namespace Prisma {
     chartId: string
     projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
+    chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutSnapshotsInput = {
@@ -61087,8 +61165,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     cells?: CellUpdateManyWithoutSheetNestedInput
-    chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
   }
 
@@ -61100,6 +61179,7 @@ export namespace Prisma {
     chartId?: StringFieldUpdateOperationsInput | string
     projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
   }
 
   export type ReferredPersonCreateManyClientInput = {
@@ -61865,9 +61945,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
-    chart?: ChartTableUpdateOneRequiredWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutProjectInput = {
@@ -61878,6 +61959,7 @@ export namespace Prisma {
     chartId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateManyWithoutProjectInput = {

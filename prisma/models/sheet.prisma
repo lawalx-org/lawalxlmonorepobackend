@@ -1,17 +1,35 @@
+// model Sheet {
+//   id        String   @id @default(uuid())
+//   name      String
+//   cells     Cell[]
+//   snapshots SheetSnapshot[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+
+//   chartId    String      @unique
+//   projectId   String     @unique
+//   chart      ChartTable  @relation(fields: [chartId], references: [id])
+//   project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+// }
+
 model Sheet {
-  id        String   @id @default(uuid())
+  id        String      @id @default(uuid())
   name      String
   cells     Cell[]
   snapshots SheetSnapshot[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
+  chartId   String
+  projectId String
 
-  chartId    String      @unique
-  projectId   String     @unique
-  chart      ChartTable  @relation(fields: [chartId], references: [id])
-  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  chart     ChartTable?
+  project   Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, chartId])
 }
+
 
 model Cell {
   id        String   @id @default(uuid())

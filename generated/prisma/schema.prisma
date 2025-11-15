@@ -539,6 +539,20 @@ model Viewer {
   @@map("viewers")
 }
 
+// model ChartTable {
+//   id        String    @id @default(uuid())
+//   title     String
+//   status    ChartStatus
+//   category  ChartName
+//   xAxis    Json
+//   yAxis    Json
+//   zAxis    Json?
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+
+//   sheet     Sheet?
+// }
+
 model ChartTable {
   id        String      @id @default(uuid())
   title     String
@@ -550,7 +564,8 @@ model ChartTable {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
-  sheet Sheet?
+  sheet   Sheet?  @relation(fields: [sheetId], references: [id])
+  sheetId String? @unique
 }
 
 enum ChartStatus {
@@ -727,6 +742,20 @@ enum DayOfWeek {
   SATURDAY
 }
 
+// model Sheet {
+//   id        String   @id @default(uuid())
+//   name      String
+//   cells     Cell[]
+//   snapshots SheetSnapshot[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   chartId    String      @unique
+//   projectId   String     @unique
+//   chart      ChartTable  @relation(fields: [chartId], references: [id])
+//   project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+// }
+
 model Sheet {
   id        String          @id @default(uuid())
   name      String
@@ -735,10 +764,13 @@ model Sheet {
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
 
-  chartId   String     @unique
-  projectId String     @unique
-  chart     ChartTable @relation(fields: [chartId], references: [id])
-  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  chartId   String
+  projectId String
+
+  chart   ChartTable?
+  project Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, chartId])
 }
 
 model Cell {
