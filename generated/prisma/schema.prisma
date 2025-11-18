@@ -360,6 +360,7 @@ model Submitted {
   project          Project           @relation(fields: [projectId], references: [id])
   projectId        String
   sheetId          String
+  submiteCells     String[]
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   submissionReturn SubmissionReturn? // Relation to the submission return
@@ -793,6 +794,17 @@ model SheetSnapshot {
   sheetId   String
   data      Json
   createdAt DateTime @default(now())
+}
+
+model submiteCell {
+  id         String   @id @default(uuid())
+  row        Int
+  col        Int
+  value      String
+  sheetId    String
+  employeeId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 // Prisma client generator
