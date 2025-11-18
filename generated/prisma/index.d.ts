@@ -191,7 +191,8 @@ export namespace $Enums {
   export const ChartStatus: {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
-  DEPRECATED: 'DEPRECATED'
+  DEPRECATED: 'DEPRECATED',
+  COMPLETED: 'COMPLETED'
 };
 
 export type ChartStatus = (typeof ChartStatus)[keyof typeof ChartStatus]

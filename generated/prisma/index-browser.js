@@ -636,7 +636,8 @@ exports.UserStatus = exports.$Enums.UserStatus = {
 exports.ChartStatus = exports.$Enums.ChartStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
-  DEPRECATED: 'DEPRECATED'
+  DEPRECATED: 'DEPRECATED',
+  COMPLETED: 'COMPLETED'
 };
 
 exports.ChartName = exports.$Enums.ChartName = {

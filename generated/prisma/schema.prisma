@@ -572,6 +572,7 @@ enum ChartStatus {
   ACTIVE
   INACTIVE
   DEPRECATED
+  COMPLETED
 }
 
 enum ChartName {
