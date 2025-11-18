@@ -1,6 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProgramDto } from '../dto/create-program.dto';
+import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
+import {
+  PaginatedResult,
+  paginate,
+} from 'src/modules/utils/pagination/pagination.utils';
+import { Prisma } from 'generated/prisma';
 
 @Injectable()
 export class ProgramService {
@@ -26,8 +32,44 @@ export class ProgramService {
     });
   }
 
-  async findAll() {
-    return this.prisma.program.findMany();
+  async findAll(
+    query: GetAllProgramsDto,
+  ): Promise<PaginatedResult<any>> {
+    const { page, limit, programName, priority, deadline, progress, datetime } =
+      query;
+    const where: Prisma.ProgramWhereInput = {};
+
+    if (programName) {
+      where.programName = {
+        contains: programName,
+        mode: 'insensitive',
+      };
+    }
+
+    if (priority) {
+      where.priority = priority;
+    }
+
+    if (deadline) {
+      where.deadline = deadline;
+    }
+
+    if (progress !== undefined) {
+      where.progress = progress;
+    }
+
+    if (datetime) {
+      where.datetime = datetime;
+    }
+
+    return paginate(
+      this.prisma,
+      'program',
+      {
+        where,
+      },
+      { page: page ?? 1, limit: limit ?? 10 },
+    );
   }
 
   async findOne(id: string) {

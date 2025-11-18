@@ -22,5 +22,30 @@ export function buildProjectFilter(
     where.programId = query.programId;
   }
 
+  if (query.name) {
+    where.name = { contains: query.name, mode: 'insensitive' };
+  }
+
+  if (query.progress) {
+    where.progress = { equals: query.progress };
+  }
+
+  if (query.startDate && query.endDate) {
+    where.startDate = { gte: query.startDate };
+    where.deadline = { lte: query.endDate };
+  } else if (query.startDate) {
+    where.startDate = { gte: query.startDate };
+  } else if (query.endDate) {
+    where.deadline = { lte: query.endDate };
+  }
+
+  if (query.employeeId) {
+    where.projectEmployees = {
+      some: {
+        employeeId: query.employeeId,
+      },
+    };
+  }
+
   return where;
 }

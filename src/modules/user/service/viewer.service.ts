@@ -8,6 +8,10 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { Role } from 'generated/prisma';
 import { CreateViewerDto } from '../dto/create-viewer.dto';
+import {
+  paginate,
+  PaginatedResult,
+} from 'src/modules/utils/pagination/pagination.utils';
 
 @Injectable()
 export class ViewerService {
@@ -67,6 +71,11 @@ export class ViewerService {
     }
 
     const { user } = viewer;
+    if (!user) {
+      throw new NotFoundException(
+        `User associated with viewer ID "${id}" not found`,
+      );
+    }
     const { password, ...userWithoutPassword } = user;
 
     return {
@@ -75,18 +84,32 @@ export class ViewerService {
     };
   }
 
-  async findAll() {
-    const viewers = await this.prisma.viewer.findMany({
-      include: { user: true },
-    });
+  async findAll(
+    query: { page: number; limit: number } = { page: 1, limit: 10 },
+  ): Promise<PaginatedResult<any>> {
+    const paginatedViewers = await paginate(
+      this.prisma,
+      'viewer',
+      {
+        include: { user: true },
+      },
+      { page: query.page, limit: query.limit },
+    );
 
-    return viewers.map((viewer) => {
+    paginatedViewers.data = paginatedViewers.data.map((viewer: any) => {
       const { user } = viewer;
+      if (!user) {
+        throw new NotFoundException(
+          `User not found for viewer with id ${viewer.id}`,
+        );
+      }
       const { password, ...userWithoutPassword } = user;
       return {
         ...viewer,
         user: userWithoutPassword,
       };
     });
+
+    return paginatedViewers;
   }
 }

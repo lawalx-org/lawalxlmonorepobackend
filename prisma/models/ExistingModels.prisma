@@ -16,8 +16,8 @@ model Payment {
   id            String   @id @default(uuid())
   amount        Float
   transactionId String   @unique
-  userId        String
-  user          User     @relation(fields: [userId], references: [id])
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
