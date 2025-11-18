@@ -461,7 +461,8 @@ exports.Prisma.ChartTableScalarFieldEnum = {
   yAxis: 'yAxis',
   zAxis: 'zAxis',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  sheetId: 'sheetId'
 };
 
 exports.Prisma.ReminderScalarFieldEnum = {
@@ -562,6 +563,13 @@ exports.IndustryCategory = exports.$Enums.IndustryCategory = {
   BEAUTY_AND_WELLNESS: 'BEAUTY_AND_WELLNESS'
 };
 
+exports.Priority = exports.$Enums.Priority = {
+  HIGH: 'HIGH',
+  MEDIUM: 'MEDIUM',
+  LOW: 'LOW',
+  NORMAL: 'NORMAL'
+};
+
 exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   PENDING: 'PENDING',
   LIVE: 'LIVE',
@@ -569,13 +577,6 @@ exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   OVERDUE: 'OVERDUE',
   PROBLEM: 'PROBLEM',
   COMPLETED: 'COMPLETED'
-};
-
-exports.Priority = exports.$Enums.Priority = {
-  HIGH: 'HIGH',
-  MEDIUM: 'MEDIUM',
-  LOW: 'LOW',
-  NORMAL: 'NORMAL'
 };
 
 exports.SubmittedStatus = exports.$Enums.SubmittedStatus = {
@@ -635,7 +636,8 @@ exports.UserStatus = exports.$Enums.UserStatus = {
 exports.ChartStatus = exports.$Enums.ChartStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
-  DEPRECATED: 'DEPRECATED'
+  DEPRECATED: 'DEPRECATED',
+  COMPLETED: 'COMPLETED'
 };
 
 exports.ChartName = exports.$Enums.ChartName = {

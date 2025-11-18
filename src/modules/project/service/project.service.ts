@@ -81,7 +81,6 @@ export class ProjectService {
       managerId,
       programId,
       message,
-      nextTriggerAt,
       repeatEvery,
       repeatOnDays,
       repeatOnDates,
@@ -90,6 +89,8 @@ export class ProjectService {
       name,
       ...projectData
     } = createProjectDto;
+
+    console.log(managerId)
 
     // --- Pre-validation before transaction ---
     const [manager, program] = await Promise.all([
@@ -173,7 +174,6 @@ export class ProjectService {
       // Create reminder linked to the new project
       await this.reminderService.createReminderWithTx(tx, {
         message,
-        nextTriggerAt,
         repeatEvery,
         repeatOnDays,
         repeatOnDates,

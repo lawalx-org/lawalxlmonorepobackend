@@ -12,10 +12,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import { RedisService } from '../../../common/db/redis/services/redis.service';
 
+
+
 interface PayloadType {
-  id: string;
-  email?: string;
+ userId: string;
+ email?: string;
 }
+
 
 @WebSocketGateway({
   cors: {
@@ -55,7 +58,7 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
       const decoded = await this.jwtService.verifyAsync<PayloadType>(token, {
         secret: jwtAccessSecret,
       });
-      const userId = decoded.id;
+      const userId = decoded.userId;
 
       const user = await this.prisma.user.findUnique({
         where: { id: userId },

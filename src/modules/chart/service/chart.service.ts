@@ -226,4 +226,15 @@ export class ChartService {
       };
     });
   }
+
+  async getChartsByProjectId(projectId: string) {
+  return this.prisma.chartTable.findMany({
+    where: {
+      sheet: {
+        projectId: projectId,
+      },
+    },
+  });
+}
+
 }
