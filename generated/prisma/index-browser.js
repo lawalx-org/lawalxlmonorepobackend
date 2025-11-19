@@ -344,6 +344,7 @@ exports.Prisma.SubmittedScalarFieldEnum = {
   employeeId: 'employeeId',
   projectId: 'projectId',
   sheetId: 'sheetId',
+  submiteCells: 'submiteCells',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -503,6 +504,17 @@ exports.Prisma.SheetSnapshotScalarFieldEnum = {
   sheetId: 'sheetId',
   data: 'data',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.SubmiteCellScalarFieldEnum = {
+  id: 'id',
+  row: 'row',
+  col: 'col',
+  value: 'value',
+  sheetId: 'sheetId',
+  employeeId: 'employeeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -709,7 +721,8 @@ exports.Prisma.ModelName = {
   Reminder: 'Reminder',
   Sheet: 'Sheet',
   Cell: 'Cell',
-  SheetSnapshot: 'SheetSnapshot'
+  SheetSnapshot: 'SheetSnapshot',
+  submiteCell: 'submiteCell'
 };
 
 /**

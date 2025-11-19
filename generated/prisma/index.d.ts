@@ -183,6 +183,11 @@ export type Cell = $Result.DefaultSelection<Prisma.$CellPayload>
  * 
  */
 export type SheetSnapshot = $Result.DefaultSelection<Prisma.$SheetSnapshotPayload>
+/**
+ * Model submiteCell
+ * 
+ */
+export type submiteCell = $Result.DefaultSelection<Prisma.$submiteCellPayload>
 
 /**
  * Enums
@@ -939,6 +944,16 @@ export class PrismaClient<
     * ```
     */
   get sheetSnapshot(): Prisma.SheetSnapshotDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.submiteCell`: Exposes CRUD operations for the **submiteCell** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SubmiteCells
+    * const submiteCells = await prisma.submiteCell.findMany()
+    * ```
+    */
+  get submiteCell(): Prisma.submiteCellDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1413,7 +1428,8 @@ export namespace Prisma {
     Reminder: 'Reminder',
     Sheet: 'Sheet',
     Cell: 'Cell',
-    SheetSnapshot: 'SheetSnapshot'
+    SheetSnapshot: 'SheetSnapshot',
+    submiteCell: 'submiteCell'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1432,7 +1448,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer" | "chartTable" | "reminder" | "sheet" | "cell" | "sheetSnapshot"
+      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer" | "chartTable" | "reminder" | "sheet" | "cell" | "sheetSnapshot" | "submiteCell"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3952,6 +3968,80 @@ export namespace Prisma {
           }
         }
       }
+      submiteCell: {
+        payload: Prisma.$submiteCellPayload<ExtArgs>
+        fields: Prisma.submiteCellFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.submiteCellFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.submiteCellFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>
+          }
+          findFirst: {
+            args: Prisma.submiteCellFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.submiteCellFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>
+          }
+          findMany: {
+            args: Prisma.submiteCellFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>[]
+          }
+          create: {
+            args: Prisma.submiteCellCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>
+          }
+          createMany: {
+            args: Prisma.submiteCellCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.submiteCellCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>[]
+          }
+          delete: {
+            args: Prisma.submiteCellDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>
+          }
+          update: {
+            args: Prisma.submiteCellUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>
+          }
+          deleteMany: {
+            args: Prisma.submiteCellDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.submiteCellUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.submiteCellUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>[]
+          }
+          upsert: {
+            args: Prisma.submiteCellUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$submiteCellPayload>
+          }
+          aggregate: {
+            args: Prisma.SubmiteCellAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSubmiteCell>
+          }
+          groupBy: {
+            args: Prisma.submiteCellGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SubmiteCellGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.submiteCellCountArgs<ExtArgs>
+            result: $Utils.Optional<SubmiteCellCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4082,6 +4172,7 @@ export namespace Prisma {
     sheet?: SheetOmit
     cell?: CellOmit
     sheetSnapshot?: SheetSnapshotOmit
+    submiteCell?: submiteCellOmit
   }
 
   /* Types for Logging */
@@ -26240,6 +26331,7 @@ export namespace Prisma {
     employeeId: number
     projectId: number
     sheetId: number
+    submiteCells: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -26278,6 +26370,7 @@ export namespace Prisma {
     employeeId?: true
     projectId?: true
     sheetId?: true
+    submiteCells?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -26363,6 +26456,7 @@ export namespace Prisma {
     employeeId: string | null
     projectId: string
     sheetId: string
+    submiteCells: string[]
     createdAt: Date
     updatedAt: Date
     _count: SubmittedCountAggregateOutputType | null
@@ -26392,6 +26486,7 @@ export namespace Prisma {
     employeeId?: boolean
     projectId?: boolean
     sheetId?: boolean
+    submiteCells?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | Submitted$employeeArgs<ExtArgs>
@@ -26407,6 +26502,7 @@ export namespace Prisma {
     employeeId?: boolean
     projectId?: boolean
     sheetId?: boolean
+    submiteCells?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | Submitted$employeeArgs<ExtArgs>
@@ -26421,6 +26517,7 @@ export namespace Prisma {
     employeeId?: boolean
     projectId?: boolean
     sheetId?: boolean
+    submiteCells?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     employee?: boolean | Submitted$employeeArgs<ExtArgs>
@@ -26435,11 +26532,12 @@ export namespace Prisma {
     employeeId?: boolean
     projectId?: boolean
     sheetId?: boolean
+    submiteCells?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type SubmittedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "information" | "submission" | "status" | "employeeId" | "projectId" | "sheetId" | "createdAt" | "updatedAt", ExtArgs["result"]["submitted"]>
+  export type SubmittedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "information" | "submission" | "status" | "employeeId" | "projectId" | "sheetId" | "submiteCells" | "createdAt" | "updatedAt", ExtArgs["result"]["submitted"]>
   export type SubmittedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employee?: boolean | Submitted$employeeArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
@@ -26469,6 +26567,7 @@ export namespace Prisma {
       employeeId: string | null
       projectId: string
       sheetId: string
+      submiteCells: string[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["submitted"]>
@@ -26904,6 +27003,7 @@ export namespace Prisma {
     readonly employeeId: FieldRef<"Submitted", 'String'>
     readonly projectId: FieldRef<"Submitted", 'String'>
     readonly sheetId: FieldRef<"Submitted", 'String'>
+    readonly submiteCells: FieldRef<"Submitted", 'String[]'>
     readonly createdAt: FieldRef<"Submitted", 'DateTime'>
     readonly updatedAt: FieldRef<"Submitted", 'DateTime'>
   }
@@ -43422,6 +43522,1078 @@ export namespace Prisma {
 
 
   /**
+   * Model submiteCell
+   */
+
+  export type AggregateSubmiteCell = {
+    _count: SubmiteCellCountAggregateOutputType | null
+    _avg: SubmiteCellAvgAggregateOutputType | null
+    _sum: SubmiteCellSumAggregateOutputType | null
+    _min: SubmiteCellMinAggregateOutputType | null
+    _max: SubmiteCellMaxAggregateOutputType | null
+  }
+
+  export type SubmiteCellAvgAggregateOutputType = {
+    row: number | null
+    col: number | null
+  }
+
+  export type SubmiteCellSumAggregateOutputType = {
+    row: number | null
+    col: number | null
+  }
+
+  export type SubmiteCellMinAggregateOutputType = {
+    id: string | null
+    row: number | null
+    col: number | null
+    value: string | null
+    sheetId: string | null
+    employeeId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubmiteCellMaxAggregateOutputType = {
+    id: string | null
+    row: number | null
+    col: number | null
+    value: string | null
+    sheetId: string | null
+    employeeId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubmiteCellCountAggregateOutputType = {
+    id: number
+    row: number
+    col: number
+    value: number
+    sheetId: number
+    employeeId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SubmiteCellAvgAggregateInputType = {
+    row?: true
+    col?: true
+  }
+
+  export type SubmiteCellSumAggregateInputType = {
+    row?: true
+    col?: true
+  }
+
+  export type SubmiteCellMinAggregateInputType = {
+    id?: true
+    row?: true
+    col?: true
+    value?: true
+    sheetId?: true
+    employeeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubmiteCellMaxAggregateInputType = {
+    id?: true
+    row?: true
+    col?: true
+    value?: true
+    sheetId?: true
+    employeeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubmiteCellCountAggregateInputType = {
+    id?: true
+    row?: true
+    col?: true
+    value?: true
+    sheetId?: true
+    employeeId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SubmiteCellAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which submiteCell to aggregate.
+     */
+    where?: submiteCellWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of submiteCells to fetch.
+     */
+    orderBy?: submiteCellOrderByWithRelationInput | submiteCellOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: submiteCellWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` submiteCells from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` submiteCells.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned submiteCells
+    **/
+    _count?: true | SubmiteCellCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubmiteCellAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubmiteCellSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubmiteCellMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubmiteCellMaxAggregateInputType
+  }
+
+  export type GetSubmiteCellAggregateType<T extends SubmiteCellAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubmiteCell]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubmiteCell[P]>
+      : GetScalarType<T[P], AggregateSubmiteCell[P]>
+  }
+
+
+
+
+  export type submiteCellGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: submiteCellWhereInput
+    orderBy?: submiteCellOrderByWithAggregationInput | submiteCellOrderByWithAggregationInput[]
+    by: SubmiteCellScalarFieldEnum[] | SubmiteCellScalarFieldEnum
+    having?: submiteCellScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubmiteCellCountAggregateInputType | true
+    _avg?: SubmiteCellAvgAggregateInputType
+    _sum?: SubmiteCellSumAggregateInputType
+    _min?: SubmiteCellMinAggregateInputType
+    _max?: SubmiteCellMaxAggregateInputType
+  }
+
+  export type SubmiteCellGroupByOutputType = {
+    id: string
+    row: number
+    col: number
+    value: string
+    sheetId: string
+    employeeId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: SubmiteCellCountAggregateOutputType | null
+    _avg: SubmiteCellAvgAggregateOutputType | null
+    _sum: SubmiteCellSumAggregateOutputType | null
+    _min: SubmiteCellMinAggregateOutputType | null
+    _max: SubmiteCellMaxAggregateOutputType | null
+  }
+
+  type GetSubmiteCellGroupByPayload<T extends submiteCellGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SubmiteCellGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubmiteCellGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubmiteCellGroupByOutputType[P]>
+            : GetScalarType<T[P], SubmiteCellGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type submiteCellSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    row?: boolean
+    col?: boolean
+    value?: boolean
+    sheetId?: boolean
+    employeeId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["submiteCell"]>
+
+  export type submiteCellSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    row?: boolean
+    col?: boolean
+    value?: boolean
+    sheetId?: boolean
+    employeeId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["submiteCell"]>
+
+  export type submiteCellSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    row?: boolean
+    col?: boolean
+    value?: boolean
+    sheetId?: boolean
+    employeeId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["submiteCell"]>
+
+  export type submiteCellSelectScalar = {
+    id?: boolean
+    row?: boolean
+    col?: boolean
+    value?: boolean
+    sheetId?: boolean
+    employeeId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type submiteCellOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "row" | "col" | "value" | "sheetId" | "employeeId" | "createdAt" | "updatedAt", ExtArgs["result"]["submiteCell"]>
+
+  export type $submiteCellPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "submiteCell"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      row: number
+      col: number
+      value: string
+      sheetId: string
+      employeeId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["submiteCell"]>
+    composites: {}
+  }
+
+  type submiteCellGetPayload<S extends boolean | null | undefined | submiteCellDefaultArgs> = $Result.GetResult<Prisma.$submiteCellPayload, S>
+
+  type submiteCellCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<submiteCellFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SubmiteCellCountAggregateInputType | true
+    }
+
+  export interface submiteCellDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['submiteCell'], meta: { name: 'submiteCell' } }
+    /**
+     * Find zero or one SubmiteCell that matches the filter.
+     * @param {submiteCellFindUniqueArgs} args - Arguments to find a SubmiteCell
+     * @example
+     * // Get one SubmiteCell
+     * const submiteCell = await prisma.submiteCell.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends submiteCellFindUniqueArgs>(args: SelectSubset<T, submiteCellFindUniqueArgs<ExtArgs>>): Prisma__submiteCellClient<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SubmiteCell that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {submiteCellFindUniqueOrThrowArgs} args - Arguments to find a SubmiteCell
+     * @example
+     * // Get one SubmiteCell
+     * const submiteCell = await prisma.submiteCell.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends submiteCellFindUniqueOrThrowArgs>(args: SelectSubset<T, submiteCellFindUniqueOrThrowArgs<ExtArgs>>): Prisma__submiteCellClient<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SubmiteCell that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {submiteCellFindFirstArgs} args - Arguments to find a SubmiteCell
+     * @example
+     * // Get one SubmiteCell
+     * const submiteCell = await prisma.submiteCell.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends submiteCellFindFirstArgs>(args?: SelectSubset<T, submiteCellFindFirstArgs<ExtArgs>>): Prisma__submiteCellClient<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SubmiteCell that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {submiteCellFindFirstOrThrowArgs} args - Arguments to find a SubmiteCell
+     * @example
+     * // Get one SubmiteCell
+     * const submiteCell = await prisma.submiteCell.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends submiteCellFindFirstOrThrowArgs>(args?: SelectSubset<T, submiteCellFindFirstOrThrowArgs<ExtArgs>>): Prisma__submiteCellClient<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SubmiteCells that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {submiteCellFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SubmiteCells
+     * const submiteCells = await prisma.submiteCell.findMany()
+     * 
+     * // Get first 10 SubmiteCells
+     * const submiteCells = await prisma.submiteCell.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const submiteCellWithIdOnly = await prisma.submiteCell.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends submiteCellFindManyArgs>(args?: SelectSubset<T, submiteCellFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SubmiteCell.
+     * @param {submiteCellCreateArgs} args - Arguments to create a SubmiteCell.
+     * @example
+     * // Create one SubmiteCell
+     * const SubmiteCell = await prisma.submiteCell.create({
+     *   data: {
+     *     // ... data to create a SubmiteCell
+     *   }
+     * })
+     * 
+     */
+    create<T extends submiteCellCreateArgs>(args: SelectSubset<T, submiteCellCreateArgs<ExtArgs>>): Prisma__submiteCellClient<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SubmiteCells.
+     * @param {submiteCellCreateManyArgs} args - Arguments to create many SubmiteCells.
+     * @example
+     * // Create many SubmiteCells
+     * const submiteCell = await prisma.submiteCell.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends submiteCellCreateManyArgs>(args?: SelectSubset<T, submiteCellCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SubmiteCells and returns the data saved in the database.
+     * @param {submiteCellCreateManyAndReturnArgs} args - Arguments to create many SubmiteCells.
+     * @example
+     * // Create many SubmiteCells
+     * const submiteCell = await prisma.submiteCell.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SubmiteCells and only return the `id`
+     * const submiteCellWithIdOnly = await prisma.submiteCell.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends submiteCellCreateManyAndReturnArgs>(args?: SelectSubset<T, submiteCellCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SubmiteCell.
+     * @param {submiteCellDeleteArgs} args - Arguments to delete one SubmiteCell.
+     * @example
+     * // Delete one SubmiteCell
+     * const SubmiteCell = await prisma.submiteCell.delete({
+     *   where: {
+     *     // ... filter to delete one SubmiteCell
+     *   }
+     * })
+     * 
+     */
+    delete<T extends submiteCellDeleteArgs>(args: SelectSubset<T, submiteCellDeleteArgs<ExtArgs>>): Prisma__submiteCellClient<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SubmiteCell.
+     * @param {submiteCellUpdateArgs} args - Arguments to update one SubmiteCell.
+     * @example
+     * // Update one SubmiteCell
+     * const submiteCell = await prisma.submiteCell.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends submiteCellUpdateArgs>(args: SelectSubset<T, submiteCellUpdateArgs<ExtArgs>>): Prisma__submiteCellClient<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SubmiteCells.
+     * @param {submiteCellDeleteManyArgs} args - Arguments to filter SubmiteCells to delete.
+     * @example
+     * // Delete a few SubmiteCells
+     * const { count } = await prisma.submiteCell.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends submiteCellDeleteManyArgs>(args?: SelectSubset<T, submiteCellDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubmiteCells.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {submiteCellUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SubmiteCells
+     * const submiteCell = await prisma.submiteCell.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends submiteCellUpdateManyArgs>(args: SelectSubset<T, submiteCellUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubmiteCells and returns the data updated in the database.
+     * @param {submiteCellUpdateManyAndReturnArgs} args - Arguments to update many SubmiteCells.
+     * @example
+     * // Update many SubmiteCells
+     * const submiteCell = await prisma.submiteCell.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SubmiteCells and only return the `id`
+     * const submiteCellWithIdOnly = await prisma.submiteCell.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends submiteCellUpdateManyAndReturnArgs>(args: SelectSubset<T, submiteCellUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SubmiteCell.
+     * @param {submiteCellUpsertArgs} args - Arguments to update or create a SubmiteCell.
+     * @example
+     * // Update or create a SubmiteCell
+     * const submiteCell = await prisma.submiteCell.upsert({
+     *   create: {
+     *     // ... data to create a SubmiteCell
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SubmiteCell we want to update
+     *   }
+     * })
+     */
+    upsert<T extends submiteCellUpsertArgs>(args: SelectSubset<T, submiteCellUpsertArgs<ExtArgs>>): Prisma__submiteCellClient<$Result.GetResult<Prisma.$submiteCellPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SubmiteCells.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {submiteCellCountArgs} args - Arguments to filter SubmiteCells to count.
+     * @example
+     * // Count the number of SubmiteCells
+     * const count = await prisma.submiteCell.count({
+     *   where: {
+     *     // ... the filter for the SubmiteCells we want to count
+     *   }
+     * })
+    **/
+    count<T extends submiteCellCountArgs>(
+      args?: Subset<T, submiteCellCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubmiteCellCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SubmiteCell.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubmiteCellAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubmiteCellAggregateArgs>(args: Subset<T, SubmiteCellAggregateArgs>): Prisma.PrismaPromise<GetSubmiteCellAggregateType<T>>
+
+    /**
+     * Group by SubmiteCell.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {submiteCellGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends submiteCellGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: submiteCellGroupByArgs['orderBy'] }
+        : { orderBy?: submiteCellGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, submiteCellGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmiteCellGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the submiteCell model
+   */
+  readonly fields: submiteCellFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for submiteCell.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__submiteCellClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the submiteCell model
+   */
+  interface submiteCellFieldRefs {
+    readonly id: FieldRef<"submiteCell", 'String'>
+    readonly row: FieldRef<"submiteCell", 'Int'>
+    readonly col: FieldRef<"submiteCell", 'Int'>
+    readonly value: FieldRef<"submiteCell", 'String'>
+    readonly sheetId: FieldRef<"submiteCell", 'String'>
+    readonly employeeId: FieldRef<"submiteCell", 'String'>
+    readonly createdAt: FieldRef<"submiteCell", 'DateTime'>
+    readonly updatedAt: FieldRef<"submiteCell", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * submiteCell findUnique
+   */
+  export type submiteCellFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * Filter, which submiteCell to fetch.
+     */
+    where: submiteCellWhereUniqueInput
+  }
+
+  /**
+   * submiteCell findUniqueOrThrow
+   */
+  export type submiteCellFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * Filter, which submiteCell to fetch.
+     */
+    where: submiteCellWhereUniqueInput
+  }
+
+  /**
+   * submiteCell findFirst
+   */
+  export type submiteCellFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * Filter, which submiteCell to fetch.
+     */
+    where?: submiteCellWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of submiteCells to fetch.
+     */
+    orderBy?: submiteCellOrderByWithRelationInput | submiteCellOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for submiteCells.
+     */
+    cursor?: submiteCellWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` submiteCells from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` submiteCells.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of submiteCells.
+     */
+    distinct?: SubmiteCellScalarFieldEnum | SubmiteCellScalarFieldEnum[]
+  }
+
+  /**
+   * submiteCell findFirstOrThrow
+   */
+  export type submiteCellFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * Filter, which submiteCell to fetch.
+     */
+    where?: submiteCellWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of submiteCells to fetch.
+     */
+    orderBy?: submiteCellOrderByWithRelationInput | submiteCellOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for submiteCells.
+     */
+    cursor?: submiteCellWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` submiteCells from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` submiteCells.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of submiteCells.
+     */
+    distinct?: SubmiteCellScalarFieldEnum | SubmiteCellScalarFieldEnum[]
+  }
+
+  /**
+   * submiteCell findMany
+   */
+  export type submiteCellFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * Filter, which submiteCells to fetch.
+     */
+    where?: submiteCellWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of submiteCells to fetch.
+     */
+    orderBy?: submiteCellOrderByWithRelationInput | submiteCellOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing submiteCells.
+     */
+    cursor?: submiteCellWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` submiteCells from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` submiteCells.
+     */
+    skip?: number
+    distinct?: SubmiteCellScalarFieldEnum | SubmiteCellScalarFieldEnum[]
+  }
+
+  /**
+   * submiteCell create
+   */
+  export type submiteCellCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * The data needed to create a submiteCell.
+     */
+    data: XOR<submiteCellCreateInput, submiteCellUncheckedCreateInput>
+  }
+
+  /**
+   * submiteCell createMany
+   */
+  export type submiteCellCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many submiteCells.
+     */
+    data: submiteCellCreateManyInput | submiteCellCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * submiteCell createManyAndReturn
+   */
+  export type submiteCellCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * The data used to create many submiteCells.
+     */
+    data: submiteCellCreateManyInput | submiteCellCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * submiteCell update
+   */
+  export type submiteCellUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * The data needed to update a submiteCell.
+     */
+    data: XOR<submiteCellUpdateInput, submiteCellUncheckedUpdateInput>
+    /**
+     * Choose, which submiteCell to update.
+     */
+    where: submiteCellWhereUniqueInput
+  }
+
+  /**
+   * submiteCell updateMany
+   */
+  export type submiteCellUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update submiteCells.
+     */
+    data: XOR<submiteCellUpdateManyMutationInput, submiteCellUncheckedUpdateManyInput>
+    /**
+     * Filter which submiteCells to update
+     */
+    where?: submiteCellWhereInput
+    /**
+     * Limit how many submiteCells to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * submiteCell updateManyAndReturn
+   */
+  export type submiteCellUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * The data used to update submiteCells.
+     */
+    data: XOR<submiteCellUpdateManyMutationInput, submiteCellUncheckedUpdateManyInput>
+    /**
+     * Filter which submiteCells to update
+     */
+    where?: submiteCellWhereInput
+    /**
+     * Limit how many submiteCells to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * submiteCell upsert
+   */
+  export type submiteCellUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * The filter to search for the submiteCell to update in case it exists.
+     */
+    where: submiteCellWhereUniqueInput
+    /**
+     * In case the submiteCell found by the `where` argument doesn't exist, create a new submiteCell with this data.
+     */
+    create: XOR<submiteCellCreateInput, submiteCellUncheckedCreateInput>
+    /**
+     * In case the submiteCell was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<submiteCellUpdateInput, submiteCellUncheckedUpdateInput>
+  }
+
+  /**
+   * submiteCell delete
+   */
+  export type submiteCellDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+    /**
+     * Filter which submiteCell to delete.
+     */
+    where: submiteCellWhereUniqueInput
+  }
+
+  /**
+   * submiteCell deleteMany
+   */
+  export type submiteCellDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which submiteCells to delete
+     */
+    where?: submiteCellWhereInput
+    /**
+     * Limit how many submiteCells to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * submiteCell without action
+   */
+  export type submiteCellDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the submiteCell
+     */
+    select?: submiteCellSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the submiteCell
+     */
+    omit?: submiteCellOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -43716,6 +44888,7 @@ export namespace Prisma {
     employeeId: 'employeeId',
     projectId: 'projectId',
     sheetId: 'sheetId',
+    submiteCells: 'submiteCells',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -43920,6 +45093,20 @@ export namespace Prisma {
   };
 
   export type SheetSnapshotScalarFieldEnum = (typeof SheetSnapshotScalarFieldEnum)[keyof typeof SheetSnapshotScalarFieldEnum]
+
+
+  export const SubmiteCellScalarFieldEnum: {
+    id: 'id',
+    row: 'row',
+    col: 'col',
+    value: 'value',
+    sheetId: 'sheetId',
+    employeeId: 'employeeId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SubmiteCellScalarFieldEnum = (typeof SubmiteCellScalarFieldEnum)[keyof typeof SubmiteCellScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -45728,6 +46915,7 @@ export namespace Prisma {
     employeeId?: StringNullableFilter<"Submitted"> | string | null
     projectId?: StringFilter<"Submitted"> | string
     sheetId?: StringFilter<"Submitted"> | string
+    submiteCells?: StringNullableListFilter<"Submitted">
     createdAt?: DateTimeFilter<"Submitted"> | Date | string
     updatedAt?: DateTimeFilter<"Submitted"> | Date | string
     employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
@@ -45743,6 +46931,7 @@ export namespace Prisma {
     employeeId?: SortOrderInput | SortOrder
     projectId?: SortOrder
     sheetId?: SortOrder
+    submiteCells?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     employee?: EmployeeOrderByWithRelationInput
@@ -45761,6 +46950,7 @@ export namespace Prisma {
     employeeId?: StringNullableFilter<"Submitted"> | string | null
     projectId?: StringFilter<"Submitted"> | string
     sheetId?: StringFilter<"Submitted"> | string
+    submiteCells?: StringNullableListFilter<"Submitted">
     createdAt?: DateTimeFilter<"Submitted"> | Date | string
     updatedAt?: DateTimeFilter<"Submitted"> | Date | string
     employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
@@ -45776,6 +46966,7 @@ export namespace Prisma {
     employeeId?: SortOrderInput | SortOrder
     projectId?: SortOrder
     sheetId?: SortOrder
+    submiteCells?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: SubmittedCountOrderByAggregateInput
@@ -45794,6 +46985,7 @@ export namespace Prisma {
     employeeId?: StringNullableWithAggregatesFilter<"Submitted"> | string | null
     projectId?: StringWithAggregatesFilter<"Submitted"> | string
     sheetId?: StringWithAggregatesFilter<"Submitted"> | string
+    submiteCells?: StringNullableListFilter<"Submitted">
     createdAt?: DateTimeWithAggregatesFilter<"Submitted"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Submitted"> | Date | string
   }
@@ -46860,6 +48052,75 @@ export namespace Prisma {
     sheetId?: StringWithAggregatesFilter<"SheetSnapshot"> | string
     data?: JsonWithAggregatesFilter<"SheetSnapshot">
     createdAt?: DateTimeWithAggregatesFilter<"SheetSnapshot"> | Date | string
+  }
+
+  export type submiteCellWhereInput = {
+    AND?: submiteCellWhereInput | submiteCellWhereInput[]
+    OR?: submiteCellWhereInput[]
+    NOT?: submiteCellWhereInput | submiteCellWhereInput[]
+    id?: StringFilter<"submiteCell"> | string
+    row?: IntFilter<"submiteCell"> | number
+    col?: IntFilter<"submiteCell"> | number
+    value?: StringFilter<"submiteCell"> | string
+    sheetId?: StringFilter<"submiteCell"> | string
+    employeeId?: StringFilter<"submiteCell"> | string
+    createdAt?: DateTimeFilter<"submiteCell"> | Date | string
+    updatedAt?: DateTimeFilter<"submiteCell"> | Date | string
+  }
+
+  export type submiteCellOrderByWithRelationInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    employeeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type submiteCellWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: submiteCellWhereInput | submiteCellWhereInput[]
+    OR?: submiteCellWhereInput[]
+    NOT?: submiteCellWhereInput | submiteCellWhereInput[]
+    row?: IntFilter<"submiteCell"> | number
+    col?: IntFilter<"submiteCell"> | number
+    value?: StringFilter<"submiteCell"> | string
+    sheetId?: StringFilter<"submiteCell"> | string
+    employeeId?: StringFilter<"submiteCell"> | string
+    createdAt?: DateTimeFilter<"submiteCell"> | Date | string
+    updatedAt?: DateTimeFilter<"submiteCell"> | Date | string
+  }, "id">
+
+  export type submiteCellOrderByWithAggregationInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    employeeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: submiteCellCountOrderByAggregateInput
+    _avg?: submiteCellAvgOrderByAggregateInput
+    _max?: submiteCellMaxOrderByAggregateInput
+    _min?: submiteCellMinOrderByAggregateInput
+    _sum?: submiteCellSumOrderByAggregateInput
+  }
+
+  export type submiteCellScalarWhereWithAggregatesInput = {
+    AND?: submiteCellScalarWhereWithAggregatesInput | submiteCellScalarWhereWithAggregatesInput[]
+    OR?: submiteCellScalarWhereWithAggregatesInput[]
+    NOT?: submiteCellScalarWhereWithAggregatesInput | submiteCellScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"submiteCell"> | string
+    row?: IntWithAggregatesFilter<"submiteCell"> | number
+    col?: IntWithAggregatesFilter<"submiteCell"> | number
+    value?: StringWithAggregatesFilter<"submiteCell"> | string
+    sheetId?: StringWithAggregatesFilter<"submiteCell"> | string
+    employeeId?: StringWithAggregatesFilter<"submiteCell"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"submiteCell"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"submiteCell"> | Date | string
   }
 
   export type ActivityCreateInput = {
@@ -48431,6 +49692,7 @@ export namespace Prisma {
     submission: string
     status?: $Enums.SubmittedStatus
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     employee?: EmployeeCreateNestedOneWithoutSubmittedInput
@@ -48446,6 +49708,7 @@ export namespace Prisma {
     employeeId?: string | null
     projectId: string
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
@@ -48457,6 +49720,7 @@ export namespace Prisma {
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneWithoutSubmittedNestedInput
@@ -48472,6 +49736,7 @@ export namespace Prisma {
     employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     projectId?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
@@ -48485,6 +49750,7 @@ export namespace Prisma {
     employeeId?: string | null
     projectId: string
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -48495,6 +49761,7 @@ export namespace Prisma {
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48507,6 +49774,7 @@ export namespace Prisma {
     employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     projectId?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49670,6 +50938,83 @@ export namespace Prisma {
     sheetId?: StringFieldUpdateOperationsInput | string
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type submiteCellCreateInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    sheetId: string
+    employeeId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type submiteCellUncheckedCreateInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    sheetId: string
+    employeeId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type submiteCellUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    employeeId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type submiteCellUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    employeeId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type submiteCellCreateManyInput = {
+    id?: string
+    row: number
+    col: number
+    value: string
+    sheetId: string
+    employeeId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type submiteCellUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    employeeId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type submiteCellUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    row?: IntFieldUpdateOperationsInput | number
+    col?: IntFieldUpdateOperationsInput | number
+    value?: StringFieldUpdateOperationsInput | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+    employeeId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -50908,6 +52253,7 @@ export namespace Prisma {
     employeeId?: SortOrder
     projectId?: SortOrder
     sheetId?: SortOrder
+    submiteCells?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -51815,6 +53161,49 @@ export namespace Prisma {
     id?: SortOrder
     sheetId?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type submiteCellCountOrderByAggregateInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    employeeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type submiteCellAvgOrderByAggregateInput = {
+    row?: SortOrder
+    col?: SortOrder
+  }
+
+  export type submiteCellMaxOrderByAggregateInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    employeeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type submiteCellMinOrderByAggregateInput = {
+    id?: SortOrder
+    row?: SortOrder
+    col?: SortOrder
+    value?: SortOrder
+    sheetId?: SortOrder
+    employeeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type submiteCellSumOrderByAggregateInput = {
+    row?: SortOrder
+    col?: SortOrder
   }
 
   export type ProjectCreateNestedOneWithoutActivitiesInput = {
@@ -52984,6 +54373,10 @@ export namespace Prisma {
     update?: XOR<XOR<SubmittedUpdateToOneWithWhereWithoutSubmissionReturnInput, SubmittedUpdateWithoutSubmissionReturnInput>, SubmittedUncheckedUpdateWithoutSubmissionReturnInput>
   }
 
+  export type SubmittedCreatesubmiteCellsInput = {
+    set: string[]
+  }
+
   export type EmployeeCreateNestedOneWithoutSubmittedInput = {
     create?: XOR<EmployeeCreateWithoutSubmittedInput, EmployeeUncheckedCreateWithoutSubmittedInput>
     connectOrCreate?: EmployeeCreateOrConnectWithoutSubmittedInput
@@ -53010,6 +54403,11 @@ export namespace Prisma {
 
   export type EnumSubmittedStatusFieldUpdateOperationsInput = {
     set?: $Enums.SubmittedStatus
+  }
+
+  export type SubmittedUpdatesubmiteCellsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type EmployeeUpdateOneWithoutSubmittedNestedInput = {
@@ -55316,6 +56714,7 @@ export namespace Prisma {
     submission: string
     status?: $Enums.SubmittedStatus
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     project: ProjectCreateNestedOneWithoutSubmittedInput
@@ -55329,6 +56728,7 @@ export namespace Prisma {
     status?: $Enums.SubmittedStatus
     projectId: string
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
@@ -55472,6 +56872,7 @@ export namespace Prisma {
     employeeId?: StringNullableFilter<"Submitted"> | string | null
     projectId?: StringFilter<"Submitted"> | string
     sheetId?: StringFilter<"Submitted"> | string
+    submiteCells?: StringNullableListFilter<"Submitted">
     createdAt?: DateTimeFilter<"Submitted"> | Date | string
     updatedAt?: DateTimeFilter<"Submitted"> | Date | string
   }
@@ -57524,6 +58925,7 @@ export namespace Prisma {
     submission: string
     status?: $Enums.SubmittedStatus
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     employee?: EmployeeCreateNestedOneWithoutSubmittedInput
@@ -57537,6 +58939,7 @@ export namespace Prisma {
     status?: $Enums.SubmittedStatus
     employeeId?: string | null
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     submissionReturn?: SubmissionReturnUncheckedCreateNestedOneWithoutSubmittedInput
@@ -58214,6 +59617,7 @@ export namespace Prisma {
     submission: string
     status?: $Enums.SubmittedStatus
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
     employee?: EmployeeCreateNestedOneWithoutSubmittedInput
@@ -58228,6 +59632,7 @@ export namespace Prisma {
     employeeId?: string | null
     projectId: string
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -58254,6 +59659,7 @@ export namespace Prisma {
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneWithoutSubmittedNestedInput
@@ -58268,6 +59674,7 @@ export namespace Prisma {
     employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     projectId?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61350,6 +62757,7 @@ export namespace Prisma {
     status?: $Enums.SubmittedStatus
     projectId: string
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -61378,6 +62786,7 @@ export namespace Prisma {
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutSubmittedNestedInput
@@ -61391,6 +62800,7 @@ export namespace Prisma {
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     projectId?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
@@ -61403,6 +62813,7 @@ export namespace Prisma {
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     projectId?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61701,6 +63112,7 @@ export namespace Prisma {
     status?: $Enums.SubmittedStatus
     employeeId?: string | null
     sheetId: string
+    submiteCells?: SubmittedCreatesubmiteCellsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -61873,6 +63285,7 @@ export namespace Prisma {
     submission?: StringFieldUpdateOperationsInput | string
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     employee?: EmployeeUpdateOneWithoutSubmittedNestedInput
@@ -61886,6 +63299,7 @@ export namespace Prisma {
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submissionReturn?: SubmissionReturnUncheckedUpdateOneWithoutSubmittedNestedInput
@@ -61898,6 +63312,7 @@ export namespace Prisma {
     status?: EnumSubmittedStatusFieldUpdateOperationsInput | $Enums.SubmittedStatus
     employeeId?: NullableStringFieldUpdateOperationsInput | string | null
     sheetId?: StringFieldUpdateOperationsInput | string
+    submiteCells?: SubmittedUpdatesubmiteCellsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
