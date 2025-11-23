@@ -20,6 +20,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ChartModule } from './modules/chart/chart.module';
 import { ManagerModule } from './modules/manager/manager.module';
 import { SeedService } from './common/seed/seed.services';
+import { Client_Dash_stakeModule } from './modules/client_dashboard-stack/client.dashboard.stack.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { SeedService } from './common/seed/seed.services';
     NotificationModule,
     RedisModule,
     ChartModule,
+    Client_Dash_stakeModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, SeedService],
