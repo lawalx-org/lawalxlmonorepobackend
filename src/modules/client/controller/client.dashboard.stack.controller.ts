@@ -9,10 +9,10 @@ export class ClientDashboardStackController {
   constructor(private readonly clientDashboardStack: ClientDashboardStack) {}
  @Get("overview-stack")
   async overview() {
-    const overview= await this.clientDashboardStack.getDashboardOverview();
+    const result= await this.clientDashboardStack.getDashboardOverview();
     return {
         message:"client stack fetch successfully",
-        data:overview
+        data:result
     }
   }
 }
