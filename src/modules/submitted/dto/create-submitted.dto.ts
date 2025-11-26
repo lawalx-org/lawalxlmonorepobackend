@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsArray, IsUUID } from 'class-validator';
 
 export class CreateSubmittedDto {
   @ApiProperty({
@@ -33,4 +33,12 @@ export class CreateSubmittedDto {
   @IsString()
   @IsNotEmpty()
   sheetId: string;
+
+  @ApiProperty({
+    example: ['cell-id-1', 'cell-id-2'],
+    description: 'An array of submitted cell IDs',
+  })
+  @IsArray()
+  @IsUUID('4', { each: true })
+  submiteCells: string[];
 }

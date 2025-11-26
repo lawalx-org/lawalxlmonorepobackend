@@ -40,7 +40,7 @@ export class CreateEmployeeDto extends BaseUserDto {
 
   @ApiPropertyOptional({
     type: [String],
-    example: ['Carlyle Hall', 'Highway Expansion'],
+    example: ['projectID_1', 'projectID_2'],
     description: 'List of assigned projects',
   })
   @IsArray()

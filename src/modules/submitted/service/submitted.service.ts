@@ -33,7 +33,7 @@ export class SubmittedService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createSubmittedDto: CreateSubmittedDto, employeeId: string) {
-    const { projectId, sheetId } = createSubmittedDto;
+    const { projectId, sheetId, submiteCells } = createSubmittedDto;
 
     const employee = await this.prisma.employee.findUnique({
       where: { id: employeeId },
@@ -57,6 +57,25 @@ export class SubmittedService {
 
     if (!sheet) {
       throw new NotFoundException(`Sheet with ID ${sheetId} not found`);
+    }
+
+    if (submiteCells && submiteCells.length > 0) {
+      const foundCells = await this.prisma.submiteCell.findMany({
+        where: {
+          id: {
+            in: submiteCells,
+          },
+        },
+      });
+
+      if (foundCells.length !== submiteCells.length) {
+        const notFoundIds = submiteCells.filter(
+          (id) => !foundCells.some((cell) => cell.id === id),
+        );
+        throw new NotFoundException(
+          `SubmiteCell with IDs ${notFoundIds.join(', ')} not found`,
+        );
+      }
     }
 
     return this.prisma.submitted.create({

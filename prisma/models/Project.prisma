@@ -18,6 +18,7 @@ model Project {
   progress                  Int?
   chartList                 String[]      // Seed create that chart list
   estimatedCompletedDate    DateTime?
+  projectCompleteDate       DateTime?   // this is project end date 
   currentRate               String?
   budget                    String?
   createdAt                 DateTime      @default(now())

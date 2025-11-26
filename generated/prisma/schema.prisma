@@ -19,7 +19,11 @@ model Activity {
 
 model Client {
   id                String           @id @default(uuid())
+<<<<<<< HEAD
+  userId            String           @unique
+=======
   userId            String?          @unique
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   email             String           @unique
   contactPersonName String?
   clientLogo        String?
@@ -44,7 +48,11 @@ model Client {
   updatedAt         DateTime         @updatedAt
 
   // Relations
+<<<<<<< HEAD
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+=======
   user            User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   // managers              Manager[]
   // employees             Employee[]
   // viewers               Viewer[]
@@ -58,7 +66,11 @@ model Client {
 
 model Employee {
   id          String   @id @default(uuid())
+<<<<<<< HEAD
+  userId      String   @unique
+=======
   userId      String?  @unique
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   // clientId    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -67,10 +79,16 @@ model Employee {
   skills      String[]
 
   // Relations
+<<<<<<< HEAD
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  projectEmployees ProjectEmployee[]
+=======
   user             User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
   // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   projectEmployees ProjectEmployee[]
   submitted        Submitted[]
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 
   @@map("employees")
 }
@@ -91,8 +109,13 @@ model Payment {
   id            String   @id @default(uuid())
   amount        Float
   transactionId String   @unique
+<<<<<<< HEAD
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+=======
   userId        String?
   user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -101,7 +124,11 @@ model Payment {
 
 model Manager {
   id          String   @id @default(uuid())
+<<<<<<< HEAD
+  userId      String   @unique
+=======
   userId      String?  @unique
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   // clientId    String
   skills      String[]
   createdAt   DateTime @default(now())
@@ -110,7 +137,11 @@ model Manager {
   joinedDate  String
 
   // Relations
+<<<<<<< HEAD
+  user                       User                        @relation(fields: [userId], references: [id], onDelete: Cascade)
+=======
   user                       User?                       @relation(fields: [userId], references: [id], onDelete: SetNull)
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   projects                   Project[]
   requestsToAddProjectMember RequestToAddProjectMember[]
@@ -123,7 +154,10 @@ model Notification {
   id          String   @id @default(uuid())
   senderId    String
   receiverIds String[]
+<<<<<<< HEAD
+=======
   projectId   String?
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   context     String
   type        String
   isRead      Boolean  @default(false)
@@ -149,10 +183,13 @@ model NotificationProvision {
   @@map("notification_provisions")
 }
 
+<<<<<<< HEAD
+=======
 // reminder
 //employadd
 //manageradd
 //PROJECT_CREATED
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 model NotificationPermissionEmployee {
   id               String   @id @default(uuid())
   userId           String   @unique
@@ -258,7 +295,11 @@ model Program {
   programName        String
   datetime           String
   programDescription String
+<<<<<<< HEAD
+  priority           String
+=======
   priority           Priority
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   deadline           String
   progress           Int?
   createdAt          DateTime @default(now())
@@ -275,6 +316,15 @@ model Project {
   id                     String        @id @default(uuid())
   programId              String
   name                   String
+<<<<<<< HEAD
+  datetime               DateTime?
+  uploadCycle            ProjectCycle
+  description            String
+  dataReceivedTime       String?
+  beforeSubmitData       Int?
+  importFiles            String[]
+  importMainFile         String?
+=======
   // uploadbeforeday           String
   // uploadCycle               ProjectCycle
   description            String
@@ -282,6 +332,7 @@ model Project {
   // beforeSubmitData          Int?
   // weakuploadData            String[]
   // monthlyuploadData         String[]
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   status                 ProjectStatus @default(PENDING)
   priority               Priority
   deadline               DateTime
@@ -290,6 +341,10 @@ model Project {
   progress               Int?
   chartList              String[] // Seed create that chart list
   estimatedCompletedDate DateTime?
+<<<<<<< HEAD
+=======
+  projectCompleteDate    DateTime? // this is project end date 
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   currentRate            String?
   budget                 String?
   createdAt              DateTime      @default(now())
@@ -305,9 +360,12 @@ model Project {
   activities                 Activity[]
   reviews                    Review[]
   requestsToAddProjectMember RequestToAddProjectMember[]
+<<<<<<< HEAD
+=======
   submitted                  Submitted[]
   reminders                  Reminder[]
   sheets                     Sheet[]
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 
   @@map("projects")
 }
@@ -341,6 +399,11 @@ model Review {
   @@map("reviews")
 }
 
+<<<<<<< HEAD
+model SuperAdmin {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+=======
 model SubmissionReturn {
   id          String    @id @default(uuid())
   submitted   Submitted @relation(fields: [submittedId], references: [id])
@@ -360,6 +423,7 @@ model Submitted {
   project          Project           @relation(fields: [projectId], references: [id])
   projectId        String
   sheetId          String
+  submiteCells     String[]
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   submissionReturn SubmissionReturn? // Relation to the submission return
@@ -368,6 +432,7 @@ model Submitted {
 model SuperAdmin {
   id             String   @id @default(uuid())
   userId         String?  @unique
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   clientLogo     String?
   favicon        String?
   primaryColor   String?
@@ -376,7 +441,11 @@ model SuperAdmin {
   updatedAt      DateTime @updatedAt
 
   // Relations
+<<<<<<< HEAD
+  user                             User                              @relation(fields: [userId], references: [id], onDelete: Cascade)
+=======
   user                             User?                             @relation(fields: [userId], references: [id], onDelete: SetNull)
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   notificationPermissionSuperAdmin NotificationPermissionSuperAdmin?
 
   @@map("super_admins")
@@ -384,7 +453,11 @@ model SuperAdmin {
 
 model Supporter {
   id            String        @id @default(uuid())
+<<<<<<< HEAD
+  userId        String        @unique
+=======
   userId        String?       @unique
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   supporterRole SupporterRole
   skills        String[]
   workload      Int? // Max number 4
@@ -393,7 +466,11 @@ model Supporter {
   updatedAt     DateTime      @updatedAt
 
   // Relations
+<<<<<<< HEAD
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+=======
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 
   @@map("supporters")
 }
@@ -527,18 +604,28 @@ model RequestToAddProjectMember {
 
 model Viewer {
   id        String   @id @default(uuid())
+<<<<<<< HEAD
+  userId    String   @unique
+=======
   userId    String?  @unique
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   // clientId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
+<<<<<<< HEAD
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+=======
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
   @@map("viewers")
 }
 
+<<<<<<< HEAD
+=======
 // model ChartTable {
 //   id        String    @id @default(uuid())
 //   title     String
@@ -594,6 +681,7 @@ enum ChartName {
   TABLE
 }
 
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 enum Role {
   VIEWER
   EMPLOYEE
@@ -650,7 +738,10 @@ enum ProjectStatus {
   DRAFT
   OVERDUE
   PROBLEM
+<<<<<<< HEAD
+=======
   COMPLETED
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 }
 
 enum TaskStatus {
@@ -701,6 +792,8 @@ enum ActivityActionType {
   GENERAL
 }
 
+<<<<<<< HEAD
+=======
 enum SubmittedStatus {
   APPROVED
   PENDING
@@ -795,6 +888,18 @@ model SheetSnapshot {
   createdAt DateTime @default(now())
 }
 
+model submiteCell {
+  id         String   @id @default(uuid())
+  row        Int
+  col        Int
+  value      String
+  sheetId    String
+  employeeId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 // Prisma client generator
 generator client {
   provider = "prisma-client-js"
