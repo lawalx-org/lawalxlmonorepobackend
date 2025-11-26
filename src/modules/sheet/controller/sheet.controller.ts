@@ -32,7 +32,7 @@
 //   }
 // }
 
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Req, UnauthorizedException } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -42,11 +42,25 @@ import {
 } from '@nestjs/swagger';
 import { SheetService } from '../service/sheet.service';
 import { UpdateCellDto } from '../dto/update-cell.dto';
+import { CreateSubmittedCellDto } from '../dto/create-submitted-cell.dto';
+import { RequestWithUser } from 'src/types/RequestWithUser';
 
 @ApiTags('Sheet') // Groups all endpoints under "Sheet" in Swagger
 @Controller('sheet')
 export class SheetController {
   constructor(private readonly sheetService: SheetService) {}
+
+  @Post('submit-cell')
+  @ApiOperation({ summary: 'Submit a single cell' })
+  @ApiBody({ type: CreateSubmittedCellDto })
+  @ApiResponse({ status: 201, description: 'Cell submitted successfully' })
+  createSubmittedCell(@Body() createSubmittedCellDto: CreateSubmittedCellDto,  @Req() req: RequestWithUser ) {
+     const  employeeId = req?.user?.employeeId
+      if (!employeeId) {
+    throw new UnauthorizedException('Employee ID missing. Only employees can submit cells.');
+  }
+    return this.sheetService.createSubmittedCell(createSubmittedCellDto,employeeId);
+  }
 
   @Post('update-cells')
   @ApiOperation({ summary: 'Update multiple cells in a sheet' })
@@ -88,6 +102,14 @@ export class SheetController {
   })
   getSnapshot(@Param('snapshotId') snapshotId: string) {
     return this.sheetService.getSnapshot(snapshotId);
+  }
+
+  @Get('project/:projectId')
+  @ApiOperation({ summary: 'Get all sheets for a given project' })
+  @ApiParam({ name: 'projectId', type: String, example: 'project_12345abc' })
+  @ApiResponse({ status: 200, description: 'List of sheets for the project' })
+  getSheetsByProjectId(@Param('projectId') projectId: string) {
+    return this.sheetService.getSheetsByProjectId(projectId);
   }
 
   @Get(':sheetId')
