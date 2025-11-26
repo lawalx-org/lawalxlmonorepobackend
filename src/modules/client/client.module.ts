@@ -9,9 +9,11 @@ import { EmployeesActivityServices } from './service/client.employees_activity.s
 import { Employees_activityController } from './controller/client.employes_activity.controller';
 import { ProjectStatusStack } from './service/client.project.status.services';
 import { ProjectStatusStackController } from './controller/client.project.status.controller';
+import { ClientDashboardOverdue_Project } from './service/client.dashboard.overedue.services';
+import { ClientProjectOverdueController } from './controller/client.dashboard.overedue.controller';
 
 @Module({
-  controllers: [ClientController,ClientDashboardStackController,ProjectTimelineController,Employees_activityController,ProjectStatusStackController],
-  providers: [ClientService,ClientDashboardStack,ProjectTimelineService,EmployeesActivityServices,ProjectStatusStack],
+  controllers: [ClientController,ClientDashboardStackController,ProjectTimelineController,Employees_activityController,ProjectStatusStackController,ClientProjectOverdueController],
+  providers: [ClientService,ClientDashboardStack,ProjectTimelineService,EmployeesActivityServices,ProjectStatusStack,ClientDashboardOverdue_Project],
 })
 export class ClientModule {}
