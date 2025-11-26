@@ -14,4 +14,4 @@ model Employee {
     projectEmployees   ProjectEmployee[]
     submitted          Submitted[]
   @@map("employees")
-}
+} 

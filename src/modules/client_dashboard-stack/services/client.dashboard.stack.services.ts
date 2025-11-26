@@ -168,7 +168,7 @@ export class ClientDashboardStack {
         laseMonth: submitOverdueThisMonth,
         lastMonth: submitOverdueLastMonth,
         grow: submitOverdueGrowth,
-        client_Left: leftUser
+        client_left: leftUser
       }
 
 
