@@ -1012,8 +1012,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.16.2
-   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+   * Prisma Client JS version: 6.19.0
+   * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
    */
   export type PrismaVersion = {
     client: string
@@ -1026,6 +1026,7 @@ export namespace Prisma {
    */
 
 
+  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -21656,6 +21657,7 @@ export namespace Prisma {
     startDate: Date | null
     progress: number | null
     estimatedCompletedDate: Date | null
+    projectCompleteDate: Date | null
     currentRate: string | null
     budget: string | null
     createdAt: Date | null
@@ -21676,6 +21678,7 @@ export namespace Prisma {
     startDate: Date | null
     progress: number | null
     estimatedCompletedDate: Date | null
+    projectCompleteDate: Date | null
     currentRate: string | null
     budget: string | null
     createdAt: Date | null
@@ -21697,6 +21700,7 @@ export namespace Prisma {
     progress: number
     chartList: number
     estimatedCompletedDate: number
+    projectCompleteDate: number
     currentRate: number
     budget: number
     createdAt: number
@@ -21731,6 +21735,7 @@ export namespace Prisma {
     startDate?: true
     progress?: true
     estimatedCompletedDate?: true
+    projectCompleteDate?: true
     currentRate?: true
     budget?: true
     createdAt?: true
@@ -21751,6 +21756,7 @@ export namespace Prisma {
     startDate?: true
     progress?: true
     estimatedCompletedDate?: true
+    projectCompleteDate?: true
     currentRate?: true
     budget?: true
     createdAt?: true
@@ -21772,6 +21778,7 @@ export namespace Prisma {
     progress?: true
     chartList?: true
     estimatedCompletedDate?: true
+    projectCompleteDate?: true
     currentRate?: true
     budget?: true
     createdAt?: true
@@ -21880,6 +21887,7 @@ export namespace Prisma {
     progress: number | null
     chartList: string[]
     estimatedCompletedDate: Date | null
+    projectCompleteDate: Date | null
     currentRate: string | null
     budget: string | null
     createdAt: Date
@@ -21920,6 +21928,7 @@ export namespace Prisma {
     progress?: boolean
     chartList?: boolean
     estimatedCompletedDate?: boolean
+    projectCompleteDate?: boolean
     currentRate?: boolean
     budget?: boolean
     createdAt?: boolean
@@ -21952,6 +21961,7 @@ export namespace Prisma {
     progress?: boolean
     chartList?: boolean
     estimatedCompletedDate?: boolean
+    projectCompleteDate?: boolean
     currentRate?: boolean
     budget?: boolean
     createdAt?: boolean
@@ -21975,6 +21985,7 @@ export namespace Prisma {
     progress?: boolean
     chartList?: boolean
     estimatedCompletedDate?: boolean
+    projectCompleteDate?: boolean
     currentRate?: boolean
     budget?: boolean
     createdAt?: boolean
@@ -21998,6 +22009,7 @@ export namespace Prisma {
     progress?: boolean
     chartList?: boolean
     estimatedCompletedDate?: boolean
+    projectCompleteDate?: boolean
     currentRate?: boolean
     budget?: boolean
     createdAt?: boolean
@@ -22006,7 +22018,7 @@ export namespace Prisma {
     longitude?: boolean
   }
 
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "description" | "status" | "priority" | "deadline" | "managerId" | "startDate" | "progress" | "chartList" | "estimatedCompletedDate" | "currentRate" | "budget" | "createdAt" | "updatedAt" | "latitude" | "longitude", ExtArgs["result"]["project"]>
+  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "description" | "status" | "priority" | "deadline" | "managerId" | "startDate" | "progress" | "chartList" | "estimatedCompletedDate" | "projectCompleteDate" | "currentRate" | "budget" | "createdAt" | "updatedAt" | "latitude" | "longitude", ExtArgs["result"]["project"]>
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     program?: boolean | ProgramDefaultArgs<ExtArgs>
     manager?: boolean | ManagerDefaultArgs<ExtArgs>
@@ -22056,6 +22068,7 @@ export namespace Prisma {
       progress: number | null
       chartList: string[]
       estimatedCompletedDate: Date | null
+      projectCompleteDate: Date | null
       currentRate: string | null
       budget: string | null
       createdAt: Date
@@ -22507,6 +22520,7 @@ export namespace Prisma {
     readonly progress: FieldRef<"Project", 'Int'>
     readonly chartList: FieldRef<"Project", 'String[]'>
     readonly estimatedCompletedDate: FieldRef<"Project", 'DateTime'>
+    readonly projectCompleteDate: FieldRef<"Project", 'DateTime'>
     readonly currentRate: FieldRef<"Project", 'String'>
     readonly budget: FieldRef<"Project", 'String'>
     readonly createdAt: FieldRef<"Project", 'DateTime'>
@@ -44836,6 +44850,7 @@ export namespace Prisma {
     progress: 'progress',
     chartList: 'chartList',
     estimatedCompletedDate: 'estimatedCompletedDate',
+    projectCompleteDate: 'projectCompleteDate',
     currentRate: 'currentRate',
     budget: 'budget',
     createdAt: 'createdAt',
@@ -46606,6 +46621,7 @@ export namespace Prisma {
     progress?: IntNullableFilter<"Project"> | number | null
     chartList?: StringNullableListFilter<"Project">
     estimatedCompletedDate?: DateTimeNullableFilter<"Project"> | Date | string | null
+    projectCompleteDate?: DateTimeNullableFilter<"Project"> | Date | string | null
     currentRate?: StringNullableFilter<"Project"> | string | null
     budget?: StringNullableFilter<"Project"> | string | null
     createdAt?: DateTimeFilter<"Project"> | Date | string
@@ -46637,6 +46653,7 @@ export namespace Prisma {
     progress?: SortOrderInput | SortOrder
     chartList?: SortOrder
     estimatedCompletedDate?: SortOrderInput | SortOrder
+    projectCompleteDate?: SortOrderInput | SortOrder
     currentRate?: SortOrderInput | SortOrder
     budget?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -46671,6 +46688,7 @@ export namespace Prisma {
     progress?: IntNullableFilter<"Project"> | number | null
     chartList?: StringNullableListFilter<"Project">
     estimatedCompletedDate?: DateTimeNullableFilter<"Project"> | Date | string | null
+    projectCompleteDate?: DateTimeNullableFilter<"Project"> | Date | string | null
     currentRate?: StringNullableFilter<"Project"> | string | null
     budget?: StringNullableFilter<"Project"> | string | null
     createdAt?: DateTimeFilter<"Project"> | Date | string
@@ -46702,6 +46720,7 @@ export namespace Prisma {
     progress?: SortOrderInput | SortOrder
     chartList?: SortOrder
     estimatedCompletedDate?: SortOrderInput | SortOrder
+    projectCompleteDate?: SortOrderInput | SortOrder
     currentRate?: SortOrderInput | SortOrder
     budget?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -46731,6 +46750,7 @@ export namespace Prisma {
     progress?: IntNullableWithAggregatesFilter<"Project"> | number | null
     chartList?: StringNullableListFilter<"Project">
     estimatedCompletedDate?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+    projectCompleteDate?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
     currentRate?: StringNullableWithAggregatesFilter<"Project"> | string | null
     budget?: StringNullableWithAggregatesFilter<"Project"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
@@ -49362,6 +49382,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -49393,6 +49414,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -49420,6 +49442,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49451,6 +49474,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49480,6 +49504,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -49499,6 +49524,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49520,6 +49546,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52043,6 +52070,7 @@ export namespace Prisma {
     progress?: SortOrder
     chartList?: SortOrder
     estimatedCompletedDate?: SortOrder
+    projectCompleteDate?: SortOrder
     currentRate?: SortOrder
     budget?: SortOrder
     createdAt?: SortOrder
@@ -52069,6 +52097,7 @@ export namespace Prisma {
     startDate?: SortOrder
     progress?: SortOrder
     estimatedCompletedDate?: SortOrder
+    projectCompleteDate?: SortOrder
     currentRate?: SortOrder
     budget?: SortOrder
     createdAt?: SortOrder
@@ -52089,6 +52118,7 @@ export namespace Prisma {
     startDate?: SortOrder
     progress?: SortOrder
     estimatedCompletedDate?: SortOrder
+    projectCompleteDate?: SortOrder
     currentRate?: SortOrder
     budget?: SortOrder
     createdAt?: SortOrder
@@ -55965,6 +55995,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -55995,6 +56026,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -56106,6 +56138,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56136,6 +56169,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57244,6 +57278,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -57273,6 +57308,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -57432,6 +57468,7 @@ export namespace Prisma {
     progress?: IntNullableFilter<"Project"> | number | null
     chartList?: StringNullableListFilter<"Project">
     estimatedCompletedDate?: DateTimeNullableFilter<"Project"> | Date | string | null
+    projectCompleteDate?: DateTimeNullableFilter<"Project"> | Date | string | null
     currentRate?: StringNullableFilter<"Project"> | string | null
     budget?: StringNullableFilter<"Project"> | string | null
     createdAt?: DateTimeFilter<"Project"> | Date | string
@@ -58574,6 +58611,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -58603,6 +58641,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59305,6 +59344,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59335,6 +59375,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59404,6 +59445,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59434,6 +59476,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59493,6 +59536,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59523,6 +59567,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59565,6 +59610,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59595,6 +59641,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59716,6 +59763,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59746,6 +59794,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59836,6 +59885,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59866,6 +59916,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60253,6 +60304,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -60283,6 +60335,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -60325,6 +60378,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60355,6 +60409,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61663,6 +61718,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -61693,6 +61749,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -61762,6 +61819,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61792,6 +61850,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62055,6 +62114,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -62085,6 +62145,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -62127,6 +62188,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62157,6 +62219,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62262,6 +62325,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -62292,6 +62356,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -62424,6 +62489,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62454,6 +62520,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62829,6 +62896,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -62856,6 +62924,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62885,6 +62954,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62913,6 +62983,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62973,6 +63044,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
+    projectCompleteDate?: Date | string | null
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -62992,6 +63064,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63021,6 +63094,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63049,6 +63123,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
