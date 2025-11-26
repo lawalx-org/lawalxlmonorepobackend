@@ -1,8 +1,8 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { ProjectTimelineService } from "../services/project_timeline.services";
 import { ApiTags, ApiQuery } from "@nestjs/swagger";
+import { ProjectTimelineService } from "../service/client.project_timeline.services";
 
-@ApiTags('project timeline')
+@ApiTags('client project timeline')
 @Controller("project-timeline")
 
 export class ProjectTimelineController {

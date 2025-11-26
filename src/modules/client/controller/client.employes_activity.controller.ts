@@ -1,8 +1,9 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { EmployeesActivityServices } from "../services/employees_activity.services";
-import { ApiTags, ApiQuery } from "@nestjs/swagger";
 
-@ApiTags('Employees activity')
+import { ApiTags, ApiQuery } from "@nestjs/swagger";
+import { EmployeesActivityServices } from "../service/client.employees_activity.services";
+
+@ApiTags('client Employees activity')
 @Controller("employees")
 export class Employees_activityController {
   constructor(private readonly employeesActivity: EmployeesActivityServices) {}

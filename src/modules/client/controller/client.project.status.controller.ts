@@ -1,8 +1,9 @@
 import { Controller, Get, Query } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { ProjectStatusStack } from "../services/project.status.services";
+import { ProjectStatusStack } from "../service/client.project.status.services";
 
-@ApiTags('project status stack')
+
+@ApiTags('client project status stack')
 @Controller("project-status-stack")
 export class ProjectStatusStackController {
     constructor(private readonly projectStatusStack: ProjectStatusStack) {}
