@@ -1,4 +1,3 @@
-/* eslint-disable */
 // src/redis/redis.service.ts
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -12,8 +11,8 @@ export class RedisService implements OnModuleInit {
 
   onModuleInit() {
     const redisUrl =
-      this.configService.get<string>('redis_connection_url') ||
-      'redis://localhost:6379';
+      this.configService.get<string>('redis.url') ||
+      `redis://${this.configService.get<string>('redis.host') || 'localhost'}:${this.configService.get<number>('redis.port') || 6379}`;
 
     this.redis = new Redis(redisUrl);
   }

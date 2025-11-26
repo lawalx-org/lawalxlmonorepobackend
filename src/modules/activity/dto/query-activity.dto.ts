@@ -1,9 +1,6 @@
 import {
   IsOptional,
   IsString,
-  IsInt,
-  Min,
-  Max,
   IsEnum,
   IsDateString,
   IsBoolean,
@@ -14,8 +11,9 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { Type, Transform } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { PaginationDto } from 'src/modules/utils/pagination/pagination.dto';
 
 export enum DateRangePreset {
   TODAY = 'today',
@@ -43,22 +41,7 @@ export class IsDateAfterConstraint implements ValidatorConstraintInterface {
   }
 }
 
-export class QueryActivityDto {
-  @ApiPropertyOptional({ example: 1, minimum: 1 })
-  @IsOptional()
-  @Type(() => Number)
-  @IsInt({ message: 'Page must be an integer' })
-  @Min(1, { message: 'Page must be at least 1' })
-  page?: number = 1;
-
-  @ApiPropertyOptional({ example: 20, minimum: 1, maximum: 100 })
-  @IsOptional()
-  @Type(() => Number)
-  @IsInt({ message: 'Limit must be an integer' })
-  @Min(1, { message: 'Limit must be at least 1' })
-  @Max(100, { message: 'Limit cannot exceed 100' })
-  limit?: number = 20;
-
+export class QueryActivityDto extends PaginationDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()

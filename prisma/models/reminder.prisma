@@ -1,0 +1,30 @@
+model Reminder {
+  id            String      @id @default(uuid())
+  message       String
+  nextTriggerAt DateTime?
+  repeatEvery   RepeatInterval?
+  isActive      Boolean     @default(true)
+  projectId     String
+  project       Project     @relation(fields: [projectId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  repeatOnDays  DayOfWeek[]
+  repeatOnDates Int[]
+  remindBefore  Int?
+}
+
+enum RepeatInterval {
+  WEEKLY
+  BI_WEEKLY
+  MONTHLY
+}
+
+enum DayOfWeek {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}

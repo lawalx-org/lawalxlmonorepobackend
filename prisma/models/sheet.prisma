@@ -1,0 +1,67 @@
+// model Sheet {
+//   id        String   @id @default(uuid())
+//   name      String
+//   cells     Cell[]
+//   snapshots SheetSnapshot[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+
+//   chartId    String      @unique
+//   projectId   String     @unique
+//   chart      ChartTable  @relation(fields: [chartId], references: [id])
+//   project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+// }
+
+model Sheet {
+  id        String      @id @default(uuid())
+  name      String
+  cells     Cell[]
+  snapshots SheetSnapshot[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  chartId   String
+  projectId String
+
+  chart     ChartTable?
+  project   Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, chartId])
+}
+
+
+model Cell {
+  id        String   @id @default(uuid())
+  row       Int
+  col       Int
+  value     String
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sheetId, row, col])
+}
+
+model SheetSnapshot {
+  id        String   @id @default(uuid())
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId   String
+  data      Json
+  createdAt DateTime @default(now())
+}
+
+
+
+
+model submiteCell {
+  id        String   @id @default(uuid())
+  row       Int
+  col       Int
+  value     String
+  sheetId   String
+  employeeId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

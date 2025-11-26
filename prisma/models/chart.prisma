@@ -1,0 +1,60 @@
+// model ChartTable {
+//   id        String    @id @default(uuid())
+//   title     String
+//   status    ChartStatus
+//   category  ChartName
+//   xAxis    Json
+//   yAxis    Json
+//   zAxis    Json?
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+
+//   sheet     Sheet?
+// }
+
+
+model ChartTable {
+  id        String    @id @default(uuid())
+  title     String
+  status    ChartStatus
+  category  ChartName
+  xAxis     Json
+  yAxis     Json
+  zAxis     Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  sheet     Sheet? @relation(fields: [sheetId], references: [id])
+  sheetId   String? @unique
+}
+
+
+
+enum ChartStatus {
+  ACTIVE
+  INACTIVE
+  DEPRECATED
+  COMPLETED
+}
+
+
+
+
+enum ChartName {
+  BAR
+  LINE
+  PIE
+  DOUGHNUT
+  RADAR
+  POLAR_AREA
+  BUBBLE
+  SCATTER
+  AREA
+  MIXED
+  GAUGE
+  FUNNEL
+  TREEMAP
+  SUNBURST
+  SANKEY
+  TABLE
+}

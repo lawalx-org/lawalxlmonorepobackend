@@ -1,6 +1,6 @@
 model SuperAdmin {
   id              String   @id @default(uuid())
-  userId          String   @unique
+  userId          String?  @unique
   clientLogo      String?
   favicon         String?
   primaryColor    String?
@@ -9,7 +9,7 @@ model SuperAdmin {
   updatedAt       DateTime @updatedAt
 
   // Relations
-  user                               User                                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                               User?                               @relation(fields: [userId], references: [id], onDelete: SetNull)
   notificationPermissionSuperAdmin   NotificationPermissionSuperAdmin?
 
   @@map("super_admins")

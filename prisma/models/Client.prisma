@@ -1,6 +1,6 @@
 model Client {
   id                    String            @id @default(uuid())
-  userId                String            @unique
+  userId                String?           @unique
   email                 String            @unique
   contactPersonName     String?
   clientLogo            String?
@@ -25,7 +25,7 @@ model Client {
   updatedAt             DateTime          @updatedAt
 
   // Relations
-  user                  User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                  User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
   // managers              Manager[]
   // employees             Employee[]
   // viewers               Viewer[]

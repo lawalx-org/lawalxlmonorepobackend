@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 services:
   postgres_db:
     image: postgres:15
@@ -6,6 +11,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+<<<<<<< HEAD
       POSTGRES_DB: mydb
     ports:
       - '5432:5432'
@@ -75,3 +81,69 @@ volumes:
 networks:
   app_network:
     driver: bridge
+=======
+      POSTGRES_DB: appdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis_cache:
+    image: redis:7
+    container_name: redis_cache
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - redisdata:/data
+
+  nest-app:
+    image: sakibsakib/lawex:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nest-app
+    restart: always
+    depends_on:
+      - postgres_db
+      - redis_cache
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@postgres_db:5432/appdb?schema=public"
+      REDIS_HOST: "redis_cache"
+      REDIS_PORT: "6379"
+      REDIS_CONNECTION_URL: "redis://redis_cache:6379"
+      NODE_ENV: development
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  # prisma_studio:
+    # image: node:20-bullseye
+    # container_name: prisma_studio
+    # working_dir: /usr/src/app
+    # user: "root"
+    # volumes:
+    #   - .:/usr/src/app
+    # command: >
+    #   sh -c "npm ci &&
+    #          npx prisma generate &&
+    #          npx prisma studio --port 5555 --browser none"
+    # depends_on:
+    #   - postgres_db
+    # ports:
+    #   - "5556:5555"
+    # env_file:
+    #   - .env
+    # environment:
+    #   DATABASE_URL: ${DATABASE_URL}
+    # networks:
+    #   - app_network
+    # restart: always
+
+
+volumes:
+  pgdata:
+  redisdata:
+>>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e

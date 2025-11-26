@@ -29,7 +29,6 @@ export default () => ({
   mail_from_name: process.env.MAIL_FROM_NAME,
   mail_from_email: process.env.MAIL_FROM_EMAIL,
 
-  redis_connection_url: process.env.REDIS_CONNECTION_URL,
   database: {
     url: process.env.DATABASE_URL,
   },
@@ -52,5 +51,11 @@ export default () => ({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK_URL,
+  },
+
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT as string, 10),
+    url: process.env.REDIS_CONNECTION_URL,
   },
 });

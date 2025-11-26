@@ -3,13 +3,13 @@ model Project {
   id                        String        @id @default(uuid())
   programId                 String
   name                      String
-  datetime                  DateTime?
-  uploadCycle               ProjectCycle
+  // uploadbeforeday           String
+  // uploadCycle               ProjectCycle
   description               String
-  dataReceivedTime          String?
-  beforeSubmitData          Int?
-  importFiles               String[]
-  importMainFile            String?
+  // dataReceivedTime          String?
+  // beforeSubmitData          Int?
+  // weakuploadData            String[]
+  // monthlyuploadData         String[]
   status                    ProjectStatus @default(PENDING)
   priority                  Priority
   deadline                  DateTime
@@ -18,6 +18,7 @@ model Project {
   progress                  Int?
   chartList                 String[]      // Seed create that chart list
   estimatedCompletedDate    DateTime?
+  projectCompleteDate       DateTime?   // this is project end date 
   currentRate               String?
   budget                    String?
   createdAt                 DateTime      @default(now())
@@ -33,7 +34,9 @@ model Project {
   activities                Activity[]
   reviews                   Review[]
   requestsToAddProjectMember RequestToAddProjectMember[]
-
+  submitted                 Submitted[]
+  reminders Reminder[]
+  sheets                    Sheet[] 
   @@map("projects")
 }
 
