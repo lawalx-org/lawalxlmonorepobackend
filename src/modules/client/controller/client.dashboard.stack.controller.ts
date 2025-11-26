@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ClientDashboardStack } from '../services/client.dashboard.stack.services';
+import { ClientDashboardStack } from '../service/client.dashboard.stack.services';
+
 
 @ApiTags('client dashboard stack')
 @Controller('client-stack-dashboard')
