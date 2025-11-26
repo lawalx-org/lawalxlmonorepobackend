@@ -21,6 +21,9 @@ import { ChartModule } from './modules/chart/chart.module';
 import { ManagerModule } from './modules/manager/manager.module';
 import { SeedService } from './common/seed/seed.services';
 import { Client_Dash_stakeModule } from './modules/client_dashboard-stack/client.dashboard.stack.module';
+import { project_status_stackModule } from './modules/project_status/project.status.module';
+import { project_timelineModule } from './modules/project_timeline/project-timeline.module';
+import { employees_activityModule } from './modules/employees_activity/employees_activity.module';
 
 @Module({
   imports: [
@@ -61,6 +64,9 @@ import { Client_Dash_stakeModule } from './modules/client_dashboard-stack/client
     RedisModule,
     ChartModule,
     Client_Dash_stakeModule,
+    project_status_stackModule,
+    project_timelineModule,
+    employees_activityModule
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, SeedService],
