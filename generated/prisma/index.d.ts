@@ -104,8 +104,6 @@ export type ProjectEmployee = $Result.DefaultSelection<Prisma.$ProjectEmployeePa
  */
 export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
 /**
-<<<<<<< HEAD
-=======
  * Model SubmissionReturn
  * 
  */
@@ -116,7 +114,6 @@ export type SubmissionReturn = $Result.DefaultSelection<Prisma.$SubmissionReturn
  */
 export type Submitted = $Result.DefaultSelection<Prisma.$SubmittedPayload>
 /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
  * Model SuperAdmin
  * 
  */
@@ -161,8 +158,6 @@ export type RequestToAddProjectMember = $Result.DefaultSelection<Prisma.$Request
  * 
  */
 export type Viewer = $Result.DefaultSelection<Prisma.$ViewerPayload>
-<<<<<<< HEAD
-=======
 /**
  * Model ChartTable
  * 
@@ -193,15 +188,11 @@ export type SheetSnapshot = $Result.DefaultSelection<Prisma.$SheetSnapshotPayloa
  * 
  */
 export type submiteCell = $Result.DefaultSelection<Prisma.$submiteCellPayload>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 
 /**
  * Enums
  */
 export namespace $Enums {
-<<<<<<< HEAD
-  export const Role: {
-=======
   export const ChartStatus: {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
@@ -235,7 +226,6 @@ export type ChartName = (typeof ChartName)[keyof typeof ChartName]
 
 
 export const Role: {
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   VIEWER: 'VIEWER',
   EMPLOYEE: 'EMPLOYEE',
   SUPPORTER: 'SUPPORTER',
@@ -311,12 +301,8 @@ export const ProjectStatus: {
   LIVE: 'LIVE',
   DRAFT: 'DRAFT',
   OVERDUE: 'OVERDUE',
-<<<<<<< HEAD
-  PROBLEM: 'PROBLEM'
-=======
   PROBLEM: 'PROBLEM',
   COMPLETED: 'COMPLETED'
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 };
 
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
@@ -384,10 +370,6 @@ export const ActivityActionType: {
 
 export type ActivityActionType = (typeof ActivityActionType)[keyof typeof ActivityActionType]
 
-<<<<<<< HEAD
-}
-
-=======
 
 export const SubmittedStatus: {
   APPROVED: 'APPROVED',
@@ -437,7 +419,6 @@ export type ChartName = $Enums.ChartName
 
 export const ChartName: typeof $Enums.ChartName
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
@@ -490,8 +471,6 @@ export type ActivityActionType = $Enums.ActivityActionType
 
 export const ActivityActionType: typeof $Enums.ActivityActionType
 
-<<<<<<< HEAD
-=======
 export type SubmittedStatus = $Enums.SubmittedStatus
 
 export const SubmittedStatus: typeof $Enums.SubmittedStatus
@@ -508,7 +487,6 @@ export type DayOfWeek = $Enums.DayOfWeek
 
 export const DayOfWeek: typeof $Enums.DayOfWeek
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 /**
  * ##  Prisma Client ʲˢ
  *
@@ -808,8 +786,6 @@ export class PrismaClient<
   get review(): Prisma.ReviewDelegate<ExtArgs, ClientOptions>;
 
   /**
-<<<<<<< HEAD
-=======
    * `prisma.submissionReturn`: Exposes CRUD operations for the **SubmissionReturn** model.
     * Example usage:
     * ```ts
@@ -830,7 +806,6 @@ export class PrismaClient<
   get submitted(): Prisma.SubmittedDelegate<ExtArgs, ClientOptions>;
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * `prisma.superAdmin`: Exposes CRUD operations for the **SuperAdmin** model.
     * Example usage:
     * ```ts
@@ -919,8 +894,6 @@ export class PrismaClient<
     * ```
     */
   get viewer(): Prisma.ViewerDelegate<ExtArgs, ClientOptions>;
-<<<<<<< HEAD
-=======
 
   /**
    * `prisma.chartTable`: Exposes CRUD operations for the **ChartTable** model.
@@ -981,7 +954,6 @@ export class PrismaClient<
     * ```
     */
   get submiteCell(): Prisma.submiteCellDelegate<ExtArgs, ClientOptions>;
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 }
 
 export namespace Prisma {
@@ -1040,13 +1012,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-<<<<<<< HEAD
-   * Prisma Client JS version: 6.16.3
-   * Query Engine version: bb420e667c1820a8c05a38023385f6cc7ef8e83a
-=======
-   * Prisma Client JS version: 6.19.0
-   * Query Engine version: 2ba551f319ab1df4bc874a89965d8b3641056773
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
+   * Prisma Client JS version: 6.18.0
+   * Query Engine version: 34b5a692b7bd79939a9a2c3ef97d816e749cda2f
    */
   export type PrismaVersion = {
     client: string
@@ -1059,10 +1026,7 @@ export namespace Prisma {
    */
 
 
-<<<<<<< HEAD
-=======
   export import Bytes = runtime.Bytes
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -1449,11 +1413,8 @@ export namespace Prisma {
     Project: 'Project',
     ProjectEmployee: 'ProjectEmployee',
     Review: 'Review',
-<<<<<<< HEAD
-=======
     SubmissionReturn: 'SubmissionReturn',
     Submitted: 'Submitted',
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     SuperAdmin: 'SuperAdmin',
     Supporter: 'Supporter',
     Task: 'Task',
@@ -1462,9 +1423,6 @@ export namespace Prisma {
     Tag: 'Tag',
     ReferredPerson: 'ReferredPerson',
     RequestToAddProjectMember: 'RequestToAddProjectMember',
-<<<<<<< HEAD
-    Viewer: 'Viewer'
-=======
     Viewer: 'Viewer',
     ChartTable: 'ChartTable',
     Reminder: 'Reminder',
@@ -1472,7 +1430,6 @@ export namespace Prisma {
     Cell: 'Cell',
     SheetSnapshot: 'SheetSnapshot',
     submiteCell: 'submiteCell'
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1491,11 +1448,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-<<<<<<< HEAD
-      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer"
-=======
       modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer" | "chartTable" | "reminder" | "sheet" | "cell" | "sheetSnapshot" | "submiteCell"
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2831,8 +2784,6 @@ export namespace Prisma {
           }
         }
       }
-<<<<<<< HEAD
-=======
       SubmissionReturn: {
         payload: Prisma.$SubmissionReturnPayload<ExtArgs>
         fields: Prisma.SubmissionReturnFieldRefs
@@ -2981,7 +2932,6 @@ export namespace Prisma {
           }
         }
       }
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       SuperAdmin: {
         payload: Prisma.$SuperAdminPayload<ExtArgs>
         fields: Prisma.SuperAdminFieldRefs
@@ -3648,8 +3598,6 @@ export namespace Prisma {
           }
         }
       }
-<<<<<<< HEAD
-=======
       ChartTable: {
         payload: Prisma.$ChartTablePayload<ExtArgs>
         fields: Prisma.ChartTableFieldRefs
@@ -4094,7 +4042,6 @@ export namespace Prisma {
           }
         }
       }
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     }
   } & {
     other: {
@@ -4209,11 +4156,8 @@ export namespace Prisma {
     project?: ProjectOmit
     projectEmployee?: ProjectEmployeeOmit
     review?: ReviewOmit
-<<<<<<< HEAD
-=======
     submissionReturn?: SubmissionReturnOmit
     submitted?: SubmittedOmit
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     superAdmin?: SuperAdminOmit
     supporter?: SupporterOmit
     task?: TaskOmit
@@ -4223,15 +4167,12 @@ export namespace Prisma {
     referredPerson?: ReferredPersonOmit
     requestToAddProjectMember?: RequestToAddProjectMemberOmit
     viewer?: ViewerOmit
-<<<<<<< HEAD
-=======
     chartTable?: ChartTableOmit
     reminder?: ReminderOmit
     sheet?: SheetOmit
     cell?: CellOmit
     sheetSnapshot?: SheetSnapshotOmit
     submiteCell?: submiteCellOmit
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   /* Types for Logging */
@@ -4362,18 +4303,12 @@ export namespace Prisma {
 
   export type EmployeeCountOutputType = {
     projectEmployees: number
-<<<<<<< HEAD
-=======
     submitted: number
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     projectEmployees?: boolean | EmployeeCountOutputTypeCountProjectEmployeesArgs
-<<<<<<< HEAD
-=======
     submitted?: boolean | EmployeeCountOutputTypeCountSubmittedArgs
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   // Custom InputTypes
@@ -4394,8 +4329,6 @@ export namespace Prisma {
     where?: ProjectEmployeeWhereInput
   }
 
-<<<<<<< HEAD
-=======
   /**
    * EmployeeCountOutputType without action
    */
@@ -4403,7 +4336,6 @@ export namespace Prisma {
     where?: SubmittedWhereInput
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 
   /**
    * Count Type ManagerCountOutputType
@@ -4517,12 +4449,9 @@ export namespace Prisma {
     activities: number
     reviews: number
     requestsToAddProjectMember: number
-<<<<<<< HEAD
-=======
     submitted: number
     reminders: number
     sheets: number
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4531,12 +4460,9 @@ export namespace Prisma {
     activities?: boolean | ProjectCountOutputTypeCountActivitiesArgs
     reviews?: boolean | ProjectCountOutputTypeCountReviewsArgs
     requestsToAddProjectMember?: boolean | ProjectCountOutputTypeCountRequestsToAddProjectMemberArgs
-<<<<<<< HEAD
-=======
     submitted?: boolean | ProjectCountOutputTypeCountSubmittedArgs
     reminders?: boolean | ProjectCountOutputTypeCountRemindersArgs
     sheets?: boolean | ProjectCountOutputTypeCountSheetsArgs
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   // Custom InputTypes
@@ -4585,8 +4511,6 @@ export namespace Prisma {
     where?: RequestToAddProjectMemberWhereInput
   }
 
-<<<<<<< HEAD
-=======
   /**
    * ProjectCountOutputType without action
    */
@@ -4608,7 +4532,6 @@ export namespace Prisma {
     where?: SheetWhereInput
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 
   /**
    * Count Type UserCountOutputType
@@ -4660,8 +4583,6 @@ export namespace Prisma {
 
 
   /**
-<<<<<<< HEAD
-=======
    * Count Type SheetCountOutputType
    */
 
@@ -4702,7 +4623,6 @@ export namespace Prisma {
 
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Models
    */
 
@@ -6118,11 +6038,7 @@ export namespace Prisma {
 
   export type ClientGroupByOutputType = {
     id: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email: string
     contactPersonName: string | null
     clientLogo: string | null
@@ -6191,11 +6107,7 @@ export namespace Prisma {
     trialPeriod?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Client$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: boolean | Client$referredPersonsArgs<ExtArgs>
     tickets?: boolean | Client$ticketsArgs<ExtArgs>
     programs?: boolean | Client$programsArgs<ExtArgs>
@@ -6228,11 +6140,7 @@ export namespace Prisma {
     trialPeriod?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Client$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["client"]>
 
   export type ClientSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6260,11 +6168,7 @@ export namespace Prisma {
     trialPeriod?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Client$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["client"]>
 
   export type ClientSelectScalar = {
@@ -6296,11 +6200,7 @@ export namespace Prisma {
 
   export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "email" | "contactPersonName" | "clientLogo" | "favicon" | "primaryColor" | "secondaryColor" | "footerText" | "supportMail" | "subdomain" | "serverLocation" | "category" | "onboarding" | "welcomeDashboard" | "chartList" | "storage" | "threshold" | "archiveAfter" | "userWarning" | "adminNote" | "trialPeriod" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
   export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Client$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: boolean | Client$referredPersonsArgs<ExtArgs>
     tickets?: boolean | Client$ticketsArgs<ExtArgs>
     programs?: boolean | Client$programsArgs<ExtArgs>
@@ -6308,27 +6208,16 @@ export namespace Prisma {
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type ClientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Client$userArgs<ExtArgs>
   }
   export type ClientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Client$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type $ClientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Client"
     objects: {
-<<<<<<< HEAD
-      user: Prisma.$UserPayload<ExtArgs>
-=======
       user: Prisma.$UserPayload<ExtArgs> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       referredPersons: Prisma.$ReferredPersonPayload<ExtArgs>[]
       tickets: Prisma.$TicketPayload<ExtArgs>[]
       programs: Prisma.$ProgramPayload<ExtArgs>[]
@@ -6336,11 +6225,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-<<<<<<< HEAD
-      userId: string
-=======
       userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       email: string
       contactPersonName: string | null
       clientLogo: string | null
@@ -6757,11 +6642,7 @@ export namespace Prisma {
    */
   export interface Prisma__ClientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-<<<<<<< HEAD
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-=======
     user<T extends Client$userArgs<ExtArgs> = {}>(args?: Subset<T, Client$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons<T extends Client$referredPersonsArgs<ExtArgs> = {}>(args?: Subset<T, Client$referredPersonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReferredPersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tickets<T extends Client$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, Client$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     programs<T extends Client$programsArgs<ExtArgs> = {}>(args?: Subset<T, Client$programsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7215,8 +7096,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Client.user
    */
   export type Client$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7236,7 +7115,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Client.referredPersons
    */
   export type Client$referredPersonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7489,11 +7367,7 @@ export namespace Prisma {
 
   export type EmployeeGroupByOutputType = {
     id: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt: Date
     updatedAt: Date
     description: string
@@ -7526,14 +7400,9 @@ export namespace Prisma {
     description?: boolean
     joinedDate?: boolean
     skills?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    projectEmployees?: boolean | Employee$projectEmployeesArgs<ExtArgs>
-=======
     user?: boolean | Employee$userArgs<ExtArgs>
     projectEmployees?: boolean | Employee$projectEmployeesArgs<ExtArgs>
     submitted?: boolean | Employee$submittedArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["employee"]>
 
@@ -7545,11 +7414,7 @@ export namespace Prisma {
     description?: boolean
     joinedDate?: boolean
     skills?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Employee$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["employee"]>
 
   export type EmployeeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7560,11 +7425,7 @@ export namespace Prisma {
     description?: boolean
     joinedDate?: boolean
     skills?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Employee$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["employee"]>
 
   export type EmployeeSelectScalar = {
@@ -7579,17 +7440,6 @@ export namespace Prisma {
 
   export type EmployeeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt" | "description" | "joinedDate" | "skills", ExtArgs["result"]["employee"]>
   export type EmployeeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    projectEmployees?: boolean | Employee$projectEmployeesArgs<ExtArgs>
-    _count?: boolean | EmployeeCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type EmployeeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type EmployeeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Employee$userArgs<ExtArgs>
     projectEmployees?: boolean | Employee$projectEmployeesArgs<ExtArgs>
     submitted?: boolean | Employee$submittedArgs<ExtArgs>
@@ -7600,20 +7450,11 @@ export namespace Prisma {
   }
   export type EmployeeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Employee$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type $EmployeePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Employee"
     objects: {
-<<<<<<< HEAD
-      user: Prisma.$UserPayload<ExtArgs>
-      projectEmployees: Prisma.$ProjectEmployeePayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      userId: string
-=======
       user: Prisma.$UserPayload<ExtArgs> | null
       projectEmployees: Prisma.$ProjectEmployeePayload<ExtArgs>[]
       submitted: Prisma.$SubmittedPayload<ExtArgs>[]
@@ -7621,7 +7462,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       createdAt: Date
       updatedAt: Date
       description: string
@@ -8021,14 +7861,9 @@ export namespace Prisma {
    */
   export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-<<<<<<< HEAD
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    projectEmployees<T extends Employee$projectEmployeesArgs<ExtArgs> = {}>(args?: Subset<T, Employee$projectEmployeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectEmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-=======
     user<T extends Employee$userArgs<ExtArgs> = {}>(args?: Subset<T, Employee$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     projectEmployees<T extends Employee$projectEmployeesArgs<ExtArgs> = {}>(args?: Subset<T, Employee$projectEmployeesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectEmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     submitted<T extends Employee$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Employee$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8461,8 +8296,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Employee.user
    */
   export type Employee$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8482,7 +8315,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Employee.projectEmployees
    */
   export type Employee$projectEmployeesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8507,8 +8339,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Employee.submitted
    */
   export type Employee$submittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8533,7 +8363,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Employee without action
    */
   export type EmployeeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9798,11 +9627,7 @@ export namespace Prisma {
     id: string
     amount: number
     transactionId: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt: Date
     updatedAt: Date
     _count: PaymentCountAggregateOutputType | null
@@ -9833,11 +9658,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Payment$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9847,11 +9668,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Payment$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9861,11 +9678,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Payment$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["payment"]>
 
   export type PaymentSelectScalar = {
@@ -9879,15 +9692,6 @@ export namespace Prisma {
 
   export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "transactionId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type PaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Payment$userArgs<ExtArgs>
   }
   export type PaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9895,27 +9699,18 @@ export namespace Prisma {
   }
   export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Payment$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type $PaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Payment"
     objects: {
-<<<<<<< HEAD
-      user: Prisma.$UserPayload<ExtArgs>
-=======
       user: Prisma.$UserPayload<ExtArgs> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       amount: number
       transactionId: string
-<<<<<<< HEAD
-      userId: string
-=======
       userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["payment"]>
@@ -10312,11 +10107,7 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-<<<<<<< HEAD
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-=======
     user<T extends Payment$userArgs<ExtArgs> = {}>(args?: Subset<T, Payment$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10748,8 +10539,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Payment.user
    */
   export type Payment$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10769,7 +10558,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Payment without action
    */
   export type PaymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10931,11 +10719,7 @@ export namespace Prisma {
 
   export type ManagerGroupByOutputType = {
     id: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills: string[]
     createdAt: Date
     updatedAt: Date
@@ -10968,11 +10752,7 @@ export namespace Prisma {
     updatedAt?: boolean
     description?: boolean
     joinedDate?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Manager$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects?: boolean | Manager$projectsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Manager$requestsToAddProjectMemberArgs<ExtArgs>
     _count?: boolean | ManagerCountOutputTypeDefaultArgs<ExtArgs>
@@ -10986,11 +10766,7 @@ export namespace Prisma {
     updatedAt?: boolean
     description?: boolean
     joinedDate?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Manager$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["manager"]>
 
   export type ManagerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11001,11 +10777,7 @@ export namespace Prisma {
     updatedAt?: boolean
     description?: boolean
     joinedDate?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Manager$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["manager"]>
 
   export type ManagerSelectScalar = {
@@ -11020,47 +10792,28 @@ export namespace Prisma {
 
   export type ManagerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "skills" | "createdAt" | "updatedAt" | "description" | "joinedDate", ExtArgs["result"]["manager"]>
   export type ManagerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Manager$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects?: boolean | Manager$projectsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Manager$requestsToAddProjectMemberArgs<ExtArgs>
     _count?: boolean | ManagerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ManagerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type ManagerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Manager$userArgs<ExtArgs>
   }
   export type ManagerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Manager$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type $ManagerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Manager"
     objects: {
-<<<<<<< HEAD
-      user: Prisma.$UserPayload<ExtArgs>
-=======
       user: Prisma.$UserPayload<ExtArgs> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       projects: Prisma.$ProjectPayload<ExtArgs>[]
       requestsToAddProjectMember: Prisma.$RequestToAddProjectMemberPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-<<<<<<< HEAD
-      userId: string
-=======
       userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       skills: string[]
       createdAt: Date
       updatedAt: Date
@@ -11460,11 +11213,7 @@ export namespace Prisma {
    */
   export interface Prisma__ManagerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-<<<<<<< HEAD
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-=======
     user<T extends Manager$userArgs<ExtArgs> = {}>(args?: Subset<T, Manager$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects<T extends Manager$projectsArgs<ExtArgs> = {}>(args?: Subset<T, Manager$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     requestsToAddProjectMember<T extends Manager$requestsToAddProjectMemberArgs<ExtArgs> = {}>(args?: Subset<T, Manager$requestsToAddProjectMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestToAddProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -11899,8 +11648,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Manager.user
    */
   export type Manager$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11920,7 +11667,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Manager.projects
    */
   export type Manager$projectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12000,10 +11746,7 @@ export namespace Prisma {
   export type NotificationMinAggregateOutputType = {
     id: string | null
     senderId: string | null
-<<<<<<< HEAD
-=======
     projectId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: string | null
     type: string | null
     isRead: boolean | null
@@ -12014,10 +11757,7 @@ export namespace Prisma {
   export type NotificationMaxAggregateOutputType = {
     id: string | null
     senderId: string | null
-<<<<<<< HEAD
-=======
     projectId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: string | null
     type: string | null
     isRead: boolean | null
@@ -12029,10 +11769,7 @@ export namespace Prisma {
     id: number
     senderId: number
     receiverIds: number
-<<<<<<< HEAD
-=======
     projectId: number
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: number
     type: number
     isRead: number
@@ -12045,10 +11782,7 @@ export namespace Prisma {
   export type NotificationMinAggregateInputType = {
     id?: true
     senderId?: true
-<<<<<<< HEAD
-=======
     projectId?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: true
     type?: true
     isRead?: true
@@ -12059,10 +11793,7 @@ export namespace Prisma {
   export type NotificationMaxAggregateInputType = {
     id?: true
     senderId?: true
-<<<<<<< HEAD
-=======
     projectId?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: true
     type?: true
     isRead?: true
@@ -12074,10 +11805,7 @@ export namespace Prisma {
     id?: true
     senderId?: true
     receiverIds?: true
-<<<<<<< HEAD
-=======
     projectId?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: true
     type?: true
     isRead?: true
@@ -12162,10 +11890,7 @@ export namespace Prisma {
     id: string
     senderId: string
     receiverIds: string[]
-<<<<<<< HEAD
-=======
     projectId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: string
     type: string
     isRead: boolean
@@ -12194,10 +11919,7 @@ export namespace Prisma {
     id?: boolean
     senderId?: boolean
     receiverIds?: boolean
-<<<<<<< HEAD
-=======
     projectId?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: boolean
     type?: boolean
     isRead?: boolean
@@ -12211,10 +11933,7 @@ export namespace Prisma {
     id?: boolean
     senderId?: boolean
     receiverIds?: boolean
-<<<<<<< HEAD
-=======
     projectId?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: boolean
     type?: boolean
     isRead?: boolean
@@ -12226,10 +11945,7 @@ export namespace Prisma {
     id?: boolean
     senderId?: boolean
     receiverIds?: boolean
-<<<<<<< HEAD
-=======
     projectId?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: boolean
     type?: boolean
     isRead?: boolean
@@ -12241,10 +11957,7 @@ export namespace Prisma {
     id?: boolean
     senderId?: boolean
     receiverIds?: boolean
-<<<<<<< HEAD
-=======
     projectId?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: boolean
     type?: boolean
     isRead?: boolean
@@ -12252,11 +11965,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-<<<<<<< HEAD
-  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senderId" | "receiverIds" | "context" | "type" | "isRead" | "createdAt" | "updatedAt", ExtArgs["result"]["notification"]>
-=======
   export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "senderId" | "receiverIds" | "projectId" | "context" | "type" | "isRead" | "createdAt" | "updatedAt", ExtArgs["result"]["notification"]>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     provisions?: boolean | Notification$provisionsArgs<ExtArgs>
     _count?: boolean | NotificationCountOutputTypeDefaultArgs<ExtArgs>
@@ -12273,10 +11982,7 @@ export namespace Prisma {
       id: string
       senderId: string
       receiverIds: string[]
-<<<<<<< HEAD
-=======
       projectId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       context: string
       type: string
       isRead: boolean
@@ -12709,10 +12415,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Notification", 'String'>
     readonly senderId: FieldRef<"Notification", 'String'>
     readonly receiverIds: FieldRef<"Notification", 'String[]'>
-<<<<<<< HEAD
-=======
     readonly projectId: FieldRef<"Notification", 'String'>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     readonly context: FieldRef<"Notification", 'String'>
     readonly type: FieldRef<"Notification", 'String'>
     readonly isRead: FieldRef<"Notification", 'Boolean'>
@@ -20757,11 +20460,7 @@ export namespace Prisma {
     programName: string | null
     datetime: string | null
     programDescription: string | null
-<<<<<<< HEAD
-    priority: string | null
-=======
     priority: $Enums.Priority | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string | null
     progress: number | null
     createdAt: Date | null
@@ -20774,11 +20473,7 @@ export namespace Prisma {
     programName: string | null
     datetime: string | null
     programDescription: string | null
-<<<<<<< HEAD
-    priority: string | null
-=======
     priority: $Enums.Priority | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string | null
     progress: number | null
     createdAt: Date | null
@@ -20940,11 +20635,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress: number | null
     createdAt: Date
@@ -21052,11 +20743,7 @@ export namespace Prisma {
       programName: string
       datetime: string
       programDescription: string
-<<<<<<< HEAD
-      priority: string
-=======
       priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       deadline: string
       progress: number | null
       createdAt: Date
@@ -21491,11 +21178,7 @@ export namespace Prisma {
     readonly programName: FieldRef<"Program", 'String'>
     readonly datetime: FieldRef<"Program", 'String'>
     readonly programDescription: FieldRef<"Program", 'String'>
-<<<<<<< HEAD
-    readonly priority: FieldRef<"Program", 'String'>
-=======
     readonly priority: FieldRef<"Program", 'Priority'>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     readonly deadline: FieldRef<"Program", 'String'>
     readonly progress: FieldRef<"Program", 'Int'>
     readonly createdAt: FieldRef<"Program", 'DateTime'>
@@ -21951,20 +21634,12 @@ export namespace Prisma {
   }
 
   export type ProjectAvgAggregateOutputType = {
-<<<<<<< HEAD
-    beforeSubmitData: number | null
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     progress: number | null
     latitude: number | null
     longitude: number | null
   }
 
   export type ProjectSumAggregateOutputType = {
-<<<<<<< HEAD
-    beforeSubmitData: number | null
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     progress: number | null
     latitude: number | null
     longitude: number | null
@@ -21974,16 +21649,7 @@ export namespace Prisma {
     id: string | null
     programId: string | null
     name: string | null
-<<<<<<< HEAD
-    datetime: Date | null
-    uploadCycle: $Enums.ProjectCycle | null
     description: string | null
-    dataReceivedTime: string | null
-    beforeSubmitData: number | null
-    importMainFile: string | null
-=======
-    description: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status: $Enums.ProjectStatus | null
     priority: $Enums.Priority | null
     deadline: Date | null
@@ -21991,10 +21657,7 @@ export namespace Prisma {
     startDate: Date | null
     progress: number | null
     estimatedCompletedDate: Date | null
-<<<<<<< HEAD
-=======
     projectCompleteDate: Date | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate: string | null
     budget: string | null
     createdAt: Date | null
@@ -22007,16 +21670,7 @@ export namespace Prisma {
     id: string | null
     programId: string | null
     name: string | null
-<<<<<<< HEAD
-    datetime: Date | null
-    uploadCycle: $Enums.ProjectCycle | null
     description: string | null
-    dataReceivedTime: string | null
-    beforeSubmitData: number | null
-    importMainFile: string | null
-=======
-    description: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status: $Enums.ProjectStatus | null
     priority: $Enums.Priority | null
     deadline: Date | null
@@ -22024,10 +21678,7 @@ export namespace Prisma {
     startDate: Date | null
     progress: number | null
     estimatedCompletedDate: Date | null
-<<<<<<< HEAD
-=======
     projectCompleteDate: Date | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate: string | null
     budget: string | null
     createdAt: Date | null
@@ -22040,17 +21691,7 @@ export namespace Prisma {
     id: number
     programId: number
     name: number
-<<<<<<< HEAD
-    datetime: number
-    uploadCycle: number
     description: number
-    dataReceivedTime: number
-    beforeSubmitData: number
-    importFiles: number
-    importMainFile: number
-=======
-    description: number
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status: number
     priority: number
     deadline: number
@@ -22059,10 +21700,7 @@ export namespace Prisma {
     progress: number
     chartList: number
     estimatedCompletedDate: number
-<<<<<<< HEAD
-=======
     projectCompleteDate: number
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate: number
     budget: number
     createdAt: number
@@ -22074,20 +21712,12 @@ export namespace Prisma {
 
 
   export type ProjectAvgAggregateInputType = {
-<<<<<<< HEAD
-    beforeSubmitData?: true
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     progress?: true
     latitude?: true
     longitude?: true
   }
 
   export type ProjectSumAggregateInputType = {
-<<<<<<< HEAD
-    beforeSubmitData?: true
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     progress?: true
     latitude?: true
     longitude?: true
@@ -22097,16 +21727,7 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-<<<<<<< HEAD
-    datetime?: true
-    uploadCycle?: true
     description?: true
-    dataReceivedTime?: true
-    beforeSubmitData?: true
-    importMainFile?: true
-=======
-    description?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: true
     priority?: true
     deadline?: true
@@ -22114,10 +21735,7 @@ export namespace Prisma {
     startDate?: true
     progress?: true
     estimatedCompletedDate?: true
-<<<<<<< HEAD
-=======
     projectCompleteDate?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: true
     budget?: true
     createdAt?: true
@@ -22130,16 +21748,7 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-<<<<<<< HEAD
-    datetime?: true
-    uploadCycle?: true
     description?: true
-    dataReceivedTime?: true
-    beforeSubmitData?: true
-    importMainFile?: true
-=======
-    description?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: true
     priority?: true
     deadline?: true
@@ -22147,10 +21756,7 @@ export namespace Prisma {
     startDate?: true
     progress?: true
     estimatedCompletedDate?: true
-<<<<<<< HEAD
-=======
     projectCompleteDate?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: true
     budget?: true
     createdAt?: true
@@ -22163,17 +21769,7 @@ export namespace Prisma {
     id?: true
     programId?: true
     name?: true
-<<<<<<< HEAD
-    datetime?: true
-    uploadCycle?: true
     description?: true
-    dataReceivedTime?: true
-    beforeSubmitData?: true
-    importFiles?: true
-    importMainFile?: true
-=======
-    description?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: true
     priority?: true
     deadline?: true
@@ -22182,10 +21778,7 @@ export namespace Prisma {
     progress?: true
     chartList?: true
     estimatedCompletedDate?: true
-<<<<<<< HEAD
-=======
     projectCompleteDate?: true
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: true
     budget?: true
     createdAt?: true
@@ -22285,17 +21878,7 @@ export namespace Prisma {
     id: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime: Date | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime: string | null
-    beforeSubmitData: number | null
-    importFiles: string[]
-    importMainFile: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date
@@ -22304,10 +21887,7 @@ export namespace Prisma {
     progress: number | null
     chartList: string[]
     estimatedCompletedDate: Date | null
-<<<<<<< HEAD
-=======
     projectCompleteDate: Date | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate: string | null
     budget: string | null
     createdAt: Date
@@ -22339,17 +21919,7 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-<<<<<<< HEAD
-    datetime?: boolean
-    uploadCycle?: boolean
     description?: boolean
-    dataReceivedTime?: boolean
-    beforeSubmitData?: boolean
-    importFiles?: boolean
-    importMainFile?: boolean
-=======
-    description?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -22358,10 +21928,7 @@ export namespace Prisma {
     progress?: boolean
     chartList?: boolean
     estimatedCompletedDate?: boolean
-<<<<<<< HEAD
-=======
     projectCompleteDate?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: boolean
     budget?: boolean
     createdAt?: boolean
@@ -22375,12 +21942,9 @@ export namespace Prisma {
     activities?: boolean | Project$activitiesArgs<ExtArgs>
     reviews?: boolean | Project$reviewsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Project$requestsToAddProjectMemberArgs<ExtArgs>
-<<<<<<< HEAD
-=======
     submitted?: boolean | Project$submittedArgs<ExtArgs>
     reminders?: boolean | Project$remindersArgs<ExtArgs>
     sheets?: boolean | Project$sheetsArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
@@ -22388,17 +21952,7 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-<<<<<<< HEAD
-    datetime?: boolean
-    uploadCycle?: boolean
     description?: boolean
-    dataReceivedTime?: boolean
-    beforeSubmitData?: boolean
-    importFiles?: boolean
-    importMainFile?: boolean
-=======
-    description?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -22407,10 +21961,7 @@ export namespace Prisma {
     progress?: boolean
     chartList?: boolean
     estimatedCompletedDate?: boolean
-<<<<<<< HEAD
-=======
     projectCompleteDate?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: boolean
     budget?: boolean
     createdAt?: boolean
@@ -22425,17 +21976,7 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-<<<<<<< HEAD
-    datetime?: boolean
-    uploadCycle?: boolean
     description?: boolean
-    dataReceivedTime?: boolean
-    beforeSubmitData?: boolean
-    importFiles?: boolean
-    importMainFile?: boolean
-=======
-    description?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -22444,10 +21985,7 @@ export namespace Prisma {
     progress?: boolean
     chartList?: boolean
     estimatedCompletedDate?: boolean
-<<<<<<< HEAD
-=======
     projectCompleteDate?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: boolean
     budget?: boolean
     createdAt?: boolean
@@ -22462,17 +22000,7 @@ export namespace Prisma {
     id?: boolean
     programId?: boolean
     name?: boolean
-<<<<<<< HEAD
-    datetime?: boolean
-    uploadCycle?: boolean
     description?: boolean
-    dataReceivedTime?: boolean
-    beforeSubmitData?: boolean
-    importFiles?: boolean
-    importMainFile?: boolean
-=======
-    description?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: boolean
     priority?: boolean
     deadline?: boolean
@@ -22481,10 +22009,7 @@ export namespace Prisma {
     progress?: boolean
     chartList?: boolean
     estimatedCompletedDate?: boolean
-<<<<<<< HEAD
-=======
     projectCompleteDate?: boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: boolean
     budget?: boolean
     createdAt?: boolean
@@ -22493,11 +22018,7 @@ export namespace Prisma {
     longitude?: boolean
   }
 
-<<<<<<< HEAD
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "datetime" | "uploadCycle" | "description" | "dataReceivedTime" | "beforeSubmitData" | "importFiles" | "importMainFile" | "status" | "priority" | "deadline" | "managerId" | "startDate" | "progress" | "chartList" | "estimatedCompletedDate" | "currentRate" | "budget" | "createdAt" | "updatedAt" | "latitude" | "longitude", ExtArgs["result"]["project"]>
-=======
   export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "description" | "status" | "priority" | "deadline" | "managerId" | "startDate" | "progress" | "chartList" | "estimatedCompletedDate" | "projectCompleteDate" | "currentRate" | "budget" | "createdAt" | "updatedAt" | "latitude" | "longitude", ExtArgs["result"]["project"]>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     program?: boolean | ProgramDefaultArgs<ExtArgs>
     manager?: boolean | ManagerDefaultArgs<ExtArgs>
@@ -22506,12 +22027,9 @@ export namespace Prisma {
     activities?: boolean | Project$activitiesArgs<ExtArgs>
     reviews?: boolean | Project$reviewsArgs<ExtArgs>
     requestsToAddProjectMember?: boolean | Project$requestsToAddProjectMemberArgs<ExtArgs>
-<<<<<<< HEAD
-=======
     submitted?: boolean | Project$submittedArgs<ExtArgs>
     reminders?: boolean | Project$remindersArgs<ExtArgs>
     sheets?: boolean | Project$sheetsArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -22533,28 +22051,15 @@ export namespace Prisma {
       activities: Prisma.$ActivityPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
       requestsToAddProjectMember: Prisma.$RequestToAddProjectMemberPayload<ExtArgs>[]
-<<<<<<< HEAD
-=======
       submitted: Prisma.$SubmittedPayload<ExtArgs>[]
       reminders: Prisma.$ReminderPayload<ExtArgs>[]
       sheets: Prisma.$SheetPayload<ExtArgs>[]
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       programId: string
       name: string
-<<<<<<< HEAD
-      datetime: Date | null
-      uploadCycle: $Enums.ProjectCycle
       description: string
-      dataReceivedTime: string | null
-      beforeSubmitData: number | null
-      importFiles: string[]
-      importMainFile: string | null
-=======
-      description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       status: $Enums.ProjectStatus
       priority: $Enums.Priority
       deadline: Date
@@ -22563,10 +22068,7 @@ export namespace Prisma {
       progress: number | null
       chartList: string[]
       estimatedCompletedDate: Date | null
-<<<<<<< HEAD
-=======
       projectCompleteDate: Date | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       currentRate: string | null
       budget: string | null
       createdAt: Date
@@ -22974,12 +22476,9 @@ export namespace Prisma {
     activities<T extends Project$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Project$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends Project$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Project$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     requestsToAddProjectMember<T extends Project$requestsToAddProjectMemberArgs<ExtArgs> = {}>(args?: Subset<T, Project$requestsToAddProjectMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestToAddProjectMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-<<<<<<< HEAD
-=======
     submitted<T extends Project$submittedArgs<ExtArgs> = {}>(args?: Subset<T, Project$submittedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmittedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reminders<T extends Project$remindersArgs<ExtArgs> = {}>(args?: Subset<T, Project$remindersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sheets<T extends Project$sheetsArgs<ExtArgs> = {}>(args?: Subset<T, Project$sheetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23012,17 +22511,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Project", 'String'>
     readonly programId: FieldRef<"Project", 'String'>
     readonly name: FieldRef<"Project", 'String'>
-<<<<<<< HEAD
-    readonly datetime: FieldRef<"Project", 'DateTime'>
-    readonly uploadCycle: FieldRef<"Project", 'ProjectCycle'>
     readonly description: FieldRef<"Project", 'String'>
-    readonly dataReceivedTime: FieldRef<"Project", 'String'>
-    readonly beforeSubmitData: FieldRef<"Project", 'Int'>
-    readonly importFiles: FieldRef<"Project", 'String[]'>
-    readonly importMainFile: FieldRef<"Project", 'String'>
-=======
-    readonly description: FieldRef<"Project", 'String'>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     readonly status: FieldRef<"Project", 'ProjectStatus'>
     readonly priority: FieldRef<"Project", 'Priority'>
     readonly deadline: FieldRef<"Project", 'DateTime'>
@@ -23031,10 +22520,7 @@ export namespace Prisma {
     readonly progress: FieldRef<"Project", 'Int'>
     readonly chartList: FieldRef<"Project", 'String[]'>
     readonly estimatedCompletedDate: FieldRef<"Project", 'DateTime'>
-<<<<<<< HEAD
-=======
     readonly projectCompleteDate: FieldRef<"Project", 'DateTime'>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     readonly currentRate: FieldRef<"Project", 'String'>
     readonly budget: FieldRef<"Project", 'String'>
     readonly createdAt: FieldRef<"Project", 'DateTime'>
@@ -23557,8 +23043,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Project.submitted
    */
   export type Project$submittedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -23631,7 +23115,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Project without action
    */
   export type ProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25788,8 +25271,6 @@ export namespace Prisma {
 
 
   /**
-<<<<<<< HEAD
-=======
    * Model SubmissionReturn
    */
 
@@ -27991,7 +27472,6 @@ export namespace Prisma {
 
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Model SuperAdmin
    */
 
@@ -28144,11 +27624,7 @@ export namespace Prisma {
 
   export type SuperAdminGroupByOutputType = {
     id: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo: string | null
     favicon: string | null
     primaryColor: string | null
@@ -28183,11 +27659,7 @@ export namespace Prisma {
     secondaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | SuperAdmin$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     notificationPermissionSuperAdmin?: boolean | SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs>
   }, ExtArgs["result"]["superAdmin"]>
 
@@ -28200,11 +27672,7 @@ export namespace Prisma {
     secondaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | SuperAdmin$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["superAdmin"]>
 
   export type SuperAdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -28216,11 +27684,7 @@ export namespace Prisma {
     secondaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | SuperAdmin$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["superAdmin"]>
 
   export type SuperAdminSelectScalar = {
@@ -28236,16 +27700,6 @@ export namespace Prisma {
 
   export type SuperAdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "clientLogo" | "favicon" | "primaryColor" | "secondaryColor" | "createdAt" | "updatedAt", ExtArgs["result"]["superAdmin"]>
   export type SuperAdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    notificationPermissionSuperAdmin?: boolean | SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs>
-  }
-  export type SuperAdminIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type SuperAdminIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | SuperAdmin$userArgs<ExtArgs>
     notificationPermissionSuperAdmin?: boolean | SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs>
   }
@@ -28254,26 +27708,17 @@ export namespace Prisma {
   }
   export type SuperAdminIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | SuperAdmin$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type $SuperAdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SuperAdmin"
     objects: {
-<<<<<<< HEAD
-      user: Prisma.$UserPayload<ExtArgs>
-=======
       user: Prisma.$UserPayload<ExtArgs> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       notificationPermissionSuperAdmin: Prisma.$NotificationPermissionSuperAdminPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-<<<<<<< HEAD
-      userId: string
-=======
       userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       clientLogo: string | null
       favicon: string | null
       primaryColor: string | null
@@ -28674,11 +28119,7 @@ export namespace Prisma {
    */
   export interface Prisma__SuperAdminClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-<<<<<<< HEAD
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-=======
     user<T extends SuperAdmin$userArgs<ExtArgs> = {}>(args?: Subset<T, SuperAdmin$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     notificationPermissionSuperAdmin<T extends SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs> = {}>(args?: Subset<T, SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs>>): Prisma__NotificationPermissionSuperAdminClient<$Result.GetResult<Prisma.$NotificationPermissionSuperAdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -29113,8 +28554,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * SuperAdmin.user
    */
   export type SuperAdmin$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -29134,7 +28573,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * SuperAdmin.notificationPermissionSuperAdmin
    */
   export type SuperAdmin$notificationPermissionSuperAdminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -29349,11 +28787,7 @@ export namespace Prisma {
 
   export type SupporterGroupByOutputType = {
     id: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole: $Enums.SupporterRole
     skills: string[]
     workload: number | null
@@ -29390,11 +28824,7 @@ export namespace Prisma {
     workItems?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Supporter$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["supporter"]>
 
   export type SupporterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -29406,11 +28836,7 @@ export namespace Prisma {
     workItems?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Supporter$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["supporter"]>
 
   export type SupporterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -29422,11 +28848,7 @@ export namespace Prisma {
     workItems?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Supporter$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["supporter"]>
 
   export type SupporterSelectScalar = {
@@ -29442,15 +28864,6 @@ export namespace Prisma {
 
   export type SupporterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "supporterRole" | "skills" | "workload" | "workItems" | "createdAt" | "updatedAt", ExtArgs["result"]["supporter"]>
   export type SupporterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type SupporterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type SupporterIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Supporter$userArgs<ExtArgs>
   }
   export type SupporterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -29458,25 +28871,16 @@ export namespace Prisma {
   }
   export type SupporterIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Supporter$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type $SupporterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Supporter"
     objects: {
-<<<<<<< HEAD
-      user: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      userId: string
-=======
       user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       supporterRole: $Enums.SupporterRole
       skills: string[]
       workload: number | null
@@ -29877,11 +29281,7 @@ export namespace Prisma {
    */
   export interface Prisma__SupporterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-<<<<<<< HEAD
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-=======
     user<T extends Supporter$userArgs<ExtArgs> = {}>(args?: Subset<T, Supporter$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -30315,8 +29715,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Supporter.user
    */
   export type Supporter$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -30336,7 +29734,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Supporter without action
    */
   export type SupporterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -37591,11 +36988,7 @@ export namespace Prisma {
 
   export type ViewerGroupByOutputType = {
     id: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt: Date
     updatedAt: Date
     _count: ViewerCountAggregateOutputType | null
@@ -37622,11 +37015,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Viewer$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["viewer"]>
 
   export type ViewerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -37634,11 +37023,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Viewer$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["viewer"]>
 
   export type ViewerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -37646,11 +37031,7 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Viewer$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, ExtArgs["result"]["viewer"]>
 
   export type ViewerSelectScalar = {
@@ -37662,15 +37043,6 @@ export namespace Prisma {
 
   export type ViewerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["viewer"]>
   export type ViewerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-<<<<<<< HEAD
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type ViewerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type ViewerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-=======
     user?: boolean | Viewer$userArgs<ExtArgs>
   }
   export type ViewerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -37678,25 +37050,16 @@ export namespace Prisma {
   }
   export type ViewerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Viewer$userArgs<ExtArgs>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type $ViewerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Viewer"
     objects: {
-<<<<<<< HEAD
-      user: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      userId: string
-=======
       user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["viewer"]>
@@ -38093,11 +37456,7 @@ export namespace Prisma {
    */
   export interface Prisma__ViewerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-<<<<<<< HEAD
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-=======
     user<T extends Viewer$userArgs<ExtArgs> = {}>(args?: Subset<T, Viewer$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -38527,8 +37886,6 @@ export namespace Prisma {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Viewer.user
    */
   export type Viewer$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -38548,7 +37905,6 @@ export namespace Prisma {
   }
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Viewer without action
    */
   export type ViewerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -38568,8 +37924,6 @@ export namespace Prisma {
 
 
   /**
-<<<<<<< HEAD
-=======
    * Model ChartTable
    */
 
@@ -45253,7 +44607,6 @@ export namespace Prisma {
 
 
   /**
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
    * Enums
    */
 
@@ -45367,10 +44720,7 @@ export namespace Prisma {
     id: 'id',
     senderId: 'senderId',
     receiverIds: 'receiverIds',
-<<<<<<< HEAD
-=======
     projectId: 'projectId',
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: 'context',
     type: 'type',
     isRead: 'isRead',
@@ -45491,17 +44841,7 @@ export namespace Prisma {
     id: 'id',
     programId: 'programId',
     name: 'name',
-<<<<<<< HEAD
-    datetime: 'datetime',
-    uploadCycle: 'uploadCycle',
     description: 'description',
-    dataReceivedTime: 'dataReceivedTime',
-    beforeSubmitData: 'beforeSubmitData',
-    importFiles: 'importFiles',
-    importMainFile: 'importMainFile',
-=======
-    description: 'description',
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status: 'status',
     priority: 'priority',
     deadline: 'deadline',
@@ -45510,10 +44850,7 @@ export namespace Prisma {
     progress: 'progress',
     chartList: 'chartList',
     estimatedCompletedDate: 'estimatedCompletedDate',
-<<<<<<< HEAD
-=======
     projectCompleteDate: 'projectCompleteDate',
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate: 'currentRate',
     budget: 'budget',
     createdAt: 'createdAt',
@@ -45548,8 +44885,6 @@ export namespace Prisma {
   export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
-<<<<<<< HEAD
-=======
   export const SubmissionReturnScalarFieldEnum: {
     id: 'id',
     submittedId: 'submittedId',
@@ -45575,7 +44910,6 @@ export namespace Prisma {
   export type SubmittedScalarFieldEnum = (typeof SubmittedScalarFieldEnum)[keyof typeof SubmittedScalarFieldEnum]
 
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export const SuperAdminScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -45707,8 +45041,6 @@ export namespace Prisma {
   export type ViewerScalarFieldEnum = (typeof ViewerScalarFieldEnum)[keyof typeof ViewerScalarFieldEnum]
 
 
-<<<<<<< HEAD
-=======
   export const ChartTableScalarFieldEnum: {
     id: 'id',
     title: 'title',
@@ -45791,7 +45123,6 @@ export namespace Prisma {
   export type SubmiteCellScalarFieldEnum = (typeof SubmiteCellScalarFieldEnum)[keyof typeof SubmiteCellScalarFieldEnum]
 
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -45808,8 +45139,6 @@ export namespace Prisma {
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
-<<<<<<< HEAD
-=======
   export const JsonNullValueInput: {
     JsonNull: typeof JsonNull
   };
@@ -45817,7 +45146,6 @@ export namespace Prisma {
   export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -45954,28 +45282,16 @@ export namespace Prisma {
 
 
   /**
-<<<<<<< HEAD
-   * Reference to a field of type 'ProjectCycle'
-   */
-  export type EnumProjectCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCycle'>
-=======
    * Reference to a field of type 'Priority'
    */
   export type EnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority'>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     
 
 
   /**
-<<<<<<< HEAD
-   * Reference to a field of type 'ProjectCycle[]'
-   */
-  export type ListEnumProjectCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCycle[]'>
-=======
    * Reference to a field of type 'Priority[]'
    */
   export type ListEnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority[]'>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     
 
 
@@ -45994,28 +45310,16 @@ export namespace Prisma {
 
 
   /**
-<<<<<<< HEAD
-   * Reference to a field of type 'Priority'
-   */
-  export type EnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority'>
-=======
    * Reference to a field of type 'SubmittedStatus'
    */
   export type EnumSubmittedStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmittedStatus'>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     
 
 
   /**
-<<<<<<< HEAD
-   * Reference to a field of type 'Priority[]'
-   */
-  export type ListEnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority[]'>
-=======
    * Reference to a field of type 'SubmittedStatus[]'
    */
   export type ListEnumSubmittedStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmittedStatus[]'>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     
 
 
@@ -46115,8 +45419,6 @@ export namespace Prisma {
    */
   export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus[]'>
     
-<<<<<<< HEAD
-=======
 
 
   /**
@@ -46173,7 +45475,6 @@ export namespace Prisma {
    */
   export type EnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DayOfWeek'>
     
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   /**
    * Deep Input Types
    */
@@ -46267,11 +45568,7 @@ export namespace Prisma {
     OR?: ClientWhereInput[]
     NOT?: ClientWhereInput | ClientWhereInput[]
     id?: StringFilter<"Client"> | string
-<<<<<<< HEAD
-    userId?: StringFilter<"Client"> | string
-=======
     userId?: StringNullableFilter<"Client"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: StringFilter<"Client"> | string
     contactPersonName?: StringNullableFilter<"Client"> | string | null
     clientLogo?: StringNullableFilter<"Client"> | string | null
@@ -46294,11 +45591,7 @@ export namespace Prisma {
     trialPeriod?: IntNullableFilter<"Client"> | number | null
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonListRelationFilter
     tickets?: TicketListRelationFilter
     programs?: ProgramListRelationFilter
@@ -46307,11 +45600,7 @@ export namespace Prisma {
 
   export type ClientOrderByWithRelationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: SortOrder
     contactPersonName?: SortOrderInput | SortOrder
     clientLogo?: SortOrderInput | SortOrder
@@ -46369,11 +45658,7 @@ export namespace Prisma {
     trialPeriod?: IntNullableFilter<"Client"> | number | null
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonListRelationFilter
     tickets?: TicketListRelationFilter
     programs?: ProgramListRelationFilter
@@ -46382,11 +45667,7 @@ export namespace Prisma {
 
   export type ClientOrderByWithAggregationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: SortOrder
     contactPersonName?: SortOrderInput | SortOrder
     clientLogo?: SortOrderInput | SortOrder
@@ -46421,11 +45702,7 @@ export namespace Prisma {
     OR?: ClientScalarWhereWithAggregatesInput[]
     NOT?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Client"> | string
-<<<<<<< HEAD
-    userId?: StringWithAggregatesFilter<"Client"> | string
-=======
     userId?: StringNullableWithAggregatesFilter<"Client"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: StringWithAggregatesFilter<"Client"> | string
     contactPersonName?: StringNullableWithAggregatesFilter<"Client"> | string | null
     clientLogo?: StringNullableWithAggregatesFilter<"Client"> | string | null
@@ -46455,33 +45732,20 @@ export namespace Prisma {
     OR?: EmployeeWhereInput[]
     NOT?: EmployeeWhereInput | EmployeeWhereInput[]
     id?: StringFilter<"Employee"> | string
-<<<<<<< HEAD
-    userId?: StringFilter<"Employee"> | string
-=======
     userId?: StringNullableFilter<"Employee"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFilter<"Employee"> | Date | string
     updatedAt?: DateTimeFilter<"Employee"> | Date | string
     description?: StringFilter<"Employee"> | string
     joinedDate?: StringFilter<"Employee"> | string
     skills?: StringNullableListFilter<"Employee">
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    projectEmployees?: ProjectEmployeeListRelationFilter
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     projectEmployees?: ProjectEmployeeListRelationFilter
     submitted?: SubmittedListRelationFilter
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeOrderByWithRelationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: SortOrder
     updatedAt?: SortOrder
     description?: SortOrder
@@ -46489,10 +45753,7 @@ export namespace Prisma {
     skills?: SortOrder
     user?: UserOrderByWithRelationInput
     projectEmployees?: ProjectEmployeeOrderByRelationAggregateInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedOrderByRelationAggregateInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
@@ -46506,23 +45767,14 @@ export namespace Prisma {
     description?: StringFilter<"Employee"> | string
     joinedDate?: StringFilter<"Employee"> | string
     skills?: StringNullableListFilter<"Employee">
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    projectEmployees?: ProjectEmployeeListRelationFilter
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     projectEmployees?: ProjectEmployeeListRelationFilter
     submitted?: SubmittedListRelationFilter
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, "id" | "userId">
 
   export type EmployeeOrderByWithAggregationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: SortOrder
     updatedAt?: SortOrder
     description?: SortOrder
@@ -46538,11 +45790,7 @@ export namespace Prisma {
     OR?: EmployeeScalarWhereWithAggregatesInput[]
     NOT?: EmployeeScalarWhereWithAggregatesInput | EmployeeScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Employee"> | string
-<<<<<<< HEAD
-    userId?: StringWithAggregatesFilter<"Employee"> | string
-=======
     userId?: StringNullableWithAggregatesFilter<"Employee"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Employee"> | Date | string
     description?: StringWithAggregatesFilter<"Employee"> | string
@@ -46617,28 +45865,17 @@ export namespace Prisma {
     id?: StringFilter<"Payment"> | string
     amount?: FloatFilter<"Payment"> | number
     transactionId?: StringFilter<"Payment"> | string
-<<<<<<< HEAD
-    userId?: StringFilter<"Payment"> | string
-    createdAt?: DateTimeFilter<"Payment"> | Date | string
-    updatedAt?: DateTimeFilter<"Payment"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     userId?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type PaymentOrderByWithRelationInput = {
     id?: SortOrder
     amount?: SortOrder
     transactionId?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -46651,28 +45888,17 @@ export namespace Prisma {
     OR?: PaymentWhereInput[]
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     amount?: FloatFilter<"Payment"> | number
-<<<<<<< HEAD
-    userId?: StringFilter<"Payment"> | string
-    createdAt?: DateTimeFilter<"Payment"> | Date | string
-    updatedAt?: DateTimeFilter<"Payment"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     userId?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, "id" | "transactionId">
 
   export type PaymentOrderByWithAggregationInput = {
     id?: SortOrder
     amount?: SortOrder
     transactionId?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PaymentCountOrderByAggregateInput
@@ -46689,11 +45915,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Payment"> | string
     amount?: FloatWithAggregatesFilter<"Payment"> | number
     transactionId?: StringWithAggregatesFilter<"Payment"> | string
-<<<<<<< HEAD
-    userId?: StringWithAggregatesFilter<"Payment"> | string
-=======
     userId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
   }
@@ -46703,32 +45925,20 @@ export namespace Prisma {
     OR?: ManagerWhereInput[]
     NOT?: ManagerWhereInput | ManagerWhereInput[]
     id?: StringFilter<"Manager"> | string
-<<<<<<< HEAD
-    userId?: StringFilter<"Manager"> | string
-=======
     userId?: StringNullableFilter<"Manager"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: StringNullableListFilter<"Manager">
     createdAt?: DateTimeFilter<"Manager"> | Date | string
     updatedAt?: DateTimeFilter<"Manager"> | Date | string
     description?: StringFilter<"Manager"> | string
     joinedDate?: StringFilter<"Manager"> | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects?: ProjectListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
   }
 
   export type ManagerOrderByWithRelationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -46750,22 +45960,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Manager"> | Date | string
     description?: StringFilter<"Manager"> | string
     joinedDate?: StringFilter<"Manager"> | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects?: ProjectListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
   }, "id" | "userId">
 
   export type ManagerOrderByWithAggregationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -46781,11 +45983,7 @@ export namespace Prisma {
     OR?: ManagerScalarWhereWithAggregatesInput[]
     NOT?: ManagerScalarWhereWithAggregatesInput | ManagerScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Manager"> | string
-<<<<<<< HEAD
-    userId?: StringWithAggregatesFilter<"Manager"> | string
-=======
     userId?: StringNullableWithAggregatesFilter<"Manager"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: StringNullableListFilter<"Manager">
     createdAt?: DateTimeWithAggregatesFilter<"Manager"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Manager"> | Date | string
@@ -46800,10 +45998,7 @@ export namespace Prisma {
     id?: StringFilter<"Notification"> | string
     senderId?: StringFilter<"Notification"> | string
     receiverIds?: StringNullableListFilter<"Notification">
-<<<<<<< HEAD
-=======
     projectId?: StringNullableFilter<"Notification"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringFilter<"Notification"> | string
     type?: StringFilter<"Notification"> | string
     isRead?: BoolFilter<"Notification"> | boolean
@@ -46816,10 +46011,7 @@ export namespace Prisma {
     id?: SortOrder
     senderId?: SortOrder
     receiverIds?: SortOrder
-<<<<<<< HEAD
-=======
     projectId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -46835,10 +46027,7 @@ export namespace Prisma {
     NOT?: NotificationWhereInput | NotificationWhereInput[]
     senderId?: StringFilter<"Notification"> | string
     receiverIds?: StringNullableListFilter<"Notification">
-<<<<<<< HEAD
-=======
     projectId?: StringNullableFilter<"Notification"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringFilter<"Notification"> | string
     type?: StringFilter<"Notification"> | string
     isRead?: BoolFilter<"Notification"> | boolean
@@ -46851,10 +46040,7 @@ export namespace Prisma {
     id?: SortOrder
     senderId?: SortOrder
     receiverIds?: SortOrder
-<<<<<<< HEAD
-=======
     projectId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -46872,10 +46058,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Notification"> | string
     senderId?: StringWithAggregatesFilter<"Notification"> | string
     receiverIds?: StringNullableListFilter<"Notification">
-<<<<<<< HEAD
-=======
     projectId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringWithAggregatesFilter<"Notification"> | string
     type?: StringWithAggregatesFilter<"Notification"> | string
     isRead?: BoolWithAggregatesFilter<"Notification"> | boolean
@@ -47346,11 +46529,7 @@ export namespace Prisma {
     programName?: StringFilter<"Program"> | string
     datetime?: StringFilter<"Program"> | string
     programDescription?: StringFilter<"Program"> | string
-<<<<<<< HEAD
-    priority?: StringFilter<"Program"> | string
-=======
     priority?: EnumPriorityFilter<"Program"> | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFilter<"Program"> | string
     progress?: IntNullableFilter<"Program"> | number | null
     createdAt?: DateTimeFilter<"Program"> | Date | string
@@ -47383,11 +46562,7 @@ export namespace Prisma {
     programName?: StringFilter<"Program"> | string
     datetime?: StringFilter<"Program"> | string
     programDescription?: StringFilter<"Program"> | string
-<<<<<<< HEAD
-    priority?: StringFilter<"Program"> | string
-=======
     priority?: EnumPriorityFilter<"Program"> | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFilter<"Program"> | string
     progress?: IntNullableFilter<"Program"> | number | null
     createdAt?: DateTimeFilter<"Program"> | Date | string
@@ -47423,11 +46598,7 @@ export namespace Prisma {
     programName?: StringWithAggregatesFilter<"Program"> | string
     datetime?: StringWithAggregatesFilter<"Program"> | string
     programDescription?: StringWithAggregatesFilter<"Program"> | string
-<<<<<<< HEAD
-    priority?: StringWithAggregatesFilter<"Program"> | string
-=======
     priority?: EnumPriorityWithAggregatesFilter<"Program"> | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringWithAggregatesFilter<"Program"> | string
     progress?: IntNullableWithAggregatesFilter<"Program"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Program"> | Date | string
@@ -47441,17 +46612,7 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-<<<<<<< HEAD
-    datetime?: DateTimeNullableFilter<"Project"> | Date | string | null
-    uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
-    dataReceivedTime?: StringNullableFilter<"Project"> | string | null
-    beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    importFiles?: StringNullableListFilter<"Project">
-    importMainFile?: StringNullableFilter<"Project"> | string | null
-=======
-    description?: StringFilter<"Project"> | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -47460,10 +46621,7 @@ export namespace Prisma {
     progress?: IntNullableFilter<"Project"> | number | null
     chartList?: StringNullableListFilter<"Project">
     estimatedCompletedDate?: DateTimeNullableFilter<"Project"> | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: DateTimeNullableFilter<"Project"> | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: StringNullableFilter<"Project"> | string | null
     budget?: StringNullableFilter<"Project"> | string | null
     createdAt?: DateTimeFilter<"Project"> | Date | string
@@ -47477,29 +46635,16 @@ export namespace Prisma {
     activities?: ActivityListRelationFilter
     reviews?: ReviewListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
-<<<<<<< HEAD
-=======
     submitted?: SubmittedListRelationFilter
     reminders?: ReminderListRelationFilter
     sheets?: SheetListRelationFilter
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectOrderByWithRelationInput = {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-<<<<<<< HEAD
-    datetime?: SortOrderInput | SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrderInput | SortOrder
-    beforeSubmitData?: SortOrderInput | SortOrder
-    importFiles?: SortOrder
-    importMainFile?: SortOrderInput | SortOrder
-=======
-    description?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -47508,10 +46653,7 @@ export namespace Prisma {
     progress?: SortOrderInput | SortOrder
     chartList?: SortOrder
     estimatedCompletedDate?: SortOrderInput | SortOrder
-<<<<<<< HEAD
-=======
     projectCompleteDate?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: SortOrderInput | SortOrder
     budget?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -47525,12 +46667,9 @@ export namespace Prisma {
     activities?: ActivityOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
     requestsToAddProjectMember?: RequestToAddProjectMemberOrderByRelationAggregateInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedOrderByRelationAggregateInput
     reminders?: ReminderOrderByRelationAggregateInput
     sheets?: SheetOrderByRelationAggregateInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -47540,17 +46679,7 @@ export namespace Prisma {
     NOT?: ProjectWhereInput | ProjectWhereInput[]
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-<<<<<<< HEAD
-    datetime?: DateTimeNullableFilter<"Project"> | Date | string | null
-    uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
-    dataReceivedTime?: StringNullableFilter<"Project"> | string | null
-    beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    importFiles?: StringNullableListFilter<"Project">
-    importMainFile?: StringNullableFilter<"Project"> | string | null
-=======
-    description?: StringFilter<"Project"> | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -47559,10 +46688,7 @@ export namespace Prisma {
     progress?: IntNullableFilter<"Project"> | number | null
     chartList?: StringNullableListFilter<"Project">
     estimatedCompletedDate?: DateTimeNullableFilter<"Project"> | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: DateTimeNullableFilter<"Project"> | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: StringNullableFilter<"Project"> | string | null
     budget?: StringNullableFilter<"Project"> | string | null
     createdAt?: DateTimeFilter<"Project"> | Date | string
@@ -47576,29 +46702,16 @@ export namespace Prisma {
     activities?: ActivityListRelationFilter
     reviews?: ReviewListRelationFilter
     requestsToAddProjectMember?: RequestToAddProjectMemberListRelationFilter
-<<<<<<< HEAD
-=======
     submitted?: SubmittedListRelationFilter
     reminders?: ReminderListRelationFilter
     sheets?: SheetListRelationFilter
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, "id">
 
   export type ProjectOrderByWithAggregationInput = {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-<<<<<<< HEAD
-    datetime?: SortOrderInput | SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrderInput | SortOrder
-    beforeSubmitData?: SortOrderInput | SortOrder
-    importFiles?: SortOrder
-    importMainFile?: SortOrderInput | SortOrder
-=======
-    description?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -47607,10 +46720,7 @@ export namespace Prisma {
     progress?: SortOrderInput | SortOrder
     chartList?: SortOrder
     estimatedCompletedDate?: SortOrderInput | SortOrder
-<<<<<<< HEAD
-=======
     projectCompleteDate?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: SortOrderInput | SortOrder
     budget?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -47631,17 +46741,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Project"> | string
     programId?: StringWithAggregatesFilter<"Project"> | string
     name?: StringWithAggregatesFilter<"Project"> | string
-<<<<<<< HEAD
-    datetime?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
-    uploadCycle?: EnumProjectCycleWithAggregatesFilter<"Project"> | $Enums.ProjectCycle
     description?: StringWithAggregatesFilter<"Project"> | string
-    dataReceivedTime?: StringNullableWithAggregatesFilter<"Project"> | string | null
-    beforeSubmitData?: IntNullableWithAggregatesFilter<"Project"> | number | null
-    importFiles?: StringNullableListFilter<"Project">
-    importMainFile?: StringNullableWithAggregatesFilter<"Project"> | string | null
-=======
-    description?: StringWithAggregatesFilter<"Project"> | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusWithAggregatesFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityWithAggregatesFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeWithAggregatesFilter<"Project"> | Date | string
@@ -47650,10 +46750,7 @@ export namespace Prisma {
     progress?: IntNullableWithAggregatesFilter<"Project"> | number | null
     chartList?: StringNullableListFilter<"Project">
     estimatedCompletedDate?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: StringNullableWithAggregatesFilter<"Project"> | string | null
     budget?: StringNullableWithAggregatesFilter<"Project"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
@@ -47781,8 +46878,6 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type SubmissionReturnWhereInput = {
     AND?: SubmissionReturnWhereInput | SubmissionReturnWhereInput[]
     OR?: SubmissionReturnWhereInput[]
@@ -47914,38 +47009,25 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Submitted"> | Date | string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type SuperAdminWhereInput = {
     AND?: SuperAdminWhereInput | SuperAdminWhereInput[]
     OR?: SuperAdminWhereInput[]
     NOT?: SuperAdminWhereInput | SuperAdminWhereInput[]
     id?: StringFilter<"SuperAdmin"> | string
-<<<<<<< HEAD
-    userId?: StringFilter<"SuperAdmin"> | string
-=======
     userId?: StringNullableFilter<"SuperAdmin"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: StringNullableFilter<"SuperAdmin"> | string | null
     favicon?: StringNullableFilter<"SuperAdmin"> | string | null
     primaryColor?: StringNullableFilter<"SuperAdmin"> | string | null
     secondaryColor?: StringNullableFilter<"SuperAdmin"> | string | null
     createdAt?: DateTimeFilter<"SuperAdmin"> | Date | string
     updatedAt?: DateTimeFilter<"SuperAdmin"> | Date | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     notificationPermissionSuperAdmin?: XOR<NotificationPermissionSuperAdminNullableScalarRelationFilter, NotificationPermissionSuperAdminWhereInput> | null
   }
 
   export type SuperAdminOrderByWithRelationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: SortOrderInput | SortOrder
     favicon?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
@@ -47968,21 +47050,13 @@ export namespace Prisma {
     secondaryColor?: StringNullableFilter<"SuperAdmin"> | string | null
     createdAt?: DateTimeFilter<"SuperAdmin"> | Date | string
     updatedAt?: DateTimeFilter<"SuperAdmin"> | Date | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     notificationPermissionSuperAdmin?: XOR<NotificationPermissionSuperAdminNullableScalarRelationFilter, NotificationPermissionSuperAdminWhereInput> | null
   }, "id" | "userId">
 
   export type SuperAdminOrderByWithAggregationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: SortOrderInput | SortOrder
     favicon?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
@@ -47999,11 +47073,7 @@ export namespace Prisma {
     OR?: SuperAdminScalarWhereWithAggregatesInput[]
     NOT?: SuperAdminScalarWhereWithAggregatesInput | SuperAdminScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"SuperAdmin"> | string
-<<<<<<< HEAD
-    userId?: StringWithAggregatesFilter<"SuperAdmin"> | string
-=======
     userId?: StringNullableWithAggregatesFilter<"SuperAdmin"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: StringNullableWithAggregatesFilter<"SuperAdmin"> | string | null
     favicon?: StringNullableWithAggregatesFilter<"SuperAdmin"> | string | null
     primaryColor?: StringNullableWithAggregatesFilter<"SuperAdmin"> | string | null
@@ -48017,31 +47087,19 @@ export namespace Prisma {
     OR?: SupporterWhereInput[]
     NOT?: SupporterWhereInput | SupporterWhereInput[]
     id?: StringFilter<"Supporter"> | string
-<<<<<<< HEAD
-    userId?: StringFilter<"Supporter"> | string
-=======
     userId?: StringNullableFilter<"Supporter"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole?: EnumSupporterRoleFilter<"Supporter"> | $Enums.SupporterRole
     skills?: StringNullableListFilter<"Supporter">
     workload?: IntNullableFilter<"Supporter"> | number | null
     workItems?: StringNullableListFilter<"Supporter">
     createdAt?: DateTimeFilter<"Supporter"> | Date | string
     updatedAt?: DateTimeFilter<"Supporter"> | Date | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type SupporterOrderByWithRelationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole?: SortOrder
     skills?: SortOrder
     workload?: SortOrderInput | SortOrder
@@ -48063,20 +47121,12 @@ export namespace Prisma {
     workItems?: StringNullableListFilter<"Supporter">
     createdAt?: DateTimeFilter<"Supporter"> | Date | string
     updatedAt?: DateTimeFilter<"Supporter"> | Date | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, "id" | "userId">
 
   export type SupporterOrderByWithAggregationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole?: SortOrder
     skills?: SortOrder
     workload?: SortOrderInput | SortOrder
@@ -48095,11 +47145,7 @@ export namespace Prisma {
     OR?: SupporterScalarWhereWithAggregatesInput[]
     NOT?: SupporterScalarWhereWithAggregatesInput | SupporterScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Supporter"> | string
-<<<<<<< HEAD
-    userId?: StringWithAggregatesFilter<"Supporter"> | string
-=======
     userId?: StringNullableWithAggregatesFilter<"Supporter"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole?: EnumSupporterRoleWithAggregatesFilter<"Supporter"> | $Enums.SupporterRole
     skills?: StringNullableListFilter<"Supporter">
     workload?: IntNullableWithAggregatesFilter<"Supporter"> | number | null
@@ -48627,26 +47673,15 @@ export namespace Prisma {
     OR?: ViewerWhereInput[]
     NOT?: ViewerWhereInput | ViewerWhereInput[]
     id?: StringFilter<"Viewer"> | string
-<<<<<<< HEAD
-    userId?: StringFilter<"Viewer"> | string
-    createdAt?: DateTimeFilter<"Viewer"> | Date | string
-    updatedAt?: DateTimeFilter<"Viewer"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     userId?: StringNullableFilter<"Viewer"> | string | null
     createdAt?: DateTimeFilter<"Viewer"> | Date | string
     updatedAt?: DateTimeFilter<"Viewer"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ViewerOrderByWithRelationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -48660,20 +47695,12 @@ export namespace Prisma {
     NOT?: ViewerWhereInput | ViewerWhereInput[]
     createdAt?: DateTimeFilter<"Viewer"> | Date | string
     updatedAt?: DateTimeFilter<"Viewer"> | Date | string
-<<<<<<< HEAD
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-=======
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }, "id" | "userId">
 
   export type ViewerOrderByWithAggregationInput = {
     id?: SortOrder
-<<<<<<< HEAD
-    userId?: SortOrder
-=======
     userId?: SortOrderInput | SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ViewerCountOrderByAggregateInput
@@ -48686,17 +47713,11 @@ export namespace Prisma {
     OR?: ViewerScalarWhereWithAggregatesInput[]
     NOT?: ViewerScalarWhereWithAggregatesInput | ViewerScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Viewer"> | string
-<<<<<<< HEAD
-    userId?: StringWithAggregatesFilter<"Viewer"> | string
-=======
     userId?: StringNullableWithAggregatesFilter<"Viewer"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeWithAggregatesFilter<"Viewer"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Viewer"> | Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type ChartTableWhereInput = {
     AND?: ChartTableWhereInput | ChartTableWhereInput[]
     OR?: ChartTableWhereInput[]
@@ -49121,7 +48142,6 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"submiteCell"> | Date | string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ActivityCreateInput = {
     id?: string
     timestamp?: Date | string
@@ -49235,11 +48255,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutClientInput
-=======
     user?: UserCreateNestedOneWithoutClientInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
@@ -49248,11 +48264,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -49305,11 +48317,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
-=======
     user?: UserUpdateOneWithoutClientNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
@@ -49318,11 +48326,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49353,11 +48357,7 @@ export namespace Prisma {
 
   export type ClientCreateManyInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -49410,11 +48410,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49446,33 +48442,21 @@ export namespace Prisma {
     description: string
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutEmployeeInput
-    projectEmployees?: ProjectEmployeeCreateNestedManyWithoutEmployeeInput
-=======
     user?: UserCreateNestedOneWithoutEmployeeInput
     projectEmployees?: ProjectEmployeeCreateNestedManyWithoutEmployeeInput
     submitted?: SubmittedCreateNestedManyWithoutEmployeeInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeUncheckedCreateInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: Date | string
     updatedAt?: Date | string
     description: string
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutEmployeeInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeUpdateInput = {
@@ -49482,42 +48466,26 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
-    projectEmployees?: ProjectEmployeeUpdateManyWithoutEmployeeNestedInput
-=======
     user?: UserUpdateOneWithoutEmployeeNestedInput
     projectEmployees?: ProjectEmployeeUpdateManyWithoutEmployeeNestedInput
     submitted?: SubmittedUpdateManyWithoutEmployeeNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutEmployeeNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeCreateManyInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: Date | string
     updatedAt?: Date | string
     description: string
@@ -49536,11 +48504,7 @@ export namespace Prisma {
 
   export type EmployeeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
@@ -49616,22 +48580,14 @@ export namespace Prisma {
     transactionId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutPaymentsInput
-=======
     user?: UserCreateNestedOneWithoutPaymentsInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type PaymentUncheckedCreateInput = {
     id?: string
     amount: number
     transactionId: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49642,22 +48598,14 @@ export namespace Prisma {
     transactionId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutPaymentsNestedInput
-=======
     user?: UserUpdateOneWithoutPaymentsNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type PaymentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     transactionId?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49666,11 +48614,7 @@ export namespace Prisma {
     id?: string
     amount: number
     transactionId: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49687,11 +48631,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     transactionId?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49703,22 +48643,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     description: string
     joinedDate: string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutManagerInput
-=======
     user?: UserCreateNestedOneWithoutManagerInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects?: ProjectCreateNestedManyWithoutManagerInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutManagerInput
   }
 
   export type ManagerUncheckedCreateInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: ManagerCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49735,22 +48667,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutManagerNestedInput
-=======
     user?: UserUpdateOneWithoutManagerNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects?: ProjectUpdateManyWithoutManagerNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutManagerNestedInput
   }
 
   export type ManagerUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: ManagerUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49762,11 +48686,7 @@ export namespace Prisma {
 
   export type ManagerCreateManyInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: ManagerCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49785,11 +48705,7 @@ export namespace Prisma {
 
   export type ManagerUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: ManagerUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49801,10 +48717,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: string
     type: string
     isRead?: boolean
@@ -49817,10 +48730,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: string
     type: string
     isRead?: boolean
@@ -49833,10 +48743,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -49849,10 +48756,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -49865,10 +48769,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: string
     type: string
     isRead?: boolean
@@ -49880,10 +48781,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -49895,10 +48793,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -50387,11 +49282,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -50406,11 +49297,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -50423,11 +49310,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50442,11 +49325,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50460,11 +49339,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -50476,11 +49351,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50493,11 +49364,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50507,17 +49374,7 @@ export namespace Prisma {
   export type ProjectCreateInput = {
     id?: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -50525,10 +49382,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -50542,29 +49396,16 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
     sheets?: SheetCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedCreateInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -50573,10 +49414,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -50588,28 +49426,15 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
     sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50617,10 +49442,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50634,29 +49456,16 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
     sheets?: SheetUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50665,10 +49474,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50680,29 +49486,16 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
     sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateManyInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -50711,10 +49504,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -50726,17 +49516,7 @@ export namespace Prisma {
   export type ProjectUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50744,10 +49524,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50760,17 +49537,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50779,10 +49546,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50907,8 +49671,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type SubmissionReturnCreateInput = {
     id?: string
     returnedAt?: Date | string
@@ -51043,7 +49805,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type SuperAdminCreateInput = {
     id?: string
     clientLogo?: string | null
@@ -51052,21 +49813,13 @@ export namespace Prisma {
     secondaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutSuperAdminInput
-=======
     user?: UserCreateNestedOneWithoutSuperAdminInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     notificationPermissionSuperAdmin?: NotificationPermissionSuperAdminCreateNestedOneWithoutUserInput
   }
 
   export type SuperAdminUncheckedCreateInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: string | null
     favicon?: string | null
     primaryColor?: string | null
@@ -51084,21 +49837,13 @@ export namespace Prisma {
     secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutSuperAdminNestedInput
-=======
     user?: UserUpdateOneWithoutSuperAdminNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     notificationPermissionSuperAdmin?: NotificationPermissionSuperAdminUpdateOneWithoutUserNestedInput
   }
 
   export type SuperAdminUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
     favicon?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51110,11 +49855,7 @@ export namespace Prisma {
 
   export type SuperAdminCreateManyInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: string | null
     favicon?: string | null
     primaryColor?: string | null
@@ -51135,11 +49876,7 @@ export namespace Prisma {
 
   export type SuperAdminUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
     favicon?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51156,20 +49893,12 @@ export namespace Prisma {
     workItems?: SupporterCreateworkItemsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutSupporterInput
-=======
     user?: UserCreateNestedOneWithoutSupporterInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type SupporterUncheckedCreateInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole: $Enums.SupporterRole
     skills?: SupporterCreateskillsInput | string[]
     workload?: number | null
@@ -51186,20 +49915,12 @@ export namespace Prisma {
     workItems?: SupporterUpdateworkItemsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutSupporterNestedInput
-=======
     user?: UserUpdateOneWithoutSupporterNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type SupporterUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole?: EnumSupporterRoleFieldUpdateOperationsInput | $Enums.SupporterRole
     skills?: SupporterUpdateskillsInput | string[]
     workload?: NullableIntFieldUpdateOperationsInput | number | null
@@ -51210,11 +49931,7 @@ export namespace Prisma {
 
   export type SupporterCreateManyInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole: $Enums.SupporterRole
     skills?: SupporterCreateskillsInput | string[]
     workload?: number | null
@@ -51235,11 +49952,7 @@ export namespace Prisma {
 
   export type SupporterUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     supporterRole?: EnumSupporterRoleFieldUpdateOperationsInput | $Enums.SupporterRole
     skills?: SupporterUpdateskillsInput | string[]
     workload?: NullableIntFieldUpdateOperationsInput | number | null
@@ -51831,20 +50544,12 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutViewerInput
-=======
     user?: UserCreateNestedOneWithoutViewerInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ViewerUncheckedCreateInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -51853,31 +50558,19 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutViewerNestedInput
-=======
     user?: UserUpdateOneWithoutViewerNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ViewerUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ViewerCreateManyInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -51890,9 +50583,6 @@ export namespace Prisma {
 
   export type ViewerUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52349,7 +51039,6 @@ export namespace Prisma {
     value?: StringFieldUpdateOperationsInput | string
     sheetId?: StringFieldUpdateOperationsInput | string
     employeeId?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52594,14 +51283,11 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-<<<<<<< HEAD
-=======
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ReferredPersonListRelationFilter = {
     every?: ReferredPersonWhereInput
     some?: ReferredPersonWhereInput
@@ -52768,26 +51454,20 @@ export namespace Prisma {
     none?: ProjectEmployeeWhereInput
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedListRelationFilter = {
     every?: SubmittedWhereInput
     some?: SubmittedWhereInput
     none?: SubmittedWhereInput
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectEmployeeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type EmployeeCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -52967,10 +51647,7 @@ export namespace Prisma {
     id?: SortOrder
     senderId?: SortOrder
     receiverIds?: SortOrder
-<<<<<<< HEAD
-=======
     projectId?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -52981,10 +51658,7 @@ export namespace Prisma {
   export type NotificationMaxOrderByAggregateInput = {
     id?: SortOrder
     senderId?: SortOrder
-<<<<<<< HEAD
-=======
     projectId?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -52995,10 +51669,7 @@ export namespace Prisma {
   export type NotificationMinOrderByAggregateInput = {
     id?: SortOrder
     senderId?: SortOrder
-<<<<<<< HEAD
-=======
     projectId?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: SortOrder
     type?: SortOrder
     isRead?: SortOrder
@@ -53228,8 +51899,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-<<<<<<< HEAD
-=======
   export type EnumPriorityFilter<$PrismaModel = never> = {
     equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
@@ -53237,7 +51906,6 @@ export namespace Prisma {
     not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ClientScalarRelationFilter = {
     is?: ClientWhereInput
     isNot?: ClientWhereInput
@@ -53290,24 +51958,6 @@ export namespace Prisma {
     progress?: SortOrder
   }
 
-<<<<<<< HEAD
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type EnumProjectCycleFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectCycleFilter<$PrismaModel> | $Enums.ProjectCycle
-=======
   export type EnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
@@ -53316,7 +51966,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPriorityFilter<$PrismaModel>
     _max?: NestedEnumPriorityFilter<$PrismaModel>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EnumProjectStatusFilter<$PrismaModel = never> = {
@@ -53326,13 +51975,6 @@ export namespace Prisma {
     not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
   }
 
-<<<<<<< HEAD
-  export type EnumPriorityFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
-=======
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -53342,7 +51984,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -53384,8 +52025,6 @@ export namespace Prisma {
     none?: ReviewWhereInput
   }
 
-<<<<<<< HEAD
-=======
   export type ReminderListRelationFilter = {
     every?: ReminderWhereInput
     some?: ReminderWhereInput
@@ -53398,7 +52037,6 @@ export namespace Prisma {
     none?: SheetWhereInput
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -53411,8 +52049,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-<<<<<<< HEAD
-=======
   export type ReminderOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -53421,22 +52057,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectCountOrderByAggregateInput = {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-<<<<<<< HEAD
-    datetime?: SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrder
-    beforeSubmitData?: SortOrder
-    importFiles?: SortOrder
-    importMainFile?: SortOrder
-=======
-    description?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -53445,10 +52070,7 @@ export namespace Prisma {
     progress?: SortOrder
     chartList?: SortOrder
     estimatedCompletedDate?: SortOrder
-<<<<<<< HEAD
-=======
     projectCompleteDate?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: SortOrder
     budget?: SortOrder
     createdAt?: SortOrder
@@ -53458,10 +52080,6 @@ export namespace Prisma {
   }
 
   export type ProjectAvgOrderByAggregateInput = {
-<<<<<<< HEAD
-    beforeSubmitData?: SortOrder
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     progress?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
@@ -53471,16 +52089,7 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-<<<<<<< HEAD
-    datetime?: SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrder
-    beforeSubmitData?: SortOrder
-    importMainFile?: SortOrder
-=======
-    description?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -53488,10 +52097,7 @@ export namespace Prisma {
     startDate?: SortOrder
     progress?: SortOrder
     estimatedCompletedDate?: SortOrder
-<<<<<<< HEAD
-=======
     projectCompleteDate?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: SortOrder
     budget?: SortOrder
     createdAt?: SortOrder
@@ -53504,16 +52110,7 @@ export namespace Prisma {
     id?: SortOrder
     programId?: SortOrder
     name?: SortOrder
-<<<<<<< HEAD
-    datetime?: SortOrder
-    uploadCycle?: SortOrder
     description?: SortOrder
-    dataReceivedTime?: SortOrder
-    beforeSubmitData?: SortOrder
-    importMainFile?: SortOrder
-=======
-    description?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: SortOrder
     priority?: SortOrder
     deadline?: SortOrder
@@ -53521,10 +52118,7 @@ export namespace Prisma {
     startDate?: SortOrder
     progress?: SortOrder
     estimatedCompletedDate?: SortOrder
-<<<<<<< HEAD
-=======
     projectCompleteDate?: SortOrder
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: SortOrder
     budget?: SortOrder
     createdAt?: SortOrder
@@ -53534,17 +52128,11 @@ export namespace Prisma {
   }
 
   export type ProjectSumOrderByAggregateInput = {
-<<<<<<< HEAD
-    beforeSubmitData?: SortOrder
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     progress?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
   }
 
-<<<<<<< HEAD
-=======
   export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
@@ -53555,7 +52143,6 @@ export namespace Prisma {
     _max?: NestedEnumProjectStatusFilter<$PrismaModel>
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -53570,39 +52157,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-<<<<<<< HEAD
-  export type EnumProjectCycleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectCycleWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCycle
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumProjectCycleFilter<$PrismaModel>
-    _max?: NestedEnumProjectCycleFilter<$PrismaModel>
-  }
-
-  export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.ProjectStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumProjectStatusFilter<$PrismaModel>
-    _max?: NestedEnumProjectStatusFilter<$PrismaModel>
-  }
-
-  export type EnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityWithAggregatesFilter<$PrismaModel> | $Enums.Priority
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPriorityFilter<$PrismaModel>
-    _max?: NestedEnumPriorityFilter<$PrismaModel>
-  }
-
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -53680,8 +52234,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedScalarRelationFilter = {
     is?: SubmittedWhereInput
     isNot?: SubmittedWhereInput
@@ -53769,7 +52321,6 @@ export namespace Prisma {
     _max?: NestedEnumSubmittedStatusFilter<$PrismaModel>
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type NotificationPermissionSuperAdminNullableScalarRelationFilter = {
     is?: NotificationPermissionSuperAdminWhereInput | null
     isNot?: NotificationPermissionSuperAdminWhereInput | null
@@ -54038,14 +52589,6 @@ export namespace Prisma {
     isNot?: ManagerWhereInput | null
   }
 
-<<<<<<< HEAD
-  export type EmployeeNullableScalarRelationFilter = {
-    is?: EmployeeWhereInput | null
-    isNot?: EmployeeWhereInput | null
-  }
-
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ViewerNullableScalarRelationFilter = {
     is?: ViewerWhereInput | null
     isNot?: ViewerWhereInput | null
@@ -54293,8 +52836,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-<<<<<<< HEAD
-=======
   export type EnumChartStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ChartStatus | EnumChartStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
@@ -54694,7 +53235,6 @@ export namespace Prisma {
     col?: SortOrder
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectCreateNestedOneWithoutActivitiesInput = {
     create?: XOR<ProjectCreateWithoutActivitiesInput, ProjectUncheckedCreateWithoutActivitiesInput>
     connectOrCreate?: ProjectCreateOrConnectWithoutActivitiesInput
@@ -54824,19 +53364,12 @@ export namespace Prisma {
     divide?: number
   }
 
-<<<<<<< HEAD
-  export type UserUpdateOneRequiredWithoutClientNestedInput = {
-    create?: XOR<UserCreateWithoutClientInput, UserUncheckedCreateWithoutClientInput>
-    connectOrCreate?: UserCreateOrConnectWithoutClientInput
-    upsert?: UserUpsertWithoutClientInput
-=======
   export type UserUpdateOneWithoutClientNestedInput = {
     create?: XOR<UserCreateWithoutClientInput, UserUncheckedCreateWithoutClientInput>
     connectOrCreate?: UserCreateOrConnectWithoutClientInput
     upsert?: UserUpsertWithoutClientInput
     disconnect?: UserWhereInput | boolean
     delete?: UserWhereInput | boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClientInput, UserUpdateWithoutClientInput>, UserUncheckedUpdateWithoutClientInput>
   }
@@ -54962,8 +53495,6 @@ export namespace Prisma {
     connect?: ProjectEmployeeWhereUniqueInput | ProjectEmployeeWhereUniqueInput[]
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedCreateNestedManyWithoutEmployeeInput = {
     create?: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput> | SubmittedCreateWithoutEmployeeInput[] | SubmittedUncheckedCreateWithoutEmployeeInput[]
     connectOrCreate?: SubmittedCreateOrConnectWithoutEmployeeInput | SubmittedCreateOrConnectWithoutEmployeeInput[]
@@ -54971,7 +53502,6 @@ export namespace Prisma {
     connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectEmployeeUncheckedCreateNestedManyWithoutEmployeeInput = {
     create?: XOR<ProjectEmployeeCreateWithoutEmployeeInput, ProjectEmployeeUncheckedCreateWithoutEmployeeInput> | ProjectEmployeeCreateWithoutEmployeeInput[] | ProjectEmployeeUncheckedCreateWithoutEmployeeInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutEmployeeInput | ProjectEmployeeCreateOrConnectWithoutEmployeeInput[]
@@ -54979,8 +53509,6 @@ export namespace Prisma {
     connect?: ProjectEmployeeWhereUniqueInput | ProjectEmployeeWhereUniqueInput[]
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedUncheckedCreateNestedManyWithoutEmployeeInput = {
     create?: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput> | SubmittedCreateWithoutEmployeeInput[] | SubmittedUncheckedCreateWithoutEmployeeInput[]
     connectOrCreate?: SubmittedCreateOrConnectWithoutEmployeeInput | SubmittedCreateOrConnectWithoutEmployeeInput[]
@@ -54988,25 +53516,17 @@ export namespace Prisma {
     connect?: SubmittedWhereUniqueInput | SubmittedWhereUniqueInput[]
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type EmployeeUpdateskillsInput = {
     set?: string[]
     push?: string | string[]
   }
 
-<<<<<<< HEAD
-  export type UserUpdateOneRequiredWithoutEmployeeNestedInput = {
-    create?: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
-    connectOrCreate?: UserCreateOrConnectWithoutEmployeeInput
-    upsert?: UserUpsertWithoutEmployeeInput
-=======
   export type UserUpdateOneWithoutEmployeeNestedInput = {
     create?: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
     connectOrCreate?: UserCreateOrConnectWithoutEmployeeInput
     upsert?: UserUpsertWithoutEmployeeInput
     disconnect?: UserWhereInput | boolean
     delete?: UserWhereInput | boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEmployeeInput, UserUpdateWithoutEmployeeInput>, UserUncheckedUpdateWithoutEmployeeInput>
   }
@@ -55025,8 +53545,6 @@ export namespace Prisma {
     deleteMany?: ProjectEmployeeScalarWhereInput | ProjectEmployeeScalarWhereInput[]
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedUpdateManyWithoutEmployeeNestedInput = {
     create?: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput> | SubmittedCreateWithoutEmployeeInput[] | SubmittedUncheckedCreateWithoutEmployeeInput[]
     connectOrCreate?: SubmittedCreateOrConnectWithoutEmployeeInput | SubmittedCreateOrConnectWithoutEmployeeInput[]
@@ -55041,7 +53559,6 @@ export namespace Prisma {
     deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput = {
     create?: XOR<ProjectEmployeeCreateWithoutEmployeeInput, ProjectEmployeeUncheckedCreateWithoutEmployeeInput> | ProjectEmployeeCreateWithoutEmployeeInput[] | ProjectEmployeeUncheckedCreateWithoutEmployeeInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutEmployeeInput | ProjectEmployeeCreateOrConnectWithoutEmployeeInput[]
@@ -55056,8 +53573,6 @@ export namespace Prisma {
     deleteMany?: ProjectEmployeeScalarWhereInput | ProjectEmployeeScalarWhereInput[]
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedUncheckedUpdateManyWithoutEmployeeNestedInput = {
     create?: XOR<SubmittedCreateWithoutEmployeeInput, SubmittedUncheckedCreateWithoutEmployeeInput> | SubmittedCreateWithoutEmployeeInput[] | SubmittedUncheckedCreateWithoutEmployeeInput[]
     connectOrCreate?: SubmittedCreateOrConnectWithoutEmployeeInput | SubmittedCreateOrConnectWithoutEmployeeInput[]
@@ -55072,7 +53587,6 @@ export namespace Prisma {
     deleteMany?: SubmittedScalarWhereInput | SubmittedScalarWhereInput[]
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type UserCreateNestedOneWithoutOtpVerificationInput = {
     create?: XOR<UserCreateWithoutOtpVerificationInput, UserUncheckedCreateWithoutOtpVerificationInput>
     connectOrCreate?: UserCreateOrConnectWithoutOtpVerificationInput
@@ -55101,19 +53615,12 @@ export namespace Prisma {
     divide?: number
   }
 
-<<<<<<< HEAD
-  export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
-    create?: XOR<UserCreateWithoutPaymentsInput, UserUncheckedCreateWithoutPaymentsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPaymentsInput
-    upsert?: UserUpsertWithoutPaymentsInput
-=======
   export type UserUpdateOneWithoutPaymentsNestedInput = {
     create?: XOR<UserCreateWithoutPaymentsInput, UserUncheckedCreateWithoutPaymentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutPaymentsInput
     upsert?: UserUpsertWithoutPaymentsInput
     disconnect?: UserWhereInput | boolean
     delete?: UserWhereInput | boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPaymentsInput, UserUpdateWithoutPaymentsInput>, UserUncheckedUpdateWithoutPaymentsInput>
   }
@@ -55161,19 +53668,12 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-<<<<<<< HEAD
-  export type UserUpdateOneRequiredWithoutManagerNestedInput = {
-    create?: XOR<UserCreateWithoutManagerInput, UserUncheckedCreateWithoutManagerInput>
-    connectOrCreate?: UserCreateOrConnectWithoutManagerInput
-    upsert?: UserUpsertWithoutManagerInput
-=======
   export type UserUpdateOneWithoutManagerNestedInput = {
     create?: XOR<UserCreateWithoutManagerInput, UserUncheckedCreateWithoutManagerInput>
     connectOrCreate?: UserCreateOrConnectWithoutManagerInput
     upsert?: UserUpsertWithoutManagerInput
     disconnect?: UserWhereInput | boolean
     delete?: UserWhereInput | boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutManagerInput, UserUpdateWithoutManagerInput>, UserUncheckedUpdateWithoutManagerInput>
   }
@@ -55417,13 +53917,10 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
   }
 
-<<<<<<< HEAD
-=======
   export type EnumPriorityFieldUpdateOperationsInput = {
     set?: $Enums.Priority
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ClientUpdateOneRequiredWithoutProgramsNestedInput = {
     create?: XOR<ClientCreateWithoutProgramsInput, ClientUncheckedCreateWithoutProgramsInput>
     connectOrCreate?: ClientCreateOrConnectWithoutProgramsInput
@@ -55460,13 +53957,6 @@ export namespace Prisma {
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
   }
 
-<<<<<<< HEAD
-  export type ProjectCreateimportFilesInput = {
-    set: string[]
-  }
-
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectCreatechartListInput = {
     set: string[]
   }
@@ -55518,8 +54008,6 @@ export namespace Prisma {
     connect?: RequestToAddProjectMemberWhereUniqueInput | RequestToAddProjectMemberWhereUniqueInput[]
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedCreateNestedManyWithoutProjectInput = {
     create?: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput> | SubmittedCreateWithoutProjectInput[] | SubmittedUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: SubmittedCreateOrConnectWithoutProjectInput | SubmittedCreateOrConnectWithoutProjectInput[]
@@ -55541,7 +54029,6 @@ export namespace Prisma {
     connect?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectEmployeeUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<ProjectEmployeeCreateWithoutProjectInput, ProjectEmployeeUncheckedCreateWithoutProjectInput> | ProjectEmployeeCreateWithoutProjectInput[] | ProjectEmployeeUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutProjectInput | ProjectEmployeeCreateOrConnectWithoutProjectInput[]
@@ -55577,19 +54064,6 @@ export namespace Prisma {
     connect?: RequestToAddProjectMemberWhereUniqueInput | RequestToAddProjectMemberWhereUniqueInput[]
   }
 
-<<<<<<< HEAD
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
-  export type EnumProjectCycleFieldUpdateOperationsInput = {
-    set?: $Enums.ProjectCycle
-  }
-
-  export type ProjectUpdateimportFilesInput = {
-    set?: string[]
-    push?: string | string[]
-=======
   export type SubmittedUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput> | SubmittedCreateWithoutProjectInput[] | SubmittedUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: SubmittedCreateOrConnectWithoutProjectInput | SubmittedCreateOrConnectWithoutProjectInput[]
@@ -55609,20 +54083,14 @@ export namespace Prisma {
     connectOrCreate?: SheetCreateOrConnectWithoutProjectInput | SheetCreateOrConnectWithoutProjectInput[]
     createMany?: SheetCreateManyProjectInputEnvelope
     connect?: SheetWhereUniqueInput | SheetWhereUniqueInput[]
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EnumProjectStatusFieldUpdateOperationsInput = {
     set?: $Enums.ProjectStatus
   }
 
-<<<<<<< HEAD
-  export type EnumPriorityFieldUpdateOperationsInput = {
-    set?: $Enums.Priority
-=======
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUpdatechartListInput = {
@@ -55724,8 +54192,6 @@ export namespace Prisma {
     deleteMany?: RequestToAddProjectMemberScalarWhereInput | RequestToAddProjectMemberScalarWhereInput[]
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput> | SubmittedCreateWithoutProjectInput[] | SubmittedUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: SubmittedCreateOrConnectWithoutProjectInput | SubmittedCreateOrConnectWithoutProjectInput[]
@@ -55768,7 +54234,6 @@ export namespace Prisma {
     deleteMany?: SheetScalarWhereInput | SheetScalarWhereInput[]
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectEmployeeUncheckedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<ProjectEmployeeCreateWithoutProjectInput, ProjectEmployeeUncheckedCreateWithoutProjectInput> | ProjectEmployeeCreateWithoutProjectInput[] | ProjectEmployeeUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: ProjectEmployeeCreateOrConnectWithoutProjectInput | ProjectEmployeeCreateOrConnectWithoutProjectInput[]
@@ -55839,8 +54304,6 @@ export namespace Prisma {
     deleteMany?: RequestToAddProjectMemberScalarWhereInput | RequestToAddProjectMemberScalarWhereInput[]
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedUncheckedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<SubmittedCreateWithoutProjectInput, SubmittedUncheckedCreateWithoutProjectInput> | SubmittedCreateWithoutProjectInput[] | SubmittedUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: SubmittedCreateOrConnectWithoutProjectInput | SubmittedCreateOrConnectWithoutProjectInput[]
@@ -55883,7 +54346,6 @@ export namespace Prisma {
     deleteMany?: SheetScalarWhereInput | SheetScalarWhereInput[]
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectCreateNestedOneWithoutProjectEmployeesInput = {
     create?: XOR<ProjectCreateWithoutProjectEmployeesInput, ProjectUncheckedCreateWithoutProjectEmployeesInput>
     connectOrCreate?: ProjectCreateOrConnectWithoutProjectEmployeesInput
@@ -55926,8 +54388,6 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutReviewsInput, ProjectUpdateWithoutReviewsInput>, ProjectUncheckedUpdateWithoutReviewsInput>
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedCreateNestedOneWithoutSubmissionReturnInput = {
     create?: XOR<SubmittedCreateWithoutSubmissionReturnInput, SubmittedUncheckedCreateWithoutSubmissionReturnInput>
     connectOrCreate?: SubmittedCreateOrConnectWithoutSubmissionReturnInput
@@ -56017,7 +54477,6 @@ export namespace Prisma {
     update?: XOR<XOR<SubmissionReturnUpdateToOneWithWhereWithoutSubmittedInput, SubmissionReturnUpdateWithoutSubmittedInput>, SubmissionReturnUncheckedUpdateWithoutSubmittedInput>
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type UserCreateNestedOneWithoutSuperAdminInput = {
     create?: XOR<UserCreateWithoutSuperAdminInput, UserUncheckedCreateWithoutSuperAdminInput>
     connectOrCreate?: UserCreateOrConnectWithoutSuperAdminInput
@@ -56036,19 +54495,12 @@ export namespace Prisma {
     connect?: NotificationPermissionSuperAdminWhereUniqueInput
   }
 
-<<<<<<< HEAD
-  export type UserUpdateOneRequiredWithoutSuperAdminNestedInput = {
-    create?: XOR<UserCreateWithoutSuperAdminInput, UserUncheckedCreateWithoutSuperAdminInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSuperAdminInput
-    upsert?: UserUpsertWithoutSuperAdminInput
-=======
   export type UserUpdateOneWithoutSuperAdminNestedInput = {
     create?: XOR<UserCreateWithoutSuperAdminInput, UserUncheckedCreateWithoutSuperAdminInput>
     connectOrCreate?: UserCreateOrConnectWithoutSuperAdminInput
     upsert?: UserUpsertWithoutSuperAdminInput
     disconnect?: UserWhereInput | boolean
     delete?: UserWhereInput | boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSuperAdminInput, UserUpdateWithoutSuperAdminInput>, UserUncheckedUpdateWithoutSuperAdminInput>
   }
@@ -56101,19 +54553,12 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-<<<<<<< HEAD
-  export type UserUpdateOneRequiredWithoutSupporterNestedInput = {
-    create?: XOR<UserCreateWithoutSupporterInput, UserUncheckedCreateWithoutSupporterInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSupporterInput
-    upsert?: UserUpsertWithoutSupporterInput
-=======
   export type UserUpdateOneWithoutSupporterNestedInput = {
     create?: XOR<UserCreateWithoutSupporterInput, UserUncheckedCreateWithoutSupporterInput>
     connectOrCreate?: UserCreateOrConnectWithoutSupporterInput
     upsert?: UserUpsertWithoutSupporterInput
     disconnect?: UserWhereInput | boolean
     delete?: UserWhereInput | boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSupporterInput, UserUpdateWithoutSupporterInput>, UserUncheckedUpdateWithoutSupporterInput>
   }
@@ -56769,25 +55214,16 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-<<<<<<< HEAD
-  export type UserUpdateOneRequiredWithoutViewerNestedInput = {
-    create?: XOR<UserCreateWithoutViewerInput, UserUncheckedCreateWithoutViewerInput>
-    connectOrCreate?: UserCreateOrConnectWithoutViewerInput
-    upsert?: UserUpsertWithoutViewerInput
-=======
   export type UserUpdateOneWithoutViewerNestedInput = {
     create?: XOR<UserCreateWithoutViewerInput, UserUncheckedCreateWithoutViewerInput>
     connectOrCreate?: UserCreateOrConnectWithoutViewerInput
     upsert?: UserUpsertWithoutViewerInput
     disconnect?: UserWhereInput | boolean
     delete?: UserWhereInput | boolean
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutViewerInput, UserUpdateWithoutViewerInput>, UserUncheckedUpdateWithoutViewerInput>
   }
 
-<<<<<<< HEAD
-=======
   export type SheetCreateNestedOneWithoutChartInput = {
     create?: XOR<SheetCreateWithoutChartInput, SheetUncheckedCreateWithoutChartInput>
     connectOrCreate?: SheetCreateOrConnectWithoutChartInput
@@ -57014,7 +55450,6 @@ export namespace Prisma {
     update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutSnapshotsInput, SheetUpdateWithoutSnapshotsInput>, SheetUncheckedUpdateWithoutSnapshotsInput>
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -57248,8 +55683,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-<<<<<<< HEAD
-=======
   export type NestedEnumPriorityFilter<$PrismaModel = never> = {
     equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
@@ -57274,7 +55707,6 @@ export namespace Prisma {
     not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -57286,27 +55718,6 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-<<<<<<< HEAD
-  export type NestedEnumProjectCycleFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectCycleFilter<$PrismaModel> | $Enums.ProjectCycle
-  }
-
-  export type NestedEnumProjectStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
-  }
-
-  export type NestedEnumPriorityFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
-=======
   export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
@@ -57315,7 +55726,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumProjectStatusFilter<$PrismaModel>
     _max?: NestedEnumProjectStatusFilter<$PrismaModel>
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -57332,39 +55742,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-<<<<<<< HEAD
-  export type NestedEnumProjectCycleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectCycle | EnumProjectCycleFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectCycle[] | ListEnumProjectCycleFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectCycleWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCycle
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumProjectCycleFilter<$PrismaModel>
-    _max?: NestedEnumProjectCycleFilter<$PrismaModel>
-  }
-
-  export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProjectStatus | EnumProjectStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.ProjectStatus[] | ListEnumProjectStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.ProjectStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumProjectStatusFilter<$PrismaModel>
-    _max?: NestedEnumProjectStatusFilter<$PrismaModel>
-  }
-
-  export type NestedEnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityWithAggregatesFilter<$PrismaModel> | $Enums.Priority
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPriorityFilter<$PrismaModel>
-    _max?: NestedEnumPriorityFilter<$PrismaModel>
-  }
-
-=======
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -57381,8 +55758,6 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-<<<<<<< HEAD
-=======
   export type NestedEnumSubmittedStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.SubmittedStatus | EnumSubmittedStatusFieldRefInput<$PrismaModel>
     in?: $Enums.SubmittedStatus[] | ListEnumSubmittedStatusFieldRefInput<$PrismaModel>
@@ -57400,7 +55775,6 @@ export namespace Prisma {
     _max?: NestedEnumSubmittedStatusFilter<$PrismaModel>
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type NestedEnumSupporterRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.SupporterRole | EnumSupporterRoleFieldRefInput<$PrismaModel>
     in?: $Enums.SupporterRole[] | ListEnumSupporterRoleFieldRefInput<$PrismaModel>
@@ -57520,18 +55894,6 @@ export namespace Prisma {
     _max?: NestedEnumUserStatusFilter<$PrismaModel>
   }
 
-<<<<<<< HEAD
-  export type ProjectCreateWithoutActivitiesInput = {
-    id?: string
-    name: string
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
-    description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
   export type NestedEnumChartStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ChartStatus | EnumChartStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ChartStatus[] | ListEnumChartStatusFieldRefInput<$PrismaModel>
@@ -57626,7 +55988,6 @@ export namespace Prisma {
     id?: string
     name: string
     description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -57634,10 +55995,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -57650,29 +56008,16 @@ export namespace Prisma {
     tasks?: TaskCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
     sheets?: SheetCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedCreateWithoutActivitiesInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -57681,10 +56026,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -57695,12 +56037,9 @@ export namespace Prisma {
     tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
     sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateOrConnectWithoutActivitiesInput = {
@@ -57791,17 +56130,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutActivitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57809,10 +56138,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57825,29 +56151,16 @@ export namespace Prisma {
     tasks?: TaskUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
     sheets?: SheetUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateWithoutActivitiesInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57856,10 +56169,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57870,12 +56180,9 @@ export namespace Prisma {
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
     sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type UserUpsertWithoutActivitiesInput = {
@@ -58099,11 +56406,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -58116,11 +56419,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -58321,11 +56620,7 @@ export namespace Prisma {
     programName?: StringFilter<"Program"> | string
     datetime?: StringFilter<"Program"> | string
     programDescription?: StringFilter<"Program"> | string
-<<<<<<< HEAD
-    priority?: StringFilter<"Program"> | string
-=======
     priority?: EnumPriorityFilter<"Program"> | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFilter<"Program"> | string
     progress?: IntNullableFilter<"Program"> | number | null
     createdAt?: DateTimeFilter<"Program"> | Date | string
@@ -58446,8 +56741,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedCreateWithoutEmployeeInput = {
     id?: string
     information: string
@@ -58484,7 +56777,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type UserUpsertWithoutEmployeeInput = {
     update: XOR<UserUpdateWithoutEmployeeInput, UserUncheckedUpdateWithoutEmployeeInput>
     create: XOR<UserCreateWithoutEmployeeInput, UserUncheckedCreateWithoutEmployeeInput>
@@ -58586,8 +56878,6 @@ export namespace Prisma {
     assignedAt?: DateTimeFilter<"ProjectEmployee"> | Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedUpsertWithWhereUniqueWithoutEmployeeInput = {
     where: SubmittedWhereUniqueInput
     update: XOR<SubmittedUpdateWithoutEmployeeInput, SubmittedUncheckedUpdateWithoutEmployeeInput>
@@ -58620,7 +56910,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Submitted"> | Date | string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type UserCreateWithoutOtpVerificationInput = {
     id?: string
     email: string
@@ -58981,17 +57270,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutManagerInput = {
     id?: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -58999,10 +57278,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59015,29 +57291,16 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
     sheets?: SheetCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedCreateWithoutManagerInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -59045,10 +57308,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -59060,12 +57320,9 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
     sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateOrConnectWithoutManagerInput = {
@@ -59202,17 +57459,7 @@ export namespace Prisma {
     id?: StringFilter<"Project"> | string
     programId?: StringFilter<"Project"> | string
     name?: StringFilter<"Project"> | string
-<<<<<<< HEAD
-    datetime?: DateTimeNullableFilter<"Project"> | Date | string | null
-    uploadCycle?: EnumProjectCycleFilter<"Project"> | $Enums.ProjectCycle
     description?: StringFilter<"Project"> | string
-    dataReceivedTime?: StringNullableFilter<"Project"> | string | null
-    beforeSubmitData?: IntNullableFilter<"Project"> | number | null
-    importFiles?: StringNullableListFilter<"Project">
-    importMainFile?: StringNullableFilter<"Project"> | string | null
-=======
-    description?: StringFilter<"Project"> | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFilter<"Project"> | $Enums.ProjectStatus
     priority?: EnumPriorityFilter<"Project"> | $Enums.Priority
     deadline?: DateTimeFilter<"Project"> | Date | string
@@ -59221,10 +57468,7 @@ export namespace Prisma {
     progress?: IntNullableFilter<"Project"> | number | null
     chartList?: StringNullableListFilter<"Project">
     estimatedCompletedDate?: DateTimeNullableFilter<"Project"> | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: DateTimeNullableFilter<"Project"> | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: StringNullableFilter<"Project"> | string | null
     budget?: StringNullableFilter<"Project"> | string | null
     createdAt?: DateTimeFilter<"Project"> | Date | string
@@ -59376,10 +57620,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: string
     type: string
     isRead?: boolean
@@ -59391,10 +57632,7 @@ export namespace Prisma {
     id?: string
     senderId: string
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context: string
     type: string
     isRead?: boolean
@@ -59497,10 +57735,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -59512,10 +57747,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     senderId?: StringFieldUpdateOperationsInput | string
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
-<<<<<<< HEAD
-=======
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     context?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -60251,20 +58483,12 @@ export namespace Prisma {
     secondaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutSuperAdminInput
-=======
     user?: UserCreateNestedOneWithoutSuperAdminInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type SuperAdminUncheckedCreateWithoutNotificationPermissionSuperAdminInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: string | null
     favicon?: string | null
     primaryColor?: string | null
@@ -60297,20 +58521,12 @@ export namespace Prisma {
     secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutSuperAdminNestedInput
-=======
     user?: UserUpdateOneWithoutSuperAdminNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type SuperAdminUncheckedUpdateWithoutNotificationPermissionSuperAdminInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
     favicon?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60343,11 +58559,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutClientInput
-=======
     user?: UserCreateNestedOneWithoutClientInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     tags?: TagCreateNestedOneWithoutClientInput
@@ -60355,11 +58567,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutProgramsInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -60395,17 +58603,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutProgramInput = {
     id?: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -60413,10 +58611,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -60429,28 +58624,15 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
     sheets?: SheetCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedCreateWithoutProgramInput = {
     id?: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -60459,10 +58641,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -60474,12 +58653,9 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
     sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateOrConnectWithoutProgramInput = {
@@ -60527,11 +58703,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
-=======
     user?: UserUpdateOneWithoutClientNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     tags?: TagUpdateOneWithoutClientNestedInput
@@ -60539,11 +58711,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutProgramsInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60592,11 +58760,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -60610,11 +58774,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -60633,21 +58793,13 @@ export namespace Prisma {
     updatedAt?: Date | string
     description: string
     joinedDate: string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutManagerInput
-=======
     user?: UserCreateNestedOneWithoutManagerInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutManagerInput
   }
 
   export type ManagerUncheckedCreateWithoutProjectsInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: ManagerCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60805,8 +58957,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedCreateWithoutProjectInput = {
     id?: string
     information: string
@@ -60911,7 +59061,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProgramUpsertWithoutProjectsInput = {
     update: XOR<ProgramUpdateWithoutProjectsInput, ProgramUncheckedUpdateWithoutProjectsInput>
     create: XOR<ProgramCreateWithoutProjectsInput, ProgramUncheckedCreateWithoutProjectsInput>
@@ -60928,11 +59077,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60946,11 +59091,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60975,21 +59116,13 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutManagerNestedInput
-=======
     user?: UserUpdateOneWithoutManagerNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutManagerNestedInput
   }
 
   export type ManagerUncheckedUpdateWithoutProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: ManagerUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61123,18 +59256,6 @@ export namespace Prisma {
     data: XOR<RequestToAddProjectMemberUpdateManyMutationInput, RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectInput>
   }
 
-<<<<<<< HEAD
-  export type ProjectCreateWithoutProjectEmployeesInput = {
-    id?: string
-    name: string
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
-    description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
   export type SubmittedUpsertWithWhereUniqueWithoutProjectInput = {
     where: SubmittedWhereUniqueInput
     update: XOR<SubmittedUpdateWithoutProjectInput, SubmittedUncheckedUpdateWithoutProjectInput>
@@ -61216,7 +59337,6 @@ export namespace Prisma {
     id?: string
     name: string
     description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -61224,10 +59344,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -61240,29 +59357,16 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
     sheets?: SheetCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedCreateWithoutProjectEmployeesInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -61271,10 +59375,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -61285,12 +59386,9 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
     sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateOrConnectWithoutProjectEmployeesInput = {
@@ -61305,30 +59403,19 @@ export namespace Prisma {
     description: string
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutEmployeeInput
-=======
     user?: UserCreateNestedOneWithoutEmployeeInput
     submitted?: SubmittedCreateNestedManyWithoutEmployeeInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeUncheckedCreateWithoutProjectEmployeesInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: Date | string
     updatedAt?: Date | string
     description: string
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutEmployeeInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeCreateOrConnectWithoutProjectEmployeesInput = {
@@ -61350,17 +59437,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutProjectEmployeesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61368,10 +59445,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61384,29 +59458,16 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
     sheets?: SheetUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateWithoutProjectEmployeesInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61415,10 +59476,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61429,12 +59487,9 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
     sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeUpsertWithoutProjectEmployeesInput = {
@@ -61455,46 +59510,25 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutEmployeeNestedInput
-=======
     user?: UserUpdateOneWithoutEmployeeNestedInput
     submitted?: SubmittedUpdateManyWithoutEmployeeNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeUncheckedUpdateWithoutProjectEmployeesInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutEmployeeNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateWithoutReviewsInput = {
     id?: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -61502,10 +59536,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -61518,29 +59549,16 @@ export namespace Prisma {
     tasks?: TaskCreateNestedManyWithoutProjectInput
     activities?: ActivityCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
     sheets?: SheetCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedCreateWithoutReviewsInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -61549,10 +59567,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -61563,12 +59578,9 @@ export namespace Prisma {
     tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
     sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateOrConnectWithoutReviewsInput = {
@@ -61590,17 +59602,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61608,10 +59610,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61624,29 +59623,16 @@ export namespace Prisma {
     tasks?: TaskUpdateManyWithoutProjectNestedInput
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
     sheets?: SheetUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61655,10 +59641,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61669,8 +59652,6 @@ export namespace Prisma {
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
     sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
@@ -61970,7 +59951,6 @@ export namespace Prisma {
   export type SubmissionReturnUncheckedUpdateWithoutSubmittedInput = {
     id?: StringFieldUpdateOperationsInput | string
     returnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type UserCreateWithoutSuperAdminInput = {
@@ -62316,17 +60296,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutTasksInput = {
     id?: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -62334,10 +60304,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -62350,29 +60317,16 @@ export namespace Prisma {
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
     sheets?: SheetCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedCreateWithoutTasksInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -62381,10 +60335,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -62395,12 +60346,9 @@ export namespace Prisma {
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
     sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateOrConnectWithoutTasksInput = {
@@ -62422,17 +60370,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62440,10 +60378,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62456,29 +60391,16 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
     sheets?: SheetUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62487,10 +60409,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62501,12 +60420,9 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
     sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ClientCreateWithoutTicketsInput = {
@@ -62533,11 +60449,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutClientInput
-=======
     user?: UserCreateNestedOneWithoutClientInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
     tags?: TagCreateNestedOneWithoutClientInput
@@ -62545,11 +60457,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutTicketsInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -62617,11 +60525,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
-=======
     user?: UserUpdateOneWithoutClientNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
     tags?: TagUpdateOneWithoutClientNestedInput
@@ -62629,11 +60533,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutTicketsInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62761,10 +60661,7 @@ export namespace Prisma {
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
     projectEmployees?: ProjectEmployeeCreateNestedManyWithoutEmployeeInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutEmployeeInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeUncheckedCreateWithoutUserInput = {
@@ -62775,10 +60672,7 @@ export namespace Prisma {
     joinedDate: string
     skills?: EmployeeCreateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUncheckedCreateNestedManyWithoutEmployeeInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutEmployeeInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeCreateOrConnectWithoutUserInput = {
@@ -63200,10 +61094,7 @@ export namespace Prisma {
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUpdateManyWithoutEmployeeNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutEmployeeNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type EmployeeUncheckedUpdateWithoutUserInput = {
@@ -63214,10 +61105,7 @@ export namespace Prisma {
     joinedDate?: StringFieldUpdateOperationsInput | string
     skills?: EmployeeUpdateskillsInput | string[]
     projectEmployees?: ProjectEmployeeUncheckedUpdateManyWithoutEmployeeNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutEmployeeNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ViewerUpsertWithoutUserInput = {
@@ -63526,11 +61414,7 @@ export namespace Prisma {
     id?: StringFilter<"Payment"> | string
     amount?: FloatFilter<"Payment"> | number
     transactionId?: StringFilter<"Payment"> | string
-<<<<<<< HEAD
-    userId?: StringFilter<"Payment"> | string
-=======
     userId?: StringNullableFilter<"Payment"> | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
   }
@@ -63575,11 +61459,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutClientInput
-=======
     user?: UserCreateNestedOneWithoutClientInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
@@ -63587,11 +61467,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutTagsInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -63659,11 +61535,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
-=======
     user?: UserUpdateOneWithoutClientNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
@@ -63671,11 +61543,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63727,11 +61595,7 @@ export namespace Prisma {
     trialPeriod?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutClientInput
-=======
     user?: UserCreateNestedOneWithoutClientInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
     tags?: TagCreateNestedOneWithoutClientInput
@@ -63739,11 +61603,7 @@ export namespace Prisma {
 
   export type ClientUncheckedCreateWithoutReferredPersonsInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email: string
     contactPersonName?: string | null
     clientLogo?: string | null
@@ -63811,11 +61671,7 @@ export namespace Prisma {
     trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutClientNestedInput
-=======
     user?: UserUpdateOneWithoutClientNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
     tags?: TagUpdateOneWithoutClientNestedInput
@@ -63823,11 +61679,7 @@ export namespace Prisma {
 
   export type ClientUncheckedUpdateWithoutReferredPersonsInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     email?: StringFieldUpdateOperationsInput | string
     contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
     clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63858,17 +61710,7 @@ export namespace Prisma {
   export type ProjectCreateWithoutRequestsToAddProjectMemberInput = {
     id?: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -63876,10 +61718,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -63892,29 +61731,16 @@ export namespace Prisma {
     tasks?: TaskCreateNestedManyWithoutProjectInput
     activities?: ActivityCreateNestedManyWithoutProjectInput
     reviews?: ReviewCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedCreateNestedManyWithoutProjectInput
     reminders?: ReminderCreateNestedManyWithoutProjectInput
     sheets?: SheetCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedCreateWithoutRequestsToAddProjectMemberInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -63923,10 +61749,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -63937,12 +61760,9 @@ export namespace Prisma {
     tasks?: TaskUncheckedCreateNestedManyWithoutProjectInput
     activities?: ActivityUncheckedCreateNestedManyWithoutProjectInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutProjectInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedCreateNestedManyWithoutProjectInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutProjectInput
     sheets?: SheetUncheckedCreateNestedManyWithoutProjectInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectCreateOrConnectWithoutRequestsToAddProjectMemberInput = {
@@ -63957,21 +61777,13 @@ export namespace Prisma {
     updatedAt?: Date | string
     description: string
     joinedDate: string
-<<<<<<< HEAD
-    user: UserCreateNestedOneWithoutManagerInput
-=======
     user?: UserCreateNestedOneWithoutManagerInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects?: ProjectCreateNestedManyWithoutManagerInput
   }
 
   export type ManagerUncheckedCreateWithoutRequestsToAddProjectMemberInput = {
     id?: string
-<<<<<<< HEAD
-    userId: string
-=======
     userId?: string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: ManagerCreateskillsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -63999,17 +61811,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutRequestsToAddProjectMemberInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64017,10 +61819,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64033,29 +61832,16 @@ export namespace Prisma {
     tasks?: TaskUpdateManyWithoutProjectNestedInput
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
     sheets?: SheetUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateWithoutRequestsToAddProjectMemberInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64064,10 +61850,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64078,12 +61861,9 @@ export namespace Prisma {
     tasks?: TaskUncheckedUpdateManyWithoutProjectNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
     sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ManagerUpsertWithoutRequestsToAddProjectMemberInput = {
@@ -64104,21 +61884,13 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
     joinedDate?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    user?: UserUpdateOneRequiredWithoutManagerNestedInput
-=======
     user?: UserUpdateOneWithoutManagerNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     projects?: ProjectUpdateManyWithoutManagerNestedInput
   }
 
   export type ManagerUncheckedUpdateWithoutRequestsToAddProjectMemberInput = {
     id?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    userId?: StringFieldUpdateOperationsInput | string
-=======
     userId?: NullableStringFieldUpdateOperationsInput | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     skills?: ManagerUpdateskillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64271,8 +62043,6 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
   }
 
-<<<<<<< HEAD
-=======
   export type SheetCreateWithoutChartInput = {
     id?: string
     name: string
@@ -64886,7 +62656,6 @@ export namespace Prisma {
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ReferredPersonCreateManyClientInput = {
     id?: string
     name: string
@@ -64918,11 +62687,7 @@ export namespace Prisma {
     programName: string
     datetime: string
     programDescription: string
-<<<<<<< HEAD
-    priority: string
-=======
     priority: $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline: string
     progress?: number | null
     createdAt?: Date | string
@@ -65012,11 +62777,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65029,11 +62790,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65046,11 +62803,7 @@ export namespace Prisma {
     programName?: StringFieldUpdateOperationsInput | string
     datetime?: StringFieldUpdateOperationsInput | string
     programDescription?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    priority?: StringFieldUpdateOperationsInput | string
-=======
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     deadline?: StringFieldUpdateOperationsInput | string
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65063,8 +62816,6 @@ export namespace Prisma {
     assignedAt?: Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedCreateManyEmployeeInput = {
     id?: string
     information: string
@@ -65077,7 +62828,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectEmployeeUpdateWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65096,8 +62846,6 @@ export namespace Prisma {
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedUpdateWithoutEmployeeInput = {
     id?: StringFieldUpdateOperationsInput | string
     information?: StringFieldUpdateOperationsInput | string
@@ -65136,22 +62884,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectCreateManyManagerInput = {
     id?: string
     programId: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -65159,10 +62896,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -65182,17 +62916,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65200,10 +62924,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65216,29 +62937,16 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
     sheets?: SheetUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65246,10 +62954,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65261,29 +62966,16 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
     sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateManyWithoutManagerInput = {
     id?: StringFieldUpdateOperationsInput | string
     programId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65291,10 +62983,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65346,17 +63035,7 @@ export namespace Prisma {
   export type ProjectCreateManyProgramInput = {
     id?: string
     name: string
-<<<<<<< HEAD
-    datetime?: Date | string | null
-    uploadCycle: $Enums.ProjectCycle
     description: string
-    dataReceivedTime?: string | null
-    beforeSubmitData?: number | null
-    importFiles?: ProjectCreateimportFilesInput | string[]
-    importMainFile?: string | null
-=======
-    description: string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: $Enums.ProjectStatus
     priority: $Enums.Priority
     deadline: Date | string
@@ -65365,10 +63044,7 @@ export namespace Prisma {
     progress?: number | null
     chartList?: ProjectCreatechartListInput | string[]
     estimatedCompletedDate?: Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: string | null
     budget?: string | null
     createdAt?: Date | string
@@ -65380,17 +63056,7 @@ export namespace Prisma {
   export type ProjectUpdateWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65398,10 +63064,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65414,28 +63077,15 @@ export namespace Prisma {
     activities?: ActivityUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUpdateManyWithoutProjectNestedInput
     sheets?: SheetUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65444,10 +63094,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65459,28 +63106,15 @@ export namespace Prisma {
     activities?: ActivityUncheckedUpdateManyWithoutProjectNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutProjectNestedInput
     requestsToAddProjectMember?: RequestToAddProjectMemberUncheckedUpdateManyWithoutProjectNestedInput
-<<<<<<< HEAD
-=======
     submitted?: SubmittedUncheckedUpdateManyWithoutProjectNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
     sheets?: SheetUncheckedUpdateManyWithoutProjectNestedInput
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   }
 
   export type ProjectUncheckedUpdateManyWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-<<<<<<< HEAD
-    datetime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    uploadCycle?: EnumProjectCycleFieldUpdateOperationsInput | $Enums.ProjectCycle
     description?: StringFieldUpdateOperationsInput | string
-    dataReceivedTime?: NullableStringFieldUpdateOperationsInput | string | null
-    beforeSubmitData?: NullableIntFieldUpdateOperationsInput | number | null
-    importFiles?: ProjectUpdateimportFilesInput | string[]
-    importMainFile?: NullableStringFieldUpdateOperationsInput | string | null
-=======
-    description?: StringFieldUpdateOperationsInput | string
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65489,10 +63123,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     chartList?: ProjectUpdatechartListInput | string[]
     estimatedCompletedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-<<<<<<< HEAD
-=======
     projectCompleteDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
     currentRate?: NullableStringFieldUpdateOperationsInput | string | null
     budget?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65548,8 +63179,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedCreateManyProjectInput = {
     id?: string
     information: string
@@ -65583,7 +63212,6 @@ export namespace Prisma {
     chartId: string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type ProjectEmployeeUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65725,8 +63353,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type SubmittedUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     information?: StringFieldUpdateOperationsInput | string
@@ -65834,7 +63460,6 @@ export namespace Prisma {
     chartId?: StringFieldUpdateOperationsInput | string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
   export type NotificationProvisionCreateManyUserInput = {
     notificationId: string
   }
@@ -65931,8 +63556,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-<<<<<<< HEAD
-=======
   export type CellCreateManySheetInput = {
     id?: string
     row: number
@@ -65993,7 +63616,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 
 
   /**
