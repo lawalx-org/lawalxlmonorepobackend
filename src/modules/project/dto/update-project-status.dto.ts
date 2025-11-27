@@ -1,7 +1,15 @@
 
 import { ApiProperty } from '@nestjs/swagger';
-import { ProjectStatus } from '@prisma/client';
 import { IsEnum, IsNotEmpty } from 'class-validator';
+
+export enum ProjectStatus {
+  PENDING = 'PENDING',
+  LIVE = 'LIVE',
+  DRAFT = 'DRAFT',
+  OVERDUE = 'OVERDUE',
+  PROBLEM = 'PROBLEM',
+  COMPLETED = 'COMPLETED',
+}
 
 export class UpdateProjectStatusDto {
   @ApiProperty({

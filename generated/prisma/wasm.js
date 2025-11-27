@@ -741,7 +741,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\projectnew\\lawalxlmonorepobackend-main\\generated\\prisma",
+      "value": "/home/sakib/Desktop/store project/lawalxlmonorepobackend/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -750,12 +750,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\projectnew\\lawalxlmonorepobackend-main\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/sakib/Desktop/store project/lawalxlmonorepobackend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -769,6 +769,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
