@@ -21,7 +21,7 @@ export class FileController {
       
         destination: (req, file, cb) => {
           const fileType = file.mimetype.split('/')[1];
-          const uploadDir = join(process.cwd(), 'uploads', fileType);
+          const uploadDir = join(process.cwd(), 'uploads-file', fileType);
           if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
           cb(null, uploadDir);
         },

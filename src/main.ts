@@ -23,7 +23,7 @@ async function bootstrap() {
 
   
   //add new for upload file 
-  app.use('/uploads', express.static(join(process.cwd(), 'uploads')));
+  app.use('/uploads-file', express.static(join(process.cwd(), 'uploads-file')));
 
   // Global success response formatting
   app.useGlobalInterceptors(new TransformInterceptor());

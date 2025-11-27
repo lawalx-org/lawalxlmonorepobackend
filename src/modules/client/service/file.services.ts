@@ -22,7 +22,7 @@ export class FileService {
 
       const fileType = file.mimetype.split('/')[1];
       const filePath = file.path;
-      const publicUrl = `/uploads/${fileType}/${file.filename}`;
+      const publicUrl = `/uploads-file/${fileType}/${file.filename}`;
 
       console.log('Saving file for userId:', userId);
 
@@ -90,7 +90,7 @@ export class FileService {
     if (fs.existsSync(existingFile.filePath)) fs.unlinkSync(existingFile.filePath);
 
     const fileType = file.mimetype.split('/')[1];
-    const publicUrl = `/uploads/${fileType}/${file.filename}`;
+    const publicUrl = `/uploads-file/${fileType}/${file.filename}`;
 
     const updated = await this.prisma.file.update({
       where: { id: fileId },
