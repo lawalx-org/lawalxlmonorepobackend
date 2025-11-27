@@ -477,6 +477,7 @@ model User {
   otpVerification OtpVerification?
   payments        Payment[]
   activities      Activity[]
+  file            File[]
 
   @@map("users")
 }
@@ -712,6 +713,21 @@ enum SubmittedStatus {
 enum NotificationType {
   NEW_EMPLOYEE_ASSIGNED
   NEW_MANAGER_ASSIGNED
+}
+
+model File {
+  id       String   @id @default(cuid())
+  filename String
+  url      String
+  filePath String
+  fileType String
+  size     Int
+  uploadAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Reminder {

@@ -11,9 +11,11 @@ import { ProjectStatusStack } from './service/client.project.status.services';
 import { ProjectStatusStackController } from './controller/client.project.status.controller';
 import { ClientDashboardOverdue_Project } from './service/client.dashboard.overedue.services';
 import { ClientProjectOverdueController } from './controller/client.dashboard.overedue.controller';
+import { FileService } from './service/file.services';
+import { FileController } from './controller/file.controller';
 
 @Module({
-  controllers: [ClientController,ClientDashboardStackController,ProjectTimelineController,Employees_activityController,ProjectStatusStackController,ClientProjectOverdueController],
-  providers: [ClientService,ClientDashboardStack,ProjectTimelineService,EmployeesActivityServices,ProjectStatusStack,ClientDashboardOverdue_Project],
+  controllers: [ClientController,ClientDashboardStackController,ProjectTimelineController,Employees_activityController,ProjectStatusStackController,ClientProjectOverdueController,FileController],
+  providers: [ClientService,ClientDashboardStack,ProjectTimelineService,EmployeesActivityServices,ProjectStatusStack,ClientDashboardOverdue_Project,FileService],
 })
 export class ClientModule {}
