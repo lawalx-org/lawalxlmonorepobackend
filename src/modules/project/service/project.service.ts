@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, Logger } from '@nestjs/common';
-import { Prisma } from 'generated/prisma';
+import { Prisma, ProjectStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
 import { FindAllProjectsDto } from '../dto/find-all-projects.dto';
@@ -309,5 +309,20 @@ export class ProjectService {
     }
 
     return project;
+  }
+
+  async updateProjectStatus(id: string, status: ProjectStatus) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+    });
+
+    if (!project) {
+      throw new NotFoundException(`Project with ID "${id}" not found`);
+    }
+
+    return this.prisma.project.update({
+      where: { id },
+      data: { status },
+    });
   }
 }
