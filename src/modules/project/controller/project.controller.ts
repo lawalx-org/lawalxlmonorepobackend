@@ -6,6 +6,8 @@ import {
   Param,
   UseGuards,
   Query,
+  Patch,
+  Delete,
 } from '@nestjs/common';
 import { ProjectService } from '../service/project.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
@@ -15,6 +17,7 @@ import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { Role } from 'generated/prisma';
+import { UpdateProjectDto } from '../dto/update-project.dto';
 
 @Controller('project')
 @UseGuards(JwtAuthGuard,RolesGuard)
@@ -61,4 +64,30 @@ export class ProjectController {
       project,
     };
   }
+
+  // update project all fields 
+  @Patch(':id')
+  async updateProject(
+    @Param('id') id: string,
+    @Body() updateProjectDto: UpdateProjectDto,
+  ) {
+    const result = await this.projectService.updateProject(id, updateProjectDto);
+
+    return {
+      message: 'project updated successfully',
+      project: result,
+    };
+  }
+
+
+  //delete project 
+  @Delete(':id')
+  async deleteProject  (@Param('id') id:string){
+    const result = await this.projectService.deleteProject(id);
+    return{
+      message:"project delete successfully",
+      project:result
+    }
+  }
+
 }

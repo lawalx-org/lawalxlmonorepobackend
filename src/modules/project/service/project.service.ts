@@ -310,4 +310,48 @@ export class ProjectService {
 
     return project;
   }
+
+
+
+  //update project 
+ async updateProject(projectId: string, updateData: Prisma.ProjectUpdateInput) {
+  const existingProject = await this.prisma.project.findUnique({
+    where: {id: projectId},
+  });
+
+  if (!existingProject) {
+    throw new NotFoundException(`project with id ${projectId} not found`);
+  }
+
+  const updatedProject = await this.prisma.project.update({
+    where: {id: projectId},
+    data: updateData,
+  });
+
+  return updatedProject;
 }
+
+
+//delete project
+
+async deleteProject (projectId:string) {
+  
+  const existingProject = await this.prisma.project.findUnique({
+    where:{id:projectId}
+  });
+
+  if(!existingProject) throw new NotFoundException(`project id ${projectId} not found`)
+
+  const project_delete = await this.prisma.project.delete({
+    where:{id:projectId}
+  })
+
+  return {
+    project_delete
+  }
+}
+
+
+
+}
+
