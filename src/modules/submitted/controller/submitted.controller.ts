@@ -19,6 +19,7 @@ import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
+import { Role } from 'generated/prisma';
 
 @Controller('submitted')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -80,13 +81,21 @@ export class SubmittedController {
   }
 
   @Patch(':id/status')
+  @Roles(Role.MANAGER)
   async updateStatus(
     @Param('id') id: string,
     @Body() updateSubmittedStatusDto: UpdateSubmittedStatusDto,
+    @Req() req: RequestWithUser
   ) {
+
+      const mangerId = req.user.managerId;
+    if (!mangerId) {
+      throw new UnauthorizedException('Employee ID not found in token');
+    }
     const updatedSubmission = await this.submittedService.updateStatus(
       id,
       updateSubmittedStatusDto,
+      mangerId,
     );
     return {
       message: 'Submission status updated successfully',

@@ -186,6 +186,12 @@ export class EmployeeService {
       },
     });
 
+
+   await prisma.notificationPermissionEmployee.create({
+      data: { userId: user.id },
+    });
+
+    
     await prisma.employee.create({
       data: {
         userId: user.id,
