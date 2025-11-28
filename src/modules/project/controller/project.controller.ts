@@ -20,7 +20,7 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 @Controller('project')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ProjectController {
-  constructor(private readonly projectService: ProjectService) {}
+  constructor(private readonly projectService: ProjectService) { }
 
   //  Create a new project
   @Post()
@@ -72,4 +72,18 @@ export class ProjectController {
       project,
     };
   }
+
+  // Get all sheets for which project this sheet exits
+  @Get(':id/sheets')
+  @ApiOperation({ summary: 'Get all sheets for a project by project ID' })
+  @ApiResponse({ status: 200, description: 'Sheets retrieved successfully' })
+  @ApiResponse({ status: 404, description: 'Project not found' })
+  async getSheets(@Param('id') id: string) {
+    const result = await this.projectService.getSheets(id);
+    return {
+      message: 'Sheets retrieved successfully',
+      data:result,
+    };
+  }
+
 }

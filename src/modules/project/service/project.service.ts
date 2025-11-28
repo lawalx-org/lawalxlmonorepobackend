@@ -15,7 +15,7 @@ export class ProjectService {
     private readonly prisma: PrismaService,
     private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
-  ) {}
+  ) { }
 
   // async create(createProjectDto: CreateProjectDto) {
   //   const { employeeIds, managerId, programId, ...projectData } =
@@ -310,4 +310,25 @@ export class ProjectService {
 
     return project;
   }
+
+  //get sheet with project id
+  async getSheets(projectId: string) {
+
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      select: { id: true },
+    });
+
+    if (!project) throw new NotFoundException(`Project with ID ${projectId}not found`);
+
+
+    const sheets = await this.prisma.sheet.findMany({
+      where: {
+         projectId 
+        },
+    });
+
+    return sheets;
+  }
+
 }
