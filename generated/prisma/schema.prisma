@@ -175,6 +175,7 @@ model NotificationPermissionManager {
   fileImportByEmployees Boolean  @default(true)
   weeklySummary         Boolean  @default(true)
   createNewProject      Boolean  @default(true)
+  submittedProject      Boolean  @default(true)
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 

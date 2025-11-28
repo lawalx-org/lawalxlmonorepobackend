@@ -20,6 +20,7 @@ import { ChartModule } from './modules/chart/chart.module';
 import { ManagerModule } from './modules/manager/manager.module';
 import { SeedService } from './common/seed/seed.services';
 import { EmployeeModule } from './modules/employee/employee.module';
+import { SheetModule } from './modules/sheet/sheet.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { EmployeeModule } from './modules/employee/employee.module';
     NotificationModule,
     RedisModule,
     ChartModule,
+    SheetModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, SeedService],

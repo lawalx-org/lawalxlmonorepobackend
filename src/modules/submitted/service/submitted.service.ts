@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -12,6 +13,7 @@ import {
   PaginatedResult,
 } from '../../utils/pagination/pagination.utils';
 import { Submitted, SubmittedStatus } from '../../../../generated/prisma';
+import { NotificationService } from 'src/modules/notification/service/notification.service';
 
 interface WhereClause {
   employeeId?: string;
@@ -30,58 +32,80 @@ interface WhereClause {
 
 @Injectable()
 export class SubmittedService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly notificationService: NotificationService
 
-  async create(createSubmittedDto: CreateSubmittedDto, employeeId: string) {
-    const { projectId, sheetId, submiteCells } = createSubmittedDto;
+  ) { }
 
-    const employee = await this.prisma.employee.findUnique({
-      where: { id: employeeId },
+ async create(createSubmittedDto: CreateSubmittedDto, employeeId: string) {
+  const { projectId, sheetId, submiteCells } = createSubmittedDto;
+
+
+  const employee = await this.prisma.employee.findUnique({ where: { id: employeeId }});
+  if (!employee) throw new NotFoundException(`Employee with ID ${employeeId} not found`);
+
+  const project = await this.prisma.project.findUnique({
+    where: { id: projectId },
+    include: {
+      manager: true, 
+    }
+  });
+  if (!project) throw new NotFoundException(`Project with ID ${projectId} not found`);
+
+  const sheet = await this.prisma.sheet.findUnique({ where: { id: sheetId }});
+  if (!sheet) throw new NotFoundException(`Sheet with ID ${sheetId} not found`);
+
+  
+  if (submiteCells?.length > 0) {
+    const foundCells = await this.prisma.submiteCell.findMany({
+      where: { id: { in: submiteCells }},
     });
 
-    if (!employee) {
-      throw new NotFoundException(`Employee with ID ${employeeId} not found`);
+    if (foundCells.length !== submiteCells.length) {
+      const notFoundIds = submiteCells.filter(id => !foundCells.some(cell => cell.id === id));
+      throw new NotFoundException(`SubmiteCell with IDs ${notFoundIds.join(', ')} not found`);
     }
-
-    const project = await this.prisma.project.findUnique({
-      where: { id: projectId },
-    });
-
-    if (!project) {
-      throw new NotFoundException(`Project with ID ${projectId} not found`);
-    }
-
-    const sheet = await this.prisma.sheet.findUnique({
-      where: { id: sheetId },
-    });
-
-    if (!sheet) {
-      throw new NotFoundException(`Sheet with ID ${sheetId} not found`);
-    }
-
-    if (submiteCells && submiteCells.length > 0) {
-      const foundCells = await this.prisma.submiteCell.findMany({
-        where: {
-          id: {
-            in: submiteCells,
-          },
-        },
-      });
-
-      if (foundCells.length !== submiteCells.length) {
-        const notFoundIds = submiteCells.filter(
-          (id) => !foundCells.some((cell) => cell.id === id),
-        );
-        throw new NotFoundException(
-          `SubmiteCell with IDs ${notFoundIds.join(', ')} not found`,
-        );
-      }
-    }
-
-    return this.prisma.submitted.create({
-      data: { ...createSubmittedDto, employeeId },
-    });
   }
+
+ 
+  const result = await this.prisma.submitted.create({
+    data: { ...createSubmittedDto, employeeId },
+  });
+
+
+  const projectManager = project.manager;  
+  if (!projectManager) {
+    console.log(" No manager assigned to project. Skipping notification.");
+    return result;
+  }
+
+  
+  const permission = await this.prisma.notificationPermissionManager.findUnique({
+    where: { userId: projectManager.id },
+  });
+
+  if (!permission || permission.submittedProject !== true) {
+    console.log(" Manager notification permission disabled. No notification sent.");
+    return result;
+  }
+
+
+  const sendingList = await this.notificationService.create(
+    {
+      receiverIds: [projectManager.id],
+      projectId,
+      context: `A new submission has been created for project: ${project.name}`,
+      type: 'PROJECT_SUBMITTED',
+    },
+    employeeId,
+  );
+
+ 
+
+  return result;
+}
+
 
   async findAll(
     query: GetAllSubmissionsDto,

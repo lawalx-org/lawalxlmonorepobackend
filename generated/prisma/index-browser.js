@@ -231,6 +231,7 @@ exports.Prisma.NotificationPermissionManagerScalarFieldEnum = {
   fileImportByEmployees: 'fileImportByEmployees',
   weeklySummary: 'weeklySummary',
   createNewProject: 'createNewProject',
+  submittedProject: 'submittedProject',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

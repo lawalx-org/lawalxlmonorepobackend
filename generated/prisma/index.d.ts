@@ -15077,6 +15077,7 @@ export namespace Prisma {
     fileImportByEmployees: boolean | null
     weeklySummary: boolean | null
     createNewProject: boolean | null
+    submittedProject: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -15087,6 +15088,7 @@ export namespace Prisma {
     fileImportByEmployees: boolean | null
     weeklySummary: boolean | null
     createNewProject: boolean | null
+    submittedProject: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -15097,6 +15099,7 @@ export namespace Prisma {
     fileImportByEmployees: number
     weeklySummary: number
     createNewProject: number
+    submittedProject: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -15109,6 +15112,7 @@ export namespace Prisma {
     fileImportByEmployees?: true
     weeklySummary?: true
     createNewProject?: true
+    submittedProject?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -15119,6 +15123,7 @@ export namespace Prisma {
     fileImportByEmployees?: true
     weeklySummary?: true
     createNewProject?: true
+    submittedProject?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -15129,6 +15134,7 @@ export namespace Prisma {
     fileImportByEmployees?: true
     weeklySummary?: true
     createNewProject?: true
+    submittedProject?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -15212,6 +15218,7 @@ export namespace Prisma {
     fileImportByEmployees: boolean
     weeklySummary: boolean
     createNewProject: boolean
+    submittedProject: boolean
     createdAt: Date
     updatedAt: Date
     _count: NotificationPermissionManagerCountAggregateOutputType | null
@@ -15239,6 +15246,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -15250,6 +15258,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -15261,6 +15270,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -15272,11 +15282,12 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type NotificationPermissionManagerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fileImportByEmployees" | "weeklySummary" | "createNewProject" | "createdAt" | "updatedAt", ExtArgs["result"]["notificationPermissionManager"]>
+  export type NotificationPermissionManagerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fileImportByEmployees" | "weeklySummary" | "createNewProject" | "submittedProject" | "createdAt" | "updatedAt", ExtArgs["result"]["notificationPermissionManager"]>
   export type NotificationPermissionManagerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -15298,6 +15309,7 @@ export namespace Prisma {
       fileImportByEmployees: boolean
       weeklySummary: boolean
       createNewProject: boolean
+      submittedProject: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["notificationPermissionManager"]>
@@ -15729,6 +15741,7 @@ export namespace Prisma {
     readonly fileImportByEmployees: FieldRef<"NotificationPermissionManager", 'Boolean'>
     readonly weeklySummary: FieldRef<"NotificationPermissionManager", 'Boolean'>
     readonly createNewProject: FieldRef<"NotificationPermissionManager", 'Boolean'>
+    readonly submittedProject: FieldRef<"NotificationPermissionManager", 'Boolean'>
     readonly createdAt: FieldRef<"NotificationPermissionManager", 'DateTime'>
     readonly updatedAt: FieldRef<"NotificationPermissionManager", 'DateTime'>
   }
@@ -46042,6 +46055,7 @@ export namespace Prisma {
     fileImportByEmployees: 'fileImportByEmployees',
     weeklySummary: 'weeklySummary',
     createNewProject: 'createNewProject',
+    submittedProject: 'submittedProject',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -47484,6 +47498,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFilter<"NotificationPermissionManager"> | boolean
     weeklySummary?: BoolFilter<"NotificationPermissionManager"> | boolean
     createNewProject?: BoolFilter<"NotificationPermissionManager"> | boolean
+    submittedProject?: BoolFilter<"NotificationPermissionManager"> | boolean
     createdAt?: DateTimeFilter<"NotificationPermissionManager"> | Date | string
     updatedAt?: DateTimeFilter<"NotificationPermissionManager"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -47495,6 +47510,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -47509,6 +47525,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFilter<"NotificationPermissionManager"> | boolean
     weeklySummary?: BoolFilter<"NotificationPermissionManager"> | boolean
     createNewProject?: BoolFilter<"NotificationPermissionManager"> | boolean
+    submittedProject?: BoolFilter<"NotificationPermissionManager"> | boolean
     createdAt?: DateTimeFilter<"NotificationPermissionManager"> | Date | string
     updatedAt?: DateTimeFilter<"NotificationPermissionManager"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -47520,6 +47537,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: NotificationPermissionManagerCountOrderByAggregateInput
@@ -47536,6 +47554,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolWithAggregatesFilter<"NotificationPermissionManager"> | boolean
     weeklySummary?: BoolWithAggregatesFilter<"NotificationPermissionManager"> | boolean
     createNewProject?: BoolWithAggregatesFilter<"NotificationPermissionManager"> | boolean
+    submittedProject?: BoolWithAggregatesFilter<"NotificationPermissionManager"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"NotificationPermissionManager"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"NotificationPermissionManager"> | Date | string
   }
@@ -50294,6 +50313,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutNotificationManagerInput
@@ -50305,6 +50325,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -50314,6 +50335,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutNotificationManagerNestedInput
@@ -50325,6 +50347,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -50335,6 +50358,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -50344,6 +50368,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -50354,6 +50379,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -53217,6 +53243,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -53227,6 +53254,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -53237,6 +53265,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -62425,6 +62454,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -62434,6 +62464,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -62922,6 +62953,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -62931,6 +62963,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
