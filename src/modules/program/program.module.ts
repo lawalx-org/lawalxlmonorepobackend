@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { ProgramController } from './controller/program.controller';
 import { ProgramService } from './service/program.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { TagController } from './controller/tag.controller';
+import { TagService } from './service/tag.service';
 
 @Module({
   imports: [PrismaModule],
-  controllers: [ProgramController],
-  providers: [ProgramService],
+  controllers: [ProgramController,TagController],
+  providers: [ProgramService,TagService],
 })
 export class ProgramModule {}

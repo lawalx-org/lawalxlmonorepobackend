@@ -28,27 +28,43 @@ export class ProgramController {
     @Body() createProgramDto: CreateProgramDto,
     @Req() req: RequestWithUser,
   ) {
-    console.log('request user', req.user);
+    
     const userid = req.user.clientId;
-    console.log('user id from token', userid);
+    
     return this.programService.create(createProgramDto, userid!);
   }
 
   @Get()
   findAll(@Query() query: GetAllProgramsDto) {
-    return this.programService.findAll(query);
+    
+    const data = this.programService.findAll(query);
+    
+return {
+      message: 'Programs fetched successfully',
+      data,
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.programService.findOne(id);
+ async findOne(@Param('id') id: string) {
+     const data = await this.programService.findOne(id);
+     return {
+      message: 'Program fetched successfully',
+      data,
+     }
+    
   }
 
   @Get(':id/projects')
-  findAllProjectsByProgram(
+ async findAllProjectsByProgram(
     @Param('id') id: string,
     @Query() query: FindAllProjectsInProgramDto,
   ) {
-    return this.programService.findAllProjectsByProgram(id, query);
+    const data = await this.programService.findAllProjectsByProgram(id, query);
+    return {
+      message: 'Projects fetched successfully',
+      data,
+    }
+    
   }
 }

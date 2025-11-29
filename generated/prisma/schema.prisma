@@ -51,7 +51,6 @@ model Client {
   referredPersons ReferredPerson[]
   tickets         Ticket[]
   programs        Program[]
-  tags            Tag?
 
   @@map("clients")
 }
@@ -268,6 +267,7 @@ model Program {
   // Relations
   client   Client    @relation(fields: [userId], references: [id], onDelete: Cascade)
   projects Project[]
+  tags     Tag[]
 
   @@map("programs")
 }
@@ -485,13 +485,13 @@ model User {
 
 // Tags model
 model Tag {
-  clientId  String   @id
-  tags      String[]
+  id        String   @id @default(cuid())
+  programId String
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
-  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
 
   @@map("tags")
 }

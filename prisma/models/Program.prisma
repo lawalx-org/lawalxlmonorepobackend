@@ -14,6 +14,7 @@ model Program {
   // Relations
   client              Client    @relation(fields: [userId], references: [id], onDelete: Cascade)
   projects            Project[]
+   tags      Tag[]
 
   @@map("programs")
 }
