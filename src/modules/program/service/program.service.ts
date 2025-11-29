@@ -7,6 +7,7 @@ import {
   paginate,
 } from 'src/modules/utils/pagination/pagination.utils';
 import { Prisma } from 'generated/prisma';
+import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program.dto';
 
 @Injectable()
 export class ProgramService {
@@ -81,4 +82,57 @@ export class ProgramService {
     }
     return program;
   }
+  async findAllProjectsByProgram(
+    programId: string,
+    query: FindAllProjectsInProgramDto,
+  ): Promise<PaginatedResult<any>> {
+    await this.findOne(programId);
+    const { page, limit, search, priority, startDate, deadline } = query;
+    const where: Prisma.ProjectWhereInput = {
+      programId,
+    };
+
+    if (search) {
+      where.OR = [
+        {
+          name: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          description: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      ];
+    }
+
+    if (priority) {
+      where.priority = priority;
+    }
+
+    if (startDate) {
+      where.startDate = {
+        gte: startDate,
+      };
+    }
+
+    if (deadline) {
+      where.deadline = {
+        lte: deadline,
+      };
+    }
+
+    return paginate(
+      this.prisma,
+      'project',
+      {
+        where,
+      },
+      { page: page ?? 1, limit: limit ?? 10 },
+    );
+  }
 }
+
