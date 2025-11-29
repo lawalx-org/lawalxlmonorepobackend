@@ -14,13 +14,17 @@ export class ProgramService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createProgramDto: CreateProgramDto, userId: string) {
-    const { ...programData } = createProgramDto;
+    const { tagIds, ...programData } = createProgramDto;
     const client = await this.prisma.client.findUnique({
       where: { id: userId },
     });
     if (!client) {
       throw new NotFoundException(`Client with ID "${userId}" not found`);
     }
+
+    const connectTags = tagIds
+      ? { connect: tagIds.map((id) => ({ id })) }
+      : undefined;
 
     return this.prisma.program.create({
       data: {
@@ -29,6 +33,7 @@ export class ProgramService {
         client: {
           connect: { id: userId },
         },
+        tags: connectTags,
       },
     });
   }
@@ -36,8 +41,16 @@ export class ProgramService {
   async findAll(
     query: GetAllProgramsDto,
   ): Promise<PaginatedResult<any>> {
-    const { page, limit, programName, priority, deadline, progress, datetime } =
-      query;
+    const {
+      page,
+      limit,
+      programName,
+      priority,
+      deadline,
+      progress,
+      datetime,
+      tags,
+    } = query;
     const where: Prisma.ProgramWhereInput = {};
 
     if (programName) {
@@ -61,6 +74,19 @@ export class ProgramService {
 
     if (datetime) {
       where.datetime = datetime;
+    }
+
+    if (tags && tags.length > 0) {
+      where.AND = tags.map((tag) => ({
+        tags: {
+          some: {
+            name: {
+              equals: tag,
+              mode: 'insensitive',
+            },
+          },
+        },
+      }));
     }
 
     return paginate(

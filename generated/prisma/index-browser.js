@@ -422,8 +422,9 @@ exports.Prisma.UserScalarFieldEnum = {
 };
 
 exports.Prisma.TagScalarFieldEnum = {
-  clientId: 'clientId',
-  tags: 'tags',
+  id: 'id',
+  programId: 'programId',
+  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

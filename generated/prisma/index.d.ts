@@ -4504,10 +4504,12 @@ export namespace Prisma {
 
   export type ProgramCountOutputType = {
     projects: number
+    tags: number
   }
 
   export type ProgramCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     projects?: boolean | ProgramCountOutputTypeCountProjectsArgs
+    tags?: boolean | ProgramCountOutputTypeCountTagsArgs
   }
 
   // Custom InputTypes
@@ -4526,6 +4528,13 @@ export namespace Prisma {
    */
   export type ProgramCountOutputTypeCountProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProjectWhereInput
+  }
+
+  /**
+   * ProgramCountOutputType without action
+   */
+  export type ProgramCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
   }
 
 
@@ -6210,7 +6219,6 @@ export namespace Prisma {
     referredPersons?: boolean | Client$referredPersonsArgs<ExtArgs>
     tickets?: boolean | Client$ticketsArgs<ExtArgs>
     programs?: boolean | Client$programsArgs<ExtArgs>
-    tags?: boolean | Client$tagsArgs<ExtArgs>
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["client"]>
 
@@ -6303,7 +6311,6 @@ export namespace Prisma {
     referredPersons?: boolean | Client$referredPersonsArgs<ExtArgs>
     tickets?: boolean | Client$ticketsArgs<ExtArgs>
     programs?: boolean | Client$programsArgs<ExtArgs>
-    tags?: boolean | Client$tagsArgs<ExtArgs>
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6320,7 +6327,6 @@ export namespace Prisma {
       referredPersons: Prisma.$ReferredPersonPayload<ExtArgs>[]
       tickets: Prisma.$TicketPayload<ExtArgs>[]
       programs: Prisma.$ProgramPayload<ExtArgs>[]
-      tags: Prisma.$TagPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6745,7 +6751,6 @@ export namespace Prisma {
     referredPersons<T extends Client$referredPersonsArgs<ExtArgs> = {}>(args?: Subset<T, Client$referredPersonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReferredPersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tickets<T extends Client$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, Client$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     programs<T extends Client$programsArgs<ExtArgs> = {}>(args?: Subset<T, Client$programsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tags<T extends Client$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Client$tagsArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7283,25 +7288,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProgramScalarFieldEnum | ProgramScalarFieldEnum[]
-  }
-
-  /**
-   * Client.tags
-   */
-  export type Client$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    where?: TagWhereInput
   }
 
   /**
@@ -20786,6 +20772,7 @@ export namespace Prisma {
     updatedAt?: boolean
     client?: boolean | ClientDefaultArgs<ExtArgs>
     projects?: boolean | Program$projectsArgs<ExtArgs>
+    tags?: boolean | Program$tagsArgs<ExtArgs>
     _count?: boolean | ProgramCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["program"]>
 
@@ -20834,6 +20821,7 @@ export namespace Prisma {
   export type ProgramInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientDefaultArgs<ExtArgs>
     projects?: boolean | Program$projectsArgs<ExtArgs>
+    tags?: boolean | Program$tagsArgs<ExtArgs>
     _count?: boolean | ProgramCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProgramIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -20848,6 +20836,7 @@ export namespace Prisma {
     objects: {
       client: Prisma.$ClientPayload<ExtArgs>
       projects: Prisma.$ProjectPayload<ExtArgs>[]
+      tags: Prisma.$TagPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -21256,6 +21245,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     projects<T extends Program$projectsArgs<ExtArgs> = {}>(args?: Subset<T, Program$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tags<T extends Program$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Program$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21712,6 +21702,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[]
+  }
+
+  /**
+   * Program.tags
+   */
+  export type Program$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    where?: TagWhereInput
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    cursor?: TagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
   }
 
   /**
@@ -33759,20 +33773,25 @@ export namespace Prisma {
   }
 
   export type TagMinAggregateOutputType = {
-    clientId: string | null
+    id: string | null
+    programId: string | null
+    name: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TagMaxAggregateOutputType = {
-    clientId: string | null
+    id: string | null
+    programId: string | null
+    name: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TagCountAggregateOutputType = {
-    clientId: number
-    tags: number
+    id: number
+    programId: number
+    name: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -33780,20 +33799,25 @@ export namespace Prisma {
 
 
   export type TagMinAggregateInputType = {
-    clientId?: true
+    id?: true
+    programId?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type TagMaxAggregateInputType = {
-    clientId?: true
+    id?: true
+    programId?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type TagCountAggregateInputType = {
-    clientId?: true
-    tags?: true
+    id?: true
+    programId?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -33872,8 +33896,9 @@ export namespace Prisma {
   }
 
   export type TagGroupByOutputType = {
-    clientId: string
-    tags: string[]
+    id: string
+    programId: string
+    name: string
     createdAt: Date
     updatedAt: Date
     _count: TagCountAggregateOutputType | null
@@ -33896,55 +33921,60 @@ export namespace Prisma {
 
 
   export type TagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    clientId?: boolean
-    tags?: boolean
+    id?: boolean
+    programId?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tag"]>
 
   export type TagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    clientId?: boolean
-    tags?: boolean
+    id?: boolean
+    programId?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tag"]>
 
   export type TagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    clientId?: boolean
-    tags?: boolean
+    id?: boolean
+    programId?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tag"]>
 
   export type TagSelectScalar = {
-    clientId?: boolean
-    tags?: boolean
+    id?: boolean
+    programId?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"clientId" | "tags" | "createdAt" | "updatedAt", ExtArgs["result"]["tag"]>
+  export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["tag"]>
   export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }
   export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }
   export type TagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }
 
   export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Tag"
     objects: {
-      client: Prisma.$ClientPayload<ExtArgs>
+      program: Prisma.$ProgramPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      clientId: string
-      tags: string[]
+      id: string
+      programId: string
+      name: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["tag"]>
@@ -34030,8 +34060,8 @@ export namespace Prisma {
      * // Get first 10 Tags
      * const tags = await prisma.tag.findMany({ take: 10 })
      * 
-     * // Only select the `clientId`
-     * const tagWithClientIdOnly = await prisma.tag.findMany({ select: { clientId: true } })
+     * // Only select the `id`
+     * const tagWithIdOnly = await prisma.tag.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends TagFindManyArgs>(args?: SelectSubset<T, TagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -34075,9 +34105,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Tags and only return the `clientId`
-     * const tagWithClientIdOnly = await prisma.tag.createManyAndReturn({
-     *   select: { clientId: true },
+     * // Create many Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -34166,9 +34196,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Tags and only return the `clientId`
-     * const tagWithClientIdOnly = await prisma.tag.updateManyAndReturn({
-     *   select: { clientId: true },
+     * // Update zero or more Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -34341,7 +34371,7 @@ export namespace Prisma {
    */
   export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    program<T extends ProgramDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProgramDefaultArgs<ExtArgs>>): Prisma__ProgramClient<$Result.GetResult<Prisma.$ProgramPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -34371,8 +34401,9 @@ export namespace Prisma {
    * Fields of the Tag model
    */
   interface TagFieldRefs {
-    readonly clientId: FieldRef<"Tag", 'String'>
-    readonly tags: FieldRef<"Tag", 'String[]'>
+    readonly id: FieldRef<"Tag", 'String'>
+    readonly programId: FieldRef<"Tag", 'String'>
+    readonly name: FieldRef<"Tag", 'String'>
     readonly createdAt: FieldRef<"Tag", 'DateTime'>
     readonly updatedAt: FieldRef<"Tag", 'DateTime'>
   }
@@ -46294,8 +46325,9 @@ export namespace Prisma {
 
 
   export const TagScalarFieldEnum: {
-    clientId: 'clientId',
-    tags: 'tags',
+    id: 'id',
+    programId: 'programId',
+    name: 'name',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -46909,7 +46941,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonListRelationFilter
     tickets?: TicketListRelationFilter
     programs?: ProgramListRelationFilter
-    tags?: XOR<TagNullableScalarRelationFilter, TagWhereInput> | null
   }
 
   export type ClientOrderByWithRelationInput = {
@@ -46941,7 +46972,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonOrderByRelationAggregateInput
     tickets?: TicketOrderByRelationAggregateInput
     programs?: ProgramOrderByRelationAggregateInput
-    tags?: TagOrderByWithRelationInput
   }
 
   export type ClientWhereUniqueInput = Prisma.AtLeast<{
@@ -46976,7 +47006,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonListRelationFilter
     tickets?: TicketListRelationFilter
     programs?: ProgramListRelationFilter
-    tags?: XOR<TagNullableScalarRelationFilter, TagWhereInput> | null
   }, "id" | "userId" | "email">
 
   export type ClientOrderByWithAggregationInput = {
@@ -47855,6 +47884,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Program"> | Date | string
     client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
     projects?: ProjectListRelationFilter
+    tags?: TagListRelationFilter
   }
 
   export type ProgramOrderByWithRelationInput = {
@@ -47870,6 +47900,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     client?: ClientOrderByWithRelationInput
     projects?: ProjectOrderByRelationAggregateInput
+    tags?: TagOrderByRelationAggregateInput
   }
 
   export type ProgramWhereUniqueInput = Prisma.AtLeast<{
@@ -47888,6 +47919,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Program"> | Date | string
     client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
     projects?: ProjectListRelationFilter
+    tags?: TagListRelationFilter
   }, "id">
 
   export type ProgramOrderByWithAggregationInput = {
@@ -48809,35 +48841,39 @@ export namespace Prisma {
     AND?: TagWhereInput | TagWhereInput[]
     OR?: TagWhereInput[]
     NOT?: TagWhereInput | TagWhereInput[]
-    clientId?: StringFilter<"Tag"> | string
-    tags?: StringNullableListFilter<"Tag">
+    id?: StringFilter<"Tag"> | string
+    programId?: StringFilter<"Tag"> | string
+    name?: StringFilter<"Tag"> | string
     createdAt?: DateTimeFilter<"Tag"> | Date | string
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    program?: XOR<ProgramScalarRelationFilter, ProgramWhereInput>
   }
 
   export type TagOrderByWithRelationInput = {
-    clientId?: SortOrder
-    tags?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    client?: ClientOrderByWithRelationInput
+    program?: ProgramOrderByWithRelationInput
   }
 
   export type TagWhereUniqueInput = Prisma.AtLeast<{
-    clientId?: string
+    id?: string
     AND?: TagWhereInput | TagWhereInput[]
     OR?: TagWhereInput[]
     NOT?: TagWhereInput | TagWhereInput[]
-    tags?: StringNullableListFilter<"Tag">
+    programId?: StringFilter<"Tag"> | string
+    name?: StringFilter<"Tag"> | string
     createdAt?: DateTimeFilter<"Tag"> | Date | string
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
-  }, "clientId">
+    program?: XOR<ProgramScalarRelationFilter, ProgramWhereInput>
+  }, "id">
 
   export type TagOrderByWithAggregationInput = {
-    clientId?: SortOrder
-    tags?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TagCountOrderByAggregateInput
@@ -48849,8 +48885,9 @@ export namespace Prisma {
     AND?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
     OR?: TagScalarWhereWithAggregatesInput[]
     NOT?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
-    clientId?: StringWithAggregatesFilter<"Tag"> | string
-    tags?: StringNullableListFilter<"Tag">
+    id?: StringWithAggregatesFilter<"Tag"> | string
+    programId?: StringWithAggregatesFilter<"Tag"> | string
+    name?: StringWithAggregatesFilter<"Tag"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
   }
@@ -49663,7 +49700,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateInput = {
@@ -49694,7 +49730,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientUpdateInput = {
@@ -49725,7 +49760,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateInput = {
@@ -49756,7 +49790,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ClientCreateManyInput = {
@@ -50700,6 +50733,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     client: ClientCreateNestedOneWithoutProgramsInput
     projects?: ProjectCreateNestedManyWithoutProgramInput
+    tags?: TagCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateInput = {
@@ -50714,6 +50748,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectUncheckedCreateNestedManyWithoutProgramInput
+    tags?: TagUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUpdateInput = {
@@ -50728,6 +50763,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: ClientUpdateOneRequiredWithoutProgramsNestedInput
     projects?: ProjectUpdateManyWithoutProgramNestedInput
+    tags?: TagUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateInput = {
@@ -50742,6 +50778,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUncheckedUpdateManyWithoutProgramNestedInput
+    tags?: TagUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramCreateManyInput = {
@@ -51771,49 +51808,56 @@ export namespace Prisma {
   }
 
   export type TagCreateInput = {
-    tags?: TagCreatetagsInput | string[]
+    id?: string
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    client: ClientCreateNestedOneWithoutTagsInput
+    program: ProgramCreateNestedOneWithoutTagsInput
   }
 
   export type TagUncheckedCreateInput = {
-    clientId: string
-    tags?: TagCreatetagsInput | string[]
+    id?: string
+    programId: string
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TagUpdateInput = {
-    tags?: TagUpdatetagsInput | string[]
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client?: ClientUpdateOneRequiredWithoutTagsNestedInput
+    program?: ProgramUpdateOneRequiredWithoutTagsNestedInput
   }
 
   export type TagUncheckedUpdateInput = {
-    clientId?: StringFieldUpdateOperationsInput | string
-    tags?: TagUpdatetagsInput | string[]
+    id?: StringFieldUpdateOperationsInput | string
+    programId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TagCreateManyInput = {
-    clientId: string
-    tags?: TagCreatetagsInput | string[]
+    id?: string
+    programId: string
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TagUpdateManyMutationInput = {
-    tags?: TagUpdatetagsInput | string[]
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TagUncheckedUpdateManyInput = {
-    clientId?: StringFieldUpdateOperationsInput | string
-    tags?: TagUpdatetagsInput | string[]
+    id?: StringFieldUpdateOperationsInput | string
+    programId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52811,11 +52855,6 @@ export namespace Prisma {
     none?: ProgramWhereInput
   }
 
-  export type TagNullableScalarRelationFilter = {
-    is?: TagWhereInput | null
-    isNot?: TagWhereInput | null
-  }
-
   export type ReferredPersonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -53417,6 +53456,16 @@ export namespace Prisma {
   export type ClientScalarRelationFilter = {
     is?: ClientWhereInput
     isNot?: ClientWhereInput
+  }
+
+  export type TagListRelationFilter = {
+    every?: TagWhereInput
+    some?: TagWhereInput
+    none?: TagWhereInput
+  }
+
+  export type TagOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ProgramCountOrderByAggregateInput = {
@@ -54247,20 +54296,25 @@ export namespace Prisma {
   }
 
   export type TagCountOrderByAggregateInput = {
-    clientId?: SortOrder
-    tags?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TagMaxOrderByAggregateInput = {
-    clientId?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TagMinOrderByAggregateInput = {
-    clientId?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -54875,12 +54929,6 @@ export namespace Prisma {
     connect?: ProgramWhereUniqueInput | ProgramWhereUniqueInput[]
   }
 
-  export type TagCreateNestedOneWithoutClientInput = {
-    create?: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    connectOrCreate?: TagCreateOrConnectWithoutClientInput
-    connect?: TagWhereUniqueInput
-  }
-
   export type ReferredPersonUncheckedCreateNestedManyWithoutClientInput = {
     create?: XOR<ReferredPersonCreateWithoutClientInput, ReferredPersonUncheckedCreateWithoutClientInput> | ReferredPersonCreateWithoutClientInput[] | ReferredPersonUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ReferredPersonCreateOrConnectWithoutClientInput | ReferredPersonCreateOrConnectWithoutClientInput[]
@@ -54900,12 +54948,6 @@ export namespace Prisma {
     connectOrCreate?: ProgramCreateOrConnectWithoutClientInput | ProgramCreateOrConnectWithoutClientInput[]
     createMany?: ProgramCreateManyClientInputEnvelope
     connect?: ProgramWhereUniqueInput | ProgramWhereUniqueInput[]
-  }
-
-  export type TagUncheckedCreateNestedOneWithoutClientInput = {
-    create?: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    connectOrCreate?: TagCreateOrConnectWithoutClientInput
-    connect?: TagWhereUniqueInput
   }
 
   export type EnumIndustryCategoryFieldUpdateOperationsInput = {
@@ -54981,16 +55023,6 @@ export namespace Prisma {
     deleteMany?: ProgramScalarWhereInput | ProgramScalarWhereInput[]
   }
 
-  export type TagUpdateOneWithoutClientNestedInput = {
-    create?: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    connectOrCreate?: TagCreateOrConnectWithoutClientInput
-    upsert?: TagUpsertWithoutClientInput
-    disconnect?: TagWhereInput | boolean
-    delete?: TagWhereInput | boolean
-    connect?: TagWhereUniqueInput
-    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutClientInput, TagUpdateWithoutClientInput>, TagUncheckedUpdateWithoutClientInput>
-  }
-
   export type ReferredPersonUncheckedUpdateManyWithoutClientNestedInput = {
     create?: XOR<ReferredPersonCreateWithoutClientInput, ReferredPersonUncheckedCreateWithoutClientInput> | ReferredPersonCreateWithoutClientInput[] | ReferredPersonUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ReferredPersonCreateOrConnectWithoutClientInput | ReferredPersonCreateOrConnectWithoutClientInput[]
@@ -55031,16 +55063,6 @@ export namespace Prisma {
     update?: ProgramUpdateWithWhereUniqueWithoutClientInput | ProgramUpdateWithWhereUniqueWithoutClientInput[]
     updateMany?: ProgramUpdateManyWithWhereWithoutClientInput | ProgramUpdateManyWithWhereWithoutClientInput[]
     deleteMany?: ProgramScalarWhereInput | ProgramScalarWhereInput[]
-  }
-
-  export type TagUncheckedUpdateOneWithoutClientNestedInput = {
-    create?: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    connectOrCreate?: TagCreateOrConnectWithoutClientInput
-    upsert?: TagUpsertWithoutClientInput
-    disconnect?: TagWhereInput | boolean
-    delete?: TagWhereInput | boolean
-    connect?: TagWhereUniqueInput
-    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutClientInput, TagUpdateWithoutClientInput>, TagUncheckedUpdateWithoutClientInput>
   }
 
   export type EmployeeCreateskillsInput = {
@@ -55475,11 +55497,25 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
   }
 
+  export type TagCreateNestedManyWithoutProgramInput = {
+    create?: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput> | TagCreateWithoutProgramInput[] | TagUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutProgramInput | TagCreateOrConnectWithoutProgramInput[]
+    createMany?: TagCreateManyProgramInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+  }
+
   export type ProjectUncheckedCreateNestedManyWithoutProgramInput = {
     create?: XOR<ProjectCreateWithoutProgramInput, ProjectUncheckedCreateWithoutProgramInput> | ProjectCreateWithoutProgramInput[] | ProjectUncheckedCreateWithoutProgramInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutProgramInput | ProjectCreateOrConnectWithoutProgramInput[]
     createMany?: ProjectCreateManyProgramInputEnvelope
     connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+  }
+
+  export type TagUncheckedCreateNestedManyWithoutProgramInput = {
+    create?: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput> | TagCreateWithoutProgramInput[] | TagUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutProgramInput | TagCreateOrConnectWithoutProgramInput[]
+    createMany?: TagCreateManyProgramInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
   }
 
   export type EnumPriorityFieldUpdateOperationsInput = {
@@ -55508,6 +55544,20 @@ export namespace Prisma {
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
   }
 
+  export type TagUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput> | TagCreateWithoutProgramInput[] | TagUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutProgramInput | TagCreateOrConnectWithoutProgramInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutProgramInput | TagUpsertWithWhereUniqueWithoutProgramInput[]
+    createMany?: TagCreateManyProgramInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutProgramInput | TagUpdateWithWhereUniqueWithoutProgramInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutProgramInput | TagUpdateManyWithWhereWithoutProgramInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
+  }
+
   export type ProjectUncheckedUpdateManyWithoutProgramNestedInput = {
     create?: XOR<ProjectCreateWithoutProgramInput, ProjectUncheckedCreateWithoutProgramInput> | ProjectCreateWithoutProgramInput[] | ProjectUncheckedCreateWithoutProgramInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutProgramInput | ProjectCreateOrConnectWithoutProgramInput[]
@@ -55520,6 +55570,20 @@ export namespace Prisma {
     update?: ProjectUpdateWithWhereUniqueWithoutProgramInput | ProjectUpdateWithWhereUniqueWithoutProgramInput[]
     updateMany?: ProjectUpdateManyWithWhereWithoutProgramInput | ProjectUpdateManyWithWhereWithoutProgramInput[]
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+  }
+
+  export type TagUncheckedUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput> | TagCreateWithoutProgramInput[] | TagUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutProgramInput | TagCreateOrConnectWithoutProgramInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutProgramInput | TagUpsertWithWhereUniqueWithoutProgramInput[]
+    createMany?: TagCreateManyProgramInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutProgramInput | TagUpdateWithWhereUniqueWithoutProgramInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutProgramInput | TagUpdateManyWithWhereWithoutProgramInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
   }
 
   export type ProjectCreatechartListInput = {
@@ -56750,27 +56814,18 @@ export namespace Prisma {
     deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
-  export type TagCreatetagsInput = {
-    set: string[]
+  export type ProgramCreateNestedOneWithoutTagsInput = {
+    create?: XOR<ProgramCreateWithoutTagsInput, ProgramUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: ProgramCreateOrConnectWithoutTagsInput
+    connect?: ProgramWhereUniqueInput
   }
 
-  export type ClientCreateNestedOneWithoutTagsInput = {
-    create?: XOR<ClientCreateWithoutTagsInput, ClientUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutTagsInput
-    connect?: ClientWhereUniqueInput
-  }
-
-  export type TagUpdatetagsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type ClientUpdateOneRequiredWithoutTagsNestedInput = {
-    create?: XOR<ClientCreateWithoutTagsInput, ClientUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutTagsInput
-    upsert?: ClientUpsertWithoutTagsInput
-    connect?: ClientWhereUniqueInput
-    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutTagsInput, ClientUpdateWithoutTagsInput>, ClientUncheckedUpdateWithoutTagsInput>
+  export type ProgramUpdateOneRequiredWithoutTagsNestedInput = {
+    create?: XOR<ProgramCreateWithoutTagsInput, ProgramUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: ProgramCreateOrConnectWithoutTagsInput
+    upsert?: ProgramUpsertWithoutTagsInput
+    connect?: ProgramWhereUniqueInput
+    update?: XOR<XOR<ProgramUpdateToOneWithWhereWithoutTagsInput, ProgramUpdateWithoutTagsInput>, ProgramUncheckedUpdateWithoutTagsInput>
   }
 
   export type ClientCreateNestedOneWithoutReferredPersonsInput = {
@@ -58039,6 +58094,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectCreateNestedManyWithoutProgramInput
+    tags?: TagCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutClientInput = {
@@ -58052,6 +58108,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectUncheckedCreateNestedManyWithoutProgramInput
+    tags?: TagUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutClientInput = {
@@ -58062,23 +58119,6 @@ export namespace Prisma {
   export type ProgramCreateManyClientInputEnvelope = {
     data: ProgramCreateManyClientInput | ProgramCreateManyClientInput[]
     skipDuplicates?: boolean
-  }
-
-  export type TagCreateWithoutClientInput = {
-    tags?: TagCreatetagsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TagUncheckedCreateWithoutClientInput = {
-    tags?: TagCreatetagsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TagCreateOrConnectWithoutClientInput = {
-    where: TagWhereUniqueInput
-    create: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
   }
 
   export type UserUpsertWithoutClientInput = {
@@ -58254,29 +58294,6 @@ export namespace Prisma {
     progress?: IntNullableFilter<"Program"> | number | null
     createdAt?: DateTimeFilter<"Program"> | Date | string
     updatedAt?: DateTimeFilter<"Program"> | Date | string
-  }
-
-  export type TagUpsertWithoutClientInput = {
-    update: XOR<TagUpdateWithoutClientInput, TagUncheckedUpdateWithoutClientInput>
-    create: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    where?: TagWhereInput
-  }
-
-  export type TagUpdateToOneWithWhereWithoutClientInput = {
-    where?: TagWhereInput
-    data: XOR<TagUpdateWithoutClientInput, TagUncheckedUpdateWithoutClientInput>
-  }
-
-  export type TagUpdateWithoutClientInput = {
-    tags?: TagUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TagUncheckedUpdateWithoutClientInput = {
-    tags?: TagUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutEmployeeInput = {
@@ -60231,7 +60248,6 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutClientInput
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutProgramsInput = {
@@ -60261,7 +60277,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutProgramsInput = {
@@ -60337,6 +60352,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TagCreateWithoutProgramInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagUncheckedCreateWithoutProgramInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagCreateOrConnectWithoutProgramInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput>
+  }
+
+  export type TagCreateManyProgramInputEnvelope = {
+    data: TagCreateManyProgramInput | TagCreateManyProgramInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClientUpsertWithoutProgramsInput = {
     update: XOR<ClientUpdateWithoutProgramsInput, ClientUncheckedUpdateWithoutProgramsInput>
     create: XOR<ClientCreateWithoutProgramsInput, ClientUncheckedCreateWithoutProgramsInput>
@@ -60375,7 +60414,6 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutClientNestedInput
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutProgramsInput = {
@@ -60405,7 +60443,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutProgramInput = {
@@ -60424,6 +60461,33 @@ export namespace Prisma {
     data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyWithoutProgramInput>
   }
 
+  export type TagUpsertWithWhereUniqueWithoutProgramInput = {
+    where: TagWhereUniqueInput
+    update: XOR<TagUpdateWithoutProgramInput, TagUncheckedUpdateWithoutProgramInput>
+    create: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput>
+  }
+
+  export type TagUpdateWithWhereUniqueWithoutProgramInput = {
+    where: TagWhereUniqueInput
+    data: XOR<TagUpdateWithoutProgramInput, TagUncheckedUpdateWithoutProgramInput>
+  }
+
+  export type TagUpdateManyWithWhereWithoutProgramInput = {
+    where: TagScalarWhereInput
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyWithoutProgramInput>
+  }
+
+  export type TagScalarWhereInput = {
+    AND?: TagScalarWhereInput | TagScalarWhereInput[]
+    OR?: TagScalarWhereInput[]
+    NOT?: TagScalarWhereInput | TagScalarWhereInput[]
+    id?: StringFilter<"Tag"> | string
+    programId?: StringFilter<"Tag"> | string
+    name?: StringFilter<"Tag"> | string
+    createdAt?: DateTimeFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeFilter<"Tag"> | Date | string
+  }
+
   export type ProgramCreateWithoutProjectsInput = {
     id?: string
     programName: string
@@ -60435,6 +60499,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     client: ClientCreateNestedOneWithoutProgramsInput
+    tags?: TagCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutProjectsInput = {
@@ -60448,6 +60513,7 @@ export namespace Prisma {
     progress?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: TagUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutProjectsInput = {
@@ -60752,6 +60818,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: ClientUpdateOneRequiredWithoutProgramsNestedInput
+    tags?: TagUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutProjectsInput = {
@@ -60765,6 +60832,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: TagUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ManagerUpsertWithoutProjectsInput = {
@@ -62129,7 +62197,6 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutClientInput
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutTicketsInput = {
@@ -62159,7 +62226,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
     programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutTicketsInput = {
@@ -62205,7 +62271,6 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutClientNestedInput
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutTicketsInput = {
@@ -62235,7 +62300,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ClientCreateWithoutUserInput = {
@@ -62265,7 +62329,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutUserInput = {
@@ -62295,7 +62358,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutUserInput = {
@@ -62722,7 +62784,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutUserInput = {
@@ -62752,7 +62813,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ManagerUpsertWithoutUserInput = {
@@ -63182,140 +63242,76 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"File"> | Date | string
   }
 
-  export type ClientCreateWithoutTagsInput = {
+  export type ProgramCreateWithoutTagsInput = {
     id?: string
-    email: string
-    contactPersonName?: string | null
-    clientLogo?: string | null
-    favicon?: string | null
-    primaryColor?: string | null
-    secondaryColor?: string | null
-    footerText?: string | null
-    supportMail?: string | null
-    subdomain?: string | null
-    serverLocation?: string | null
-    category?: $Enums.IndustryCategory
-    onboarding?: boolean
-    welcomeDashboard?: boolean
-    chartList?: ClientCreatechartListInput | string[]
-    storage?: string | null
-    threshold?: number | null
-    archiveAfter?: number | null
-    userWarning?: boolean
-    adminNote?: string | null
-    trialPeriod?: number | null
+    programName: string
+    datetime: string
+    programDescription: string
+    priority: $Enums.Priority
+    deadline: string
+    progress?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user?: UserCreateNestedOneWithoutClientInput
-    referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
-    tickets?: TicketCreateNestedManyWithoutClientInput
-    programs?: ProgramCreateNestedManyWithoutClientInput
+    client: ClientCreateNestedOneWithoutProgramsInput
+    projects?: ProjectCreateNestedManyWithoutProgramInput
   }
 
-  export type ClientUncheckedCreateWithoutTagsInput = {
+  export type ProgramUncheckedCreateWithoutTagsInput = {
     id?: string
-    userId?: string | null
-    email: string
-    contactPersonName?: string | null
-    clientLogo?: string | null
-    favicon?: string | null
-    primaryColor?: string | null
-    secondaryColor?: string | null
-    footerText?: string | null
-    supportMail?: string | null
-    subdomain?: string | null
-    serverLocation?: string | null
-    category?: $Enums.IndustryCategory
-    onboarding?: boolean
-    welcomeDashboard?: boolean
-    chartList?: ClientCreatechartListInput | string[]
-    storage?: string | null
-    threshold?: number | null
-    archiveAfter?: number | null
-    userWarning?: boolean
-    adminNote?: string | null
-    trialPeriod?: number | null
+    userId: string
+    programName: string
+    datetime: string
+    programDescription: string
+    priority: $Enums.Priority
+    deadline: string
+    progress?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
-    tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
-    programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutProgramInput
   }
 
-  export type ClientCreateOrConnectWithoutTagsInput = {
-    where: ClientWhereUniqueInput
-    create: XOR<ClientCreateWithoutTagsInput, ClientUncheckedCreateWithoutTagsInput>
+  export type ProgramCreateOrConnectWithoutTagsInput = {
+    where: ProgramWhereUniqueInput
+    create: XOR<ProgramCreateWithoutTagsInput, ProgramUncheckedCreateWithoutTagsInput>
   }
 
-  export type ClientUpsertWithoutTagsInput = {
-    update: XOR<ClientUpdateWithoutTagsInput, ClientUncheckedUpdateWithoutTagsInput>
-    create: XOR<ClientCreateWithoutTagsInput, ClientUncheckedCreateWithoutTagsInput>
-    where?: ClientWhereInput
+  export type ProgramUpsertWithoutTagsInput = {
+    update: XOR<ProgramUpdateWithoutTagsInput, ProgramUncheckedUpdateWithoutTagsInput>
+    create: XOR<ProgramCreateWithoutTagsInput, ProgramUncheckedCreateWithoutTagsInput>
+    where?: ProgramWhereInput
   }
 
-  export type ClientUpdateToOneWithWhereWithoutTagsInput = {
-    where?: ClientWhereInput
-    data: XOR<ClientUpdateWithoutTagsInput, ClientUncheckedUpdateWithoutTagsInput>
+  export type ProgramUpdateToOneWithWhereWithoutTagsInput = {
+    where?: ProgramWhereInput
+    data: XOR<ProgramUpdateWithoutTagsInput, ProgramUncheckedUpdateWithoutTagsInput>
   }
 
-  export type ClientUpdateWithoutTagsInput = {
+  export type ProgramUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
-    clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
-    favicon?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
-    footerText?: NullableStringFieldUpdateOperationsInput | string | null
-    supportMail?: NullableStringFieldUpdateOperationsInput | string | null
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    serverLocation?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: EnumIndustryCategoryFieldUpdateOperationsInput | $Enums.IndustryCategory
-    onboarding?: BoolFieldUpdateOperationsInput | boolean
-    welcomeDashboard?: BoolFieldUpdateOperationsInput | boolean
-    chartList?: ClientUpdatechartListInput | string[]
-    storage?: NullableStringFieldUpdateOperationsInput | string | null
-    threshold?: NullableIntFieldUpdateOperationsInput | number | null
-    archiveAfter?: NullableIntFieldUpdateOperationsInput | number | null
-    userWarning?: BoolFieldUpdateOperationsInput | boolean
-    adminNote?: NullableStringFieldUpdateOperationsInput | string | null
-    trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
+    programName?: StringFieldUpdateOperationsInput | string
+    datetime?: StringFieldUpdateOperationsInput | string
+    programDescription?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: StringFieldUpdateOperationsInput | string
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutClientNestedInput
-    referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
-    tickets?: TicketUpdateManyWithoutClientNestedInput
-    programs?: ProgramUpdateManyWithoutClientNestedInput
+    client?: ClientUpdateOneRequiredWithoutProgramsNestedInput
+    projects?: ProjectUpdateManyWithoutProgramNestedInput
   }
 
-  export type ClientUncheckedUpdateWithoutTagsInput = {
+  export type ProgramUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
-    clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
-    favicon?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
-    footerText?: NullableStringFieldUpdateOperationsInput | string | null
-    supportMail?: NullableStringFieldUpdateOperationsInput | string | null
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    serverLocation?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: EnumIndustryCategoryFieldUpdateOperationsInput | $Enums.IndustryCategory
-    onboarding?: BoolFieldUpdateOperationsInput | boolean
-    welcomeDashboard?: BoolFieldUpdateOperationsInput | boolean
-    chartList?: ClientUpdatechartListInput | string[]
-    storage?: NullableStringFieldUpdateOperationsInput | string | null
-    threshold?: NullableIntFieldUpdateOperationsInput | number | null
-    archiveAfter?: NullableIntFieldUpdateOperationsInput | number | null
-    userWarning?: BoolFieldUpdateOperationsInput | boolean
-    adminNote?: NullableStringFieldUpdateOperationsInput | string | null
-    trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: StringFieldUpdateOperationsInput | string
+    programName?: StringFieldUpdateOperationsInput | string
+    datetime?: StringFieldUpdateOperationsInput | string
+    programDescription?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: StringFieldUpdateOperationsInput | string
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
-    tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
-    programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ClientCreateWithoutReferredPersonsInput = {
@@ -63345,7 +63341,6 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutReferredPersonsInput = {
@@ -63375,7 +63370,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutReferredPersonsInput = {
@@ -63421,7 +63415,6 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutReferredPersonsInput = {
@@ -63451,7 +63444,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ProjectCreateWithoutRequestsToAddProjectMemberInput = {
@@ -64682,6 +64674,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUpdateManyWithoutProgramNestedInput
+    tags?: TagUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutClientInput = {
@@ -64695,6 +64688,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUncheckedUpdateManyWithoutProgramNestedInput
+    tags?: TagUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateManyWithoutClientInput = {
@@ -64952,6 +64946,13 @@ export namespace Prisma {
     longitude?: number | null
   }
 
+  export type TagCreateManyProgramInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ProjectUpdateWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -65029,6 +65030,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type TagUpdateWithoutProgramInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagUncheckedUpdateWithoutProgramInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagUncheckedUpdateManyWithoutProgramInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProjectEmployeeCreateManyProjectInput = {
