@@ -6,9 +6,6 @@ import { CreateTagDto } from '../dto/create-tag.dto';
 export class TagService {
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Create a new tag under a program
-   */
   async create(dto: CreateTagDto) {
     // Ensure program exists before attaching a tag
     const programExists = await this.prisma.program.findUnique({
