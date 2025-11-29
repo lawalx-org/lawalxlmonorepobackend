@@ -8,6 +8,7 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { EmployeeService } from '../service/employee.service';
@@ -24,12 +25,15 @@ import {
   ApiGetEmployeeTasks,
   ApiGetEmployeeStatistics,
   ApiChangeEmployeeStatus,
+  ApiRequestSheetUpdate,
 } from '../utils/swagger.decorators';
+import { RequestSheetUpdateDto } from '../dto/request-sheet-update.dto';
+
 
 @ApiTags('Employees')
 @Controller('employees')
 export class EmployeeController {
-  constructor(private readonly employeeService: EmployeeService) {}
+  constructor(private readonly employeeService: EmployeeService) { }
 
   @Get()
   @ApiGetAllEmployees()
@@ -86,4 +90,15 @@ export class EmployeeController {
   ) {
     return this.employeeService.changeStatus(id, userStatus);
   }
+
+  //notified req
+@Post(':id/request-sheet-update')
+@ApiRequestSheetUpdate()
+async reqSheetUpdate(
+  @Param('id') employeeId: string,
+  @Body() dto: RequestSheetUpdateDto,
+) {
+  return this.employeeService.reqSheetUpdate(employeeId, dto.projectId);
+}
+
 }

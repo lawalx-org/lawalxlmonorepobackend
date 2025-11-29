@@ -32,7 +32,7 @@
 //   }
 // }
 
-import { Controller, Post, Body, Get, Param, Req, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -44,9 +44,11 @@ import { SheetService } from '../service/sheet.service';
 import { UpdateCellDto } from '../dto/update-cell.dto';
 import { CreateSubmittedCellDto } from '../dto/create-submitted-cell.dto';
 import { RequestWithUser } from 'src/types/RequestWithUser';
+import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 
 @ApiTags('Sheet') // Groups all endpoints under "Sheet" in Swagger
 @Controller('sheet')
+@UseGuards(JwtAuthGuard)
 export class SheetController {
   constructor(private readonly sheetService: SheetService) {}
 
@@ -55,6 +57,7 @@ export class SheetController {
   @ApiBody({ type: CreateSubmittedCellDto })
   @ApiResponse({ status: 201, description: 'Cell submitted successfully' })
   createSubmittedCell(@Body() createSubmittedCellDto: CreateSubmittedCellDto,  @Req() req: RequestWithUser ) {
+     
      const  employeeId = req?.user?.employeeId
       if (!employeeId) {
     throw new UnauthorizedException('Employee ID missing. Only employees can submit cells.');

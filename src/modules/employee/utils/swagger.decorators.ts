@@ -57,3 +57,25 @@ export const ApiChangeEmployeeStatus = () =>
     ApiResponse({ status: 200, description: 'Status updated successfully' }),
     ApiResponse({ status: 404, description: 'Employee not found' }),
   );
+
+
+
+  export const ApiRequestSheetUpdate = () =>
+  applyDecorators(
+    ApiOperation({
+      summary: 'Request sheet update',
+      description: 'Employee requests a sheet update which sends notifications to managers.',
+    }),
+    ApiResponse({
+      status: 201,
+      description: 'Sheet update request sent successfully',
+    }),
+    ApiResponse({
+      status: 404,
+      description: 'Employee not found',
+    }),
+    ApiResponse({
+      status: 409,
+      description: 'No managers found or no user linked to employee',
+    }),
+  );

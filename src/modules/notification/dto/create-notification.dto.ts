@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsString, IsNotEmpty } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsArray, IsString, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateNotificationDto {
   @ApiProperty({
@@ -26,4 +26,11 @@ export class CreateNotificationDto {
   @IsString()
   @IsNotEmpty()
   type: string;
+  @ApiPropertyOptional({
+    description: 'Optional project ID related to the notification.',
+    example: 'project-id-123',
+  })
+  @IsString()
+  @IsOptional()
+  projectId?: string;
 }
