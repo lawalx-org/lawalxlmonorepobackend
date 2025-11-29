@@ -6,6 +6,7 @@ import {
   Param,
   UseGuards,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { ProjectService } from '../service/project.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
@@ -16,6 +17,7 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { Role } from 'generated/prisma';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { UpdateProjectStatusDto } from '../dto/update-project-status.dto';
 
 @Controller('project')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -83,6 +85,22 @@ export class ProjectController {
     return {
       message: 'Sheets retrieved successfully',
       data:result,
+    };
+  }
+
+
+
+  // Update project status by his won id 
+  @Patch('status')
+  @Roles(Role.CLIENT)
+  @ApiOperation({ summary: 'Update the status of a project' })
+  @ApiResponse({ status: 200, description: 'Project status updated successfully' })
+  @ApiResponse({ status: 404, description: 'Project not found' })
+  async updateStatus(@Body() updateProjectStatusDto: UpdateProjectStatusDto) {
+    const updatedProject = await this.projectService.updateProjectStatus(updateProjectStatusDto);
+    return {
+      message: `Project status updated to ${updatedProject.status} successfully`,
+      project: updatedProject,
     };
   }
 

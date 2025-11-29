@@ -7,6 +7,8 @@ import { buildProjectFilter } from '../utils/project-filter-builder';
 import { SearchProjectByNameDto } from '../dto/search-project.dto';
 import { ReminderService } from 'src/modules/notification/service/reminder';
 import { NotificationService } from 'src/modules/notification/service/notification.service';
+import { UpdateProjectDto } from '../dto/update-project.dto';
+import { UpdateProjectStatusDto } from '../dto/update-project-status.dto';
 
 @Injectable()
 export class ProjectService {
@@ -324,11 +326,98 @@ export class ProjectService {
 
     const sheets = await this.prisma.sheet.findMany({
       where: {
-         projectId 
-        },
+        projectId
+      },
     });
 
     return sheets;
   }
+
+  //   async updateProjectStatus(updateProjectStatusDto: UpdateProjectStatusDto) {
+  //   const { projectId, status } = updateProjectStatusDto;
+
+
+  //   const existingProject = await this.prisma.project.findUnique({
+  //     where: { id: projectId },
+  //   });
+
+  //   if (!existingProject) {
+  //     throw new NotFoundException(`Project with ID "${projectId}" not found`);
+  //   }
+
+
+  //   const updatedProject = await this.prisma.project.update({
+  //     where: { id: projectId },
+  //     data: { status }, 
+  //   });
+
+  //   return updatedProject;
+  // }
+
+  async updateProjectStatus(updateProjectStatusDto: UpdateProjectStatusDto) {
+    const { projectId, status } = updateProjectStatusDto;
+
+
+    const project = await this.prisma.project.findUnique({
+      where: {
+        id: projectId
+      },
+      include: {
+        manager: {
+          include: {
+            user: true
+          }
+        },
+        projectEmployees: {
+          include: {
+            employee: {
+              include: {
+                user: true
+              }
+            }
+          }
+        },
+      },
+    });
+
+    if (!project) {
+      throw new NotFoundException(`Project with ID "${projectId}" not found`);
+    }
+
+
+    const updatedProject = await this.prisma.project.update({
+      where: { id: projectId },
+      data: { status },
+    });
+
+
+    if (status === 'LIVE') {
+      const managerUserId = project.manager?.user?.id;
+      if (!managerUserId) {
+        throw new NotFoundException('Manager or associated user not found');
+      }
+
+      const employeeUserIds = project.projectEmployees
+        .map((e) => e.employee?.user?.id)
+        .filter((id): id is string => !!id);
+
+      const receiverIds = [...new Set([managerUserId, ...employeeUserIds])];
+
+      await this.notificationService.create(
+        {
+          receiverIds,
+          context: `Project ${project.name} is now LIVE.`,
+          type: 'PROJECT_STATUS_UPDATE',
+        },
+        managerUserId
+      );
+    }
+
+    return updatedProject;
+  }
+
+
+
+
 
 }

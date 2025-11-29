@@ -275,7 +275,11 @@ export class SubmittedService {
     );
 
 
-    return { updatedSubmission };
+    return { 
+      message: 'Sheet update request sent successfully',
+      notifications: updatedSubmission,
+      // updatedSubmission 
+    };
   });
 }
 

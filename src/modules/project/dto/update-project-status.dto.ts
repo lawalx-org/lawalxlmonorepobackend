@@ -1,6 +1,6 @@
 
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export enum ProjectStatus {
   PENDING = 'PENDING',
@@ -12,6 +12,12 @@ export enum ProjectStatus {
 }
 
 export class UpdateProjectStatusDto {
+
+  @ApiProperty({ description: 'Project ID to update' })
+  @IsString()
+  projectId: string;
+
+
   @ApiProperty({
     enum: ProjectStatus,
     description: 'The new status of the project.',

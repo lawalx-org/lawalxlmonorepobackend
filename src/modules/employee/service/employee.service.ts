@@ -457,16 +457,14 @@ export class EmployeeService {
 
     
 
-    return {
+    // return {
+    //   message: 'Sheet update request sent successfully',
+    //    sendingList,
+    // };
+       return {
       message: 'Sheet update request sent successfully',
-       sendingList,
+      notifications: sendingList,
     };
   }
 
 }
-// checks employee exists and has a linked user account.
-// collects all managers as notification receivers.
-// Creates a notification with sender = employee user ID.
-// Saves notification + context message (“employee requested sheet update”).
-// Creates notification-provision records for each manager.
-// Returns success message and notification data.
