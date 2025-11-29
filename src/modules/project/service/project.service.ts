@@ -9,6 +9,7 @@ import { ReminderService } from 'src/modules/notification/service/reminder';
 import { NotificationService } from 'src/modules/notification/service/notification.service';
 import { UpdateProjectDto } from '../dto/update-project.dto';
 import { UpdateProjectStatusDto } from '../dto/update-project-status.dto';
+import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
 
 @Injectable()
 export class ProjectService {
@@ -212,7 +213,7 @@ export class ProjectService {
         {
           receiverIds: uniqueReceivers,
           context: `A new project "${project.name}" has been created and assigned.`,
-          type: 'PROJECT_CREATED',
+          type: NotificationType.NEW_EMPLOYEE_ASSIGNED ,
         },
         project.manager.user.id,
       );
@@ -407,7 +408,7 @@ export class ProjectService {
         {
           receiverIds,
           context: `Project ${project.name} is now LIVE.`,
-          type: 'PROJECT_STATUS_UPDATE',
+          type: NotificationType.PROJECT_STATUS_UPDATE ,
         },
         managerUserId
       );

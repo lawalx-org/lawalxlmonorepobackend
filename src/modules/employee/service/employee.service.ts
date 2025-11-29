@@ -10,6 +10,7 @@ import { UpdateEmployeeDto } from '../dto/update-employee.dto';
 import { BulkDeleteDto } from '../dto/bulk-delete.dto';
 import { Prisma } from 'generated/prisma';
 import { NotificationService } from 'src/modules/notification/service/notification.service';
+import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
 
 @Injectable()
 export class EmployeeService {
@@ -447,7 +448,7 @@ export class EmployeeService {
         {
           receiverIds,
           context: `Employee ${employee.id} requested a sheet update.`,
-        type: 'SHEET_UPDATE_REQUEST',
+        type: NotificationType.SHEET_UPDATE_REQUEST,
         projectId,
         },
         employee.id,

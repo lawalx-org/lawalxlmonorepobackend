@@ -15,6 +15,7 @@ import {
 } from '../../utils/pagination/pagination.utils';
 import { Submitted, SubmittedStatus } from '../../../../generated/prisma';
 import { NotificationService } from 'src/modules/notification/service/notification.service';
+import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
 
 interface WhereClause {
   employeeId?: string;
@@ -97,7 +98,7 @@ export class SubmittedService {
         receiverIds: [projectManager.id],
         projectId,
         context: `A new submission has been created for project: ${project.name}`,
-        type: 'PROJECT_SUBMITTED',
+        type: NotificationType.PROJECT_SUBMITTED,
       },
       employeeId,
     );
@@ -269,7 +270,7 @@ export class SubmittedService {
         receiverIds: [employee.userId!],
         projectId: project.id,
         context: message,
-        type: 'SUBMISSION_UPDATED_STATUS',
+        type: NotificationType.SUBMISSION_UPDATED_STATUS,
       },
       managerId,
     );

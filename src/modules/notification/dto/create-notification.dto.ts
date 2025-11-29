@@ -1,5 +1,16 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsArray, IsString, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
+
+export enum NotificationType {
+  NEW_EMPLOYEE_ASSIGNED = 'NEW_EMPLOYEE_ASSIGNED',
+  NEW_MANAGER_ASSIGNED = 'NEW_MANAGER_ASSIGNED',
+  SUBMISSION_UPDATED_STATUS = 'SUBMISSION_UPDATED_STATUS',
+  PROJECT_SUBMITTED = 'PROJECT_SUBMITTED',
+  PROJECT_STATUS_UPDATE = 'PROJECT_STATUS_UPDATE',
+   PROJECT_CREATED = 'PROJECT_CREATED',
+   REMINDER = 'REMINDER',
+   SHEET_UPDATE_REQUEST = 'SHEET_UPDATE_REQUEST',              
+}
 
 export class CreateNotificationDto {
   @ApiProperty({
@@ -21,11 +32,14 @@ export class CreateNotificationDto {
 
   @ApiProperty({
     description: 'The type of the notification.',
-    example: 'TASK_ASSIGNED',
+    example: NotificationType.NEW_EMPLOYEE_ASSIGNED,
+    enum: NotificationType,
   })
-  @IsString()
+  @IsEnum(NotificationType)
   @IsNotEmpty()
-  type: string;
+  type: NotificationType;
+
+
   @ApiPropertyOptional({
     description: 'Optional project ID related to the notification.',
     example: 'project-id-123',

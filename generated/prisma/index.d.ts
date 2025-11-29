@@ -387,7 +387,13 @@ export type SubmittedStatus = (typeof SubmittedStatus)[keyof typeof SubmittedSta
 
 export const NotificationType: {
   NEW_EMPLOYEE_ASSIGNED: 'NEW_EMPLOYEE_ASSIGNED',
-  NEW_MANAGER_ASSIGNED: 'NEW_MANAGER_ASSIGNED'
+  NEW_MANAGER_ASSIGNED: 'NEW_MANAGER_ASSIGNED',
+  SUBMISSION_UPDATED_STATUS: 'SUBMISSION_UPDATED_STATUS',
+  PROJECT_SUBMITTED: 'PROJECT_SUBMITTED',
+  PROJECT_STATUS_UPDATE: 'PROJECT_STATUS_UPDATE',
+  PROJECT_CREATED: 'PROJECT_CREATED',
+  REMINDER: 'REMINDER',
+  SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST'
 };
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -11833,7 +11839,7 @@ export namespace Prisma {
     senderId: string | null
     projectId: string | null
     context: string | null
-    type: string | null
+    type: $Enums.NotificationType | null
     isRead: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -11844,7 +11850,7 @@ export namespace Prisma {
     senderId: string | null
     projectId: string | null
     context: string | null
-    type: string | null
+    type: $Enums.NotificationType | null
     isRead: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -11977,7 +11983,7 @@ export namespace Prisma {
     receiverIds: string[]
     projectId: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead: boolean
     createdAt: Date
     updatedAt: Date
@@ -12069,7 +12075,7 @@ export namespace Prisma {
       receiverIds: string[]
       projectId: string | null
       context: string
-      type: string
+      type: $Enums.NotificationType
       isRead: boolean
       createdAt: Date
       updatedAt: Date
@@ -12502,7 +12508,7 @@ export namespace Prisma {
     readonly receiverIds: FieldRef<"Notification", 'String[]'>
     readonly projectId: FieldRef<"Notification", 'String'>
     readonly context: FieldRef<"Notification", 'String'>
-    readonly type: FieldRef<"Notification", 'String'>
+    readonly type: FieldRef<"Notification", 'NotificationType'>
     readonly isRead: FieldRef<"Notification", 'Boolean'>
     readonly createdAt: FieldRef<"Notification", 'DateTime'>
     readonly updatedAt: FieldRef<"Notification", 'DateTime'>
@@ -46628,6 +46634,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'NotificationType'
+   */
+  export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+    
+
+
+  /**
+   * Reference to a field of type 'NotificationType[]'
+   */
+  export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Priority'
    */
   export type EnumPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Priority'>
@@ -47343,7 +47363,7 @@ export namespace Prisma {
     receiverIds?: StringNullableListFilter<"Notification">
     projectId?: StringNullableFilter<"Notification"> | string | null
     context?: StringFilter<"Notification"> | string
-    type?: StringFilter<"Notification"> | string
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolFilter<"Notification"> | boolean
     createdAt?: DateTimeFilter<"Notification"> | Date | string
     updatedAt?: DateTimeFilter<"Notification"> | Date | string
@@ -47372,7 +47392,7 @@ export namespace Prisma {
     receiverIds?: StringNullableListFilter<"Notification">
     projectId?: StringNullableFilter<"Notification"> | string | null
     context?: StringFilter<"Notification"> | string
-    type?: StringFilter<"Notification"> | string
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolFilter<"Notification"> | boolean
     createdAt?: DateTimeFilter<"Notification"> | Date | string
     updatedAt?: DateTimeFilter<"Notification"> | Date | string
@@ -47403,7 +47423,7 @@ export namespace Prisma {
     receiverIds?: StringNullableListFilter<"Notification">
     projectId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     context?: StringWithAggregatesFilter<"Notification"> | string
-    type?: StringWithAggregatesFilter<"Notification"> | string
+    type?: EnumNotificationTypeWithAggregatesFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolWithAggregatesFilter<"Notification"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
@@ -50156,7 +50176,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50169,7 +50189,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50182,7 +50202,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50195,7 +50215,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50208,7 +50228,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50220,7 +50240,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50232,7 +50252,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53177,6 +53197,13 @@ export namespace Prisma {
     joinedDate?: SortOrder
   }
 
+  export type EnumNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+  }
+
   export type NotificationProvisionListRelationFilter = {
     every?: NotificationProvisionWhereInput
     some?: NotificationProvisionWhereInput
@@ -53219,6 +53246,16 @@ export namespace Prisma {
     isRead?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
   export type NotificationScalarRelationFilter = {
@@ -55344,6 +55381,10 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type EnumNotificationTypeFieldUpdateOperationsInput = {
+    set?: $Enums.NotificationType
+  }
+
   export type NotificationProvisionUpdateManyWithoutNotificationNestedInput = {
     create?: XOR<NotificationProvisionCreateWithoutNotificationInput, NotificationProvisionUncheckedCreateWithoutNotificationInput> | NotificationProvisionCreateWithoutNotificationInput[] | NotificationProvisionUncheckedCreateWithoutNotificationInput[]
     connectOrCreate?: NotificationProvisionCreateOrConnectWithoutNotificationInput | NotificationProvisionCreateOrConnectWithoutNotificationInput[]
@@ -57359,6 +57400,23 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+  }
+
+  export type NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
+  }
+
   export type NestedEnumPriorityFilter<$PrismaModel = never> = {
     equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
@@ -59286,7 +59344,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59298,7 +59356,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -59403,7 +59461,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -59415,7 +59473,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

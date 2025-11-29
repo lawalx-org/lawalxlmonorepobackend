@@ -119,15 +119,15 @@ model Manager {
 
 // Core Notification model
 model Notification {
-  id          String   @id @default(uuid())
+  id          String           @id @default(uuid())
   senderId    String
   receiverIds String[]
   projectId   String?
   context     String
-  type        String
-  isRead      Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  type        NotificationType
+  isRead      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   // Relations
   provisions NotificationProvision[]
@@ -714,6 +714,12 @@ enum SubmittedStatus {
 enum NotificationType {
   NEW_EMPLOYEE_ASSIGNED
   NEW_MANAGER_ASSIGNED
+  SUBMISSION_UPDATED_STATUS
+  PROJECT_SUBMITTED
+  PROJECT_STATUS_UPDATE
+  PROJECT_CREATED
+  REMINDER
+  SHEET_UPDATE_REQUEST
 }
 
 model File {

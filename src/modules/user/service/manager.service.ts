@@ -15,6 +15,7 @@ import {
   paginate,
   PaginatedResult,
 } from 'src/modules/utils/pagination/pagination.utils';
+import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
 
 @Injectable()
 export class ManagerService {
@@ -225,7 +226,7 @@ export class ManagerService {
         {
           receiverIds,
           context: `A new manager ${name} has been assigned to a project you are managing.`,
-          type: 'NEW_MANAGER_ASSIGNED',
+          type: NotificationType.NEW_MANAGER_ASSIGNED,
         },
         result.id,
       );
