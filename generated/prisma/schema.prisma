@@ -720,6 +720,7 @@ enum NotificationType {
   PROJECT_CREATED
   REMINDER
   SHEET_UPDATE_REQUEST
+  FILE_CREATED
 }
 
 model File {
@@ -735,6 +736,9 @@ model File {
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  sheetId String
+  sheet   Sheet? @relation(fields: [sheetId], references: [id], onDelete: Cascade)
 }
 
 model Reminder {
@@ -795,6 +799,8 @@ model Sheet {
 
   chart   ChartTable?
   project Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  files File[]
 
   @@unique([projectId, chartId])
 }

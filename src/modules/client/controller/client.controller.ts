@@ -59,9 +59,10 @@ export class ClientController {
       type: 'object',
       properties: {
         userId: { type: 'string', example: '1d3b9943-4b77-4b54-803e-fc6e15e0b396' },
+           sheetId: { type: 'string', example: 'a6dd3e9c-1fb1-40e1-a9e6-1cb59cdfa99c' },
         file: { type: 'string', format: 'binary' },
       },
-      required: ['userId', 'file'],
+      required: ['userId', 'sheetId', 'file'],
     },
   })
   @UseInterceptors(
@@ -89,15 +90,18 @@ export class ClientController {
       }),
     }),
   )
+async uploadFile(
+  @UploadedFile() file: Express.Multer.File,
+  @Body() body: UploadFileDto
+) {
+  const result = await this.clientService.saveFile(file, body.userId, body.sheetId);
 
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body: UploadFileDto) {
-    // console.log('id:', body.userId);
-    const result = await this.clientService.saveFile(file, body.userId);
-    return {
-      message: 'File uploaded successfully',
-      data: result,
-    };
-  }
+  return {
+    message: 'File uploaded successfully',
+    data: result,
+  };
+}
+
 
 
  

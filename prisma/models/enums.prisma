@@ -105,6 +105,7 @@ enum ActivityActionType {
   TASK_CREATED
   TASK_COMPLETED
   GENERAL
+
 }
 
 
@@ -126,4 +127,5 @@ enum NotificationType {
   PROJECT_CREATED
   REMINDER
   SHEET_UPDATE_REQUEST
+  FILE_CREATED
 }

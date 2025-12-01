@@ -479,7 +479,8 @@ exports.Prisma.FileScalarFieldEnum = {
   uploadAt: 'uploadAt',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  sheetId: 'sheetId'
 };
 
 exports.Prisma.ReminderScalarFieldEnum = {
@@ -599,7 +600,8 @@ exports.NotificationType = exports.$Enums.NotificationType = {
   PROJECT_STATUS_UPDATE: 'PROJECT_STATUS_UPDATE',
   PROJECT_CREATED: 'PROJECT_CREATED',
   REMINDER: 'REMINDER',
-  SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST'
+  SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST',
+  FILE_CREATED: 'FILE_CREATED'
 };
 
 exports.Priority = exports.$Enums.Priority = {

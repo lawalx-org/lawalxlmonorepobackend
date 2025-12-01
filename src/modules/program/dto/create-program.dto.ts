@@ -52,13 +52,5 @@ export class CreateProgramDto {
   @IsNotEmpty()
   deadline: string;
 
-  @ApiPropertyOptional({
-    description: 'List of tag IDs to associate with the program',
-    type: [String],
-    example: ['uuid1', 'uuid2'],
-  })
-  @IsOptional()
-  @IsArray()
-  @IsUUID('4', { each: true })
-  tagIds?: string[];
+ 
 }

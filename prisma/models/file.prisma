@@ -1,16 +1,17 @@
 model File {
-  id        String   @id @default(cuid())
-  filename  String
-  url       String
-  filePath  String
-  fileType  String      
-  size      Int
-  uploadAt  DateTime @default(now())
+  id       String   @id @default(cuid())
+  filename String
+  url      String
+  filePath String
+  fileType String
+  size     Int
+  uploadAt DateTime @default(now())
 
   userId    String
-  user      User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now()) 
+  updatedAt DateTime @default(now()) @updatedAt
+
+  sheetId String
+  sheet   Sheet?  @relation(fields: [sheetId], references: [id], onDelete: Cascade)
 }
-
-
