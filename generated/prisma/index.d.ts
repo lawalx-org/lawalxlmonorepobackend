@@ -393,7 +393,8 @@ export const NotificationType: {
   PROJECT_STATUS_UPDATE: 'PROJECT_STATUS_UPDATE',
   PROJECT_CREATED: 'PROJECT_CREATED',
   REMINDER: 'REMINDER',
-  SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST'
+  SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST',
+  FILE_CREATED: 'FILE_CREATED'
 };
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -4703,11 +4704,13 @@ export namespace Prisma {
   export type SheetCountOutputType = {
     cells: number
     snapshots: number
+    files: number
   }
 
   export type SheetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cells?: boolean | SheetCountOutputTypeCountCellsArgs
     snapshots?: boolean | SheetCountOutputTypeCountSnapshotsArgs
+    files?: boolean | SheetCountOutputTypeCountFilesArgs
   }
 
   // Custom InputTypes
@@ -4733,6 +4736,13 @@ export namespace Prisma {
    */
   export type SheetCountOutputTypeCountSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SheetSnapshotWhereInput
+  }
+
+  /**
+   * SheetCountOutputType without action
+   */
+  export type SheetCountOutputTypeCountFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
   }
 
 
@@ -39261,6 +39271,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    sheetId: string | null
   }
 
   export type FileMaxAggregateOutputType = {
@@ -39274,6 +39285,7 @@ export namespace Prisma {
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    sheetId: string | null
   }
 
   export type FileCountAggregateOutputType = {
@@ -39287,6 +39299,7 @@ export namespace Prisma {
     userId: number
     createdAt: number
     updatedAt: number
+    sheetId: number
     _all: number
   }
 
@@ -39310,6 +39323,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    sheetId?: true
   }
 
   export type FileMaxAggregateInputType = {
@@ -39323,6 +39337,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    sheetId?: true
   }
 
   export type FileCountAggregateInputType = {
@@ -39336,6 +39351,7 @@ export namespace Prisma {
     userId?: true
     createdAt?: true
     updatedAt?: true
+    sheetId?: true
     _all?: true
   }
 
@@ -39436,6 +39452,7 @@ export namespace Prisma {
     userId: string
     createdAt: Date
     updatedAt: Date
+    sheetId: string
     _count: FileCountAggregateOutputType | null
     _avg: FileAvgAggregateOutputType | null
     _sum: FileSumAggregateOutputType | null
@@ -39468,7 +39485,9 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sheetId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
   }, ExtArgs["result"]["file"]>
 
   export type FileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -39482,7 +39501,9 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sheetId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
   }, ExtArgs["result"]["file"]>
 
   export type FileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -39496,7 +39517,9 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sheetId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
   }, ExtArgs["result"]["file"]>
 
   export type FileSelectScalar = {
@@ -39510,23 +39533,28 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sheetId?: boolean
   }
 
-  export type FileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "filename" | "url" | "filePath" | "fileType" | "size" | "uploadAt" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["file"]>
+  export type FileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "filename" | "url" | "filePath" | "fileType" | "size" | "uploadAt" | "userId" | "createdAt" | "updatedAt" | "sheetId", ExtArgs["result"]["file"]>
   export type FileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
   }
   export type FileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
   }
   export type FileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
   }
 
   export type $FilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "File"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      sheet: Prisma.$SheetPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -39539,6 +39567,7 @@ export namespace Prisma {
       userId: string
       createdAt: Date
       updatedAt: Date
+      sheetId: string
     }, ExtArgs["result"]["file"]>
     composites: {}
   }
@@ -39934,6 +39963,7 @@ export namespace Prisma {
   export interface Prisma__FileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sheet<T extends File$sheetArgs<ExtArgs> = {}>(args?: Subset<T, File$sheetArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -39973,6 +40003,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"File", 'String'>
     readonly createdAt: FieldRef<"File", 'DateTime'>
     readonly updatedAt: FieldRef<"File", 'DateTime'>
+    readonly sheetId: FieldRef<"File", 'String'>
   }
     
 
@@ -40366,6 +40397,25 @@ export namespace Prisma {
      * Limit how many Files to delete.
      */
     limit?: number
+  }
+
+  /**
+   * File.sheet
+   */
+  export type File$sheetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    where?: SheetWhereInput
   }
 
   /**
@@ -41729,6 +41779,7 @@ export namespace Prisma {
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
     chart?: boolean | Sheet$chartArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
+    files?: boolean | Sheet$filesArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
@@ -41767,6 +41818,7 @@ export namespace Prisma {
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
     chart?: boolean | Sheet$chartArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
+    files?: boolean | Sheet$filesArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -41783,6 +41835,7 @@ export namespace Prisma {
       snapshots: Prisma.$SheetSnapshotPayload<ExtArgs>[]
       chart: Prisma.$ChartTablePayload<ExtArgs> | null
       project: Prisma.$ProjectPayload<ExtArgs>
+      files: Prisma.$FilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -42189,6 +42242,7 @@ export namespace Prisma {
     snapshots<T extends Sheet$snapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chart<T extends Sheet$chartArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$chartArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    files<T extends Sheet$filesArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -42684,6 +42738,30 @@ export namespace Prisma {
      */
     include?: ChartTableInclude<ExtArgs> | null
     where?: ChartTableWhereInput
+  }
+
+  /**
+   * Sheet.files
+   */
+  export type Sheet$filesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    cursor?: FileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
   }
 
   /**
@@ -46403,7 +46481,8 @@ export namespace Prisma {
     uploadAt: 'uploadAt',
     userId: 'userId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    sheetId: 'sheetId'
   };
 
   export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
@@ -49191,7 +49270,9 @@ export namespace Prisma {
     userId?: StringFilter<"File"> | string
     createdAt?: DateTimeFilter<"File"> | Date | string
     updatedAt?: DateTimeFilter<"File"> | Date | string
+    sheetId?: StringFilter<"File"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sheet?: XOR<SheetNullableScalarRelationFilter, SheetWhereInput> | null
   }
 
   export type FileOrderByWithRelationInput = {
@@ -49205,7 +49286,9 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrder
     user?: UserOrderByWithRelationInput
+    sheet?: SheetOrderByWithRelationInput
   }
 
   export type FileWhereUniqueInput = Prisma.AtLeast<{
@@ -49222,7 +49305,9 @@ export namespace Prisma {
     userId?: StringFilter<"File"> | string
     createdAt?: DateTimeFilter<"File"> | Date | string
     updatedAt?: DateTimeFilter<"File"> | Date | string
+    sheetId?: StringFilter<"File"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sheet?: XOR<SheetNullableScalarRelationFilter, SheetWhereInput> | null
   }, "id">
 
   export type FileOrderByWithAggregationInput = {
@@ -49236,6 +49321,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrder
     _count?: FileCountOrderByAggregateInput
     _avg?: FileAvgOrderByAggregateInput
     _max?: FileMaxOrderByAggregateInput
@@ -49257,6 +49343,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"File"> | string
     createdAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
+    sheetId?: StringWithAggregatesFilter<"File"> | string
   }
 
   export type ReminderWhereInput = {
@@ -49360,6 +49447,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotListRelationFilter
     chart?: XOR<ChartTableNullableScalarRelationFilter, ChartTableWhereInput> | null
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    files?: FileListRelationFilter
   }
 
   export type SheetOrderByWithRelationInput = {
@@ -49373,6 +49461,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotOrderByRelationAggregateInput
     chart?: ChartTableOrderByWithRelationInput
     project?: ProjectOrderByWithRelationInput
+    files?: FileOrderByRelationAggregateInput
   }
 
   export type SheetWhereUniqueInput = Prisma.AtLeast<{
@@ -49390,6 +49479,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotListRelationFilter
     chart?: XOR<ChartTableNullableScalarRelationFilter, ChartTableWhereInput> | null
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    files?: FileListRelationFilter
   }, "id" | "projectId_chartId">
 
   export type SheetOrderByWithAggregationInput = {
@@ -52168,6 +52258,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutFileInput
+    sheet?: SheetCreateNestedOneWithoutFilesInput
   }
 
   export type FileUncheckedCreateInput = {
@@ -52181,6 +52272,7 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sheetId: string
   }
 
   export type FileUpdateInput = {
@@ -52194,6 +52286,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutFileNestedInput
+    sheet?: SheetUpdateOneWithoutFilesNestedInput
   }
 
   export type FileUncheckedUpdateInput = {
@@ -52207,6 +52300,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: StringFieldUpdateOperationsInput | string
   }
 
   export type FileCreateManyInput = {
@@ -52220,6 +52314,7 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sheetId: string
   }
 
   export type FileUpdateManyMutationInput = {
@@ -52245,6 +52340,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ReminderCreateInput = {
@@ -52354,6 +52450,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateInput = {
@@ -52366,6 +52463,7 @@ export namespace Prisma {
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
     chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUpdateInput = {
@@ -52378,6 +52476,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateInput = {
@@ -52390,6 +52489,7 @@ export namespace Prisma {
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetCreateManyInput = {
@@ -54588,6 +54688,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrder
   }
 
   export type FileAvgOrderByAggregateInput = {
@@ -54605,6 +54706,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrder
   }
 
   export type FileMinOrderByAggregateInput = {
@@ -54618,6 +54720,7 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sheetId?: SortOrder
   }
 
   export type FileSumOrderByAggregateInput = {
@@ -56957,6 +57060,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type SheetCreateNestedOneWithoutFilesInput = {
+    create?: XOR<SheetCreateWithoutFilesInput, SheetUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutFilesInput
+    connect?: SheetWhereUniqueInput
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -56971,6 +57080,16 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutFileInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFileInput, UserUpdateWithoutFileInput>, UserUncheckedUpdateWithoutFileInput>
+  }
+
+  export type SheetUpdateOneWithoutFilesNestedInput = {
+    create?: XOR<SheetCreateWithoutFilesInput, SheetUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutFilesInput
+    upsert?: SheetUpsertWithoutFilesInput
+    disconnect?: SheetWhereInput | boolean
+    delete?: SheetWhereInput | boolean
+    connect?: SheetWhereUniqueInput
+    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutFilesInput, SheetUpdateWithoutFilesInput>, SheetUncheckedUpdateWithoutFilesInput>
   }
 
   export type ReminderCreaterepeatOnDaysInput = {
@@ -57035,6 +57154,13 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput
   }
 
+  export type FileCreateNestedManyWithoutSheetInput = {
+    create?: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput> | FileCreateWithoutSheetInput[] | FileUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutSheetInput | FileCreateOrConnectWithoutSheetInput[]
+    createMany?: FileCreateManySheetInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+  }
+
   export type CellUncheckedCreateNestedManyWithoutSheetInput = {
     create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
     connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
@@ -57053,6 +57179,13 @@ export namespace Prisma {
     create?: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
     connectOrCreate?: ChartTableCreateOrConnectWithoutSheetInput
     connect?: ChartTableWhereUniqueInput
+  }
+
+  export type FileUncheckedCreateNestedManyWithoutSheetInput = {
+    create?: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput> | FileCreateWithoutSheetInput[] | FileUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutSheetInput | FileCreateOrConnectWithoutSheetInput[]
+    createMany?: FileCreateManySheetInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
   export type CellUpdateManyWithoutSheetNestedInput = {
@@ -57101,6 +57234,20 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutSheetsInput, ProjectUpdateWithoutSheetsInput>, ProjectUncheckedUpdateWithoutSheetsInput>
   }
 
+  export type FileUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput> | FileCreateWithoutSheetInput[] | FileUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutSheetInput | FileCreateOrConnectWithoutSheetInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutSheetInput | FileUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: FileCreateManySheetInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutSheetInput | FileUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutSheetInput | FileUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
   export type CellUncheckedUpdateManyWithoutSheetNestedInput = {
     create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
     connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
@@ -57137,6 +57284,20 @@ export namespace Prisma {
     delete?: ChartTableWhereInput | boolean
     connect?: ChartTableWhereUniqueInput
     update?: XOR<XOR<ChartTableUpdateToOneWithWhereWithoutSheetInput, ChartTableUpdateWithoutSheetInput>, ChartTableUncheckedUpdateWithoutSheetInput>
+  }
+
+  export type FileUncheckedUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput> | FileCreateWithoutSheetInput[] | FileUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutSheetInput | FileCreateOrConnectWithoutSheetInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutSheetInput | FileUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: FileCreateManySheetInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutSheetInput | FileUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutSheetInput | FileUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
   export type SheetCreateNestedOneWithoutCellsInput = {
@@ -60831,6 +60992,7 @@ export namespace Prisma {
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     chart?: ChartTableCreateNestedOneWithoutSheetInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutProjectInput = {
@@ -60842,6 +61004,7 @@ export namespace Prisma {
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
     chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutProjectInput = {
@@ -62780,6 +62943,7 @@ export namespace Prisma {
     uploadAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sheet?: SheetCreateNestedOneWithoutFilesInput
   }
 
   export type FileUncheckedCreateWithoutUserInput = {
@@ -62792,6 +62956,7 @@ export namespace Prisma {
     uploadAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sheetId: string
   }
 
   export type FileCreateOrConnectWithoutUserInput = {
@@ -63298,6 +63463,7 @@ export namespace Prisma {
     userId?: StringFilter<"File"> | string
     createdAt?: DateTimeFilter<"File"> | Date | string
     updatedAt?: DateTimeFilter<"File"> | Date | string
+    sheetId?: StringFilter<"File"> | string
   }
 
   export type ProgramCreateWithoutTagsInput = {
@@ -63853,6 +64019,7 @@ export namespace Prisma {
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutChartInput = {
@@ -63864,6 +64031,7 @@ export namespace Prisma {
     projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutChartInput = {
@@ -63891,6 +64059,7 @@ export namespace Prisma {
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutChartInput = {
@@ -63902,6 +64071,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type UserCreateWithoutFileInput = {
@@ -63973,6 +64143,35 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutFileInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutFileInput, UserUncheckedCreateWithoutFileInput>
+  }
+
+  export type SheetCreateWithoutFilesInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chartId: string
+    cells?: CellCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+    chart?: ChartTableCreateNestedOneWithoutSheetInput
+    project: ProjectCreateNestedOneWithoutSheetsInput
+  }
+
+  export type SheetUncheckedCreateWithoutFilesInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chartId: string
+    projectId: string
+    cells?: CellUncheckedCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+    chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+  }
+
+  export type SheetCreateOrConnectWithoutFilesInput = {
+    where: SheetWhereUniqueInput
+    create: XOR<SheetCreateWithoutFilesInput, SheetUncheckedCreateWithoutFilesInput>
   }
 
   export type UserUpsertWithoutFileInput = {
@@ -64050,6 +64249,41 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SheetUpsertWithoutFilesInput = {
+    update: XOR<SheetUpdateWithoutFilesInput, SheetUncheckedUpdateWithoutFilesInput>
+    create: XOR<SheetCreateWithoutFilesInput, SheetUncheckedCreateWithoutFilesInput>
+    where?: SheetWhereInput
+  }
+
+  export type SheetUpdateToOneWithWhereWithoutFilesInput = {
+    where?: SheetWhereInput
+    data: XOR<SheetUpdateWithoutFilesInput, SheetUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type SheetUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
+    cells?: CellUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneWithoutSheetNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+  }
+
+  export type SheetUncheckedUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
   }
 
   export type ProjectCreateWithoutRemindersInput = {
@@ -64326,6 +64560,42 @@ export namespace Prisma {
     create: XOR<ProjectCreateWithoutSheetsInput, ProjectUncheckedCreateWithoutSheetsInput>
   }
 
+  export type FileCreateWithoutSheetInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutFileInput
+  }
+
+  export type FileUncheckedCreateWithoutSheetInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FileCreateOrConnectWithoutSheetInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput>
+  }
+
+  export type FileCreateManySheetInputEnvelope = {
+    data: FileCreateManySheetInput | FileCreateManySheetInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CellUpsertWithWhereUniqueWithoutSheetInput = {
     where: CellWhereUniqueInput
     update: XOR<CellUpdateWithoutSheetInput, CellUncheckedUpdateWithoutSheetInput>
@@ -64485,6 +64755,22 @@ export namespace Prisma {
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
+  export type FileUpsertWithWhereUniqueWithoutSheetInput = {
+    where: FileWhereUniqueInput
+    update: XOR<FileUpdateWithoutSheetInput, FileUncheckedUpdateWithoutSheetInput>
+    create: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput>
+  }
+
+  export type FileUpdateWithWhereUniqueWithoutSheetInput = {
+    where: FileWhereUniqueInput
+    data: XOR<FileUpdateWithoutSheetInput, FileUncheckedUpdateWithoutSheetInput>
+  }
+
+  export type FileUpdateManyWithWhereWithoutSheetInput = {
+    where: FileScalarWhereInput
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyWithoutSheetInput>
+  }
+
   export type SheetCreateWithoutCellsInput = {
     id?: string
     name: string
@@ -64494,6 +64780,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutCellsInput = {
@@ -64505,6 +64792,7 @@ export namespace Prisma {
     projectId: string
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
     chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutCellsInput = {
@@ -64532,6 +64820,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutCellsInput = {
@@ -64543,6 +64832,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetCreateWithoutSnapshotsInput = {
@@ -64554,6 +64844,7 @@ export namespace Prisma {
     cells?: CellCreateNestedManyWithoutSheetInput
     chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutSnapshotsInput = {
@@ -64565,6 +64856,7 @@ export namespace Prisma {
     projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutSnapshotsInput = {
@@ -64592,6 +64884,7 @@ export namespace Prisma {
     cells?: CellUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutSnapshotsInput = {
@@ -64603,6 +64896,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type ReferredPersonCreateManyClientInput = {
@@ -65418,6 +65712,7 @@ export namespace Prisma {
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneWithoutSheetNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutProjectInput = {
@@ -65429,6 +65724,7 @@ export namespace Prisma {
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateManyWithoutProjectInput = {
@@ -65473,6 +65769,7 @@ export namespace Prisma {
     uploadAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    sheetId: string
   }
 
   export type NotificationProvisionUpdateWithoutUserInput = {
@@ -65557,6 +65854,7 @@ export namespace Prisma {
     uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheet?: SheetUpdateOneWithoutFilesNestedInput
   }
 
   export type FileUncheckedUpdateWithoutUserInput = {
@@ -65569,6 +65867,7 @@ export namespace Prisma {
     uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: StringFieldUpdateOperationsInput | string
   }
 
   export type FileUncheckedUpdateManyWithoutUserInput = {
@@ -65581,6 +65880,7 @@ export namespace Prisma {
     uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CellCreateManySheetInput = {
@@ -65596,6 +65896,19 @@ export namespace Prisma {
     id?: string
     data: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+  }
+
+  export type FileCreateManySheetInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CellUpdateWithoutSheetInput = {
@@ -65641,6 +65954,45 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFileNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileUncheckedUpdateManyWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

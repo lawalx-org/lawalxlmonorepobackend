@@ -14,7 +14,7 @@ export class ProgramService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createProgramDto: CreateProgramDto, userId: string) {
-    const { tagIds, ...programData } = createProgramDto;
+    const {  ...programData } = createProgramDto;
     const client = await this.prisma.client.findUnique({
       where: { id: userId },
     });
@@ -22,9 +22,7 @@ export class ProgramService {
       throw new NotFoundException(`Client with ID "${userId}" not found`);
     }
 
-    const connectTags = tagIds
-      ? { connect: tagIds.map((id) => ({ id })) }
-      : undefined;
+ 
 
     return this.prisma.program.create({
       data: {
@@ -33,7 +31,7 @@ export class ProgramService {
         client: {
           connect: { id: userId },
         },
-        tags: connectTags,
+        
       },
     });
   }
