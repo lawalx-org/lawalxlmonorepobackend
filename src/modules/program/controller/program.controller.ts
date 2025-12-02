@@ -19,7 +19,7 @@ import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program
 
 @Controller('program')
 export class ProgramController {
-  constructor(private readonly programService: ProgramService) {}
+  constructor(private readonly programService: ProgramService) { }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('CLIENT')
@@ -28,35 +28,35 @@ export class ProgramController {
     @Body() createProgramDto: CreateProgramDto,
     @Req() req: RequestWithUser,
   ) {
-    
+
     const userid = req.user.clientId;
-    
+
     return this.programService.create(createProgramDto, userid!);
   }
 
   @Get()
-  findAll(@Query() query: GetAllProgramsDto) {
-    
-    const data = this.programService.findAll(query);
-    
-return {
+  async findAll(@Query() query: GetAllProgramsDto) {
+    const data = await this.programService.findAll(query);
+
+    return {
       message: 'Programs fetched successfully',
       data,
-    }
+    };
   }
 
+
   @Get(':id')
- async findOne(@Param('id') id: string) {
-     const data = await this.programService.findOne(id);
-     return {
+  async findOne(@Param('id') id: string) {
+    const data = await this.programService.findOne(id);
+    return {
       message: 'Program fetched successfully',
       data,
-     }
-    
+    }
+
   }
 
   @Get(':id/projects')
- async findAllProjectsByProgram(
+  async findAllProjectsByProgram(
     @Param('id') id: string,
     @Query() query: FindAllProjectsInProgramDto,
   ) {
@@ -65,6 +65,6 @@ return {
       message: 'Projects fetched successfully',
       data,
     }
-    
+
   }
 }
