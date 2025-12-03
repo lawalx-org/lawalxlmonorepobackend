@@ -2063,7 +2063,7 @@ Response headers
 
 #  performance 
 ## Endpoint
-**GET** `/api/v1/employeeDashboard/dashboard/sperformance`
+**GET** `/api/v1/employeeDashboard/dashboard/performance`
 - Authorization: Bearer `employee_access_token`
 
 ## Output
@@ -2096,3 +2096,1109 @@ Response headers
 </details>
 <br>
 <br>
+<br>
+<br>
+
+
+# User
+## get all users
+## Endpoints
+**GET** `/api/v1/users`
+- Authorization: Bearer `access_token`
+
+
+## Query Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `page` | string | ❌ | if need   
+| `Limit` | string | ❌ | if need
+### Example Request
+```http
+GET /api/v1/users?page=1&limit=10
+Authorization: Bearer _access_token
+```
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Users fetched successfully",
+  "data": {
+    "data": [
+      {
+        "id": "2c07f056-5a9e-4b23-846d-ea62bfab3372",
+        "email": "sakibsoftvence@gmail.com",
+        "phoneNumber": "+114386196438",
+        "name": "Admin",
+        "role": "CLIENT",
+        "profileImage": null,
+        "language": "ENGLISH",
+        "timezone": null,
+        "verification2FA": false,
+        "status": true,
+        "lastActive": false,
+        "createdAt": "2025-11-30T23:57:59.602Z",
+        "updatedAt": "2025-11-30T23:57:59.602Z",
+        "userStatus": "ACTIVE"
+      },
+      {
+        "id": "33b051d3-5838-4a1b-90ca-89e4d3f1e871",
+        "email": "john-m1@example.com",
+        "phoneNumber": "25464654651",
+        "name": "John Doe",
+        "role": "MANAGER",
+        "profileImage": null,
+        "language": "ENGLISH",
+        "timezone": null,
+        "verification2FA": false,
+        "status": false,
+        "lastActive": false,
+        "createdAt": "2025-12-02T03:49:29.276Z",
+        "updatedAt": "2025-12-02T03:49:29.276Z",
+        "userStatus": "ACTIVE"
+      },
+      {
+        "id": "7dddbeca-18bf-444e-ac6e-d9a73e4a5a71",
+        "email": "john-e1@example.com",
+        "phoneNumber": "25464654658",
+        "name": "John Doe",
+        "role": "EMPLOYEE",
+        "profileImage": null,
+        "language": "ENGLISH",
+        "timezone": null,
+        "verification2FA": false,
+        "status": false,
+        "lastActive": false,
+        "createdAt": "2025-12-02T04:00:29.638Z",
+        "updatedAt": "2025-12-02T04:00:29.638Z",
+        "userStatus": "ACTIVE"
+      }
+    ],
+    "meta": {
+      "total": 3,
+      "page": 1,
+      "limit": 10,
+      "totalPages": 1
+    }
+  }
+}
+</div>
+</details>
+
+<br>
+<br>
+
+## updater  user
+## Endpoints
+**PATCH** `/api/v1/users`
+- Authorization: Bearer `access_token`
+
+
+## Query Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `file` | string | ❌ | if need   
+| `language` | string | ❌ | if need
+| `timezone` | string | ❌ | if need
+| `verification2FA` | string | ❌ | if need
+
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "User updated successfully",
+  "data": {
+    "id": "2c07f056-5a9e-4b23-846d-ea62bfab3372",
+    "email": "sakibsoftvence@gmail.com",
+    "phoneNumber": "+114386196438",
+    "name": "Admin",
+    "role": "CLIENT",
+    "profileImage": "uploads\\profile-images\\26324f7f-1883-4c98-a90a-eefb2c7e0aa3.png",
+    "language": "ENGLISH",
+    "timezone": "2025-11-13T10:00:00.000Z",
+    "verification2FA": true,
+    "status": true,
+    "lastActive": false,
+    "createdAt": "2025-11-30T23:57:59.602Z",
+    "updatedAt": "2025-12-03T04:23:47.617Z",
+    "userStatus": "ACTIVE"
+  }
+}
+</div>
+</details>
+<br>
+<br>
+
+>
+
+## updater  user
+## Endpoints
+**PATCH** `/api/v1/users`
+- Authorization: Bearer `access_token`
+
+
+## Query Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `file` | string | ❌ | if need   
+| `language` | string | ❌ | if need
+| `timezone` | string | ❌ | if need
+| `verification2FA` | string | ❌ | if need
+
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "User updated successfully",
+  "data": {
+    "id": "2c07f056-5a9e-4b23-846d-ea62bfab3372",
+    "email": "sakibsoftvence@gmail.com",
+    "phoneNumber": "+114386196438",
+    "name": "Admin",
+    "role": "CLIENT",
+    "profileImage": "uploads\\profile-images\\26324f7f-1883-4c98-a90a-eefb2c7e0aa3.png",
+    "language": "ENGLISH",
+    "timezone": "2025-11-13T10:00:00.000Z",
+    "verification2FA": true,
+    "status": true,
+    "lastActive": false,
+    "createdAt": "2025-11-30T23:57:59.602Z",
+    "updatedAt": "2025-12-03T04:23:47.617Z",
+    "userStatus": "ACTIVE"
+  }
+}
+</div>
+</details>
+<br>
+<br>
+
+## get managers
+## Endpoints
+**GET** `/api/v1/users`
+- Authorization: Bearer `access_token`
+
+
+## Query Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `limit` | string | ❌ | if need   
+| `page` | string | ❌ | if need
+
+
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Managers fetched successfully",
+  "data": {
+    "data": [
+      {
+        "id": "245fea64-35b6-4c02-bb53-c81375cb6886",
+        "userId": "33b051d3-5838-4a1b-90ca-89e4d3f1e871",
+        "skills": [
+          "Civil Eng",
+          "Architect"
+        ],
+        "createdAt": "2025-12-02T03:49:29.282Z",
+        "updatedAt": "2025-12-02T03:49:29.282Z",
+        "description": "Responsible for managing infrastructure projects",
+        "joinedDate": "2025-10-11",
+        "user": {
+          "id": "33b051d3-5838-4a1b-90ca-89e4d3f1e871",
+          "email": "john-m1@example.com",
+          "phoneNumber": "25464654651",
+          "name": "John Doe",
+          "role": "MANAGER",
+          "profileImage": null,
+          "language": "ENGLISH",
+          "timezone": null,
+          "verification2FA": false,
+          "status": false,
+          "lastActive": false,
+          "createdAt": "2025-12-02T03:49:29.276Z",
+          "updatedAt": "2025-12-02T03:49:29.276Z",
+          "userStatus": "ACTIVE"
+        }
+      }
+    ],
+    "meta": {
+      "total": 1,
+      "page": 1,
+      "limit": 10,
+      "totalPages": 1
+    }
+  }
+}
+</div>
+</details>
+<br>
+<br
+
+## get employees
+## Endpoints
+**GET** `/api/v1/users/employees`
+- Authorization: Bearer `access_token`
+
+
+## Query Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `limit` | string | ❌ | if need   
+| `page` | string | ❌ | if need
+
+
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Employees fetched successfully",
+  "data": {
+    "data": [
+      {
+        "id": "f5eea02f-10de-4f80-b0b2-3ab6395ef7a9",
+        "userId": "7dddbeca-18bf-444e-ac6e-d9a73e4a5a71",
+        "createdAt": "2025-12-02T04:00:29.641Z",
+        "updatedAt": "2025-12-02T04:00:29.641Z",
+        "description": "Responsible for managing infrastructure projects",
+        "joinedDate": "2025-10-11",
+        "skills": [
+          "Civil Eng",
+          "Architect"
+        ],
+        "user": {
+          "id": "7dddbeca-18bf-444e-ac6e-d9a73e4a5a71",
+          "email": "john-e1@example.com",
+          "phoneNumber": "25464654658",
+          "name": "John Doe",
+          "role": "EMPLOYEE",
+          "profileImage": null,
+          "language": "ENGLISH",
+          "timezone": null,
+          "verification2FA": false,
+          "status": false,
+          "lastActive": false,
+          "createdAt": "2025-12-02T04:00:29.638Z",
+          "updatedAt": "2025-12-02T04:00:29.638Z",
+          "userStatus": "ACTIVE"
+        }
+      }
+    ],
+    "meta": {
+      "total": 1,
+      "page": 1,
+      "limit": 10,
+      "totalPages": 1
+    }
+  }
+}
+</div>
+</details>
+<br>
+<br>
+
+## get viewers
+## Endpoints
+**GET** `/api/v1/users/viewers`
+- Authorization: Bearer `access_token`
+
+## Query Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `limit` | string | ❌ | if need   
+| `page` | string | ❌ | if need
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Viewers fetched successfully",
+  "data": {
+    "data": [
+      {
+        "id": "d8dcdef6-28c1-4aac-b913-1b8ea5b8c16a",
+        "userId": "357340e3-c144-4734-837c-d8917d0ca2da",
+        "createdAt": "2025-12-03T04:31:59.542Z",
+        "updatedAt": "2025-12-03T04:31:59.542Z",
+        "user": {
+          "id": "357340e3-c144-4734-837c-d8917d0ca2da",
+          "email": "john-v1@example.com",
+          "phoneNumber": "25464654654",
+          "name": "John Doe",
+          "role": "VIEWER",
+          "profileImage": null,
+          "language": "ENGLISH",
+          "timezone": null,
+          "verification2FA": false,
+          "status": false,
+          "lastActive": false,
+          "createdAt": "2025-12-03T04:31:59.539Z",
+          "updatedAt": "2025-12-03T04:31:59.539Z",
+          "userStatus": "ACTIVE"
+        }
+      }
+    ],
+    "meta": {
+      "total": 1,
+      "page": 1,
+      "limit": 10,
+      "totalPages": 1
+    }
+  }
+}
+</div>
+</details>
+<br>
+<br>
+
+## get user with id
+## Endpoints
+**GET** `/api/v1/users/{id}`
+- Authorization: Bearer `access_token`
+
+## Query Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `id` | string | ✔️ | need  
+|
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "User fetched successfully",
+  "data": {
+    "id": "357340e3-c144-4734-837c-d8917d0ca2da",
+    "email": "john-v1@example.com",
+    "phoneNumber": "25464654654",
+    "name": "John Doe",
+    "role": "VIEWER",
+    "profileImage": null,
+    "language": "ENGLISH",
+    "timezone": null,
+    "verification2FA": false,
+    "status": false,
+    "lastActive": false,
+    "createdAt": "2025-12-03T04:31:59.539Z",
+    "updatedAt": "2025-12-03T04:31:59.539Z",
+    "userStatus": "ACTIVE"
+  }
+}
+</div>
+</details>
+<br>
+<br>
+
+## get manager with id
+## Endpoints
+**GET** `/api/v1/managers/{id}`
+- Authorization: Bearer `access_token`
+
+## Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `id` | string | ✔️ | need  
+|
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Manager fetched successfully",
+  "data": {
+    "id": "245fea64-35b6-4c02-bb53-c81375cb6886",
+    "userId": "33b051d3-5838-4a1b-90ca-89e4d3f1e871",
+    "skills": [
+      "Civil Eng",
+      "Architect"
+    ],
+    "createdAt": "2025-12-02T03:49:29.282Z",
+    "updatedAt": "2025-12-02T03:49:29.282Z",
+    "description": "Responsible for managing infrastructure projects",
+    "joinedDate": "2025-10-11",
+    "user": {
+      "id": "33b051d3-5838-4a1b-90ca-89e4d3f1e871",
+      "email": "john-m1@example.com",
+      "phoneNumber": "25464654651",
+      "name": "John Doe",
+      "role": "MANAGER",
+      "profileImage": null,
+      "language": "ENGLISH",
+      "timezone": null,
+      "verification2FA": false,
+      "status": false,
+      "lastActive": false,
+      "createdAt": "2025-12-02T03:49:29.276Z",
+      "updatedAt": "2025-12-02T03:49:29.276Z",
+      "userStatus": "ACTIVE"
+    }
+  }
+}
+</div>
+</details>
+<br>
+<br>
+
+## get employees with id
+## Endpoints
+**GET** `/api/v1/employees/{id}`
+- Authorization: Bearer `access_token`
+
+## Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `id` | string | ✔️ | need  
+|
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Employee fetched successfully",
+  "data": {
+    "id": "f5eea02f-10de-4f80-b0b2-3ab6395ef7a9",
+    "userId": "7dddbeca-18bf-444e-ac6e-d9a73e4a5a71",
+    "createdAt": "2025-12-02T04:00:29.641Z",
+    "updatedAt": "2025-12-02T04:00:29.641Z",
+    "description": "Responsible for managing infrastructure projects",
+    "joinedDate": "2025-10-11",
+    "skills": [
+      "Civil Eng",
+      "Architect"
+    ],
+    "user": {
+      "id": "7dddbeca-18bf-444e-ac6e-d9a73e4a5a71",
+      "email": "john-e1@example.com",
+      "phoneNumber": "25464654658",
+      "name": "John Doe",
+      "role": "EMPLOYEE",
+      "profileImage": null,
+      "language": "ENGLISH",
+      "timezone": null,
+      "verification2FA": false,
+      "status": false,
+      "lastActive": false,
+      "createdAt": "2025-12-02T04:00:29.638Z",
+      "updatedAt": "2025-12-02T04:00:29.638Z",
+      "userStatus": "ACTIVE"
+    }
+  }
+}
+</div>
+</details>
+<br>
+<br>
+
+## get viewers with id
+## Endpoints
+**GET** `/api/v1/viewers/{id}`
+- Authorization: Bearer `access_token`
+
+## Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `id` | string | ✔️ | need  
+|
+
+## Output
+<details>
+<summary>📄 Output JSON (click to expand)</summary>
+<div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 20px; margin-top: 10px ">
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Viewer fetched successfully",
+  "data": {
+    "id": "d8dcdef6-28c1-4aac-b913-1b8ea5b8c16a",
+    "userId": "357340e3-c144-4734-837c-d8917d0ca2da",
+    "createdAt": "2025-12-03T04:31:59.542Z",
+    "updatedAt": "2025-12-03T04:31:59.542Z",
+    "user": {
+      "id": "357340e3-c144-4734-837c-d8917d0ca2da",
+      "email": "john-v1@example.com",
+      "phoneNumber": "25464654654",
+      "name": "John Doe",
+      "role": "VIEWER",
+      "profileImage": null,
+      "language": "ENGLISH",
+      "timezone": null,
+      "verification2FA": false,
+      "status": false,
+      "lastActive": false,
+      "createdAt": "2025-12-03T04:31:59.539Z",
+      "updatedAt": "2025-12-03T04:31:59.539Z",
+      "userStatus": "ACTIVE"
+    }
+  }
+}
+</div>
+</details>
+<br>
+<br>
+<br>
+<br>
+
+# Manager
+## Get manager dashboard
+## Endpoints
+**GET** `/api/v1/manager/dashboard`
+- Authorization: Bearer `manager_access_token
+## Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": {
+    "totalProjectsAssigned": 6,
+    "totalSubmissions": 1,
+    "totalReturns": 0,
+    "liveProjects": 1,
+    "overdueProjects": 2
+  }
+}
+```
+<br>
+<br>
+
+## Get manager project live
+## Endpoints
+**GET** `/api/v1/manager/projects/live`
+- Authorization: Bearer `manager_access_token
+## Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": [
+    {
+      "id": "2d6aa864-ce29-471c-ba74-5637934aca0b",
+      "programId": "2adc7a20-e2c4-41af-bc21-51e90d6abe00",
+      "name": "Project Alpha",
+      "description": "This is a project to do something important.",
+      "status": "LIVE",
+      "priority": "HIGH",
+      "deadline": "2025-12-31T23:59:59.999Z",
+      "managerId": "245fea64-35b6-4c02-bb53-c81375cb6886",
+      "startDate": "2025-01-01T00:00:00.000Z",
+      "progress": 0,
+      "chartList": [],
+      "estimatedCompletedDate": "2025-12-02T03:58:36.335Z",
+      "projectCompleteDate": "2025-08-02T09:02:52.781Z",
+      "currentRate": "string",
+      "budget": "string",
+      "createdAt": "2025-12-02T04:04:45.370Z",
+      "updatedAt": "2025-12-02T09:23:48.944Z",
+      "latitude": 37.7749,
+      "longitude": -122.4194
+    }
+  ]
+}
+```
+<br>
+<br>
+
+## Get manager project overdue
+## Endpoints
+**GET** `/api/v1/manager/projects/overdue`
+- Authorization: Bearer `manager_access_token
+## Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": [
+    {
+      "id": "aeda044e-c35a-4dea-a012-0fe6dc2cae25",
+      "programId": "2adc7a20-e2c4-41af-bc21-51e90d6abe00",
+      "name": "Project Bita",
+      "description": "This is a project to do something important.",
+      "status": "OVERDUE",
+      "priority": "HIGH",
+      "deadline": "2025-07-31T23:59:59.999Z",
+      "managerId": "245fea64-35b6-4c02-bb53-c81375cb6886",
+      "startDate": "2025-01-01T00:00:00.000Z",
+      "progress": 0,
+      "chartList": [],
+      "estimatedCompletedDate": "2025-12-02T09:02:52.781Z",
+      "projectCompleteDate": "2025-12-02T09:02:52.781Z",
+      "currentRate": "string",
+      "budget": "string",
+      "createdAt": "2025-12-02T09:04:09.774Z",
+      "updatedAt": "2025-12-02T09:20:47.730Z",
+      "latitude": 37.7749,
+      "longitude": -122.4194
+    },
+    {
+      "id": "e67af1ed-957d-4b69-b748-14a05a17571f",
+      "programId": "2adc7a20-e2c4-41af-bc21-51e90d6abe00",
+      "name": "Project overdue",
+      "description": "This is a project to do something important.",
+      "status": "OVERDUE",
+      "priority": "HIGH",
+      "deadline": "2025-08-31T23:59:59.999Z",
+      "managerId": "245fea64-35b6-4c02-bb53-c81375cb6886",
+      "startDate": "2025-01-01T00:00:00.000Z",
+      "progress": 0,
+      "chartList": [],
+      "estimatedCompletedDate": "2025-09-02T09:02:52.781Z",
+      "projectCompleteDate": "2025-12-02T09:02:52.781Z",
+      "currentRate": "string",
+      "budget": "string",
+      "createdAt": "2025-12-02T09:11:36.530Z",
+      "updatedAt": "2025-12-02T09:20:57.122Z",
+      "latitude": 37.7749,
+      "longitude": -122.4194
+    }
+  ]
+}
+```
+<br>
+<br>
+
+## Get manager project submission returns  
+## Endpoints
+**GET** `/api/v1/manager/submissions/returns`
+- Authorization: Bearer `manager_access_token
+## Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": []
+}
+```
+<br>
+<br>
+
+## Get manager performance
+## Endpoints
+**GET** `/api/v1/manager/performance`
+- Authorization: Bearer `manager_access_token
+## Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": {
+    "projects": {
+      "currentMonth": 6,
+      "previousMonth": 0,
+      "percentageChange": "100%"
+    },
+    "submissions": {
+      "currentMonth": 1,
+      "previousMonth": 0,
+      "percentageChange": "100%"
+    },
+    "returns": {
+      "currentMonth": 0,
+      "previousMonth": 0,
+      "percentageChange": "0%"
+    }
+  }
+}
+```
+<br>
+<br>
+
+## Get manager chart submission status
+## Endpoints
+**GET** `/api/v1/manager/charts/submission-status`
+- Authorization: Bearer `manager_access_token
+
+## Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `period` | string | ✔️ | need  month/six-month/year
+## Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": {
+    "totalProjects": 6,
+    "projectStatus": {
+      "PENDING": 2,
+      "OVERDUE": 2,
+      "COMPLETED": 1,
+      "LIVE": 1
+    },
+    "taskStatus": {}
+  }
+}
+```
+<br>
+<br>
+
+## Get manager top project overdue
+## Endpoints
+**GET** `/api/v1/manager/charts/top-overdue-projects`
+- Authorization: Bearer `manager_access_token
+## Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": [
+    {
+      "projectName": "Project Bita",
+      "overdueDays": 125,
+      "priority": "Critical"
+    },
+    {
+      "projectName": "Project overdue",
+      "overdueDays": 94,
+      "priority": "Critical"
+    }
+  ]
+}
+```
+<br>
+<br>
+<br>
+<br>
+
+
+# Chart 
+## Create charts
+## Endpoints
+**POST** `/api/v1/charts`
+<!-- - Authorization: Bearer `manager_access_token` -->
+
+### Example
+```
+{
+  "title": "Weekly Sleep Pattern",
+  "status": "ACTIVE",
+  "category": "AREA",
+  "xAxis": "{\"labels\":[\"Mon\",\"Tue\",\"Wed\"],\"values\":[6,7,8]}",
+  "yAxis": "{\"labels\":[\"Mon\",\"Tue\",\"Wed\"],\"values\":[70,80,90]}",
+  "zAxis": "{\"labels\":[\"Mon\",\"Tue\",\"Wed\"],\"values\":[1,2,3]}"
+}
+```
+
+### Output
+```{
+  "statusCode": 201,
+  "success": true,
+  "message": "Chart created successfully",
+  "data": {
+    "id": "0c325ed9-1415-48ae-b47e-40be25de9f40",
+    "title": "Weekly Sleep Pattern",
+    "status": "ACTIVE",
+    "category": "AREA",
+    "xAxis": {
+      "labels": [
+        "Mon",
+        "Tue",
+        "Wed"
+      ],
+      "values": [
+        6,
+        7,
+        8
+      ]
+    },
+    "yAxis": {
+      "labels": [
+        "Mon",
+        "Tue",
+        "Wed"
+      ],
+      "values": [
+        70,
+        80,
+        90
+      ]
+    },
+    "zAxis": {
+      "labels": [
+        "Mon",
+        "Tue",
+        "Wed"
+      ],
+      "values": [
+        1,
+        2,
+        3
+      ]
+    },
+    "createdAt": "2025-12-03T05:04:01.477Z",
+    "updatedAt": "2025-12-03T05:04:01.477Z",
+    "sheetId": null
+  }
+}
+```
+<br>
+<br>
+
+
+## get inactive in charts
+## Endpoints
+**GET** `/api/v1/chart/activeInChart`
+<!-- - Authorization: Bearer `manager_access_token` -->
+
+### Output
+```
+{
+  "success": false,
+  "statusCode": 404,
+  "message": "No inactive charts found",
+  "error": "NotFoundException",
+  "path": "/api/v1/chart/activeInChart",
+  "method": "GET",
+  "timestamp": "2025-12-03T05:04:16.683Z",
+  "errorDetails": {
+    "error": "Not Found",
+    "statusCode": 404
+  }
+}
+``` 
+<br>
+<br>
+
+## get active in charts
+## Endpoints
+**GET** `/api/v1/chart/activechart`
+<!-- - Authorization: Bearer `manager_access_token` -->
+
+### Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "All charts active fetched successfully",
+  "data": [
+    {
+      "id": "0c325ed9-1415-48ae-b47e-40be25de9f40",
+      "title": "Weekly Sleep Pattern",
+      "status": "ACTIVE",
+      "category": "AREA",
+      "xAxis": {
+        "labels": [
+          "Mon",
+          "Tue",
+          "Wed"
+        ],
+        "values": [
+          6,
+          7,
+          8
+        ]
+      },
+      "yAxis": {
+        "labels": [
+          "Mon",
+          "Tue",
+          "Wed"
+        ],
+        "values": [
+          70,
+          80,
+          90
+        ]
+      },
+      "zAxis": {
+        "labels": [
+          "Mon",
+          "Tue",
+          "Wed"
+        ],
+        "values": [
+          1,
+          2,
+          3
+        ]
+      },
+      "createdAt": "2025-12-03T05:04:01.477Z",
+      "updatedAt": "2025-12-03T05:04:01.477Z",
+      "sheetId": null
+    }
+  ]
+}
+```
+<br>
+<br>
+<br>
+
+## Get chart by id
+## Endpoints
+**GET** `/api/v1/chart/{id}`
+<!-- - Authorization: Bearer `manager_access_token` -->
+## Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `id` | string | ✔️ | need  
+
+### Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": {
+    "id": "0c325ed9-1415-48ae-b47e-40be25de9f40",
+    "title": "Weekly Sleep Pattern",
+    "status": "ACTIVE",
+    "category": "AREA",
+    "xAxis": {
+      "labels": [
+        "Mon",
+        "Tue",
+        "Wed"
+      ],
+      "values": [
+        6,
+        7,
+        8
+      ]
+    },
+    "yAxis": {
+      "labels": [
+        "Mon",
+        "Tue",
+        "Wed"
+      ],
+      "values": [
+        70,
+        80,
+        90
+      ]
+    },
+    "zAxis": {
+      "labels": [
+        "Mon",
+        "Tue",
+        "Wed"
+      ],
+      "values": [
+        1,
+        2,
+        3
+      ]
+    },
+    "createdAt": "2025-12-03T05:04:01.477Z",
+    "updatedAt": "2025-12-03T05:04:01.477Z",
+    "sheetId": null
+  }
+}
+```
+
+<br>
+<br>
+<br>
+<br>
+
+# Charts
+## get submission charts
+## Endpoints
+**GET** `/api/v1/charts/submission-status` /
+ `'http://localhost:5000/api/v1/charts/submission-status?period=month' `
+- Authorization: Bearer `employee_access_token`
+## Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `period` | string | ✔️ | need month/year/six-month 
+### Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": {
+    "totalProjects": 6,
+    "projectStatus": {
+      "PENDING": 2,
+      "OVERDUE": 2,
+      "COMPLETED": 1,
+      "LIVE": 1
+    },
+    "taskStatus": {}
+  }
+}
+```
+## get charts overdue project
+## Endpoints
+**GET** `/api/v1/charts/top-overdue-projects`
+- Authorization: Bearer `employee_access_token`
+<br>
+<br>
+
+
+### Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": [
+    {
+      "projectName": "Project Bita",
+      "overdueDays": 125,
+      "priority": "Critical"
+    },
+    {
+      "projectName": "Project overdue",
+      "overdueDays": 94,
+      "priority": "Critical"
+    }
+  ]
+}
+```
+<br>
+<br>
+
+# Charts find by project id
+## get submission charts
+## Endpoints
+**GET** `/api/v1/charts/project/{projectId}` 
+- Authorization: Bearer `employee_access_token`
+## Parameters
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `projectId` | string | ✔️ | need month/year/six-month 
+### Output
+```
+{
+  "statusCode": 200,
+  "success": true,
+  "message": "Request successful",
+  "data": []
+}
+```
