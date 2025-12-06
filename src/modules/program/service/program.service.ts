@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProgramDto } from '../dto/create-program.dto';
 import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
@@ -158,5 +158,22 @@ export class ProgramService {
       { page: page ?? 1, limit: limit ?? 10 },
     );
   }
+
+  async updateProgramName(programId: string, programName: string) {
+  const program = await this.prisma.program.findUnique({
+    where: { id: programId },
+  });
+
+  if (!program) {
+    throw new NotFoundException(`Program with ID "${programId}" not found`);
+  }
+
+
+  return this.prisma.program.update({
+    where: { id: programId },
+    data: { programName },
+  });
+}
+
 }
 

@@ -5,17 +5,23 @@ import {
   Req,
   UnauthorizedException,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { ChartService } from '../service/chart.service';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
+import { RolesGuard } from 'src/common/jwt/roles.guard';
+import { Roles } from 'src/common/jwt/roles.decorator';
 
 @ApiTags('charts')
 @Controller('charts')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class ChartController {
-  constructor(private readonly chartService: ChartService) {}
+  constructor(private readonly chartService: ChartService) { }
 
   @Get('submission-status')
+  @Roles('EMPLOYEE')
   async getSubmissionStatusChartData(
     @Req() req: RequestWithUser,
     @Query('period') period: string,
@@ -28,6 +34,7 @@ export class ChartController {
   }
 
   @Get('top-overdue-projects')
+  @Roles('EMPLOYEE')
   async getTopOverdueProjectsChartData(@Req() req: RequestWithUser) {
     const employeeId = req.user.employeeId;
     if (!employeeId) {
@@ -37,6 +44,7 @@ export class ChartController {
   }
 
   @Get('project/:projectId')
+  @Roles('EMPLOYEE')
   async getChartsByProjectId(@Param('projectId') projectId: string) {
     return this.chartService.getChartsByProjectId(projectId);
   }

@@ -7,6 +7,7 @@ import {
   UseGuards,
   Req,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { ProgramService } from '../service/program.service';
 import { CreateProgramDto } from '../dto/create-program.dto';
@@ -16,10 +17,11 @@ import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
 import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program.dto';
+import { UpdateProgramNameDto } from '../dto/update-program.dto';
 
 @Controller('program')
 export class ProgramController {
-  constructor(private readonly programService: ProgramService) {}
+  constructor(private readonly programService: ProgramService) { }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('CLIENT')
@@ -28,35 +30,35 @@ export class ProgramController {
     @Body() createProgramDto: CreateProgramDto,
     @Req() req: RequestWithUser,
   ) {
-    
+
     const userid = req.user.clientId;
-    
+
     return this.programService.create(createProgramDto, userid!);
   }
 
   @Get()
-  findAll(@Query() query: GetAllProgramsDto) {
-    
-    const data = this.programService.findAll(query);
-    
-return {
+  async findAll(@Query() query: GetAllProgramsDto) {
+    const data = await this.programService.findAll(query);
+
+    return {
       message: 'Programs fetched successfully',
       data,
-    }
+    };
   }
 
+
   @Get(':id')
- async findOne(@Param('id') id: string) {
-     const data = await this.programService.findOne(id);
-     return {
+  async findOne(@Param('id') id: string) {
+    const data = await this.programService.findOne(id);
+    return {
       message: 'Program fetched successfully',
       data,
-     }
-    
+    }
+
   }
 
   @Get(':id/projects')
- async findAllProjectsByProgram(
+  async findAllProjectsByProgram(
     @Param('id') id: string,
     @Query() query: FindAllProjectsInProgramDto,
   ) {
@@ -65,6 +67,22 @@ return {
       message: 'Projects fetched successfully',
       data,
     }
-    
+
   }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('CLIENT')
+  @Patch(':id/name')
+  async updateName(
+    @Param('id') id: string,
+    @Body() body: UpdateProgramNameDto,
+    @Req() req: RequestWithUser,
+  ) {
+    const data = await this.programService.updateProgramName(id, body.programName);
+    return {
+      message: 'Program name updated successfully',
+      data,
+    };
+  }
+
 }

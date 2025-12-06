@@ -20,7 +20,7 @@ export class ClientDashboardController {
     }
 
     //---------- employees activity------------->
-    @Get("activity")
+    @Get("employee-activity")
     @ApiQuery({ name: 'limit', required: false })
     @ApiQuery({ name: 'page', required: false })
     @ApiQuery({ name: 'userId', required: false })
@@ -57,15 +57,20 @@ export class ClientDashboardController {
     //------------project timeline------------>
     @Get('timeline')
     @ApiQuery({ name: 'programId', required: false })
-    @ApiQuery({ name: 'maxDays', required: false })
+    @ApiQuery({ name: 'overdueTime', required: false })
+    async getTimeline(
+        @Query('programId') programId?: string,
+        @Query('overdueTime') overdueTime?: string // This is the overdue filter
+    ) {
+        const timeline = await this.clientDashboardServices.getProjectTimeline(programId, overdueTime ? Number(overdueTime) : undefined);
 
-    async getTimeline(@Query('programId') programId?: string, @Query('maxDays') maxDays?: string) {
-        const timeline = this.clientDashboardServices.getProjectTimeline(programId, maxDays ? Number(maxDays) : undefined);
         return {
-            message: "timeline fetch successfully",
+            message: "Timeline fetched successfully",
             data: timeline
-        }
+        };
     }
+
+    
 
     //-----------project status stack------------>
     @Get('status')
