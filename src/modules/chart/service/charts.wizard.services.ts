@@ -1,115 +1,48 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { stack_bar_ChartConfigDto } from '../dto/update-all-charts.dto';
 
 @Injectable()
 export class ChartsWizardServices {
-    constructor(private readonly prisma: PrismaService) { }
+  private chartConfig: stack_bar_ChartConfigDto;
 
-    async stack_bar_chart() {
-        const data = await this.prisma.sheet.findMany()
-        return {
+  async setChart(config: stack_bar_ChartConfigDto): Promise<stack_bar_ChartConfigDto> {
+  const labelCount = config.number_of_labels;
 
-        }
+
+  if (!config.show_widget || config.show_widget.length !== 3) {
+    throw new BadRequestException(`There must be exactly 3 legends.`);
+  }
+
+
+  if (!config.xAxisLabels || config.xAxisLabels.length === 0) {
+    config.xAxisLabels = Array.from({ length: labelCount }, (_, i) => `Label${i + 1}`);
+  }
+
+
+  for (const ds of config.show_widget) {
+    if (!ds.values || ds.values.length === 0) {
+      ds.values = Array.from({ length: labelCount }, () => "0");
     }
+  }
 
-    async radar_chart() {
-        return {
 
-        }
-    }
-    async doughnut_pi_chart() {
-        return {
+  if (config.xAxisLabels.length !== labelCount) {
+    throw new BadRequestException(
+      `xAxisLabels length (${config.xAxisLabels.length}) must match number_of_labels (${labelCount})`
+    );
+  }
 
-        }
+  
+  for (const ds of config.show_widget) {
+    if (!ds.values || ds.values.length !== labelCount) {
+      throw new BadRequestException(
+        `Legend "${ds.legend_name}" values length (${ds.values?.length || 0}) must match number_of_labels (${labelCount})`
+      );
     }
-    async heatMap_chart() {
-        return {
+  }
 
-        }
-    }
-    async horizontal_bar_chart() {
-        return {
+  this.chartConfig = { ...config };
+  return this.chartConfig;
+}
 
-        }
-    }
-    async multi_axis_line_chart () {
-        return{
-
-        }
-    }
-    async area_chart () {
-        return{
-
-        }
-    }
-    async stack_bar_chart_horizontal () {
-        return{
-
-        }
-    }
-    async column_chart () {
-        return{
-            
-        }
-    }
-    async pi_chart () {
-        return{
-
-        }
-    }
-    async doughnut_chart () {
-        return{
-
-        }
-    }
-    async pareto_chart () {
-        return{
-
-        }
-    }
-    async funnel_chart () {
-        return{
-
-        }
-    }
-    async scatter_chart () {
-        return{
-
-        }
-    }
-    async bubble_chart () {
-        return{
-
-        }
-    }
-    async histogram_chart () {
-        return{
-
-        }
-    }
-    async waterFall_chart () {
-        return{
-
-        }
-    }
-    async solid_gauge_chart () {
-        return{
-
-        }
-    }
-    async candlestick_chart () {
-        return{
-
-        }
-    }
-    async geography_graph_chart () {
-        return{
-
-        }
-    }
-    async spline_chart () {
-        return{
-
-        }
-    }
 }

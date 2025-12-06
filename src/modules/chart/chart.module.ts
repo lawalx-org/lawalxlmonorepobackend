@@ -5,12 +5,12 @@ import { ChartController } from './controller/chart.controller';
 import { ChartMainController } from './controller/chart.man.controller';
 import { ChartService } from './service/chart.service';
 import { ChartMainService } from './service/chart.main.service';
-import { ChartsWizardController } from './controller/charts.wizard.controller';
 import { ChartsWizardServices } from './service/charts.wizard.services';
+import { ChartsController } from './controller/charts.wizard.controller';
 
 @Module({
   imports: [PrismaModule],
-  controllers: [ChartMainController, ChartController,ChartsWizardController],
+  controllers: [ChartMainController, ChartController,ChartsController],
   providers: [ChartService, ChartMainService,ChartsWizardServices],
   exports: [ChartService], // ✅ export service so others can use it
 })

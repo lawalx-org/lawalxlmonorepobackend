@@ -7,6 +7,7 @@ import {
   UseGuards,
   Req,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { ProgramService } from '../service/program.service';
 import { CreateProgramDto } from '../dto/create-program.dto';
@@ -16,6 +17,7 @@ import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
 import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program.dto';
+import { UpdateProgramNameDto } from '../dto/update-program.dto';
 
 @Controller('program')
 export class ProgramController {
@@ -67,4 +69,20 @@ export class ProgramController {
     }
 
   }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('CLIENT')
+  @Patch(':id/name')
+  async updateName(
+    @Param('id') id: string,
+    @Body() body: UpdateProgramNameDto,
+    @Req() req: RequestWithUser,
+  ) {
+    const data = await this.programService.updateProgramName(id, body.programName);
+    return {
+      message: 'Program name updated successfully',
+      data,
+    };
+  }
+
 }
