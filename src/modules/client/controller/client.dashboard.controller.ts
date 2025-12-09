@@ -1,9 +1,15 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Query, Req, UnauthorizedException, UseGuards } from "@nestjs/common";
 import { ApiQuery, ApiTags } from "@nestjs/swagger";
 import { ClientDashboardServices } from "../service/client.dashboard.services";
+import { JwtAuthGuard } from "src/common/jwt/jwt.guard";
+import { RolesGuard } from "src/common/jwt/roles.guard";
+import { Roles } from "src/common/jwt/roles.decorator";
+import { RequestWithUser } from "src/types/RequestWithUser";
 
 
 @ApiTags('client dashboard')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('CLIENT')
 @Controller('client-dashboard')
 export class ClientDashboardController {
     constructor(private readonly clientDashboardServices: ClientDashboardServices) { }
@@ -11,7 +17,11 @@ export class ClientDashboardController {
 
     //---------- dashboard overview------------->
     @Get("overview-stack")
-    async overview() {
+    async overview(@Req() req: RequestWithUser) {
+        const clientId = req.user.clientId;
+        if (!clientId) {
+            throw new UnauthorizedException('clientId ID not found in token');
+        }
         const result = await this.clientDashboardServices.getDashboardOverview();
         return {
             message: "client stack fetch successfully",
@@ -29,13 +39,17 @@ export class ClientDashboardController {
 
 
     async activity(
-
+        @Req() req: RequestWithUser,
         @Query('userId') userId?: string,
         @Query('startDate') startDate?: string,
         @Query('endDate') endDate?: string,
         @Query('limit') limit?: string,
         @Query('page') page?: string,
     ) {
+        const clientId = req.user.clientId;
+        if (!clientId) {
+            throw new UnauthorizedException('clientId ID not found in token');
+        }
         const pageNumber = page ? Number(page) : 1;
         const take = limit ? Number(limit) : 10;
         const skip = (pageNumber - 1) * take;
@@ -59,9 +73,14 @@ export class ClientDashboardController {
     @ApiQuery({ name: 'programId', required: false })
     @ApiQuery({ name: 'overdueTime', required: false })
     async getTimeline(
+        @Req() req: RequestWithUser,
         @Query('programId') programId?: string,
         @Query('overdueTime') overdueTime?: string // This is the overdue filter
     ) {
+        const clientId = req.user.clientId;
+        if (!clientId) {
+            throw new UnauthorizedException('clientId ID not found in token');
+        }
         const timeline = await this.clientDashboardServices.getProjectTimeline(programId, overdueTime ? Number(overdueTime) : undefined);
 
         return {
@@ -70,7 +89,7 @@ export class ClientDashboardController {
         };
     }
 
-    
+
 
     //-----------project status stack------------>
     @Get('status')
@@ -79,24 +98,46 @@ export class ClientDashboardController {
         enum: ['week', 'month', 'year'],
         required: false,
         description: 'Select period for project status graph',
-        example: 'month', // Swagger UI default example
+        example: 'month',
     })
-    async projectStack(@Query('period') period: 'week' | 'month' | 'year' = 'month') {
+    async projectStack(@Req() req: RequestWithUser, @Query('period') period: 'week' | 'month' | 'year' = 'month') {
         const selectedPeriod = period || 'month';
+        const clientId = req.user.clientId;
+        if (!clientId) {
+            throw new UnauthorizedException('clientId ID not found in token');
+        }
         const project = await this.clientDashboardServices.getProjectStatusStackGraph(selectedPeriod);
 
         return {
-            message: 'Project stack graph fetched successfully',
+            message: 'Project status graph fetched successfully',
             data: project,
         };
     }
 
+    
     //---------project overdue----------->
     @Get('overdue')
-    async overdue() {
+    async overdue(@Req() req: RequestWithUser) {
+        const clientId = req.user.clientId;
+        if (!clientId) {
+            throw new UnauthorizedException('clientId ID not found in token');
+        }
         const result = await this.clientDashboardServices.getDashboardProjectsOverdue();
         return {
             message: "projects overdue fetch successfully",
+            data: result
+        }
+    };
+
+    @Get('project-activity')
+    async project_activity(@Req() req: RequestWithUser) {
+        const clientId = req.user.clientId;
+        if (!clientId) {
+            throw new UnauthorizedException('clientId ID not found in token');
+        }
+        const result = await this.clientDashboardServices.getProjectsActivity();
+        return {
+            message: "projects activity fetch successfully",
             data: result
         }
     };
