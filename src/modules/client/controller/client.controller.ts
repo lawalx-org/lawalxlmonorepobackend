@@ -15,7 +15,7 @@ export class ClientController {
 
 
 
-   //--------------------get all file ----------------->
+  //--------------------get all file ----------------->
   @Get('files')
   @ApiQuery({ name: 'userId', required: false })
   @ApiQuery({ name: 'search', required: false })
@@ -36,16 +36,24 @@ export class ClientController {
 
 
 
-  
+
 
   @Get()
   async findAll() {
-    return this.clientService.findAll();
+    const result = await this.clientService.findAll();
+    return {
+      message: "all client retrieve  successfully",
+      data: result
+    }
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return this.clientService.findOne(id);
+   const result= await this.clientService.findOne(id);
+      return {
+      message: "single  client retrieve  successfully",
+      data: result
+    }
   }
 
 
@@ -59,7 +67,7 @@ export class ClientController {
       type: 'object',
       properties: {
         userId: { type: 'string', example: '1d3b9943-4b77-4b54-803e-fc6e15e0b396' },
-           sheetId: { type: 'string', example: 'a6dd3e9c-1fb1-40e1-a9e6-1cb59cdfa99c' },
+        sheetId: { type: 'string', example: 'a6dd3e9c-1fb1-40e1-a9e6-1cb59cdfa99c' },
         file: { type: 'string', format: 'binary' },
       },
       required: ['userId', 'sheetId', 'file'],
@@ -90,21 +98,21 @@ export class ClientController {
       }),
     }),
   )
-async uploadFile(
-  @UploadedFile() file: Express.Multer.File,
-  @Body() body: UploadFileDto
-) {
-  const result = await this.clientService.saveFile(file, body.userId, body.sheetId);
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: UploadFileDto
+  ) {
+    const result = await this.clientService.saveFile(file, body.userId, body.sheetId);
 
-  return {
-    message: 'File uploaded successfully',
-    data: result,
-  };
-}
+    return {
+      message: 'File uploaded successfully',
+      data: result,
+    };
+  }
 
 
 
- 
+
 
 
   //--------------------update file ------------>
@@ -160,6 +168,6 @@ async uploadFile(
       data: result,
     };
   }
-  
+
 
 }

@@ -1,4 +1,4 @@
-import { IsString, IsArray, IsNumber, IsHexColor, ValidateNested, Min, IsOptional } from 'class-validator';
+import { IsString, IsArray, IsNumber, IsHexColor, ValidateNested, Min, IsOptional, max } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class LegendDto {
@@ -10,7 +10,7 @@ export class LegendDto {
 
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })  
+  @IsString({ each: true })
   values?: string[];
 }
 
@@ -38,3 +38,5 @@ export class stack_bar_ChartConfigDto {
   @IsNumber()
   last_field_data: number;
 }
+
+
