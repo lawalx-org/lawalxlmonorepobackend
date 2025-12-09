@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import {
@@ -12,11 +13,12 @@ import {
 import { CsvHelper } from '../utils/csv.helper';
 import { ActivityQueryBuilder } from '../utils/query-builder.helper';
 import { ActivityMapper } from '../utils/activity-mapper.helper';
-import { ActivityValidator } from '../utils/activity-validator.helper';
+// import { ActivityValidator } from '../utils/activity-validator.helper';
 
 @Injectable()
 export class ActivityService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
+
 
   async getActivities(query: QueryActivityDto): Promise<ActivityResponseDto> {
     const { page = 1, limit = 20 } = query;
@@ -141,13 +143,44 @@ export class ActivityService {
     return CsvHelper.generateActivitiesCsv(activities);
   }
 
-  async createActivity(data: CreateActivityDto) {
-    await ActivityValidator.validateUserAndProject(
-      this.prisma,
-      data.userId,
-      data.projectId,
-    );
+  async createActivityForEmployee(
+    employeeId: string,
+    data: CreateActivityDto,
+    ipAddress: string,
+  ) {
+    // 1. Fetch employee and linked userId
+    const employee = await this.prisma.employee.findUnique({
+      where: { id: employeeId },
+      select: { userId: true },
+    });
 
-    return this.prisma.activity.create({ data });
+    if (!employee?.userId) {
+      throw new UnauthorizedException('Employee not linked to a user');
+    }
+
+    const userId = employee.userId;
+
+    // 2. Validate user and project exist
+    await this.validateUserAndProject(userId, data.projectId);
+
+    // 3. Create activity
+    return this.prisma.activity.create({
+      data: { ...data, userId, ipAddress },
+    });
   }
+
+  private async validateUserAndProject(userId: string, projectId: string) {
+    const [user, project] = await Promise.all([
+      this.prisma.user.findUnique({ where: { id: userId }, select: { id: true } }),
+      this.prisma.project.findUnique({ where: { id: projectId }, select: { id: true } }),
+    ]);
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    }
+    if (!project) {
+      throw new NotFoundException(`Project with ID ${projectId} not found`);
+    }
+  }
+
 }

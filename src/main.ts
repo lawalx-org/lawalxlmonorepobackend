@@ -21,6 +21,8 @@ async function bootstrap() {
     prefix: '/uploads/',
   });
 
+   app.set('trust proxy', true);
+
   
   //add new for upload file 
   app.use('/uploads-file', express.static(join(process.cwd(), 'uploads-file')));
