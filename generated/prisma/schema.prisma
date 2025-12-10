@@ -401,6 +401,13 @@ model Supporter {
   @@map("supporters")
 }
 
+// model Tag {
+//   id    String @id @default(uuid())
+//   name  String @unique
+
+//   @@map("tags")
+// }
+
 model Task {
   id           String      @id @default(uuid())
   status       TaskStatus?
