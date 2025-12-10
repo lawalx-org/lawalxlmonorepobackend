@@ -601,7 +601,8 @@ exports.NotificationType = exports.$Enums.NotificationType = {
   PROJECT_CREATED: 'PROJECT_CREATED',
   REMINDER: 'REMINDER',
   SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST',
-  FILE_CREATED: 'FILE_CREATED'
+  FILE_CREATED: 'FILE_CREATED',
+  ACTIVITY_CREATED: 'ACTIVITY_CREATED'
 };
 
 exports.Priority = exports.$Enums.Priority = {

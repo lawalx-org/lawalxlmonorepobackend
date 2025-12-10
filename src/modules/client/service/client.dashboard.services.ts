@@ -453,67 +453,130 @@ export class ClientDashboardServices {
   }
 
 
-async getProjectsActivity() {
-  const today = new Date();
-  const ONE_DAY = 1000 * 60 * 60 * 24;
+  async getProjectsActivity() {
+    const today = new Date();
+    const ONE_DAY = 1000 * 60 * 60 * 24;
 
-  const projects = await this.prisma.project.findMany({
-    where: {
-      status: "LIVE"
-    },
-    select: {
-      id: true,
-      name: true,
-      deadline: true,
-      program: {
-        select: {
-          programName: true,
-        }
+    const projects = await this.prisma.project.findMany({
+      where: {
+        status: "LIVE"
       },
-      projectEmployees: {
-        select: {
-          employee: {
-            select: {
-              id: true,
-              user: {
-                select: {
-                  name: true,
-                  profileImage: true
+      select: {
+        id: true,
+        name: true,
+        deadline: true,
+        program: {
+          select: {
+            programName: true,
+          }
+        },
+        projectEmployees: {
+          select: {
+            employee: {
+              select: {
+                id: true,
+                user: {
+                  select: {
+                    name: true,
+                    profileImage: true
+                  }
                 }
               }
             }
           }
         }
       }
-    }
-  });
+    });
 
-  const filtered = projects
-    .map(project => {
-      const deadline = new Date(project.deadline);
-      const date = deadline.getTime() - today.getTime();
-      const daysLeft = Math.ceil(date / ONE_DAY);
+    const filtered = projects
+      .map(project => {
+        const deadline = new Date(project.deadline);
+        const date = deadline.getTime() - today.getTime();
+        const daysLeft = Math.ceil(date / ONE_DAY);
 
-      return {
-        programName: project.program?.programName ?? "No Program",
-        projectId: project.id,
-        projectName: project.name,
-        deadline: project.deadline,
-        daysLeft,
-        assign_employees: project.projectEmployees.map(pe => ({
-          id: pe.employee.id,
-          name: pe.employee.user?.name ?? "Unknown",
-          profileImage: pe.employee.user?.profileImage ?? null
-        }))
-      };
-    })
-    .filter(p => p.daysLeft <= 8 && p.daysLeft >= 0); 
+        return {
+          programName: project.program?.programName ?? "No Program",
+          projectId: project.id,
+          projectName: project.name,
+          deadline: project.deadline,
+          daysLeft,
+          assign_employees: project.projectEmployees.map(e => ({
+            id: e.employee.id,
+            name: e.employee.user?.name ?? "Unknown",
+            profileImage: e.employee.user?.profileImage ?? null
+          }))
+        };
+      })
+      .filter(p => p.daysLeft <= 8 && p.daysLeft >= 0);
 
-  return {
-    total: filtered.length,
-    projects: filtered
-  };
-}
+    return {
+      total: filtered.length,
+      projects: filtered
+    };
+  }
+
+  async upcomingDeadlineProjects() {
+    const today = new Date();
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+
+    const projects = await this.prisma.project.findMany({
+      where: {
+        status: "LIVE",
+      },
+      select: {
+        id: true,
+        name: true,
+        deadline: true,
+        program: {
+          select: {
+            programName: true,
+          }
+        },
+        projectEmployees: {
+          select: {
+            employee: {
+              select: {
+                id: true,
+                user: {
+                  select: {
+                    name: true,
+                    profileImage: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const filtered = projects
+      .map(project => {
+        const deadline = new Date(project.deadline);
+        const diffMs = deadline.getTime() - today.getTime();
+        const daysLeft = Math.ceil(diffMs / ONE_DAY);
+
+        return {
+          programName: project.program?.programName ?? "No Program",
+          projectId: project.id,
+          projectName: project.name,
+          deadline: project.deadline,
+          daysLeft,
+          employees: project.projectEmployees.map(pe => ({
+            id: pe.employee.id,
+            name: pe.employee.user?.name ?? "Unknown",
+            profileImage: pe.employee.user?.profileImage ?? null
+          }))
+        };
+      })
+      .filter(p => p.daysLeft <= 8 && p.daysLeft >= 0);
+
+    return {
+      total: filtered.length,
+      projects: filtered
+    };
+  }
+
 
 
 
