@@ -100,6 +100,7 @@ export class OtpService {
 
   //  Send verification code
   async sendVerificationCode(to: string) {
+    
     const data = await this.client.verify.v2
       .services(this.verifyServiceSid)
       .verifications.create({ to, channel: 'sms' });
