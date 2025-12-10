@@ -13,11 +13,15 @@ import {
 import { CsvHelper } from '../utils/csv.helper';
 import { ActivityQueryBuilder } from '../utils/query-builder.helper';
 import { ActivityMapper } from '../utils/activity-mapper.helper';
+import { NotificationService } from 'src/modules/notification/service/notification.service';
+import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
 // import { ActivityValidator } from '../utils/activity-validator.helper';
 
 @Injectable()
 export class ActivityService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService,
+    private readonly notificationService: NotificationService
+  ) { }
 
 
   async getActivities(query: QueryActivityDto): Promise<ActivityResponseDto> {
@@ -143,31 +147,7 @@ export class ActivityService {
     return CsvHelper.generateActivitiesCsv(activities);
   }
 
-  async createActivityForEmployee(
-    employeeId: string,
-    data: CreateActivityDto,
-    ipAddress: string,
-  ) {
-    // 1. Fetch employee and linked userId
-    const employee = await this.prisma.employee.findUnique({
-      where: { id: employeeId },
-      select: { userId: true },
-    });
 
-    if (!employee?.userId) {
-      throw new UnauthorizedException('Employee not linked to a user');
-    }
-
-    const userId = employee.userId;
-
-    // 2. Validate user and project exist
-    await this.validateUserAndProject(userId, data.projectId);
-
-    // 3. Create activity
-    return this.prisma.activity.create({
-      data: { ...data, userId, ipAddress },
-    });
-  }
 
   private async validateUserAndProject(userId: string, projectId: string) {
     const [user, project] = await Promise.all([
@@ -182,5 +162,58 @@ export class ActivityService {
       throw new NotFoundException(`Project with ID ${projectId} not found`);
     }
   }
+
+  async createActivityForEmployee(
+    employeeId: string,
+    data: CreateActivityDto,
+    ipAddress: string,
+  ) {
+    const employee = await this.prisma.employee.findUnique({
+      where: { id: employeeId },
+      select: { userId: true },
+    });
+
+    if (!employee?.userId) {
+      throw new UnauthorizedException('Employee not linked to a user');
+    }
+
+    const userId = employee.userId;
+
+
+    await this.validateUserAndProject(userId, data.projectId);
+
+    const activity = await this.prisma.activity.create({
+      data: { ...data, userId, ipAddress },
+    });
+
+    const clients = await this.prisma.user.findMany({
+      where: { role: 'CLIENT' },
+      select: { id: true },
+    });
+
+    if (clients.length === 0) {
+      console.warn('No client users found to send activity notification.');
+    } else {
+      const receiverIds = clients.map((c) => c.id);
+
+      // console.log('Sending ACTIVITY_CREATED notification to clients:', receiverIds);
+
+      await this.notificationService.create(
+        {
+          receiverIds,
+          context: `A new activity was created by employee ${employeeId}.`,
+          type: NotificationType.ACTIVITY_CREATED,
+          projectId: data.projectId,
+        },
+        userId,
+      );
+    }
+
+    return {
+      message: 'Activity created successfully',
+      activity,
+    };
+  }
+
 
 }

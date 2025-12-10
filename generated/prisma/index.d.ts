@@ -404,7 +404,8 @@ export const NotificationType: {
   PROJECT_CREATED: 'PROJECT_CREATED',
   REMINDER: 'REMINDER',
   SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST',
-  FILE_CREATED: 'FILE_CREATED'
+  FILE_CREATED: 'FILE_CREATED',
+  ACTIVITY_CREATED: 'ACTIVITY_CREATED'
 };
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
