@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, Logger } from '@nestjs/common';
-import { Prisma } from 'generated/prisma';
+import { Prisma, ProjectStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
 import { FindAllProjectsDto } from '../dto/find-all-projects.dto';
@@ -7,6 +7,9 @@ import { buildProjectFilter } from '../utils/project-filter-builder';
 import { SearchProjectByNameDto } from '../dto/search-project.dto';
 import { ReminderService } from 'src/modules/notification/service/reminder';
 import { NotificationService } from 'src/modules/notification/service/notification.service';
+import { UpdateProjectDto } from '../dto/update-project.dto';
+import { UpdateProjectStatusDto } from '../dto/update-project-status.dto';
+import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
 
 @Injectable()
 export class ProjectService {
@@ -15,7 +18,7 @@ export class ProjectService {
     private readonly prisma: PrismaService,
     private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
-  ) {}
+  ) { }
 
   // async create(createProjectDto: CreateProjectDto) {
   //   const { employeeIds, managerId, programId, ...projectData } =
@@ -210,7 +213,7 @@ export class ProjectService {
         {
           receiverIds: uniqueReceivers,
           context: `A new project "${project.name}" has been created and assigned.`,
-          type: 'PROJECT_CREATED',
+          type: NotificationType.NEW_EMPLOYEE_ASSIGNED ,
         },
         project.manager.user.id,
       );
@@ -310,4 +313,112 @@ export class ProjectService {
 
     return project;
   }
+
+  //get sheet with project id
+  async getSheets(projectId: string) {
+
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      select: { id: true },
+    });
+
+    if (!project) throw new NotFoundException(`Project with ID ${projectId}not found`);
+
+
+    const sheets = await this.prisma.sheet.findMany({
+      where: {
+        projectId
+      },
+    });
+
+    return sheets;
+  }
+
+  //   async updateProjectStatus(updateProjectStatusDto: UpdateProjectStatusDto) {
+  //   const { projectId, status } = updateProjectStatusDto;
+
+
+  //   const existingProject = await this.prisma.project.findUnique({
+  //     where: { id: projectId },
+  //   });
+
+  //   if (!existingProject) {
+  //     throw new NotFoundException(`Project with ID "${projectId}" not found`);
+  //   }
+
+
+  //   const updatedProject = await this.prisma.project.update({
+  //     where: { id: projectId },
+  //     data: { status }, 
+  //   });
+
+  //   return updatedProject;
+  // }
+
+  async updateProjectStatus(updateProjectStatusDto: UpdateProjectStatusDto) {
+    const { projectId, status } = updateProjectStatusDto;
+
+
+    const project = await this.prisma.project.findUnique({
+      where: {
+        id: projectId
+      },
+      include: {
+        manager: {
+          include: {
+            user: true
+          }
+        },
+        projectEmployees: {
+          include: {
+            employee: {
+              include: {
+                user: true
+              }
+            }
+          }
+        },
+      },
+    });
+
+    if (!project) {
+      throw new NotFoundException(`Project with ID "${projectId}" not found`);
+    }
+
+
+    const updatedProject = await this.prisma.project.update({
+      where: { id: projectId },
+      data: { status },
+    });
+
+
+    if (status === 'LIVE') {
+      const managerUserId = project.manager?.user?.id;
+      if (!managerUserId) {
+        throw new NotFoundException('Manager or associated user not found');
+      }
+
+      const employeeUserIds = project.projectEmployees
+        .map((e) => e.employee?.user?.id)
+        .filter((id): id is string => !!id);
+
+      const receiverIds = [...new Set([managerUserId, ...employeeUserIds])];
+
+      await this.notificationService.create(
+        {
+          receiverIds,
+          context: `Project ${project.name} is now LIVE.`,
+          type: NotificationType.PROJECT_STATUS_UPDATE ,
+        },
+        managerUserId
+      );
+    }
+
+    return updatedProject;
+  }
+
+
+
+
+
 }

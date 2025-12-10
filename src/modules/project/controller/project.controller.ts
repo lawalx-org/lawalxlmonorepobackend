@@ -6,6 +6,7 @@ import {
   Param,
   UseGuards,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { ProjectService } from '../service/project.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
@@ -15,15 +16,20 @@ import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { Role } from 'generated/prisma';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { UpdateProjectStatusDto } from '../dto/update-project-status.dto';
 
 @Controller('project')
-@UseGuards(JwtAuthGuard,RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class ProjectController {
-  constructor(private readonly projectService: ProjectService) {}
+  constructor(private readonly projectService: ProjectService) { }
 
   //  Create a new project
   @Post()
   @Roles(Role.CLIENT)
+  @ApiOperation({ summary: 'Create a new project' })
+  @ApiResponse({ status: 201, description: 'Project created successfully' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
   async create(@Body() createProjectDto: CreateProjectDto) {
     const newProject = await this.projectService.create(createProjectDto);
     return {
@@ -34,6 +40,8 @@ export class ProjectController {
 
   // Get all projects (with pagination/filter)
   @Get()
+  @ApiOperation({ summary: 'Get all projects' })
+  @ApiResponse({ status: 200, description: 'Projects retrieved successfully' })
   async findAll(@Query() query: FindAllProjectsDto) {
     const allProjects = await this.projectService.findAll(query);
     return {
@@ -44,6 +52,8 @@ export class ProjectController {
 
   // Search projects by name
   @Get('search')
+  @ApiOperation({ summary: 'Search projects by name' })
+  @ApiResponse({ status: 200, description: 'Projects found successfully' })
   async searchByName(@Query() query: SearchProjectByNameDto) {
     const results = await this.projectService.searchByName(query);
     return {
@@ -54,6 +64,9 @@ export class ProjectController {
 
   // Get a single project by ID
   @Get(':id')
+  @ApiOperation({ summary: 'Get a project by ID' })
+  @ApiResponse({ status: 200, description: 'Project retrieved successfully' })
+  @ApiResponse({ status: 404, description: 'Project not found' })
   async findOne(@Param('id') id: string) {
     const project = await this.projectService.findOne(id);
     return {
@@ -61,4 +74,34 @@ export class ProjectController {
       project,
     };
   }
+
+  // Get all sheets for which project this sheet exits
+  @Get(':id/sheets')
+  @ApiOperation({ summary: 'Get all sheets for a project by project ID' })
+  @ApiResponse({ status: 200, description: 'Sheets retrieved successfully' })
+  @ApiResponse({ status: 404, description: 'Project not found' })
+  async getSheets(@Param('id') id: string) {
+    const result = await this.projectService.getSheets(id);
+    return {
+      message: 'Sheets retrieved successfully',
+      data:result,
+    };
+  }
+
+
+
+  // Update project status by his won id 
+  @Patch('status')
+  @Roles(Role.CLIENT)
+  @ApiOperation({ summary: 'Update the status of a project' })
+  @ApiResponse({ status: 200, description: 'Project status updated successfully' })
+  @ApiResponse({ status: 404, description: 'Project not found' })
+  async updateStatus(@Body() updateProjectStatusDto: UpdateProjectStatusDto) {
+    const updatedProject = await this.projectService.updateProjectStatus(updateProjectStatusDto);
+    return {
+      message: `Project status updated to ${updatedProject.status} successfully`,
+      project: updatedProject,
+    };
+  }
+
 }

@@ -164,6 +164,11 @@ export type Viewer = $Result.DefaultSelection<Prisma.$ViewerPayload>
  */
 export type ChartTable = $Result.DefaultSelection<Prisma.$ChartTablePayload>
 /**
+ * Model File
+ * 
+ */
+export type File = $Result.DefaultSelection<Prisma.$FilePayload>
+/**
  * Model Reminder
  * 
  */
@@ -219,7 +224,17 @@ export const ChartName: {
   TREEMAP: 'TREEMAP',
   SUNBURST: 'SUNBURST',
   SANKEY: 'SANKEY',
-  TABLE: 'TABLE'
+  TABLE: 'TABLE',
+  HEATMAP: 'HEATMAP',
+  HORIZONTAL_BAR: 'HORIZONTAL_BAR',
+  STACK_BAR_HORIZONTAL: 'STACK_BAR_HORIZONTAL',
+  COLUMN: 'COLUMN',
+  PARETO: 'PARETO',
+  HISTOGRAM: 'HISTOGRAM',
+  WATERFALL: 'WATERFALL',
+  CANDLESTICK: 'CANDLESTICK',
+  GEOGRAPHY_GRAPH: 'GEOGRAPHY_GRAPH',
+  SPLINE: 'SPLINE'
 };
 
 export type ChartName = (typeof ChartName)[keyof typeof ChartName]
@@ -382,7 +397,14 @@ export type SubmittedStatus = (typeof SubmittedStatus)[keyof typeof SubmittedSta
 
 export const NotificationType: {
   NEW_EMPLOYEE_ASSIGNED: 'NEW_EMPLOYEE_ASSIGNED',
-  NEW_MANAGER_ASSIGNED: 'NEW_MANAGER_ASSIGNED'
+  NEW_MANAGER_ASSIGNED: 'NEW_MANAGER_ASSIGNED',
+  SUBMISSION_UPDATED_STATUS: 'SUBMISSION_UPDATED_STATUS',
+  PROJECT_SUBMITTED: 'PROJECT_SUBMITTED',
+  PROJECT_STATUS_UPDATE: 'PROJECT_STATUS_UPDATE',
+  PROJECT_CREATED: 'PROJECT_CREATED',
+  REMINDER: 'REMINDER',
+  SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST',
+  FILE_CREATED: 'FILE_CREATED'
 };
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -906,6 +928,16 @@ export class PrismaClient<
   get chartTable(): Prisma.ChartTableDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.file`: Exposes CRUD operations for the **File** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Files
+    * const files = await prisma.file.findMany()
+    * ```
+    */
+  get file(): Prisma.FileDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.reminder`: Exposes CRUD operations for the **Reminder** model.
     * Example usage:
     * ```ts
@@ -1012,8 +1044,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.18.0
-   * Query Engine version: 34b5a692b7bd79939a9a2c3ef97d816e749cda2f
+   * Prisma Client JS version: 6.16.2
+   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
    */
   export type PrismaVersion = {
     client: string
@@ -1026,7 +1058,6 @@ export namespace Prisma {
    */
 
 
-  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -1425,6 +1456,7 @@ export namespace Prisma {
     RequestToAddProjectMember: 'RequestToAddProjectMember',
     Viewer: 'Viewer',
     ChartTable: 'ChartTable',
+    File: 'File',
     Reminder: 'Reminder',
     Sheet: 'Sheet',
     Cell: 'Cell',
@@ -1448,7 +1480,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer" | "chartTable" | "reminder" | "sheet" | "cell" | "sheetSnapshot" | "submiteCell"
+      modelProps: "activity" | "client" | "employee" | "otpVerification" | "payment" | "manager" | "notification" | "notificationProvision" | "notificationPermissionEmployee" | "notificationPermissionManager" | "notificationPermissionClient" | "notificationPermissionSupporter" | "notificationPermissionAdmin" | "notificationPermissionSuperAdmin" | "program" | "project" | "projectEmployee" | "review" | "submissionReturn" | "submitted" | "superAdmin" | "supporter" | "task" | "ticket" | "user" | "tag" | "referredPerson" | "requestToAddProjectMember" | "viewer" | "chartTable" | "file" | "reminder" | "sheet" | "cell" | "sheetSnapshot" | "submiteCell"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3672,6 +3704,80 @@ export namespace Prisma {
           }
         }
       }
+      File: {
+        payload: Prisma.$FilePayload<ExtArgs>
+        fields: Prisma.FileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          findFirst: {
+            args: Prisma.FileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          findMany: {
+            args: Prisma.FileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          create: {
+            args: Prisma.FileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          createMany: {
+            args: Prisma.FileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          delete: {
+            args: Prisma.FileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          update: {
+            args: Prisma.FileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          deleteMany: {
+            args: Prisma.FileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          upsert: {
+            args: Prisma.FileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          aggregate: {
+            args: Prisma.FileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFile>
+          }
+          groupBy: {
+            args: Prisma.FileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FileCountArgs<ExtArgs>
+            result: $Utils.Optional<FileCountAggregateOutputType> | number
+          }
+        }
+      }
       Reminder: {
         payload: Prisma.$ReminderPayload<ExtArgs>
         fields: Prisma.ReminderFieldRefs
@@ -4168,6 +4274,7 @@ export namespace Prisma {
     requestToAddProjectMember?: RequestToAddProjectMemberOmit
     viewer?: ViewerOmit
     chartTable?: ChartTableOmit
+    file?: FileOmit
     reminder?: ReminderOmit
     sheet?: SheetOmit
     cell?: CellOmit
@@ -4414,10 +4521,12 @@ export namespace Prisma {
 
   export type ProgramCountOutputType = {
     projects: number
+    tags: number
   }
 
   export type ProgramCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     projects?: boolean | ProgramCountOutputTypeCountProjectsArgs
+    tags?: boolean | ProgramCountOutputTypeCountTagsArgs
   }
 
   // Custom InputTypes
@@ -4436,6 +4545,13 @@ export namespace Prisma {
    */
   export type ProgramCountOutputTypeCountProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProjectWhereInput
+  }
+
+  /**
+   * ProgramCountOutputType without action
+   */
+  export type ProgramCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
   }
 
 
@@ -4541,12 +4657,14 @@ export namespace Prisma {
     notifications: number
     payments: number
     activities: number
+    file: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
     payments?: boolean | UserCountOutputTypeCountPaymentsArgs
     activities?: boolean | UserCountOutputTypeCountActivitiesArgs
+    file?: boolean | UserCountOutputTypeCountFileArgs
   }
 
   // Custom InputTypes
@@ -4581,6 +4699,13 @@ export namespace Prisma {
     where?: ActivityWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
+  }
+
 
   /**
    * Count Type SheetCountOutputType
@@ -4589,11 +4714,13 @@ export namespace Prisma {
   export type SheetCountOutputType = {
     cells: number
     snapshots: number
+    files: number
   }
 
   export type SheetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cells?: boolean | SheetCountOutputTypeCountCellsArgs
     snapshots?: boolean | SheetCountOutputTypeCountSnapshotsArgs
+    files?: boolean | SheetCountOutputTypeCountFilesArgs
   }
 
   // Custom InputTypes
@@ -4619,6 +4746,13 @@ export namespace Prisma {
    */
   export type SheetCountOutputTypeCountSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SheetSnapshotWhereInput
+  }
+
+  /**
+   * SheetCountOutputType without action
+   */
+  export type SheetCountOutputTypeCountFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
   }
 
 
@@ -6111,7 +6245,6 @@ export namespace Prisma {
     referredPersons?: boolean | Client$referredPersonsArgs<ExtArgs>
     tickets?: boolean | Client$ticketsArgs<ExtArgs>
     programs?: boolean | Client$programsArgs<ExtArgs>
-    tags?: boolean | Client$tagsArgs<ExtArgs>
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["client"]>
 
@@ -6204,7 +6337,6 @@ export namespace Prisma {
     referredPersons?: boolean | Client$referredPersonsArgs<ExtArgs>
     tickets?: boolean | Client$ticketsArgs<ExtArgs>
     programs?: boolean | Client$programsArgs<ExtArgs>
-    tags?: boolean | Client$tagsArgs<ExtArgs>
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6221,7 +6353,6 @@ export namespace Prisma {
       referredPersons: Prisma.$ReferredPersonPayload<ExtArgs>[]
       tickets: Prisma.$TicketPayload<ExtArgs>[]
       programs: Prisma.$ProgramPayload<ExtArgs>[]
-      tags: Prisma.$TagPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6646,7 +6777,6 @@ export namespace Prisma {
     referredPersons<T extends Client$referredPersonsArgs<ExtArgs> = {}>(args?: Subset<T, Client$referredPersonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReferredPersonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tickets<T extends Client$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, Client$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     programs<T extends Client$programsArgs<ExtArgs> = {}>(args?: Subset<T, Client$programsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tags<T extends Client$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Client$tagsArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7184,25 +7314,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProgramScalarFieldEnum | ProgramScalarFieldEnum[]
-  }
-
-  /**
-   * Client.tags
-   */
-  export type Client$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Tag
-     */
-    select?: TagSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Tag
-     */
-    omit?: TagOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TagInclude<ExtArgs> | null
-    where?: TagWhereInput
   }
 
   /**
@@ -11748,7 +11859,7 @@ export namespace Prisma {
     senderId: string | null
     projectId: string | null
     context: string | null
-    type: string | null
+    type: $Enums.NotificationType | null
     isRead: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -11759,7 +11870,7 @@ export namespace Prisma {
     senderId: string | null
     projectId: string | null
     context: string | null
-    type: string | null
+    type: $Enums.NotificationType | null
     isRead: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -11892,7 +12003,7 @@ export namespace Prisma {
     receiverIds: string[]
     projectId: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead: boolean
     createdAt: Date
     updatedAt: Date
@@ -11984,7 +12095,7 @@ export namespace Prisma {
       receiverIds: string[]
       projectId: string | null
       context: string
-      type: string
+      type: $Enums.NotificationType
       isRead: boolean
       createdAt: Date
       updatedAt: Date
@@ -12417,7 +12528,7 @@ export namespace Prisma {
     readonly receiverIds: FieldRef<"Notification", 'String[]'>
     readonly projectId: FieldRef<"Notification", 'String'>
     readonly context: FieldRef<"Notification", 'String'>
-    readonly type: FieldRef<"Notification", 'String'>
+    readonly type: FieldRef<"Notification", 'NotificationType'>
     readonly isRead: FieldRef<"Notification", 'Boolean'>
     readonly createdAt: FieldRef<"Notification", 'DateTime'>
     readonly updatedAt: FieldRef<"Notification", 'DateTime'>
@@ -14978,6 +15089,7 @@ export namespace Prisma {
     fileImportByEmployees: boolean | null
     weeklySummary: boolean | null
     createNewProject: boolean | null
+    submittedProject: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14988,6 +15100,7 @@ export namespace Prisma {
     fileImportByEmployees: boolean | null
     weeklySummary: boolean | null
     createNewProject: boolean | null
+    submittedProject: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14998,6 +15111,7 @@ export namespace Prisma {
     fileImportByEmployees: number
     weeklySummary: number
     createNewProject: number
+    submittedProject: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -15010,6 +15124,7 @@ export namespace Prisma {
     fileImportByEmployees?: true
     weeklySummary?: true
     createNewProject?: true
+    submittedProject?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -15020,6 +15135,7 @@ export namespace Prisma {
     fileImportByEmployees?: true
     weeklySummary?: true
     createNewProject?: true
+    submittedProject?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -15030,6 +15146,7 @@ export namespace Prisma {
     fileImportByEmployees?: true
     weeklySummary?: true
     createNewProject?: true
+    submittedProject?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -15113,6 +15230,7 @@ export namespace Prisma {
     fileImportByEmployees: boolean
     weeklySummary: boolean
     createNewProject: boolean
+    submittedProject: boolean
     createdAt: Date
     updatedAt: Date
     _count: NotificationPermissionManagerCountAggregateOutputType | null
@@ -15140,6 +15258,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -15151,6 +15270,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -15162,6 +15282,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -15173,11 +15294,12 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type NotificationPermissionManagerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fileImportByEmployees" | "weeklySummary" | "createNewProject" | "createdAt" | "updatedAt", ExtArgs["result"]["notificationPermissionManager"]>
+  export type NotificationPermissionManagerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "fileImportByEmployees" | "weeklySummary" | "createNewProject" | "submittedProject" | "createdAt" | "updatedAt", ExtArgs["result"]["notificationPermissionManager"]>
   export type NotificationPermissionManagerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -15199,6 +15321,7 @@ export namespace Prisma {
       fileImportByEmployees: boolean
       weeklySummary: boolean
       createNewProject: boolean
+      submittedProject: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["notificationPermissionManager"]>
@@ -15630,6 +15753,7 @@ export namespace Prisma {
     readonly fileImportByEmployees: FieldRef<"NotificationPermissionManager", 'Boolean'>
     readonly weeklySummary: FieldRef<"NotificationPermissionManager", 'Boolean'>
     readonly createNewProject: FieldRef<"NotificationPermissionManager", 'Boolean'>
+    readonly submittedProject: FieldRef<"NotificationPermissionManager", 'Boolean'>
     readonly createdAt: FieldRef<"NotificationPermissionManager", 'DateTime'>
     readonly updatedAt: FieldRef<"NotificationPermissionManager", 'DateTime'>
   }
@@ -20674,6 +20798,7 @@ export namespace Prisma {
     updatedAt?: boolean
     client?: boolean | ClientDefaultArgs<ExtArgs>
     projects?: boolean | Program$projectsArgs<ExtArgs>
+    tags?: boolean | Program$tagsArgs<ExtArgs>
     _count?: boolean | ProgramCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["program"]>
 
@@ -20722,6 +20847,7 @@ export namespace Prisma {
   export type ProgramInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientDefaultArgs<ExtArgs>
     projects?: boolean | Program$projectsArgs<ExtArgs>
+    tags?: boolean | Program$tagsArgs<ExtArgs>
     _count?: boolean | ProgramCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProgramIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -20736,6 +20862,7 @@ export namespace Prisma {
     objects: {
       client: Prisma.$ClientPayload<ExtArgs>
       projects: Prisma.$ProjectPayload<ExtArgs>[]
+      tags: Prisma.$TagPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -21144,6 +21271,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     projects<T extends Program$projectsArgs<ExtArgs> = {}>(args?: Subset<T, Program$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tags<T extends Program$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Program$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21600,6 +21728,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[]
+  }
+
+  /**
+   * Program.tags
+   */
+  export type Program$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    where?: TagWhereInput
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    cursor?: TagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
   }
 
   /**
@@ -32335,6 +32487,7 @@ export namespace Prisma {
     otpVerification?: boolean | User$otpVerificationArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
+    file?: boolean | User$fileArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -32409,6 +32562,7 @@ export namespace Prisma {
     otpVerification?: boolean | User$otpVerificationArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     activities?: boolean | User$activitiesArgs<ExtArgs>
+    file?: boolean | User$fileArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -32432,6 +32586,7 @@ export namespace Prisma {
       otpVerification: Prisma.$OtpVerificationPayload<ExtArgs> | null
       payments: Prisma.$PaymentPayload<ExtArgs>[]
       activities: Prisma.$ActivityPayload<ExtArgs>[]
+      file: Prisma.$FilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -32858,6 +33013,7 @@ export namespace Prisma {
     otpVerification<T extends User$otpVerificationArgs<ExtArgs> = {}>(args?: Subset<T, User$otpVerificationArgs<ExtArgs>>): Prisma__OtpVerificationClient<$Result.GetResult<Prisma.$OtpVerificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activities<T extends User$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    file<T extends User$fileArgs<ExtArgs> = {}>(args?: Subset<T, User$fileArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -33590,6 +33746,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.file
+   */
+  export type User$fileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    cursor?: FileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -33619,20 +33799,25 @@ export namespace Prisma {
   }
 
   export type TagMinAggregateOutputType = {
-    clientId: string | null
+    id: string | null
+    programId: string | null
+    name: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TagMaxAggregateOutputType = {
-    clientId: string | null
+    id: string | null
+    programId: string | null
+    name: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TagCountAggregateOutputType = {
-    clientId: number
-    tags: number
+    id: number
+    programId: number
+    name: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -33640,20 +33825,25 @@ export namespace Prisma {
 
 
   export type TagMinAggregateInputType = {
-    clientId?: true
+    id?: true
+    programId?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type TagMaxAggregateInputType = {
-    clientId?: true
+    id?: true
+    programId?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type TagCountAggregateInputType = {
-    clientId?: true
-    tags?: true
+    id?: true
+    programId?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -33732,8 +33922,9 @@ export namespace Prisma {
   }
 
   export type TagGroupByOutputType = {
-    clientId: string
-    tags: string[]
+    id: string
+    programId: string
+    name: string
     createdAt: Date
     updatedAt: Date
     _count: TagCountAggregateOutputType | null
@@ -33756,55 +33947,60 @@ export namespace Prisma {
 
 
   export type TagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    clientId?: boolean
-    tags?: boolean
+    id?: boolean
+    programId?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tag"]>
 
   export type TagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    clientId?: boolean
-    tags?: boolean
+    id?: boolean
+    programId?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tag"]>
 
   export type TagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    clientId?: boolean
-    tags?: boolean
+    id?: boolean
+    programId?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tag"]>
 
   export type TagSelectScalar = {
-    clientId?: boolean
-    tags?: boolean
+    id?: boolean
+    programId?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"clientId" | "tags" | "createdAt" | "updatedAt", ExtArgs["result"]["tag"]>
+  export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "programId" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["tag"]>
   export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }
   export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }
   export type TagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    program?: boolean | ProgramDefaultArgs<ExtArgs>
   }
 
   export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Tag"
     objects: {
-      client: Prisma.$ClientPayload<ExtArgs>
+      program: Prisma.$ProgramPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      clientId: string
-      tags: string[]
+      id: string
+      programId: string
+      name: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["tag"]>
@@ -33890,8 +34086,8 @@ export namespace Prisma {
      * // Get first 10 Tags
      * const tags = await prisma.tag.findMany({ take: 10 })
      * 
-     * // Only select the `clientId`
-     * const tagWithClientIdOnly = await prisma.tag.findMany({ select: { clientId: true } })
+     * // Only select the `id`
+     * const tagWithIdOnly = await prisma.tag.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends TagFindManyArgs>(args?: SelectSubset<T, TagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -33935,9 +34131,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Tags and only return the `clientId`
-     * const tagWithClientIdOnly = await prisma.tag.createManyAndReturn({
-     *   select: { clientId: true },
+     * // Create many Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -34026,9 +34222,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Tags and only return the `clientId`
-     * const tagWithClientIdOnly = await prisma.tag.updateManyAndReturn({
-     *   select: { clientId: true },
+     * // Update zero or more Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -34201,7 +34397,7 @@ export namespace Prisma {
    */
   export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    program<T extends ProgramDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProgramDefaultArgs<ExtArgs>>): Prisma__ProgramClient<$Result.GetResult<Prisma.$ProgramPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -34231,8 +34427,9 @@ export namespace Prisma {
    * Fields of the Tag model
    */
   interface TagFieldRefs {
-    readonly clientId: FieldRef<"Tag", 'String'>
-    readonly tags: FieldRef<"Tag", 'String[]'>
+    readonly id: FieldRef<"Tag", 'String'>
+    readonly programId: FieldRef<"Tag", 'String'>
+    readonly name: FieldRef<"Tag", 'String'>
     readonly createdAt: FieldRef<"Tag", 'DateTime'>
     readonly updatedAt: FieldRef<"Tag", 'DateTime'>
   }
@@ -39054,6 +39251,1203 @@ export namespace Prisma {
 
 
   /**
+   * Model File
+   */
+
+  export type AggregateFile = {
+    _count: FileCountAggregateOutputType | null
+    _avg: FileAvgAggregateOutputType | null
+    _sum: FileSumAggregateOutputType | null
+    _min: FileMinAggregateOutputType | null
+    _max: FileMaxAggregateOutputType | null
+  }
+
+  export type FileAvgAggregateOutputType = {
+    size: number | null
+  }
+
+  export type FileSumAggregateOutputType = {
+    size: number | null
+  }
+
+  export type FileMinAggregateOutputType = {
+    id: string | null
+    filename: string | null
+    url: string | null
+    filePath: string | null
+    fileType: string | null
+    size: number | null
+    uploadAt: Date | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    sheetId: string | null
+  }
+
+  export type FileMaxAggregateOutputType = {
+    id: string | null
+    filename: string | null
+    url: string | null
+    filePath: string | null
+    fileType: string | null
+    size: number | null
+    uploadAt: Date | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    sheetId: string | null
+  }
+
+  export type FileCountAggregateOutputType = {
+    id: number
+    filename: number
+    url: number
+    filePath: number
+    fileType: number
+    size: number
+    uploadAt: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    sheetId: number
+    _all: number
+  }
+
+
+  export type FileAvgAggregateInputType = {
+    size?: true
+  }
+
+  export type FileSumAggregateInputType = {
+    size?: true
+  }
+
+  export type FileMinAggregateInputType = {
+    id?: true
+    filename?: true
+    url?: true
+    filePath?: true
+    fileType?: true
+    size?: true
+    uploadAt?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    sheetId?: true
+  }
+
+  export type FileMaxAggregateInputType = {
+    id?: true
+    filename?: true
+    url?: true
+    filePath?: true
+    fileType?: true
+    size?: true
+    uploadAt?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    sheetId?: true
+  }
+
+  export type FileCountAggregateInputType = {
+    id?: true
+    filename?: true
+    url?: true
+    filePath?: true
+    fileType?: true
+    size?: true
+    uploadAt?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    sheetId?: true
+    _all?: true
+  }
+
+  export type FileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which File to aggregate.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Files
+    **/
+    _count?: true | FileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FileMaxAggregateInputType
+  }
+
+  export type GetFileAggregateType<T extends FileAggregateArgs> = {
+        [P in keyof T & keyof AggregateFile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFile[P]>
+      : GetScalarType<T[P], AggregateFile[P]>
+  }
+
+
+
+
+  export type FileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithAggregationInput | FileOrderByWithAggregationInput[]
+    by: FileScalarFieldEnum[] | FileScalarFieldEnum
+    having?: FileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FileCountAggregateInputType | true
+    _avg?: FileAvgAggregateInputType
+    _sum?: FileSumAggregateInputType
+    _min?: FileMinAggregateInputType
+    _max?: FileMaxAggregateInputType
+  }
+
+  export type FileGroupByOutputType = {
+    id: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt: Date
+    userId: string
+    createdAt: Date
+    updatedAt: Date
+    sheetId: string
+    _count: FileCountAggregateOutputType | null
+    _avg: FileAvgAggregateOutputType | null
+    _sum: FileSumAggregateOutputType | null
+    _min: FileMinAggregateOutputType | null
+    _max: FileMaxAggregateOutputType | null
+  }
+
+  type GetFileGroupByPayload<T extends FileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FileGroupByOutputType[P]>
+            : GetScalarType<T[P], FileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    filename?: boolean
+    url?: boolean
+    filePath?: boolean
+    fileType?: boolean
+    size?: boolean
+    uploadAt?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sheetId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    filename?: boolean
+    url?: boolean
+    filePath?: boolean
+    fileType?: boolean
+    size?: boolean
+    uploadAt?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sheetId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    filename?: boolean
+    url?: boolean
+    filePath?: boolean
+    fileType?: boolean
+    size?: boolean
+    uploadAt?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sheetId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectScalar = {
+    id?: boolean
+    filename?: boolean
+    url?: boolean
+    filePath?: boolean
+    fileType?: boolean
+    size?: boolean
+    uploadAt?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sheetId?: boolean
+  }
+
+  export type FileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "filename" | "url" | "filePath" | "fileType" | "size" | "uploadAt" | "userId" | "createdAt" | "updatedAt" | "sheetId", ExtArgs["result"]["file"]>
+  export type FileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
+  }
+  export type FileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
+  }
+  export type FileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    sheet?: boolean | File$sheetArgs<ExtArgs>
+  }
+
+  export type $FilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "File"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      sheet: Prisma.$SheetPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      filename: string
+      url: string
+      filePath: string
+      fileType: string
+      size: number
+      uploadAt: Date
+      userId: string
+      createdAt: Date
+      updatedAt: Date
+      sheetId: string
+    }, ExtArgs["result"]["file"]>
+    composites: {}
+  }
+
+  type FileGetPayload<S extends boolean | null | undefined | FileDefaultArgs> = $Result.GetResult<Prisma.$FilePayload, S>
+
+  type FileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FileCountAggregateInputType | true
+    }
+
+  export interface FileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['File'], meta: { name: 'File' } }
+    /**
+     * Find zero or one File that matches the filter.
+     * @param {FileFindUniqueArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FileFindUniqueArgs>(args: SelectSubset<T, FileFindUniqueArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one File that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FileFindUniqueOrThrowArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FileFindUniqueOrThrowArgs>(args: SelectSubset<T, FileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first File that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindFirstArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FileFindFirstArgs>(args?: SelectSubset<T, FileFindFirstArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first File that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindFirstOrThrowArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FileFindFirstOrThrowArgs>(args?: SelectSubset<T, FileFindFirstOrThrowArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Files that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Files
+     * const files = await prisma.file.findMany()
+     * 
+     * // Get first 10 Files
+     * const files = await prisma.file.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fileWithIdOnly = await prisma.file.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FileFindManyArgs>(args?: SelectSubset<T, FileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a File.
+     * @param {FileCreateArgs} args - Arguments to create a File.
+     * @example
+     * // Create one File
+     * const File = await prisma.file.create({
+     *   data: {
+     *     // ... data to create a File
+     *   }
+     * })
+     * 
+     */
+    create<T extends FileCreateArgs>(args: SelectSubset<T, FileCreateArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Files.
+     * @param {FileCreateManyArgs} args - Arguments to create many Files.
+     * @example
+     * // Create many Files
+     * const file = await prisma.file.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FileCreateManyArgs>(args?: SelectSubset<T, FileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Files and returns the data saved in the database.
+     * @param {FileCreateManyAndReturnArgs} args - Arguments to create many Files.
+     * @example
+     * // Create many Files
+     * const file = await prisma.file.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Files and only return the `id`
+     * const fileWithIdOnly = await prisma.file.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FileCreateManyAndReturnArgs>(args?: SelectSubset<T, FileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a File.
+     * @param {FileDeleteArgs} args - Arguments to delete one File.
+     * @example
+     * // Delete one File
+     * const File = await prisma.file.delete({
+     *   where: {
+     *     // ... filter to delete one File
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FileDeleteArgs>(args: SelectSubset<T, FileDeleteArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one File.
+     * @param {FileUpdateArgs} args - Arguments to update one File.
+     * @example
+     * // Update one File
+     * const file = await prisma.file.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FileUpdateArgs>(args: SelectSubset<T, FileUpdateArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Files.
+     * @param {FileDeleteManyArgs} args - Arguments to filter Files to delete.
+     * @example
+     * // Delete a few Files
+     * const { count } = await prisma.file.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FileDeleteManyArgs>(args?: SelectSubset<T, FileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Files.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Files
+     * const file = await prisma.file.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FileUpdateManyArgs>(args: SelectSubset<T, FileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Files and returns the data updated in the database.
+     * @param {FileUpdateManyAndReturnArgs} args - Arguments to update many Files.
+     * @example
+     * // Update many Files
+     * const file = await prisma.file.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Files and only return the `id`
+     * const fileWithIdOnly = await prisma.file.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FileUpdateManyAndReturnArgs>(args: SelectSubset<T, FileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one File.
+     * @param {FileUpsertArgs} args - Arguments to update or create a File.
+     * @example
+     * // Update or create a File
+     * const file = await prisma.file.upsert({
+     *   create: {
+     *     // ... data to create a File
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the File we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FileUpsertArgs>(args: SelectSubset<T, FileUpsertArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Files.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileCountArgs} args - Arguments to filter Files to count.
+     * @example
+     * // Count the number of Files
+     * const count = await prisma.file.count({
+     *   where: {
+     *     // ... the filter for the Files we want to count
+     *   }
+     * })
+    **/
+    count<T extends FileCountArgs>(
+      args?: Subset<T, FileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a File.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FileAggregateArgs>(args: Subset<T, FileAggregateArgs>): Prisma.PrismaPromise<GetFileAggregateType<T>>
+
+    /**
+     * Group by File.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FileGroupByArgs['orderBy'] }
+        : { orderBy?: FileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the File model
+   */
+  readonly fields: FileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for File.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sheet<T extends File$sheetArgs<ExtArgs> = {}>(args?: Subset<T, File$sheetArgs<ExtArgs>>): Prisma__SheetClient<$Result.GetResult<Prisma.$SheetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the File model
+   */
+  interface FileFieldRefs {
+    readonly id: FieldRef<"File", 'String'>
+    readonly filename: FieldRef<"File", 'String'>
+    readonly url: FieldRef<"File", 'String'>
+    readonly filePath: FieldRef<"File", 'String'>
+    readonly fileType: FieldRef<"File", 'String'>
+    readonly size: FieldRef<"File", 'Int'>
+    readonly uploadAt: FieldRef<"File", 'DateTime'>
+    readonly userId: FieldRef<"File", 'String'>
+    readonly createdAt: FieldRef<"File", 'DateTime'>
+    readonly updatedAt: FieldRef<"File", 'DateTime'>
+    readonly sheetId: FieldRef<"File", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * File findUnique
+   */
+  export type FileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File findUniqueOrThrow
+   */
+  export type FileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File findFirst
+   */
+  export type FileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Files.
+     */
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File findFirstOrThrow
+   */
+  export type FileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Files.
+     */
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File findMany
+   */
+  export type FileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which Files to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File create
+   */
+  export type FileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a File.
+     */
+    data: XOR<FileCreateInput, FileUncheckedCreateInput>
+  }
+
+  /**
+   * File createMany
+   */
+  export type FileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Files.
+     */
+    data: FileCreateManyInput | FileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * File createManyAndReturn
+   */
+  export type FileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * The data used to create many Files.
+     */
+    data: FileCreateManyInput | FileCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * File update
+   */
+  export type FileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a File.
+     */
+    data: XOR<FileUpdateInput, FileUncheckedUpdateInput>
+    /**
+     * Choose, which File to update.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File updateMany
+   */
+  export type FileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Files.
+     */
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyInput>
+    /**
+     * Filter which Files to update
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * File updateManyAndReturn
+   */
+  export type FileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * The data used to update Files.
+     */
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyInput>
+    /**
+     * Filter which Files to update
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * File upsert
+   */
+  export type FileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the File to update in case it exists.
+     */
+    where: FileWhereUniqueInput
+    /**
+     * In case the File found by the `where` argument doesn't exist, create a new File with this data.
+     */
+    create: XOR<FileCreateInput, FileUncheckedCreateInput>
+    /**
+     * In case the File was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FileUpdateInput, FileUncheckedUpdateInput>
+  }
+
+  /**
+   * File delete
+   */
+  export type FileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter which File to delete.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File deleteMany
+   */
+  export type FileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Files to delete
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * File.sheet
+   */
+  export type File$sheetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sheet
+     */
+    select?: SheetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sheet
+     */
+    omit?: SheetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SheetInclude<ExtArgs> | null
+    where?: SheetWhereInput
+  }
+
+  /**
+   * File without action
+   */
+  export type FileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Reminder
    */
 
@@ -40395,6 +41789,7 @@ export namespace Prisma {
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
     chart?: boolean | Sheet$chartArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
+    files?: boolean | Sheet$filesArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sheet"]>
 
@@ -40433,6 +41828,7 @@ export namespace Prisma {
     snapshots?: boolean | Sheet$snapshotsArgs<ExtArgs>
     chart?: boolean | Sheet$chartArgs<ExtArgs>
     project?: boolean | ProjectDefaultArgs<ExtArgs>
+    files?: boolean | Sheet$filesArgs<ExtArgs>
     _count?: boolean | SheetCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SheetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -40449,6 +41845,7 @@ export namespace Prisma {
       snapshots: Prisma.$SheetSnapshotPayload<ExtArgs>[]
       chart: Prisma.$ChartTablePayload<ExtArgs> | null
       project: Prisma.$ProjectPayload<ExtArgs>
+      files: Prisma.$FilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -40855,6 +42252,7 @@ export namespace Prisma {
     snapshots<T extends Sheet$snapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$snapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SheetSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chart<T extends Sheet$chartArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$chartArgs<ExtArgs>>): Prisma__ChartTableClient<$Result.GetResult<Prisma.$ChartTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    files<T extends Sheet$filesArgs<ExtArgs> = {}>(args?: Subset<T, Sheet$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -41350,6 +42748,30 @@ export namespace Prisma {
      */
     include?: ChartTableInclude<ExtArgs> | null
     where?: ChartTableWhereInput
+  }
+
+  /**
+   * Sheet.files
+   */
+  export type Sheet$filesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    cursor?: FileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
   }
 
   /**
@@ -44758,6 +46180,7 @@ export namespace Prisma {
     fileImportByEmployees: 'fileImportByEmployees',
     weeklySummary: 'weeklySummary',
     createNewProject: 'createNewProject',
+    submittedProject: 'submittedProject',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -44996,8 +46419,9 @@ export namespace Prisma {
 
 
   export const TagScalarFieldEnum: {
-    clientId: 'clientId',
-    tags: 'tags',
+    id: 'id',
+    programId: 'programId',
+    name: 'name',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -45055,6 +46479,23 @@ export namespace Prisma {
   };
 
   export type ChartTableScalarFieldEnum = (typeof ChartTableScalarFieldEnum)[keyof typeof ChartTableScalarFieldEnum]
+
+
+  export const FileScalarFieldEnum: {
+    id: 'id',
+    filename: 'filename',
+    url: 'url',
+    filePath: 'filePath',
+    fileType: 'fileType',
+    size: 'size',
+    uploadAt: 'uploadAt',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    sheetId: 'sheetId'
+  };
+
+  export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
 
 
   export const ReminderScalarFieldEnum: {
@@ -45278,6 +46719,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'NotificationType'
+   */
+  export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+    
+
+
+  /**
+   * Reference to a field of type 'NotificationType[]'
+   */
+  export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
     
 
 
@@ -45595,7 +47050,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonListRelationFilter
     tickets?: TicketListRelationFilter
     programs?: ProgramListRelationFilter
-    tags?: XOR<TagNullableScalarRelationFilter, TagWhereInput> | null
   }
 
   export type ClientOrderByWithRelationInput = {
@@ -45627,7 +47081,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonOrderByRelationAggregateInput
     tickets?: TicketOrderByRelationAggregateInput
     programs?: ProgramOrderByRelationAggregateInput
-    tags?: TagOrderByWithRelationInput
   }
 
   export type ClientWhereUniqueInput = Prisma.AtLeast<{
@@ -45662,7 +47115,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonListRelationFilter
     tickets?: TicketListRelationFilter
     programs?: ProgramListRelationFilter
-    tags?: XOR<TagNullableScalarRelationFilter, TagWhereInput> | null
   }, "id" | "userId" | "email">
 
   export type ClientOrderByWithAggregationInput = {
@@ -46000,7 +47452,7 @@ export namespace Prisma {
     receiverIds?: StringNullableListFilter<"Notification">
     projectId?: StringNullableFilter<"Notification"> | string | null
     context?: StringFilter<"Notification"> | string
-    type?: StringFilter<"Notification"> | string
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolFilter<"Notification"> | boolean
     createdAt?: DateTimeFilter<"Notification"> | Date | string
     updatedAt?: DateTimeFilter<"Notification"> | Date | string
@@ -46029,7 +47481,7 @@ export namespace Prisma {
     receiverIds?: StringNullableListFilter<"Notification">
     projectId?: StringNullableFilter<"Notification"> | string | null
     context?: StringFilter<"Notification"> | string
-    type?: StringFilter<"Notification"> | string
+    type?: EnumNotificationTypeFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolFilter<"Notification"> | boolean
     createdAt?: DateTimeFilter<"Notification"> | Date | string
     updatedAt?: DateTimeFilter<"Notification"> | Date | string
@@ -46060,7 +47512,7 @@ export namespace Prisma {
     receiverIds?: StringNullableListFilter<"Notification">
     projectId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
     context?: StringWithAggregatesFilter<"Notification"> | string
-    type?: StringWithAggregatesFilter<"Notification"> | string
+    type?: EnumNotificationTypeWithAggregatesFilter<"Notification"> | $Enums.NotificationType
     isRead?: BoolWithAggregatesFilter<"Notification"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
@@ -46184,6 +47636,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFilter<"NotificationPermissionManager"> | boolean
     weeklySummary?: BoolFilter<"NotificationPermissionManager"> | boolean
     createNewProject?: BoolFilter<"NotificationPermissionManager"> | boolean
+    submittedProject?: BoolFilter<"NotificationPermissionManager"> | boolean
     createdAt?: DateTimeFilter<"NotificationPermissionManager"> | Date | string
     updatedAt?: DateTimeFilter<"NotificationPermissionManager"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -46195,6 +47648,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -46209,6 +47663,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFilter<"NotificationPermissionManager"> | boolean
     weeklySummary?: BoolFilter<"NotificationPermissionManager"> | boolean
     createNewProject?: BoolFilter<"NotificationPermissionManager"> | boolean
+    submittedProject?: BoolFilter<"NotificationPermissionManager"> | boolean
     createdAt?: DateTimeFilter<"NotificationPermissionManager"> | Date | string
     updatedAt?: DateTimeFilter<"NotificationPermissionManager"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -46220,6 +47675,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: NotificationPermissionManagerCountOrderByAggregateInput
@@ -46236,6 +47692,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolWithAggregatesFilter<"NotificationPermissionManager"> | boolean
     weeklySummary?: BoolWithAggregatesFilter<"NotificationPermissionManager"> | boolean
     createNewProject?: BoolWithAggregatesFilter<"NotificationPermissionManager"> | boolean
+    submittedProject?: BoolWithAggregatesFilter<"NotificationPermissionManager"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"NotificationPermissionManager"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"NotificationPermissionManager"> | Date | string
   }
@@ -46536,6 +47993,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Program"> | Date | string
     client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
     projects?: ProjectListRelationFilter
+    tags?: TagListRelationFilter
   }
 
   export type ProgramOrderByWithRelationInput = {
@@ -46551,6 +48009,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     client?: ClientOrderByWithRelationInput
     projects?: ProjectOrderByRelationAggregateInput
+    tags?: TagOrderByRelationAggregateInput
   }
 
   export type ProgramWhereUniqueInput = Prisma.AtLeast<{
@@ -46569,6 +48028,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Program"> | Date | string
     client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
     projects?: ProjectListRelationFilter
+    tags?: TagListRelationFilter
   }, "id">
 
   export type ProgramOrderByWithAggregationInput = {
@@ -47370,6 +48830,7 @@ export namespace Prisma {
     otpVerification?: XOR<OtpVerificationNullableScalarRelationFilter, OtpVerificationWhereInput> | null
     payments?: PaymentListRelationFilter
     activities?: ActivityListRelationFilter
+    file?: FileListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -47403,6 +48864,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationOrderByWithRelationInput
     payments?: PaymentOrderByRelationAggregateInput
     activities?: ActivityOrderByRelationAggregateInput
+    file?: FileOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -47439,6 +48901,7 @@ export namespace Prisma {
     otpVerification?: XOR<OtpVerificationNullableScalarRelationFilter, OtpVerificationWhereInput> | null
     payments?: PaymentListRelationFilter
     activities?: ActivityListRelationFilter
+    file?: FileListRelationFilter
   }, "id" | "email" | "phoneNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -47487,35 +48950,39 @@ export namespace Prisma {
     AND?: TagWhereInput | TagWhereInput[]
     OR?: TagWhereInput[]
     NOT?: TagWhereInput | TagWhereInput[]
-    clientId?: StringFilter<"Tag"> | string
-    tags?: StringNullableListFilter<"Tag">
+    id?: StringFilter<"Tag"> | string
+    programId?: StringFilter<"Tag"> | string
+    name?: StringFilter<"Tag"> | string
     createdAt?: DateTimeFilter<"Tag"> | Date | string
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    program?: XOR<ProgramScalarRelationFilter, ProgramWhereInput>
   }
 
   export type TagOrderByWithRelationInput = {
-    clientId?: SortOrder
-    tags?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    client?: ClientOrderByWithRelationInput
+    program?: ProgramOrderByWithRelationInput
   }
 
   export type TagWhereUniqueInput = Prisma.AtLeast<{
-    clientId?: string
+    id?: string
     AND?: TagWhereInput | TagWhereInput[]
     OR?: TagWhereInput[]
     NOT?: TagWhereInput | TagWhereInput[]
-    tags?: StringNullableListFilter<"Tag">
+    programId?: StringFilter<"Tag"> | string
+    name?: StringFilter<"Tag"> | string
     createdAt?: DateTimeFilter<"Tag"> | Date | string
     updatedAt?: DateTimeFilter<"Tag"> | Date | string
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
-  }, "clientId">
+    program?: XOR<ProgramScalarRelationFilter, ProgramWhereInput>
+  }, "id">
 
   export type TagOrderByWithAggregationInput = {
-    clientId?: SortOrder
-    tags?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TagCountOrderByAggregateInput
@@ -47527,8 +48994,9 @@ export namespace Prisma {
     AND?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
     OR?: TagScalarWhereWithAggregatesInput[]
     NOT?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
-    clientId?: StringWithAggregatesFilter<"Tag"> | string
-    tags?: StringNullableListFilter<"Tag">
+    id?: StringWithAggregatesFilter<"Tag"> | string
+    programId?: StringWithAggregatesFilter<"Tag"> | string
+    name?: StringWithAggregatesFilter<"Tag"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
   }
@@ -47798,6 +49266,96 @@ export namespace Prisma {
     sheetId?: StringNullableWithAggregatesFilter<"ChartTable"> | string | null
   }
 
+  export type FileWhereInput = {
+    AND?: FileWhereInput | FileWhereInput[]
+    OR?: FileWhereInput[]
+    NOT?: FileWhereInput | FileWhereInput[]
+    id?: StringFilter<"File"> | string
+    filename?: StringFilter<"File"> | string
+    url?: StringFilter<"File"> | string
+    filePath?: StringFilter<"File"> | string
+    fileType?: StringFilter<"File"> | string
+    size?: IntFilter<"File"> | number
+    uploadAt?: DateTimeFilter<"File"> | Date | string
+    userId?: StringFilter<"File"> | string
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
+    sheetId?: StringFilter<"File"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sheet?: XOR<SheetNullableScalarRelationFilter, SheetWhereInput> | null
+  }
+
+  export type FileOrderByWithRelationInput = {
+    id?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    filePath?: SortOrder
+    fileType?: SortOrder
+    size?: SortOrder
+    uploadAt?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sheetId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    sheet?: SheetOrderByWithRelationInput
+  }
+
+  export type FileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FileWhereInput | FileWhereInput[]
+    OR?: FileWhereInput[]
+    NOT?: FileWhereInput | FileWhereInput[]
+    filename?: StringFilter<"File"> | string
+    url?: StringFilter<"File"> | string
+    filePath?: StringFilter<"File"> | string
+    fileType?: StringFilter<"File"> | string
+    size?: IntFilter<"File"> | number
+    uploadAt?: DateTimeFilter<"File"> | Date | string
+    userId?: StringFilter<"File"> | string
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
+    sheetId?: StringFilter<"File"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    sheet?: XOR<SheetNullableScalarRelationFilter, SheetWhereInput> | null
+  }, "id">
+
+  export type FileOrderByWithAggregationInput = {
+    id?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    filePath?: SortOrder
+    fileType?: SortOrder
+    size?: SortOrder
+    uploadAt?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sheetId?: SortOrder
+    _count?: FileCountOrderByAggregateInput
+    _avg?: FileAvgOrderByAggregateInput
+    _max?: FileMaxOrderByAggregateInput
+    _min?: FileMinOrderByAggregateInput
+    _sum?: FileSumOrderByAggregateInput
+  }
+
+  export type FileScalarWhereWithAggregatesInput = {
+    AND?: FileScalarWhereWithAggregatesInput | FileScalarWhereWithAggregatesInput[]
+    OR?: FileScalarWhereWithAggregatesInput[]
+    NOT?: FileScalarWhereWithAggregatesInput | FileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"File"> | string
+    filename?: StringWithAggregatesFilter<"File"> | string
+    url?: StringWithAggregatesFilter<"File"> | string
+    filePath?: StringWithAggregatesFilter<"File"> | string
+    fileType?: StringWithAggregatesFilter<"File"> | string
+    size?: IntWithAggregatesFilter<"File"> | number
+    uploadAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
+    userId?: StringWithAggregatesFilter<"File"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
+    sheetId?: StringWithAggregatesFilter<"File"> | string
+  }
+
   export type ReminderWhereInput = {
     AND?: ReminderWhereInput | ReminderWhereInput[]
     OR?: ReminderWhereInput[]
@@ -47899,6 +49457,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotListRelationFilter
     chart?: XOR<ChartTableNullableScalarRelationFilter, ChartTableWhereInput> | null
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    files?: FileListRelationFilter
   }
 
   export type SheetOrderByWithRelationInput = {
@@ -47912,6 +49471,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotOrderByRelationAggregateInput
     chart?: ChartTableOrderByWithRelationInput
     project?: ProjectOrderByWithRelationInput
+    files?: FileOrderByRelationAggregateInput
   }
 
   export type SheetWhereUniqueInput = Prisma.AtLeast<{
@@ -47929,6 +49489,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotListRelationFilter
     chart?: XOR<ChartTableNullableScalarRelationFilter, ChartTableWhereInput> | null
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    files?: FileListRelationFilter
   }, "id" | "projectId_chartId">
 
   export type SheetOrderByWithAggregationInput = {
@@ -48259,7 +49820,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateInput = {
@@ -48290,7 +49850,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientUpdateInput = {
@@ -48321,7 +49880,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateInput = {
@@ -48352,7 +49910,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ClientCreateManyInput = {
@@ -48719,7 +50276,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48732,7 +50289,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48745,7 +50302,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48758,7 +50315,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48771,7 +50328,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48783,7 +50340,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48795,7 +50352,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48909,6 +50466,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutNotificationManagerInput
@@ -48920,6 +50478,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -48929,6 +50488,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutNotificationManagerNestedInput
@@ -48940,6 +50500,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48950,6 +50511,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -48959,6 +50521,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48969,6 +50532,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49289,6 +50853,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     client: ClientCreateNestedOneWithoutProgramsInput
     projects?: ProjectCreateNestedManyWithoutProgramInput
+    tags?: TagCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateInput = {
@@ -49303,6 +50868,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectUncheckedCreateNestedManyWithoutProgramInput
+    tags?: TagUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUpdateInput = {
@@ -49317,6 +50883,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: ClientUpdateOneRequiredWithoutProgramsNestedInput
     projects?: ProjectUpdateManyWithoutProgramNestedInput
+    tags?: TagUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateInput = {
@@ -49331,6 +50898,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUncheckedUpdateManyWithoutProgramNestedInput
+    tags?: TagUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramCreateManyInput = {
@@ -50200,6 +51768,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -50233,6 +51802,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -50266,6 +51836,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -50299,6 +51870,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -50356,49 +51928,56 @@ export namespace Prisma {
   }
 
   export type TagCreateInput = {
-    tags?: TagCreatetagsInput | string[]
+    id?: string
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    client: ClientCreateNestedOneWithoutTagsInput
+    program: ProgramCreateNestedOneWithoutTagsInput
   }
 
   export type TagUncheckedCreateInput = {
-    clientId: string
-    tags?: TagCreatetagsInput | string[]
+    id?: string
+    programId: string
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TagUpdateInput = {
-    tags?: TagUpdatetagsInput | string[]
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client?: ClientUpdateOneRequiredWithoutTagsNestedInput
+    program?: ProgramUpdateOneRequiredWithoutTagsNestedInput
   }
 
   export type TagUncheckedUpdateInput = {
-    clientId?: StringFieldUpdateOperationsInput | string
-    tags?: TagUpdatetagsInput | string[]
+    id?: StringFieldUpdateOperationsInput | string
+    programId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TagCreateManyInput = {
-    clientId: string
-    tags?: TagCreatetagsInput | string[]
+    id?: string
+    programId: string
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TagUpdateManyMutationInput = {
-    tags?: TagUpdatetagsInput | string[]
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TagUncheckedUpdateManyInput = {
-    clientId?: StringFieldUpdateOperationsInput | string
-    tags?: TagUpdatetagsInput | string[]
+    id?: StringFieldUpdateOperationsInput | string
+    programId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -50678,6 +52257,102 @@ export namespace Prisma {
     sheetId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type FileCreateInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutFileInput
+    sheet?: SheetCreateNestedOneWithoutFilesInput
+  }
+
+  export type FileUncheckedCreateInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sheetId: string
+  }
+
+  export type FileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFileNestedInput
+    sheet?: SheetUpdateOneWithoutFilesNestedInput
+  }
+
+  export type FileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FileCreateManyInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sheetId: string
+  }
+
+  export type FileUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type ReminderCreateInput = {
     id?: string
     message: string
@@ -50785,6 +52460,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateInput = {
@@ -50797,6 +52473,7 @@ export namespace Prisma {
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
     chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUpdateInput = {
@@ -50809,6 +52486,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateInput = {
@@ -50821,6 +52499,7 @@ export namespace Prisma {
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetCreateManyInput = {
@@ -51306,11 +52985,6 @@ export namespace Prisma {
     none?: ProgramWhereInput
   }
 
-  export type TagNullableScalarRelationFilter = {
-    is?: TagWhereInput | null
-    isNot?: TagWhereInput | null
-  }
-
   export type ReferredPersonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -51633,6 +53307,13 @@ export namespace Prisma {
     joinedDate?: SortOrder
   }
 
+  export type EnumNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+  }
+
   export type NotificationProvisionListRelationFilter = {
     every?: NotificationProvisionWhereInput
     some?: NotificationProvisionWhereInput
@@ -51675,6 +53356,16 @@ export namespace Prisma {
     isRead?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
   export type NotificationScalarRelationFilter = {
@@ -51738,6 +53429,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -51748,6 +53440,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -51758,6 +53451,7 @@ export namespace Prisma {
     fileImportByEmployees?: SortOrder
     weeklySummary?: SortOrder
     createNewProject?: SortOrder
+    submittedProject?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -51909,6 +53603,16 @@ export namespace Prisma {
   export type ClientScalarRelationFilter = {
     is?: ClientWhereInput
     isNot?: ClientWhereInput
+  }
+
+  export type TagListRelationFilter = {
+    every?: TagWhereInput
+    some?: TagWhereInput
+    none?: TagWhereInput
+  }
+
+  export type TagOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ProgramCountOrderByAggregateInput = {
@@ -52640,7 +54344,17 @@ export namespace Prisma {
     none?: PaymentWhereInput
   }
 
+  export type FileListRelationFilter = {
+    every?: FileWhereInput
+    some?: FileWhereInput
+    none?: FileWhereInput
+  }
+
   export type PaymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FileOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -52729,20 +54443,25 @@ export namespace Prisma {
   }
 
   export type TagCountOrderByAggregateInput = {
-    clientId?: SortOrder
-    tags?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TagMaxOrderByAggregateInput = {
-    clientId?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TagMinOrderByAggregateInput = {
-    clientId?: SortOrder
+    id?: SortOrder
+    programId?: SortOrder
+    name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -52957,6 +54676,83 @@ export namespace Prisma {
     _max?: NestedJsonFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type FileCountOrderByAggregateInput = {
+    id?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    filePath?: SortOrder
+    fileType?: SortOrder
+    size?: SortOrder
+    uploadAt?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sheetId?: SortOrder
+  }
+
+  export type FileAvgOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type FileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    filePath?: SortOrder
+    fileType?: SortOrder
+    size?: SortOrder
+    uploadAt?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sheetId?: SortOrder
+  }
+
+  export type FileMinOrderByAggregateInput = {
+    id?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    filePath?: SortOrder
+    fileType?: SortOrder
+    size?: SortOrder
+    uploadAt?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sheetId?: SortOrder
+  }
+
+  export type FileSumOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type EnumRepeatIntervalNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.RepeatInterval | EnumRepeatIntervalFieldRefInput<$PrismaModel> | null
     in?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
@@ -53095,17 +54891,6 @@ export namespace Prisma {
     projectId?: SortOrder
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type SheetScalarRelationFilter = {
     is?: SheetWhereInput
     isNot?: SheetWhereInput
@@ -53155,22 +54940,6 @@ export namespace Prisma {
   export type CellSumOrderByAggregateInput = {
     row?: SortOrder
     col?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type SheetSnapshotCountOrderByAggregateInput = {
@@ -53310,12 +55079,6 @@ export namespace Prisma {
     connect?: ProgramWhereUniqueInput | ProgramWhereUniqueInput[]
   }
 
-  export type TagCreateNestedOneWithoutClientInput = {
-    create?: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    connectOrCreate?: TagCreateOrConnectWithoutClientInput
-    connect?: TagWhereUniqueInput
-  }
-
   export type ReferredPersonUncheckedCreateNestedManyWithoutClientInput = {
     create?: XOR<ReferredPersonCreateWithoutClientInput, ReferredPersonUncheckedCreateWithoutClientInput> | ReferredPersonCreateWithoutClientInput[] | ReferredPersonUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ReferredPersonCreateOrConnectWithoutClientInput | ReferredPersonCreateOrConnectWithoutClientInput[]
@@ -53335,12 +55098,6 @@ export namespace Prisma {
     connectOrCreate?: ProgramCreateOrConnectWithoutClientInput | ProgramCreateOrConnectWithoutClientInput[]
     createMany?: ProgramCreateManyClientInputEnvelope
     connect?: ProgramWhereUniqueInput | ProgramWhereUniqueInput[]
-  }
-
-  export type TagUncheckedCreateNestedOneWithoutClientInput = {
-    create?: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    connectOrCreate?: TagCreateOrConnectWithoutClientInput
-    connect?: TagWhereUniqueInput
   }
 
   export type EnumIndustryCategoryFieldUpdateOperationsInput = {
@@ -53416,16 +55173,6 @@ export namespace Prisma {
     deleteMany?: ProgramScalarWhereInput | ProgramScalarWhereInput[]
   }
 
-  export type TagUpdateOneWithoutClientNestedInput = {
-    create?: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    connectOrCreate?: TagCreateOrConnectWithoutClientInput
-    upsert?: TagUpsertWithoutClientInput
-    disconnect?: TagWhereInput | boolean
-    delete?: TagWhereInput | boolean
-    connect?: TagWhereUniqueInput
-    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutClientInput, TagUpdateWithoutClientInput>, TagUncheckedUpdateWithoutClientInput>
-  }
-
   export type ReferredPersonUncheckedUpdateManyWithoutClientNestedInput = {
     create?: XOR<ReferredPersonCreateWithoutClientInput, ReferredPersonUncheckedCreateWithoutClientInput> | ReferredPersonCreateWithoutClientInput[] | ReferredPersonUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ReferredPersonCreateOrConnectWithoutClientInput | ReferredPersonCreateOrConnectWithoutClientInput[]
@@ -53466,16 +55213,6 @@ export namespace Prisma {
     update?: ProgramUpdateWithWhereUniqueWithoutClientInput | ProgramUpdateWithWhereUniqueWithoutClientInput[]
     updateMany?: ProgramUpdateManyWithWhereWithoutClientInput | ProgramUpdateManyWithWhereWithoutClientInput[]
     deleteMany?: ProgramScalarWhereInput | ProgramScalarWhereInput[]
-  }
-
-  export type TagUncheckedUpdateOneWithoutClientNestedInput = {
-    create?: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    connectOrCreate?: TagCreateOrConnectWithoutClientInput
-    upsert?: TagUpsertWithoutClientInput
-    disconnect?: TagWhereInput | boolean
-    delete?: TagWhereInput | boolean
-    connect?: TagWhereUniqueInput
-    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutClientInput, TagUpdateWithoutClientInput>, TagUncheckedUpdateWithoutClientInput>
   }
 
   export type EmployeeCreateskillsInput = {
@@ -53757,6 +55494,10 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type EnumNotificationTypeFieldUpdateOperationsInput = {
+    set?: $Enums.NotificationType
+  }
+
   export type NotificationProvisionUpdateManyWithoutNotificationNestedInput = {
     create?: XOR<NotificationProvisionCreateWithoutNotificationInput, NotificationProvisionUncheckedCreateWithoutNotificationInput> | NotificationProvisionCreateWithoutNotificationInput[] | NotificationProvisionUncheckedCreateWithoutNotificationInput[]
     connectOrCreate?: NotificationProvisionCreateOrConnectWithoutNotificationInput | NotificationProvisionCreateOrConnectWithoutNotificationInput[]
@@ -53910,11 +55651,25 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
   }
 
+  export type TagCreateNestedManyWithoutProgramInput = {
+    create?: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput> | TagCreateWithoutProgramInput[] | TagUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutProgramInput | TagCreateOrConnectWithoutProgramInput[]
+    createMany?: TagCreateManyProgramInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+  }
+
   export type ProjectUncheckedCreateNestedManyWithoutProgramInput = {
     create?: XOR<ProjectCreateWithoutProgramInput, ProjectUncheckedCreateWithoutProgramInput> | ProjectCreateWithoutProgramInput[] | ProjectUncheckedCreateWithoutProgramInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutProgramInput | ProjectCreateOrConnectWithoutProgramInput[]
     createMany?: ProjectCreateManyProgramInputEnvelope
     connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+  }
+
+  export type TagUncheckedCreateNestedManyWithoutProgramInput = {
+    create?: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput> | TagCreateWithoutProgramInput[] | TagUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutProgramInput | TagCreateOrConnectWithoutProgramInput[]
+    createMany?: TagCreateManyProgramInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
   }
 
   export type EnumPriorityFieldUpdateOperationsInput = {
@@ -53943,6 +55698,20 @@ export namespace Prisma {
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
   }
 
+  export type TagUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput> | TagCreateWithoutProgramInput[] | TagUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutProgramInput | TagCreateOrConnectWithoutProgramInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutProgramInput | TagUpsertWithWhereUniqueWithoutProgramInput[]
+    createMany?: TagCreateManyProgramInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutProgramInput | TagUpdateWithWhereUniqueWithoutProgramInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutProgramInput | TagUpdateManyWithWhereWithoutProgramInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
+  }
+
   export type ProjectUncheckedUpdateManyWithoutProgramNestedInput = {
     create?: XOR<ProjectCreateWithoutProgramInput, ProjectUncheckedCreateWithoutProgramInput> | ProjectCreateWithoutProgramInput[] | ProjectUncheckedCreateWithoutProgramInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutProgramInput | ProjectCreateOrConnectWithoutProgramInput[]
@@ -53955,6 +55724,20 @@ export namespace Prisma {
     update?: ProjectUpdateWithWhereUniqueWithoutProgramInput | ProjectUpdateWithWhereUniqueWithoutProgramInput[]
     updateMany?: ProjectUpdateManyWithWhereWithoutProgramInput | ProjectUpdateManyWithWhereWithoutProgramInput[]
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+  }
+
+  export type TagUncheckedUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput> | TagCreateWithoutProgramInput[] | TagUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutProgramInput | TagCreateOrConnectWithoutProgramInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutProgramInput | TagUpsertWithWhereUniqueWithoutProgramInput[]
+    createMany?: TagCreateManyProgramInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutProgramInput | TagUpdateWithWhereUniqueWithoutProgramInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutProgramInput | TagUpdateManyWithWhereWithoutProgramInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
   }
 
   export type ProjectCreatechartListInput = {
@@ -54714,6 +56497,13 @@ export namespace Prisma {
     connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
   }
 
+  export type FileCreateNestedManyWithoutUserInput = {
+    create?: XOR<FileCreateWithoutUserInput, FileUncheckedCreateWithoutUserInput> | FileCreateWithoutUserInput[] | FileUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutUserInput | FileCreateOrConnectWithoutUserInput[]
+    createMany?: FileCreateManyUserInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+  }
+
   export type ClientUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
     connectOrCreate?: ClientCreateOrConnectWithoutUserInput
@@ -54805,6 +56595,13 @@ export namespace Prisma {
     connectOrCreate?: ActivityCreateOrConnectWithoutUserInput | ActivityCreateOrConnectWithoutUserInput[]
     createMany?: ActivityCreateManyUserInputEnvelope
     connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+  }
+
+  export type FileUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FileCreateWithoutUserInput, FileUncheckedCreateWithoutUserInput> | FileCreateWithoutUserInput[] | FileUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutUserInput | FileCreateOrConnectWithoutUserInput[]
+    createMany?: FileCreateManyUserInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -54981,6 +56778,20 @@ export namespace Prisma {
     deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
   }
 
+  export type FileUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FileCreateWithoutUserInput, FileUncheckedCreateWithoutUserInput> | FileCreateWithoutUserInput[] | FileUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutUserInput | FileCreateOrConnectWithoutUserInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutUserInput | FileUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FileCreateManyUserInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutUserInput | FileUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutUserInput | FileUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
   export type ClientUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
     connectOrCreate?: ClientCreateOrConnectWithoutUserInput
@@ -55143,27 +56954,32 @@ export namespace Prisma {
     deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
   }
 
-  export type TagCreatetagsInput = {
-    set: string[]
+  export type FileUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FileCreateWithoutUserInput, FileUncheckedCreateWithoutUserInput> | FileCreateWithoutUserInput[] | FileUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutUserInput | FileCreateOrConnectWithoutUserInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutUserInput | FileUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FileCreateManyUserInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutUserInput | FileUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutUserInput | FileUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
-  export type ClientCreateNestedOneWithoutTagsInput = {
-    create?: XOR<ClientCreateWithoutTagsInput, ClientUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutTagsInput
-    connect?: ClientWhereUniqueInput
+  export type ProgramCreateNestedOneWithoutTagsInput = {
+    create?: XOR<ProgramCreateWithoutTagsInput, ProgramUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: ProgramCreateOrConnectWithoutTagsInput
+    connect?: ProgramWhereUniqueInput
   }
 
-  export type TagUpdatetagsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type ClientUpdateOneRequiredWithoutTagsNestedInput = {
-    create?: XOR<ClientCreateWithoutTagsInput, ClientUncheckedCreateWithoutTagsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutTagsInput
-    upsert?: ClientUpsertWithoutTagsInput
-    connect?: ClientWhereUniqueInput
-    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutTagsInput, ClientUpdateWithoutTagsInput>, ClientUncheckedUpdateWithoutTagsInput>
+  export type ProgramUpdateOneRequiredWithoutTagsNestedInput = {
+    create?: XOR<ProgramCreateWithoutTagsInput, ProgramUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: ProgramCreateOrConnectWithoutTagsInput
+    upsert?: ProgramUpsertWithoutTagsInput
+    connect?: ProgramWhereUniqueInput
+    update?: XOR<XOR<ProgramUpdateToOneWithWhereWithoutTagsInput, ProgramUpdateWithoutTagsInput>, ProgramUncheckedUpdateWithoutTagsInput>
   }
 
   export type ClientCreateNestedOneWithoutReferredPersonsInput = {
@@ -55248,6 +57064,44 @@ export namespace Prisma {
     update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutChartInput, SheetUpdateWithoutChartInput>, SheetUncheckedUpdateWithoutChartInput>
   }
 
+  export type UserCreateNestedOneWithoutFileInput = {
+    create?: XOR<UserCreateWithoutFileInput, UserUncheckedCreateWithoutFileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFileInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SheetCreateNestedOneWithoutFilesInput = {
+    create?: XOR<SheetCreateWithoutFilesInput, SheetUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutFilesInput
+    connect?: SheetWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutFileNestedInput = {
+    create?: XOR<UserCreateWithoutFileInput, UserUncheckedCreateWithoutFileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFileInput
+    upsert?: UserUpsertWithoutFileInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFileInput, UserUpdateWithoutFileInput>, UserUncheckedUpdateWithoutFileInput>
+  }
+
+  export type SheetUpdateOneWithoutFilesNestedInput = {
+    create?: XOR<SheetCreateWithoutFilesInput, SheetUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: SheetCreateOrConnectWithoutFilesInput
+    upsert?: SheetUpsertWithoutFilesInput
+    disconnect?: SheetWhereInput | boolean
+    delete?: SheetWhereInput | boolean
+    connect?: SheetWhereUniqueInput
+    update?: XOR<XOR<SheetUpdateToOneWithWhereWithoutFilesInput, SheetUpdateWithoutFilesInput>, SheetUncheckedUpdateWithoutFilesInput>
+  }
+
   export type ReminderCreaterepeatOnDaysInput = {
     set: $Enums.DayOfWeek[]
   }
@@ -55310,6 +57164,13 @@ export namespace Prisma {
     connect?: ProjectWhereUniqueInput
   }
 
+  export type FileCreateNestedManyWithoutSheetInput = {
+    create?: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput> | FileCreateWithoutSheetInput[] | FileUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutSheetInput | FileCreateOrConnectWithoutSheetInput[]
+    createMany?: FileCreateManySheetInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+  }
+
   export type CellUncheckedCreateNestedManyWithoutSheetInput = {
     create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
     connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
@@ -55328,6 +57189,13 @@ export namespace Prisma {
     create?: XOR<ChartTableCreateWithoutSheetInput, ChartTableUncheckedCreateWithoutSheetInput>
     connectOrCreate?: ChartTableCreateOrConnectWithoutSheetInput
     connect?: ChartTableWhereUniqueInput
+  }
+
+  export type FileUncheckedCreateNestedManyWithoutSheetInput = {
+    create?: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput> | FileCreateWithoutSheetInput[] | FileUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutSheetInput | FileCreateOrConnectWithoutSheetInput[]
+    createMany?: FileCreateManySheetInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
   export type CellUpdateManyWithoutSheetNestedInput = {
@@ -55376,6 +57244,20 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutSheetsInput, ProjectUpdateWithoutSheetsInput>, ProjectUncheckedUpdateWithoutSheetsInput>
   }
 
+  export type FileUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput> | FileCreateWithoutSheetInput[] | FileUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutSheetInput | FileCreateOrConnectWithoutSheetInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutSheetInput | FileUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: FileCreateManySheetInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutSheetInput | FileUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutSheetInput | FileUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
   export type CellUncheckedUpdateManyWithoutSheetNestedInput = {
     create?: XOR<CellCreateWithoutSheetInput, CellUncheckedCreateWithoutSheetInput> | CellCreateWithoutSheetInput[] | CellUncheckedCreateWithoutSheetInput[]
     connectOrCreate?: CellCreateOrConnectWithoutSheetInput | CellCreateOrConnectWithoutSheetInput[]
@@ -55414,18 +57296,24 @@ export namespace Prisma {
     update?: XOR<XOR<ChartTableUpdateToOneWithWhereWithoutSheetInput, ChartTableUpdateWithoutSheetInput>, ChartTableUncheckedUpdateWithoutSheetInput>
   }
 
+  export type FileUncheckedUpdateManyWithoutSheetNestedInput = {
+    create?: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput> | FileCreateWithoutSheetInput[] | FileUncheckedCreateWithoutSheetInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutSheetInput | FileCreateOrConnectWithoutSheetInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutSheetInput | FileUpsertWithWhereUniqueWithoutSheetInput[]
+    createMany?: FileCreateManySheetInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutSheetInput | FileUpdateWithWhereUniqueWithoutSheetInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutSheetInput | FileUpdateManyWithWhereWithoutSheetInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
   export type SheetCreateNestedOneWithoutCellsInput = {
     create?: XOR<SheetCreateWithoutCellsInput, SheetUncheckedCreateWithoutCellsInput>
     connectOrCreate?: SheetCreateOrConnectWithoutCellsInput
     connect?: SheetWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type SheetUpdateOneRequiredWithoutCellsNestedInput = {
@@ -55681,6 +57569,23 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeFilter<$PrismaModel> | $Enums.NotificationType
+  }
+
+  export type NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationType | EnumNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationType[] | ListEnumNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.NotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumPriorityFilter<$PrismaModel = never> = {
@@ -55951,6 +57856,22 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type NestedEnumRepeatIntervalNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.RepeatInterval | EnumRepeatIntervalFieldRefInput<$PrismaModel> | null
     in?: $Enums.RepeatInterval[] | ListEnumRepeatIntervalFieldRefInput<$PrismaModel> | null
@@ -55966,22 +57887,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumRepeatIntervalNullableFilter<$PrismaModel>
     _max?: NestedEnumRepeatIntervalNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type ProjectCreateWithoutActivitiesInput = {
@@ -56077,6 +57982,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionCreateNestedManyWithoutUserInput
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -56109,6 +58015,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUncheckedCreateNestedManyWithoutUserInput
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -56226,6 +58133,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUpdateManyWithoutUserNestedInput
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -56258,6 +58166,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUncheckedUpdateManyWithoutUserNestedInput
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutClientInput = {
@@ -56290,6 +58199,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutClientInput = {
@@ -56322,6 +58232,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutClientInput = {
@@ -56412,6 +58323,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectCreateNestedManyWithoutProgramInput
+    tags?: TagCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutClientInput = {
@@ -56425,6 +58337,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectUncheckedCreateNestedManyWithoutProgramInput
+    tags?: TagUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutClientInput = {
@@ -56435,23 +58348,6 @@ export namespace Prisma {
   export type ProgramCreateManyClientInputEnvelope = {
     data: ProgramCreateManyClientInput | ProgramCreateManyClientInput[]
     skipDuplicates?: boolean
-  }
-
-  export type TagCreateWithoutClientInput = {
-    tags?: TagCreatetagsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TagUncheckedCreateWithoutClientInput = {
-    tags?: TagCreatetagsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TagCreateOrConnectWithoutClientInput = {
-    where: TagWhereUniqueInput
-    create: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
   }
 
   export type UserUpsertWithoutClientInput = {
@@ -56495,6 +58391,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClientInput = {
@@ -56527,6 +58424,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ReferredPersonUpsertWithWhereUniqueWithoutClientInput = {
@@ -56627,29 +58525,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Program"> | Date | string
   }
 
-  export type TagUpsertWithoutClientInput = {
-    update: XOR<TagUpdateWithoutClientInput, TagUncheckedUpdateWithoutClientInput>
-    create: XOR<TagCreateWithoutClientInput, TagUncheckedCreateWithoutClientInput>
-    where?: TagWhereInput
-  }
-
-  export type TagUpdateToOneWithWhereWithoutClientInput = {
-    where?: TagWhereInput
-    data: XOR<TagUpdateWithoutClientInput, TagUncheckedUpdateWithoutClientInput>
-  }
-
-  export type TagUpdateWithoutClientInput = {
-    tags?: TagUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TagUncheckedUpdateWithoutClientInput = {
-    tags?: TagUpdatetagsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type UserCreateWithoutEmployeeInput = {
     id?: string
     email: string
@@ -56680,6 +58555,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEmployeeInput = {
@@ -56712,6 +58588,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEmployeeInput = {
@@ -56818,6 +58695,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEmployeeInput = {
@@ -56850,6 +58728,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectEmployeeUpsertWithWhereUniqueWithoutEmployeeInput = {
@@ -56940,6 +58819,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOtpVerificationInput = {
@@ -56972,6 +58852,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOtpVerificationInput = {
@@ -57020,6 +58901,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOtpVerificationInput = {
@@ -57052,6 +58934,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPaymentsInput = {
@@ -57084,6 +58967,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionCreateNestedManyWithoutUserInput
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -57116,6 +59000,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUncheckedCreateNestedManyWithoutUserInput
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -57164,6 +59049,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUpdateManyWithoutUserNestedInput
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -57196,6 +59082,7 @@ export namespace Prisma {
     notifications?: NotificationProvisionUncheckedUpdateManyWithoutUserNestedInput
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutManagerInput = {
@@ -57228,6 +59115,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutManagerInput = {
@@ -57260,6 +59148,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutManagerInput = {
@@ -57402,6 +59291,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutManagerInput = {
@@ -57434,6 +59324,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutManagerInput = {
@@ -57577,6 +59468,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -57609,6 +59501,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -57622,7 +59515,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57634,7 +59527,7 @@ export namespace Prisma {
     receiverIds?: NotificationCreatereceiverIdsInput | string[]
     projectId?: string | null
     context: string
-    type: string
+    type: $Enums.NotificationType
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -57686,6 +59579,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -57718,6 +59612,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type NotificationUpsertWithoutProvisionsInput = {
@@ -57737,7 +59632,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57749,7 +59644,7 @@ export namespace Prisma {
     receiverIds?: NotificationUpdatereceiverIdsInput | string[]
     projectId?: NullableStringFieldUpdateOperationsInput | string | null
     context?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumNotificationTypeFieldUpdateOperationsInput | $Enums.NotificationType
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57785,6 +59680,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationEmployeeInput = {
@@ -57817,6 +59713,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationEmployeeInput = {
@@ -57865,6 +59762,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationEmployeeInput = {
@@ -57897,6 +59795,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationManagerInput = {
@@ -57929,6 +59828,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationManagerInput = {
@@ -57961,6 +59861,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationManagerInput = {
@@ -58009,6 +59910,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationManagerInput = {
@@ -58041,6 +59943,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationClientInput = {
@@ -58073,6 +59976,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationClientInput = {
@@ -58105,6 +60009,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationClientInput = {
@@ -58153,6 +60058,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationClientInput = {
@@ -58185,6 +60091,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationSupporterInput = {
@@ -58217,6 +60124,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationSupporterInput = {
@@ -58249,6 +60157,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationSupporterInput = {
@@ -58297,6 +60206,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationSupporterInput = {
@@ -58329,6 +60239,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationAdminInput = {
@@ -58361,6 +60272,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationAdminInput = {
@@ -58393,6 +60305,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationAdminInput = {
@@ -58441,6 +60354,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationAdminInput = {
@@ -58473,6 +60387,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SuperAdminCreateWithoutNotificationPermissionSuperAdminInput = {
@@ -58562,7 +60477,6 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutClientInput
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutProgramsInput = {
@@ -58592,7 +60506,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutProgramsInput = {
@@ -58668,6 +60581,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TagCreateWithoutProgramInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagUncheckedCreateWithoutProgramInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagCreateOrConnectWithoutProgramInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput>
+  }
+
+  export type TagCreateManyProgramInputEnvelope = {
+    data: TagCreateManyProgramInput | TagCreateManyProgramInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClientUpsertWithoutProgramsInput = {
     update: XOR<ClientUpdateWithoutProgramsInput, ClientUncheckedUpdateWithoutProgramsInput>
     create: XOR<ClientCreateWithoutProgramsInput, ClientUncheckedCreateWithoutProgramsInput>
@@ -58706,7 +60643,6 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutClientNestedInput
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutProgramsInput = {
@@ -58736,7 +60672,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ProjectUpsertWithWhereUniqueWithoutProgramInput = {
@@ -58755,6 +60690,33 @@ export namespace Prisma {
     data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyWithoutProgramInput>
   }
 
+  export type TagUpsertWithWhereUniqueWithoutProgramInput = {
+    where: TagWhereUniqueInput
+    update: XOR<TagUpdateWithoutProgramInput, TagUncheckedUpdateWithoutProgramInput>
+    create: XOR<TagCreateWithoutProgramInput, TagUncheckedCreateWithoutProgramInput>
+  }
+
+  export type TagUpdateWithWhereUniqueWithoutProgramInput = {
+    where: TagWhereUniqueInput
+    data: XOR<TagUpdateWithoutProgramInput, TagUncheckedUpdateWithoutProgramInput>
+  }
+
+  export type TagUpdateManyWithWhereWithoutProgramInput = {
+    where: TagScalarWhereInput
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyWithoutProgramInput>
+  }
+
+  export type TagScalarWhereInput = {
+    AND?: TagScalarWhereInput | TagScalarWhereInput[]
+    OR?: TagScalarWhereInput[]
+    NOT?: TagScalarWhereInput | TagScalarWhereInput[]
+    id?: StringFilter<"Tag"> | string
+    programId?: StringFilter<"Tag"> | string
+    name?: StringFilter<"Tag"> | string
+    createdAt?: DateTimeFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeFilter<"Tag"> | Date | string
+  }
+
   export type ProgramCreateWithoutProjectsInput = {
     id?: string
     programName: string
@@ -58766,6 +60728,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     client: ClientCreateNestedOneWithoutProgramsInput
+    tags?: TagCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutProjectsInput = {
@@ -58779,6 +60742,7 @@ export namespace Prisma {
     progress?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: TagUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutProjectsInput = {
@@ -59038,6 +61002,7 @@ export namespace Prisma {
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     chart?: ChartTableCreateNestedOneWithoutSheetInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutProjectInput = {
@@ -59049,6 +61014,7 @@ export namespace Prisma {
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
     chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutProjectInput = {
@@ -59083,6 +61049,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: ClientUpdateOneRequiredWithoutProgramsNestedInput
+    tags?: TagUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutProjectsInput = {
@@ -59096,6 +61063,7 @@ export namespace Prisma {
     progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: TagUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ManagerUpsertWithoutProjectsInput = {
@@ -59983,6 +61951,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSuperAdminInput = {
@@ -60015,6 +61984,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSuperAdminInput = {
@@ -60086,6 +62056,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSuperAdminInput = {
@@ -60118,6 +62089,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type NotificationPermissionSuperAdminUpsertWithoutUserInput = {
@@ -60179,6 +62151,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSupporterInput = {
@@ -60211,6 +62184,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSupporterInput = {
@@ -60259,6 +62233,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSupporterInput = {
@@ -60291,6 +62266,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectCreateWithoutTasksInput = {
@@ -60452,7 +62428,6 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutClientInput
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutTicketsInput = {
@@ -60482,7 +62457,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
     programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutTicketsInput = {
@@ -60528,7 +62502,6 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutClientNestedInput
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutTicketsInput = {
@@ -60558,7 +62531,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ClientCreateWithoutUserInput = {
@@ -60588,7 +62560,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutUserInput = {
@@ -60618,7 +62589,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutUserInput = {
@@ -60777,6 +62747,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60786,6 +62757,7 @@ export namespace Prisma {
     fileImportByEmployees?: boolean
     weeklySummary?: boolean
     createNewProject?: boolean
+    submittedProject?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60971,6 +62943,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FileCreateWithoutUserInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sheet?: SheetCreateNestedOneWithoutFilesInput
+  }
+
+  export type FileUncheckedCreateWithoutUserInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sheetId: string
+  }
+
+  export type FileCreateOrConnectWithoutUserInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutUserInput, FileUncheckedCreateWithoutUserInput>
+  }
+
+  export type FileCreateManyUserInputEnvelope = {
+    data: FileCreateManyUserInput | FileCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClientUpsertWithoutUserInput = {
     update: XOR<ClientUpdateWithoutUserInput, ClientUncheckedUpdateWithoutUserInput>
     create: XOR<ClientCreateWithoutUserInput, ClientUncheckedCreateWithoutUserInput>
@@ -61009,7 +63017,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutUserInput = {
@@ -61039,7 +63046,6 @@ export namespace Prisma {
     referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ManagerUpsertWithoutUserInput = {
@@ -61240,6 +63246,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61249,6 +63256,7 @@ export namespace Prisma {
     fileImportByEmployees?: BoolFieldUpdateOperationsInput | boolean
     weeklySummary?: BoolFieldUpdateOperationsInput | boolean
     createNewProject?: BoolFieldUpdateOperationsInput | boolean
+    submittedProject?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61435,140 +63443,109 @@ export namespace Prisma {
     data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type ClientCreateWithoutTagsInput = {
+  export type FileUpsertWithWhereUniqueWithoutUserInput = {
+    where: FileWhereUniqueInput
+    update: XOR<FileUpdateWithoutUserInput, FileUncheckedUpdateWithoutUserInput>
+    create: XOR<FileCreateWithoutUserInput, FileUncheckedCreateWithoutUserInput>
+  }
+
+  export type FileUpdateWithWhereUniqueWithoutUserInput = {
+    where: FileWhereUniqueInput
+    data: XOR<FileUpdateWithoutUserInput, FileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type FileUpdateManyWithWhereWithoutUserInput = {
+    where: FileScalarWhereInput
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type FileScalarWhereInput = {
+    AND?: FileScalarWhereInput | FileScalarWhereInput[]
+    OR?: FileScalarWhereInput[]
+    NOT?: FileScalarWhereInput | FileScalarWhereInput[]
+    id?: StringFilter<"File"> | string
+    filename?: StringFilter<"File"> | string
+    url?: StringFilter<"File"> | string
+    filePath?: StringFilter<"File"> | string
+    fileType?: StringFilter<"File"> | string
+    size?: IntFilter<"File"> | number
+    uploadAt?: DateTimeFilter<"File"> | Date | string
+    userId?: StringFilter<"File"> | string
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
+    sheetId?: StringFilter<"File"> | string
+  }
+
+  export type ProgramCreateWithoutTagsInput = {
     id?: string
-    email: string
-    contactPersonName?: string | null
-    clientLogo?: string | null
-    favicon?: string | null
-    primaryColor?: string | null
-    secondaryColor?: string | null
-    footerText?: string | null
-    supportMail?: string | null
-    subdomain?: string | null
-    serverLocation?: string | null
-    category?: $Enums.IndustryCategory
-    onboarding?: boolean
-    welcomeDashboard?: boolean
-    chartList?: ClientCreatechartListInput | string[]
-    storage?: string | null
-    threshold?: number | null
-    archiveAfter?: number | null
-    userWarning?: boolean
-    adminNote?: string | null
-    trialPeriod?: number | null
+    programName: string
+    datetime: string
+    programDescription: string
+    priority: $Enums.Priority
+    deadline: string
+    progress?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user?: UserCreateNestedOneWithoutClientInput
-    referredPersons?: ReferredPersonCreateNestedManyWithoutClientInput
-    tickets?: TicketCreateNestedManyWithoutClientInput
-    programs?: ProgramCreateNestedManyWithoutClientInput
+    client: ClientCreateNestedOneWithoutProgramsInput
+    projects?: ProjectCreateNestedManyWithoutProgramInput
   }
 
-  export type ClientUncheckedCreateWithoutTagsInput = {
+  export type ProgramUncheckedCreateWithoutTagsInput = {
     id?: string
-    userId?: string | null
-    email: string
-    contactPersonName?: string | null
-    clientLogo?: string | null
-    favicon?: string | null
-    primaryColor?: string | null
-    secondaryColor?: string | null
-    footerText?: string | null
-    supportMail?: string | null
-    subdomain?: string | null
-    serverLocation?: string | null
-    category?: $Enums.IndustryCategory
-    onboarding?: boolean
-    welcomeDashboard?: boolean
-    chartList?: ClientCreatechartListInput | string[]
-    storage?: string | null
-    threshold?: number | null
-    archiveAfter?: number | null
-    userWarning?: boolean
-    adminNote?: string | null
-    trialPeriod?: number | null
+    userId: string
+    programName: string
+    datetime: string
+    programDescription: string
+    priority: $Enums.Priority
+    deadline: string
+    progress?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    referredPersons?: ReferredPersonUncheckedCreateNestedManyWithoutClientInput
-    tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
-    programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutProgramInput
   }
 
-  export type ClientCreateOrConnectWithoutTagsInput = {
-    where: ClientWhereUniqueInput
-    create: XOR<ClientCreateWithoutTagsInput, ClientUncheckedCreateWithoutTagsInput>
+  export type ProgramCreateOrConnectWithoutTagsInput = {
+    where: ProgramWhereUniqueInput
+    create: XOR<ProgramCreateWithoutTagsInput, ProgramUncheckedCreateWithoutTagsInput>
   }
 
-  export type ClientUpsertWithoutTagsInput = {
-    update: XOR<ClientUpdateWithoutTagsInput, ClientUncheckedUpdateWithoutTagsInput>
-    create: XOR<ClientCreateWithoutTagsInput, ClientUncheckedCreateWithoutTagsInput>
-    where?: ClientWhereInput
+  export type ProgramUpsertWithoutTagsInput = {
+    update: XOR<ProgramUpdateWithoutTagsInput, ProgramUncheckedUpdateWithoutTagsInput>
+    create: XOR<ProgramCreateWithoutTagsInput, ProgramUncheckedCreateWithoutTagsInput>
+    where?: ProgramWhereInput
   }
 
-  export type ClientUpdateToOneWithWhereWithoutTagsInput = {
-    where?: ClientWhereInput
-    data: XOR<ClientUpdateWithoutTagsInput, ClientUncheckedUpdateWithoutTagsInput>
+  export type ProgramUpdateToOneWithWhereWithoutTagsInput = {
+    where?: ProgramWhereInput
+    data: XOR<ProgramUpdateWithoutTagsInput, ProgramUncheckedUpdateWithoutTagsInput>
   }
 
-  export type ClientUpdateWithoutTagsInput = {
+  export type ProgramUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
-    clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
-    favicon?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
-    footerText?: NullableStringFieldUpdateOperationsInput | string | null
-    supportMail?: NullableStringFieldUpdateOperationsInput | string | null
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    serverLocation?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: EnumIndustryCategoryFieldUpdateOperationsInput | $Enums.IndustryCategory
-    onboarding?: BoolFieldUpdateOperationsInput | boolean
-    welcomeDashboard?: BoolFieldUpdateOperationsInput | boolean
-    chartList?: ClientUpdatechartListInput | string[]
-    storage?: NullableStringFieldUpdateOperationsInput | string | null
-    threshold?: NullableIntFieldUpdateOperationsInput | number | null
-    archiveAfter?: NullableIntFieldUpdateOperationsInput | number | null
-    userWarning?: BoolFieldUpdateOperationsInput | boolean
-    adminNote?: NullableStringFieldUpdateOperationsInput | string | null
-    trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
+    programName?: StringFieldUpdateOperationsInput | string
+    datetime?: StringFieldUpdateOperationsInput | string
+    programDescription?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: StringFieldUpdateOperationsInput | string
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutClientNestedInput
-    referredPersons?: ReferredPersonUpdateManyWithoutClientNestedInput
-    tickets?: TicketUpdateManyWithoutClientNestedInput
-    programs?: ProgramUpdateManyWithoutClientNestedInput
+    client?: ClientUpdateOneRequiredWithoutProgramsNestedInput
+    projects?: ProjectUpdateManyWithoutProgramNestedInput
   }
 
-  export type ClientUncheckedUpdateWithoutTagsInput = {
+  export type ProgramUncheckedUpdateWithoutTagsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    contactPersonName?: NullableStringFieldUpdateOperationsInput | string | null
-    clientLogo?: NullableStringFieldUpdateOperationsInput | string | null
-    favicon?: NullableStringFieldUpdateOperationsInput | string | null
-    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryColor?: NullableStringFieldUpdateOperationsInput | string | null
-    footerText?: NullableStringFieldUpdateOperationsInput | string | null
-    supportMail?: NullableStringFieldUpdateOperationsInput | string | null
-    subdomain?: NullableStringFieldUpdateOperationsInput | string | null
-    serverLocation?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: EnumIndustryCategoryFieldUpdateOperationsInput | $Enums.IndustryCategory
-    onboarding?: BoolFieldUpdateOperationsInput | boolean
-    welcomeDashboard?: BoolFieldUpdateOperationsInput | boolean
-    chartList?: ClientUpdatechartListInput | string[]
-    storage?: NullableStringFieldUpdateOperationsInput | string | null
-    threshold?: NullableIntFieldUpdateOperationsInput | number | null
-    archiveAfter?: NullableIntFieldUpdateOperationsInput | number | null
-    userWarning?: BoolFieldUpdateOperationsInput | boolean
-    adminNote?: NullableStringFieldUpdateOperationsInput | string | null
-    trialPeriod?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: StringFieldUpdateOperationsInput | string
+    programName?: StringFieldUpdateOperationsInput | string
+    datetime?: StringFieldUpdateOperationsInput | string
+    programDescription?: StringFieldUpdateOperationsInput | string
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    deadline?: StringFieldUpdateOperationsInput | string
+    progress?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    referredPersons?: ReferredPersonUncheckedUpdateManyWithoutClientNestedInput
-    tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
-    programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ClientCreateWithoutReferredPersonsInput = {
@@ -61598,7 +63575,6 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutClientInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     programs?: ProgramCreateNestedManyWithoutClientInput
-    tags?: TagCreateNestedOneWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutReferredPersonsInput = {
@@ -61628,7 +63604,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     programs?: ProgramUncheckedCreateNestedManyWithoutClientInput
-    tags?: TagUncheckedCreateNestedOneWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutReferredPersonsInput = {
@@ -61674,7 +63649,6 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutClientNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     programs?: ProgramUpdateManyWithoutClientNestedInput
-    tags?: TagUpdateOneWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutReferredPersonsInput = {
@@ -61704,7 +63678,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutClientNestedInput
-    tags?: TagUncheckedUpdateOneWithoutClientNestedInput
   }
 
   export type ProjectCreateWithoutRequestsToAddProjectMemberInput = {
@@ -61929,6 +63902,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     activities?: ActivityCreateNestedManyWithoutUserInput
+    file?: FileCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutViewerInput = {
@@ -61961,6 +63935,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    file?: FileUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutViewerInput = {
@@ -62009,6 +63984,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     activities?: ActivityUpdateManyWithoutUserNestedInput
+    file?: FileUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutViewerInput = {
@@ -62041,6 +64017,7 @@ export namespace Prisma {
     otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+    file?: FileUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SheetCreateWithoutChartInput = {
@@ -62052,6 +64029,7 @@ export namespace Prisma {
     cells?: CellCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutChartInput = {
@@ -62063,6 +64041,7 @@ export namespace Prisma {
     projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutChartInput = {
@@ -62090,6 +64069,7 @@ export namespace Prisma {
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutChartInput = {
@@ -62101,6 +64081,219 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
+  }
+
+  export type UserCreateWithoutFileInput = {
+    id?: string
+    email: string
+    phoneNumber: string
+    password: string
+    name: string
+    role?: $Enums.Role
+    profileImage?: string | null
+    language?: $Enums.Language
+    timezone?: Date | string | null
+    verification2FA?: boolean
+    status?: boolean
+    lastActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userStatus?: $Enums.UserStatus
+    client?: ClientCreateNestedOneWithoutUserInput
+    manager?: ManagerCreateNestedOneWithoutUserInput
+    employee?: EmployeeCreateNestedOneWithoutUserInput
+    viewer?: ViewerCreateNestedOneWithoutUserInput
+    supporter?: SupporterCreateNestedOneWithoutUserInput
+    superAdmin?: SuperAdminCreateNestedOneWithoutUserInput
+    notificationEmployee?: NotificationPermissionEmployeeCreateNestedOneWithoutUserInput
+    notificationManager?: NotificationPermissionManagerCreateNestedOneWithoutUserInput
+    notificationClient?: NotificationPermissionClientCreateNestedOneWithoutUserInput
+    notificationSupporter?: NotificationPermissionSupporterCreateNestedOneWithoutUserInput
+    notificationAdmin?: NotificationPermissionAdminCreateNestedOneWithoutUserInput
+    notifications?: NotificationProvisionCreateNestedManyWithoutUserInput
+    otpVerification?: OtpVerificationCreateNestedOneWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    activities?: ActivityCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutFileInput = {
+    id?: string
+    email: string
+    phoneNumber: string
+    password: string
+    name: string
+    role?: $Enums.Role
+    profileImage?: string | null
+    language?: $Enums.Language
+    timezone?: Date | string | null
+    verification2FA?: boolean
+    status?: boolean
+    lastActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userStatus?: $Enums.UserStatus
+    client?: ClientUncheckedCreateNestedOneWithoutUserInput
+    manager?: ManagerUncheckedCreateNestedOneWithoutUserInput
+    employee?: EmployeeUncheckedCreateNestedOneWithoutUserInput
+    viewer?: ViewerUncheckedCreateNestedOneWithoutUserInput
+    supporter?: SupporterUncheckedCreateNestedOneWithoutUserInput
+    superAdmin?: SuperAdminUncheckedCreateNestedOneWithoutUserInput
+    notificationEmployee?: NotificationPermissionEmployeeUncheckedCreateNestedOneWithoutUserInput
+    notificationManager?: NotificationPermissionManagerUncheckedCreateNestedOneWithoutUserInput
+    notificationClient?: NotificationPermissionClientUncheckedCreateNestedOneWithoutUserInput
+    notificationSupporter?: NotificationPermissionSupporterUncheckedCreateNestedOneWithoutUserInput
+    notificationAdmin?: NotificationPermissionAdminUncheckedCreateNestedOneWithoutUserInput
+    notifications?: NotificationProvisionUncheckedCreateNestedManyWithoutUserInput
+    otpVerification?: OtpVerificationUncheckedCreateNestedOneWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutFileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFileInput, UserUncheckedCreateWithoutFileInput>
+  }
+
+  export type SheetCreateWithoutFilesInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chartId: string
+    cells?: CellCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
+    chart?: ChartTableCreateNestedOneWithoutSheetInput
+    project: ProjectCreateNestedOneWithoutSheetsInput
+  }
+
+  export type SheetUncheckedCreateWithoutFilesInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chartId: string
+    projectId: string
+    cells?: CellUncheckedCreateNestedManyWithoutSheetInput
+    snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
+    chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+  }
+
+  export type SheetCreateOrConnectWithoutFilesInput = {
+    where: SheetWhereUniqueInput
+    create: XOR<SheetCreateWithoutFilesInput, SheetUncheckedCreateWithoutFilesInput>
+  }
+
+  export type UserUpsertWithoutFileInput = {
+    update: XOR<UserUpdateWithoutFileInput, UserUncheckedUpdateWithoutFileInput>
+    create: XOR<UserCreateWithoutFileInput, UserUncheckedCreateWithoutFileInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFileInput, UserUncheckedUpdateWithoutFileInput>
+  }
+
+  export type UserUpdateWithoutFileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    timezone?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verification2FA?: BoolFieldUpdateOperationsInput | boolean
+    status?: BoolFieldUpdateOperationsInput | boolean
+    lastActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userStatus?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    client?: ClientUpdateOneWithoutUserNestedInput
+    manager?: ManagerUpdateOneWithoutUserNestedInput
+    employee?: EmployeeUpdateOneWithoutUserNestedInput
+    viewer?: ViewerUpdateOneWithoutUserNestedInput
+    supporter?: SupporterUpdateOneWithoutUserNestedInput
+    superAdmin?: SuperAdminUpdateOneWithoutUserNestedInput
+    notificationEmployee?: NotificationPermissionEmployeeUpdateOneWithoutUserNestedInput
+    notificationManager?: NotificationPermissionManagerUpdateOneWithoutUserNestedInput
+    notificationClient?: NotificationPermissionClientUpdateOneWithoutUserNestedInput
+    notificationSupporter?: NotificationPermissionSupporterUpdateOneWithoutUserNestedInput
+    notificationAdmin?: NotificationPermissionAdminUpdateOneWithoutUserNestedInput
+    notifications?: NotificationProvisionUpdateManyWithoutUserNestedInput
+    otpVerification?: OtpVerificationUpdateOneWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    activities?: ActivityUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    timezone?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verification2FA?: BoolFieldUpdateOperationsInput | boolean
+    status?: BoolFieldUpdateOperationsInput | boolean
+    lastActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userStatus?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    client?: ClientUncheckedUpdateOneWithoutUserNestedInput
+    manager?: ManagerUncheckedUpdateOneWithoutUserNestedInput
+    employee?: EmployeeUncheckedUpdateOneWithoutUserNestedInput
+    viewer?: ViewerUncheckedUpdateOneWithoutUserNestedInput
+    supporter?: SupporterUncheckedUpdateOneWithoutUserNestedInput
+    superAdmin?: SuperAdminUncheckedUpdateOneWithoutUserNestedInput
+    notificationEmployee?: NotificationPermissionEmployeeUncheckedUpdateOneWithoutUserNestedInput
+    notificationManager?: NotificationPermissionManagerUncheckedUpdateOneWithoutUserNestedInput
+    notificationClient?: NotificationPermissionClientUncheckedUpdateOneWithoutUserNestedInput
+    notificationSupporter?: NotificationPermissionSupporterUncheckedUpdateOneWithoutUserNestedInput
+    notificationAdmin?: NotificationPermissionAdminUncheckedUpdateOneWithoutUserNestedInput
+    notifications?: NotificationProvisionUncheckedUpdateManyWithoutUserNestedInput
+    otpVerification?: OtpVerificationUncheckedUpdateOneWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SheetUpsertWithoutFilesInput = {
+    update: XOR<SheetUpdateWithoutFilesInput, SheetUncheckedUpdateWithoutFilesInput>
+    create: XOR<SheetCreateWithoutFilesInput, SheetUncheckedCreateWithoutFilesInput>
+    where?: SheetWhereInput
+  }
+
+  export type SheetUpdateToOneWithWhereWithoutFilesInput = {
+    where?: SheetWhereInput
+    data: XOR<SheetUpdateWithoutFilesInput, SheetUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type SheetUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
+    cells?: CellUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUpdateOneWithoutSheetNestedInput
+    project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+  }
+
+  export type SheetUncheckedUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chartId?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
+    snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
+    chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
   }
 
   export type ProjectCreateWithoutRemindersInput = {
@@ -62377,6 +64570,42 @@ export namespace Prisma {
     create: XOR<ProjectCreateWithoutSheetsInput, ProjectUncheckedCreateWithoutSheetsInput>
   }
 
+  export type FileCreateWithoutSheetInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutFileInput
+  }
+
+  export type FileUncheckedCreateWithoutSheetInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FileCreateOrConnectWithoutSheetInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput>
+  }
+
+  export type FileCreateManySheetInputEnvelope = {
+    data: FileCreateManySheetInput | FileCreateManySheetInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CellUpsertWithWhereUniqueWithoutSheetInput = {
     where: CellWhereUniqueInput
     update: XOR<CellUpdateWithoutSheetInput, CellUncheckedUpdateWithoutSheetInput>
@@ -62536,6 +64765,22 @@ export namespace Prisma {
     reminders?: ReminderUncheckedUpdateManyWithoutProjectNestedInput
   }
 
+  export type FileUpsertWithWhereUniqueWithoutSheetInput = {
+    where: FileWhereUniqueInput
+    update: XOR<FileUpdateWithoutSheetInput, FileUncheckedUpdateWithoutSheetInput>
+    create: XOR<FileCreateWithoutSheetInput, FileUncheckedCreateWithoutSheetInput>
+  }
+
+  export type FileUpdateWithWhereUniqueWithoutSheetInput = {
+    where: FileWhereUniqueInput
+    data: XOR<FileUpdateWithoutSheetInput, FileUncheckedUpdateWithoutSheetInput>
+  }
+
+  export type FileUpdateManyWithWhereWithoutSheetInput = {
+    where: FileScalarWhereInput
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyWithoutSheetInput>
+  }
+
   export type SheetCreateWithoutCellsInput = {
     id?: string
     name: string
@@ -62545,6 +64790,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotCreateNestedManyWithoutSheetInput
     chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutCellsInput = {
@@ -62556,6 +64802,7 @@ export namespace Prisma {
     projectId: string
     snapshots?: SheetSnapshotUncheckedCreateNestedManyWithoutSheetInput
     chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutCellsInput = {
@@ -62583,6 +64830,7 @@ export namespace Prisma {
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutCellsInput = {
@@ -62594,6 +64842,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetCreateWithoutSnapshotsInput = {
@@ -62605,6 +64854,7 @@ export namespace Prisma {
     cells?: CellCreateNestedManyWithoutSheetInput
     chart?: ChartTableCreateNestedOneWithoutSheetInput
     project: ProjectCreateNestedOneWithoutSheetsInput
+    files?: FileCreateNestedManyWithoutSheetInput
   }
 
   export type SheetUncheckedCreateWithoutSnapshotsInput = {
@@ -62616,6 +64866,7 @@ export namespace Prisma {
     projectId: string
     cells?: CellUncheckedCreateNestedManyWithoutSheetInput
     chart?: ChartTableUncheckedCreateNestedOneWithoutSheetInput
+    files?: FileUncheckedCreateNestedManyWithoutSheetInput
   }
 
   export type SheetCreateOrConnectWithoutSnapshotsInput = {
@@ -62643,6 +64894,7 @@ export namespace Prisma {
     cells?: CellUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneWithoutSheetNestedInput
     project?: ProjectUpdateOneRequiredWithoutSheetsNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutSnapshotsInput = {
@@ -62654,6 +64906,7 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type ReferredPersonCreateManyClientInput = {
@@ -62783,6 +65036,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUpdateManyWithoutProgramNestedInput
+    tags?: TagUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutClientInput = {
@@ -62796,6 +65050,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUncheckedUpdateManyWithoutProgramNestedInput
+    tags?: TagUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateManyWithoutClientInput = {
@@ -63053,6 +65308,13 @@ export namespace Prisma {
     longitude?: number | null
   }
 
+  export type TagCreateManyProgramInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ProjectUpdateWithoutProgramInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -63130,6 +65392,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type TagUpdateWithoutProgramInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagUncheckedUpdateWithoutProgramInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagUncheckedUpdateManyWithoutProgramInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProjectEmployeeCreateManyProjectInput = {
@@ -63439,6 +65722,7 @@ export namespace Prisma {
     cells?: CellUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUpdateOneWithoutSheetNestedInput
+    files?: FileUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateWithoutProjectInput = {
@@ -63450,6 +65734,7 @@ export namespace Prisma {
     cells?: CellUncheckedUpdateManyWithoutSheetNestedInput
     snapshots?: SheetSnapshotUncheckedUpdateManyWithoutSheetNestedInput
     chart?: ChartTableUncheckedUpdateOneWithoutSheetNestedInput
+    files?: FileUncheckedUpdateManyWithoutSheetNestedInput
   }
 
   export type SheetUncheckedUpdateManyWithoutProjectInput = {
@@ -63482,6 +65767,19 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type FileCreateManyUserInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sheetId: string
   }
 
   export type NotificationProvisionUpdateWithoutUserInput = {
@@ -63556,6 +65854,45 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FileUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheet?: SheetUpdateOneWithoutFilesNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FileUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sheetId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type CellCreateManySheetInput = {
     id?: string
     row: number
@@ -63569,6 +65906,19 @@ export namespace Prisma {
     id?: string
     data: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+  }
+
+  export type FileCreateManySheetInput = {
+    id?: string
+    filename: string
+    url: string
+    filePath: string
+    fileType: string
+    size: number
+    uploadAt?: Date | string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CellUpdateWithoutSheetInput = {
@@ -63614,6 +65964,45 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     data?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFileNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileUncheckedUpdateManyWithoutSheetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    filePath?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    uploadAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

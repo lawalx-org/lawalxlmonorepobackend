@@ -20,6 +20,7 @@ import { Job } from 'bullmq';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Role } from 'generated/prisma';
 import { Gateway } from './notification.getway';
+import { NotificationType } from '../dto/create-notification.dto';
 
 interface NotificationJobData {
   userId: string;
@@ -55,7 +56,7 @@ export class NotificationProcessor extends WorkerHost {
         receiverIds: [userId],
         projectId,
         context: message,
-        type: 'REMINDER',
+        type: NotificationType.REMINDER,
         provisions: {
           create: {
             user: { connect: { id: userId } },

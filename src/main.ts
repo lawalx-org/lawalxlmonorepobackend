@@ -8,6 +8,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import * as express from "express"
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -19,6 +20,12 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',
   });
+
+   app.set('trust proxy', true);
+
+  
+  //add new for upload file 
+  app.use('/uploads-file', express.static(join(process.cwd(), 'uploads-file')));
 
   // Global success response formatting
   app.useGlobalInterceptors(new TransformInterceptor());

@@ -11,7 +11,7 @@ export class NotificationService {
   ) {}
 
   async create(createNotificationDto: CreateNotificationDto, senderId: string) {
-    const { receiverIds, context, type } = createNotificationDto;
+    const { receiverIds, context, type,projectId } = createNotificationDto;
 
     const users = await this.prisma.user.findMany({
       where: {
@@ -24,8 +24,30 @@ export class NotificationService {
     if (users.length !== receiverIds.length) {
       throw new NotFoundException('One or more receivers not found');
     }
+     let  notification ;
+    if(projectId){
+      notification = await this.prisma.notification.create({
+      data: {
+        senderId,
+        projectId,
+        receiverIds,
+        context,
+        type,
+        provisions: {
+          create: receiverIds.map((userId) => ({
+            user: {
+              connect: { id: userId },
+            },
+          })),
+        },
+      },
+      include: {
+        provisions: true,
+      },
+    });
 
-    const notification = await this.prisma.notification.create({
+    }else{
+         notification = await this.prisma.notification.create({
       data: {
         senderId,
         receiverIds,
@@ -43,6 +65,9 @@ export class NotificationService {
         provisions: true,
       },
     });
+    }
+
+    
     await this.notificationGateWay.emitToUsers(receiverIds, type, notification);
     return notification;
   }

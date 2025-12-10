@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.18.0
- * Query Engine version: 34b5a692b7bd79939a9a2c3ef97d816e749cda2f
+ * Prisma Client JS version: 6.16.2
+ * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.18.0",
-  engine: "34b5a692b7bd79939a9a2c3ef97d816e749cda2f"
+  client: "6.16.2",
+  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -231,6 +231,7 @@ exports.Prisma.NotificationPermissionManagerScalarFieldEnum = {
   fileImportByEmployees: 'fileImportByEmployees',
   weeklySummary: 'weeklySummary',
   createNewProject: 'createNewProject',
+  submittedProject: 'submittedProject',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -421,8 +422,9 @@ exports.Prisma.UserScalarFieldEnum = {
 };
 
 exports.Prisma.TagScalarFieldEnum = {
-  clientId: 'clientId',
-  tags: 'tags',
+  id: 'id',
+  programId: 'programId',
+  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -462,6 +464,20 @@ exports.Prisma.ChartTableScalarFieldEnum = {
   xAxis: 'xAxis',
   yAxis: 'yAxis',
   zAxis: 'zAxis',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  sheetId: 'sheetId'
+};
+
+exports.Prisma.FileScalarFieldEnum = {
+  id: 'id',
+  filename: 'filename',
+  url: 'url',
+  filePath: 'filePath',
+  fileType: 'fileType',
+  size: 'size',
+  uploadAt: 'uploadAt',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   sheetId: 'sheetId'
@@ -576,6 +592,18 @@ exports.IndustryCategory = exports.$Enums.IndustryCategory = {
   BEAUTY_AND_WELLNESS: 'BEAUTY_AND_WELLNESS'
 };
 
+exports.NotificationType = exports.$Enums.NotificationType = {
+  NEW_EMPLOYEE_ASSIGNED: 'NEW_EMPLOYEE_ASSIGNED',
+  NEW_MANAGER_ASSIGNED: 'NEW_MANAGER_ASSIGNED',
+  SUBMISSION_UPDATED_STATUS: 'SUBMISSION_UPDATED_STATUS',
+  PROJECT_SUBMITTED: 'PROJECT_SUBMITTED',
+  PROJECT_STATUS_UPDATE: 'PROJECT_STATUS_UPDATE',
+  PROJECT_CREATED: 'PROJECT_CREATED',
+  REMINDER: 'REMINDER',
+  SHEET_UPDATE_REQUEST: 'SHEET_UPDATE_REQUEST',
+  FILE_CREATED: 'FILE_CREATED'
+};
+
 exports.Priority = exports.$Enums.Priority = {
   HIGH: 'HIGH',
   MEDIUM: 'MEDIUM',
@@ -669,7 +697,17 @@ exports.ChartName = exports.$Enums.ChartName = {
   TREEMAP: 'TREEMAP',
   SUNBURST: 'SUNBURST',
   SANKEY: 'SANKEY',
-  TABLE: 'TABLE'
+  TABLE: 'TABLE',
+  HEATMAP: 'HEATMAP',
+  HORIZONTAL_BAR: 'HORIZONTAL_BAR',
+  STACK_BAR_HORIZONTAL: 'STACK_BAR_HORIZONTAL',
+  COLUMN: 'COLUMN',
+  PARETO: 'PARETO',
+  HISTOGRAM: 'HISTOGRAM',
+  WATERFALL: 'WATERFALL',
+  CANDLESTICK: 'CANDLESTICK',
+  GEOGRAPHY_GRAPH: 'GEOGRAPHY_GRAPH',
+  SPLINE: 'SPLINE'
 };
 
 exports.RepeatInterval = exports.$Enums.RepeatInterval = {
@@ -719,6 +757,7 @@ exports.Prisma.ModelName = {
   RequestToAddProjectMember: 'RequestToAddProjectMember',
   Viewer: 'Viewer',
   ChartTable: 'ChartTable',
+  File: 'File',
   Reminder: 'Reminder',
   Sheet: 'Sheet',
   Cell: 'Cell',

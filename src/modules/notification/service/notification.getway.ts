@@ -41,7 +41,7 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleConnection(client: Socket) {
     const token =
       client.handshake.auth?.token || client.handshake.headers?.authorization;
-
+   
     if (!token) {
       client.emit('error', { message: 'Authentication token is required' });
       client.disconnect();
@@ -69,6 +69,10 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
         client.disconnect();
         return;
       }
+
+        console.log("---------------------------soket------------------------------------")
+            console.log(userId,client.id)
+     console.log("----------------------------end--------------------------")
 
       await this.redisService.hSet('userSocketMap', userId, client.id);
 
@@ -98,14 +102,19 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async emitToUsers(userIds: string[], event: string, data: any) {
     const socketIds: string[] = [];
-
+    console.log(userIds)
+    console.log(event)
+    console.log(data)
     const promises = userIds.map((userId) =>
       this.redisService.hGet('userSocketMap', userId),
     );
 
     const results = await Promise.all(promises);
-
+      console.log(promises)
+      console.log("----------------------------------")
+      console.log(results)
     for (const socketId of results) {
+      console.log(socketId,"----------------------------")
       if (socketId) {
         this.server.to(socketId).emit(event, data);
       }

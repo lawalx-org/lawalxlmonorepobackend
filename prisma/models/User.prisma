@@ -36,6 +36,7 @@ model User {
   otpVerification           OtpVerification?
   payments                  Payment[]
   activities  Activity[]
+  file        File[]
 
   @@map("users")
 }

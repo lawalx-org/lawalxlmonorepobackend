@@ -7,7 +7,7 @@ model Notification {
   receiverIds String[]
   projectId   String?
   context     String
-  type        String
+  type        NotificationType
   isRead      Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

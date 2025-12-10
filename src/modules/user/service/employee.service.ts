@@ -15,6 +15,7 @@ import {
   paginate,
   PaginatedResult,
 } from 'src/modules/utils/pagination/pagination.utils';
+import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
 
 @Injectable()
 export class EmployeeService {
@@ -186,6 +187,12 @@ export class EmployeeService {
       },
     });
 
+
+   await prisma.notificationPermissionEmployee.create({
+      data: { userId: user.id },
+    });
+
+    
     await prisma.employee.create({
       data: {
         userId: user.id,
@@ -244,7 +251,7 @@ if (notifyProjectManager && projects?.length) {
       {
         receiverIds,
         context: `A new employee ${name} has been assigned to a project you are managing.`,
-        type: 'NEW_EMPLOYEE_ASSIGNED',
+        type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
       },
       result.id,
     );

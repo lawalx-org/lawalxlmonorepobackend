@@ -5,7 +5,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { ChartMainService } from '../service/chart.main.service';
 import { Roles } from 'src/common/jwt/roles.decorator';
-import { Role } from 'generated/prisma';
+import { ChartName, Role } from 'generated/prisma';
 
 @ApiTags('chart')
 @Controller('chart')
@@ -46,4 +46,7 @@ export class ChartMainController {
   findOne(@Param('id') id: string) {
     return this.chartService.findOne(id);
   }
+
+
+
 }

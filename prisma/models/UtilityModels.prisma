@@ -1,16 +1,17 @@
 
 // Tags model
 model Tag {
-  clientId    String   @id
-  tags        String[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  programId  String
+  name       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  // Relations
-  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  program    Program @relation(fields: [programId],references: [id],onDelete: Cascade  )
 
   @@map("tags")
 }
+
 
 // ReferredPerson model
 model ReferredPerson {

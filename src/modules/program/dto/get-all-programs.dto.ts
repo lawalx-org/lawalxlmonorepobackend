@@ -1,7 +1,14 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString, IsDateString, IsInt, IsEnum } from 'class-validator';
+import {
+  IsOptional,
+  IsString,
+  IsDateString,
+  IsInt,
+  IsEnum,
+  IsArray,
+} from 'class-validator';
 import { PaginationDto } from 'src/modules/utils/pagination/pagination.dto';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 
 export enum Priority {
   HIGH = 'HIGH',
@@ -48,4 +55,15 @@ export class GetAllProgramsDto extends PaginationDto {
   @IsOptional()
   @IsDateString()
   datetime?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filter by tags',
+    example: 'frontend,backend',
+    type: [String],
+  })
+  @IsOptional()
+  @Transform(({ value }) => (value ? value.split(',') : []))
+  @IsArray()
+  @IsString({ each: true })
+  tags?: string[];
 }

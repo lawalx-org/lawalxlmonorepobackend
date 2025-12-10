@@ -51,7 +51,6 @@ model Client {
   referredPersons ReferredPerson[]
   tickets         Ticket[]
   programs        Program[]
-  tags            Tag?
 
   @@map("clients")
 }
@@ -120,15 +119,15 @@ model Manager {
 
 // Core Notification model
 model Notification {
-  id          String   @id @default(uuid())
+  id          String           @id @default(uuid())
   senderId    String
   receiverIds String[]
   projectId   String?
   context     String
-  type        String
-  isRead      Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  type        NotificationType
+  isRead      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   // Relations
   provisions NotificationProvision[]
@@ -175,6 +174,7 @@ model NotificationPermissionManager {
   fileImportByEmployees Boolean  @default(true)
   weeklySummary         Boolean  @default(true)
   createNewProject      Boolean  @default(true)
+  submittedProject      Boolean  @default(true)
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
@@ -267,6 +267,7 @@ model Program {
   // Relations
   client   Client    @relation(fields: [userId], references: [id], onDelete: Cascade)
   projects Project[]
+  tags     Tag[]
 
   @@map("programs")
 }
@@ -400,6 +401,13 @@ model Supporter {
   @@map("supporters")
 }
 
+// model Tag {
+//   id    String @id @default(uuid())
+//   name  String @unique
+
+//   @@map("tags")
+// }
+
 model Task {
   id           String      @id @default(uuid())
   status       TaskStatus?
@@ -477,19 +485,20 @@ model User {
   otpVerification OtpVerification?
   payments        Payment[]
   activities      Activity[]
+  file            File[]
 
   @@map("users")
 }
 
 // Tags model
 model Tag {
-  clientId  String   @id
-  tags      String[]
+  id        String   @id @default(cuid())
+  programId String
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
-  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
 
   @@map("tags")
 }
@@ -594,6 +603,16 @@ enum ChartName {
   SUNBURST
   SANKEY
   TABLE
+  HEATMAP
+  HORIZONTAL_BAR
+  STACK_BAR_HORIZONTAL
+  COLUMN
+  PARETO
+  HISTOGRAM
+  WATERFALL
+  CANDLESTICK
+  GEOGRAPHY_GRAPH
+  SPLINE
 }
 
 enum Role {
@@ -712,6 +731,31 @@ enum SubmittedStatus {
 enum NotificationType {
   NEW_EMPLOYEE_ASSIGNED
   NEW_MANAGER_ASSIGNED
+  SUBMISSION_UPDATED_STATUS
+  PROJECT_SUBMITTED
+  PROJECT_STATUS_UPDATE
+  PROJECT_CREATED
+  REMINDER
+  SHEET_UPDATE_REQUEST
+  FILE_CREATED
+}
+
+model File {
+  id       String   @id @default(cuid())
+  filename String
+  url      String
+  filePath String
+  fileType String
+  size     Int
+  uploadAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  sheetId String
+  sheet   Sheet? @relation(fields: [sheetId], references: [id], onDelete: Cascade)
 }
 
 model Reminder {
@@ -772,6 +816,8 @@ model Sheet {
 
   chart   ChartTable?
   project Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  files File[]
 
   @@unique([projectId, chartId])
 }

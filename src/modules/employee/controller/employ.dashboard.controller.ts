@@ -5,16 +5,17 @@ import {
   Req,
   UnauthorizedException,
 } from '@nestjs/common';
-import { EmployService } from '../services/employ.service';
+
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
+import { EmployDashboardService } from '../service/employ.dashboard.service';
 
-@Controller('employ')
+@Controller('employeeDashboard')
 @UseGuards(JwtAuthGuard, RolesGuard)
-export class EmployController {
-  constructor(private readonly employService: EmployService) {}
+export class EmployDashboardController {
+  constructor(private readonly employService: EmployDashboardService) {}
 
   @Get('dashboard')
   @Roles('EMPLOYEE')

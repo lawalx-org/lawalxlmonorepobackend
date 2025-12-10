@@ -9,10 +9,15 @@ import { EmployeeTaskFilterDto } from '../dto/employee-task-filter.dto';
 import { UpdateEmployeeDto } from '../dto/update-employee.dto';
 import { BulkDeleteDto } from '../dto/bulk-delete.dto';
 import { Prisma } from 'generated/prisma';
+import { NotificationService } from 'src/modules/notification/service/notification.service';
+import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
 
 @Injectable()
 export class EmployeeService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+      private readonly notificationService: NotificationService
+  ) { }
 
   async findAll(filters: EmployeeFilterDto) {
     const {
@@ -40,11 +45,11 @@ export class EmployeeService {
       ...(status && { user: { userStatus: status } }),
       ...(joinedDateFrom &&
         joinedDateTo && {
-          joinedDate: {
-            gte: joinedDateFrom,
-            lte: joinedDateTo,
-          },
-        }),
+        joinedDate: {
+          gte: joinedDateFrom,
+          lte: joinedDateTo,
+        },
+      }),
     };
 
     const orderBy: Prisma.EmployeeOrderByWithRelationInput =
@@ -269,18 +274,18 @@ export class EmployeeService {
       ...(projectId && { projectId }),
       ...(dueDateFrom &&
         dueDateTo && {
-          dueDate: {
-            gte: dueDateFrom,
-            lte: dueDateTo,
-          },
-        }),
+        dueDate: {
+          gte: dueDateFrom,
+          lte: dueDateTo,
+        },
+      }),
       ...(progressMin !== undefined &&
         progressMax !== undefined && {
-          progress: {
-            gte: progressMin,
-            lte: progressMax,
-          },
-        }),
+        progress: {
+          gte: progressMin,
+          lte: progressMax,
+        },
+      }),
     };
 
     const [tasks, total] = await Promise.all([
@@ -414,4 +419,53 @@ export class EmployeeService {
       data: updated,
     };
   }
+
+  //notification notified 
+  async reqSheetUpdate(employeeId: string, projectId?: string) {
+
+    const employee = await this.prisma.employee.findUnique({
+      where: { id: employeeId },
+
+    });
+
+    if (!employee)  throw new NotFoundException(`employee with ID ${employeeId}not found`);
+
+
+    const managers = await this.prisma.user.findMany({
+      where: { role: 'MANAGER' },
+      select: { id: true },
+    });
+
+    if (managers.length === 0)  throw new ConflictException('no managers found  receive the request');
+
+    const receiverIds = managers.map((m) => m.id);
+
+    let sendingList ;
+    console.log('Sending notification to:', receiverIds);
+    if (receiverIds.length) {
+       sendingList = await this.notificationService.create(
+        
+        {
+          receiverIds,
+          context: `Employee ${employee.id} requested a sheet update.`,
+        type: NotificationType.SHEET_UPDATE_REQUEST,
+        projectId,
+        },
+        employee.id,
+      );
+    }
+    console.log('Notification result:', sendingList);
+
+    
+
+    // return {
+    //   message: 'Sheet update request sent successfully',
+    //    sendingList,
+    // };
+       return {
+      message: 'Sheet update request sent successfully',
+      notifications: sendingList,
+    };
+  }
+
 }

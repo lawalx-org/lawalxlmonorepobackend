@@ -83,7 +83,7 @@ export class OtpService {
       data: { verified: true },
     });
 
-    const jwtPayload = buildJwtPayload(this.prisma, user);
+    const jwtPayload = await buildJwtPayload(this.prisma, user);
 
     const accessToken = this.jwtService.sign(jwtPayload, {
       secret: this.configService.get<string>('jwt_access_secret'),
@@ -100,6 +100,7 @@ export class OtpService {
 
   //  Send verification code
   async sendVerificationCode(to: string) {
+    
     const data = await this.client.verify.v2
       .services(this.verifyServiceSid)
       .verifications.create({ to, channel: 'sms' });
@@ -154,7 +155,7 @@ export class OtpService {
         create: { email: user.email, verified: true, otp: code, expiresAt },
       });
 
-      const jwtPayload = buildJwtPayload(this.prisma, user);
+      const jwtPayload = await buildJwtPayload(this.prisma, user);
 
       const accessToken = this.jwtService.sign(jwtPayload, {
         secret: this.configService.get<string>('jwt_access_secret'),
