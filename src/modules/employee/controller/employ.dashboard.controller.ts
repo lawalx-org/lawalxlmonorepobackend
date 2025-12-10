@@ -74,4 +74,41 @@ export class EmployDashboardController {
       data: result,
     };
   }
+
+   @Get('projects/top-overdue')
+  @Roles('EMPLOYEE')
+  async getTopOverdue(@Req() req: RequestWithUser) {
+    const employeeId = req.user.employeeId;
+    if (!employeeId) {
+      throw new UnauthorizedException('Employee ID not found in token');
+    }
+
+    const result = await this.employService.getTopOverdueProjects(employeeId);
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Top overdue projects fetched successfully',
+      data: result,
+    };
+  }
+
+  @Get('submission-status')
+  @Roles('EMPLOYEE')
+  async getSubmissionStatus(@Req() req: RequestWithUser) {
+    const employeeId = req.user.employeeId;
+
+    if (!employeeId) {
+      throw new UnauthorizedException('Employee ID not found in token');
+    }
+
+    const result = await this.employService.getSubmissionStatus(employeeId);
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Submission status fetched successfully',
+      data: result,
+    };
+  }
 }
