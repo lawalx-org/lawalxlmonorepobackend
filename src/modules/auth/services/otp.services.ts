@@ -155,7 +155,7 @@ export class OtpService {
         create: { email: user.email, verified: true, otp: code, expiresAt },
       });
 
-      const jwtPayload = buildJwtPayload(this.prisma, user);
+      const jwtPayload = await buildJwtPayload(this.prisma, user);
 
       const accessToken = this.jwtService.sign(jwtPayload, {
         secret: this.configService.get<string>('jwt_access_secret'),
