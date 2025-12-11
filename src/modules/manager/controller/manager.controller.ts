@@ -98,14 +98,4 @@ export class ManagerController {
       managerId,
     );
   }
-
-  @Get('submitted-status')
-  @Roles('MANAGER')
-  async showSubmittedEmployeeStatus_Result(@Req() req: RequestWithUser) {
-    const managerId = req.user.managerId;
-    if (!managerId) {
-      throw new UnauthorizedException('Manager ID not found in token');
-    }
-    return await this.managerService.showSubmittedEmployeeStatus_Result();
-  }
 }

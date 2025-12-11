@@ -230,35 +230,4 @@ export class ManagerService {
       },
     };
   }
-
-  async showSubmittedEmployeeStatus_Result() {
-    const employees = await this.prisma.employee.findMany({
-      select: {
-        id: true,
-        user: {
-          select: {
-            name: true,
-            profileImage: true
-          }
-        },
-        submitted: {
-          select: {
-            status: true
-          }
-        }
-      }
-    });
-
-    return employees.map(e => ({
-      id: e.id,
-      name: e.user?.name,
-      profileImage: e.user?.profileImage,
-      statusCount: {
-        approved: e.submitted.filter(s => s.status === "APPROVED").length,
-        pending: e.submitted.filter(s => s.status === "PENDING").length,
-        rejected: e.submitted.filter(s => s.status === "REJECTED").length,
-      }
-    }));
-  }
-
 }

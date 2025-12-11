@@ -211,4 +211,98 @@ export class EmployDashboardService {
       },
     };
   }
+
+  private calculateOverdueDays(deadline: Date): number {
+    const now = new Date();
+    const diff =
+      (now.getTime() - new Date(deadline).getTime()) / (1000 * 60 * 60 * 24);
+    return Math.floor(diff);
+  }
+
+  private getPriorityLabel(priority: string): string {
+    if (priority === 'LOW') return 'Low';
+    if (priority === 'MEDIUM') return 'Medium';
+    if (priority === 'HIGH') return 'Critical';
+    return 'Low';
+  }
+
+  async getTopOverdueProjects(employeeId: string) {
+    
+    const assignments = await this.prisma.projectEmployee.findMany({
+      where: { employeeId },
+      include: { project: true },
+    });
+
+    const formatted = assignments.map((item) => {
+      const overdueDays = this.calculateOverdueDays(item.project.deadline);
+      return {
+        id: item.project.id,
+        name: item.project.name,
+        status: item.project.status,
+        overdueDays: overdueDays > 0 ? overdueDays : 0,
+        priority: this.getPriorityLabel(item.project.priority),
+        deadline: item.project.deadline,
+      };
+    });
+
+    // Sort by most overdue
+    const overdueProjects = formatted
+      .filter((p) => p.overdueDays > 0)
+      .sort((a, b) => b.overdueDays - a.overdueDays);
+
+    return {
+      totalProjects: formatted.length,
+      overdueCount: overdueProjects.length,
+      projects: formatted,
+      overdueProjects,
+    };
+  }
+
+  async getSubmissionStatus(employeeId: string) {
+    const submissions = await this.prisma.submitted.findMany({
+      where: { employeeId },
+      include: {
+        project: true, // IMPORTANT → Needed to calculate overdue
+      }
+    });
+
+    const total = submissions.length;
+
+    let submitted = 0;  // APPROVED
+    let live = 0;       // PENDING
+    let returned = 0;   // REJECTED
+    let overdue = 0;    // deadline < now AND not approved
+
+    const now = new Date();
+
+    submissions.forEach((item) => {
+      // Status mapping
+      if (item.status === 'APPROVED') submitted++;
+      if (item.status === 'PENDING') live++;
+      if (item.status === 'REJECTED') returned++;
+
+      // Overdue logic: Project deadline passed AND not approved
+      if (new Date(item.project.deadline) < now && item.status !== 'APPROVED') {
+        overdue++;
+      }
+    });
+
+    return {
+      total,
+
+      counts: {
+        submitted,
+        live,
+        returned,
+        overdue,
+      },
+
+      percentages: {
+        submitted: total ? Math.round((submitted / total) * 100) : 0,
+        live: total ? Math.round((live / total) * 100) : 0,
+        returned: total ? Math.round((returned / total) * 100) : 0,
+        overdue: total ? Math.round((overdue / total) * 100) : 0,
+      }
+    };
+  }
 }
