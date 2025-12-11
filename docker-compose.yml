@@ -1,22 +1,22 @@
 
 
 services:
-  # lawalbackendbackend:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   image: sakibsakib/lawalbackendbackend:latest
-  #   container_name: lawalbackendbackend
-  #   restart: always
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - postgres_db
-  #     - redis_cache
-  #   ports:
-  #     - "5000:5000"
-  #   networks:
-  #     - app_network
+  lawalbackendbackend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sakibsakib/lawalbackendbackend:latest
+    container_name: lawalbackendbackend
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - postgres_db
+      - redis_cache
+    ports:
+      - "5000:5000"
+    networks:
+      - app_network
 
   postgres_db:
     image: postgres:15
