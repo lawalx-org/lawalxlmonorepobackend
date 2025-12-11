@@ -4,6 +4,7 @@ import {
   UseGuards,
   Req,
   UnauthorizedException,
+  Query,
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
@@ -75,7 +76,7 @@ export class EmployDashboardController {
     };
   }
 
-   @Get('projects/top-overdue')
+  @Get('projects/top-overdue')
   @Roles('EMPLOYEE')
   async getTopOverdue(@Req() req: RequestWithUser) {
     const employeeId = req.user.employeeId;
@@ -93,16 +94,47 @@ export class EmployDashboardController {
     };
   }
 
+  // @Get('submission-status')
+  // @Roles('EMPLOYEE')
+  // async getSubmissionStatus(@Req() req: RequestWithUser) {
+  //   const employeeId = req.user.employeeId;
+
+  //   if (!employeeId) {
+  //     throw new UnauthorizedException('Employee ID not found in token');
+  //   }
+
+  //   const result = await this.employService.getSubmissionStatus(employeeId);
+
+  //   return {
+  //     statusCode: 200,
+  //     success: true,
+  //     message: 'Submission status fetched successfully',
+  //     data: result,
+  //   };
+  // }
   @Get('submission-status')
   @Roles('EMPLOYEE')
-  async getSubmissionStatus(@Req() req: RequestWithUser) {
+  async getSubmissionStatus(
+    @Req() req: RequestWithUser,
+    @Query('month') month?: string,
+    @Query('year') year?: string,
+  ) {
     const employeeId = req.user.employeeId;
 
     if (!employeeId) {
       throw new UnauthorizedException('Employee ID not found in token');
     }
 
-    const result = await this.employService.getSubmissionStatus(employeeId);
+    // Default to current month & year if not provided
+    const now = new Date();
+    const selectedMonth = month ? Number(month) : now.getMonth() + 1;
+    const selectedYear = year ? Number(year) : now.getFullYear();
+
+    const result = await this.employService.getSubmissionStatus(
+      employeeId,
+      selectedMonth,
+      selectedYear,
+    );
 
     return {
       statusCode: 200,

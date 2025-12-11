@@ -98,7 +98,7 @@ export class ManagerController {
       managerId,
     );
   }
-     @Get('projects/top-overdue')
+  @Get('projects/top-overdue')
   @Roles('MANAGER')
   async getTopOverdue(@Req() req: RequestWithUser) {
     const managerId = req.user.managerId;
@@ -116,16 +116,46 @@ export class ManagerController {
     };
   }
 
+  // @Get('submission-status')
+  // @Roles('MANAGER')
+  // async getSubmissionStatus(@Req() req: RequestWithUser) {
+  //   const managerId = req.user.managerId;
+
+  //   if (!managerId) {
+  //     throw new UnauthorizedException('Employee ID not found in token');
+  //   }
+
+  //   const result = await this.managerService.getSubmissionStatus(managerId);
+
+  //   return {
+  //     statusCode: 200,
+  //     success: true,
+  //     message: 'Submission status fetched successfully',
+  //     data: result,
+  //   };
+  // }
   @Get('submission-status')
   @Roles('MANAGER')
-  async getSubmissionStatus(@Req() req: RequestWithUser) {
+  async getSubmissionStatus(
+    @Req() req: RequestWithUser,
+    @Query('month') month?: string,
+    @Query('year') year?: string,
+  ) {
     const managerId = req.user.managerId;
 
     if (!managerId) {
-      throw new UnauthorizedException('Employee ID not found in token');
+      throw new UnauthorizedException('Manager ID not found in token');
     }
 
-    const result = await this.managerService.getSubmissionStatus(managerId);
+    const now = new Date();
+    const selectedMonth = month ? Number(month) : now.getMonth() + 1;
+    const selectedYear = year ? Number(year) : now.getFullYear();
+
+    const result = await this.managerService.getSubmissionStatus(
+      managerId,
+      selectedMonth,
+      selectedYear,
+    );
 
     return {
       statusCode: 200,
