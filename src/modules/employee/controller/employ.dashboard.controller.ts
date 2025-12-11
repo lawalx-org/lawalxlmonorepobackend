@@ -13,11 +13,12 @@ import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { EmployDashboardService } from '../service/employ.dashboard.service';
 import { ApiQuery } from '@nestjs/swagger';
+import { GetSubmissionStatusQueryDto } from '../dto/get-submission-status.dto';
 
 @Controller('employeeDashboard')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class EmployDashboardController {
-  constructor(private readonly employService: EmployDashboardService) { }
+  constructor(private readonly employService: EmployDashboardService) {}
 
   @Get('dashboard')
   @Roles('EMPLOYEE')
@@ -117,8 +118,7 @@ export class EmployDashboardController {
   @Roles('EMPLOYEE')
   async getSubmissionStatus(
     @Req() req: RequestWithUser,
-    @Query('month') month?: string,
-    @Query('year') year?: string,
+    @Query() query: GetSubmissionStatusQueryDto,
   ) {
     const employeeId = req.user.employeeId;
 
@@ -126,10 +126,12 @@ export class EmployDashboardController {
       throw new UnauthorizedException('Employee ID not found in token');
     }
 
-    // Default to current month & year if not provided
     const now = new Date();
-    const selectedMonth = month ? Number(month) : now.getMonth() + 1;
-    const selectedYear = year ? Number(year) : now.getFullYear();
+
+    const selectedMonth = query.month
+      ? Number(query.month)
+      : now.getMonth() + 1;
+    const selectedYear = query.year ? Number(query.year) : now.getFullYear();
 
     const result = await this.employService.getSubmissionStatus(
       employeeId,

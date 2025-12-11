@@ -12,6 +12,7 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { ChartService } from '../../chart/service/chart.service';
 import { ManagerService } from '../service/manager.service';
+import { GetSubmissionStatusQueryDto } from '../dto/get-submission-status.dto';
 
 @Controller('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -138,8 +139,7 @@ export class ManagerController {
   @Roles('MANAGER')
   async getSubmissionStatus(
     @Req() req: RequestWithUser,
-    @Query('month') month?: string,
-    @Query('year') year?: string,
+    @Query() query: GetSubmissionStatusQueryDto,
   ) {
     const managerId = req.user.managerId;
 
@@ -148,8 +148,11 @@ export class ManagerController {
     }
 
     const now = new Date();
-    const selectedMonth = month ? Number(month) : now.getMonth() + 1;
-    const selectedYear = year ? Number(year) : now.getFullYear();
+
+    const selectedMonth = query.month
+      ? Number(query.month)
+      : now.getMonth() + 1;
+    const selectedYear = query.year ? Number(query.year) : now.getFullYear();
 
     const result = await this.managerService.getSubmissionStatus(
       managerId,

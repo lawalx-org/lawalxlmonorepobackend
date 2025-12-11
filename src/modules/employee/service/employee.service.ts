@@ -16,8 +16,8 @@ import { NotificationType } from 'src/modules/notification/dto/create-notificati
 export class EmployeeService {
   constructor(
     private readonly prisma: PrismaService,
-      private readonly notificationService: NotificationService
-  ) { }
+    private readonly notificationService: NotificationService,
+  ) {}
 
   async findAll(filters: EmployeeFilterDto) {
     const {
@@ -45,11 +45,11 @@ export class EmployeeService {
       ...(status && { user: { userStatus: status } }),
       ...(joinedDateFrom &&
         joinedDateTo && {
-        joinedDate: {
-          gte: joinedDateFrom,
-          lte: joinedDateTo,
-        },
-      }),
+          joinedDate: {
+            gte: joinedDateFrom,
+            lte: joinedDateTo,
+          },
+        }),
     };
 
     const orderBy: Prisma.EmployeeOrderByWithRelationInput =
@@ -274,18 +274,18 @@ export class EmployeeService {
       ...(projectId && { projectId }),
       ...(dueDateFrom &&
         dueDateTo && {
-        dueDate: {
-          gte: dueDateFrom,
-          lte: dueDateTo,
-        },
-      }),
+          dueDate: {
+            gte: dueDateFrom,
+            lte: dueDateTo,
+          },
+        }),
       ...(progressMin !== undefined &&
         progressMax !== undefined && {
-        progress: {
-          gte: progressMin,
-          lte: progressMax,
-        },
-      }),
+          progress: {
+            gte: progressMin,
+            lte: progressMax,
+          },
+        }),
     };
 
     const [tasks, total] = await Promise.all([
@@ -420,52 +420,151 @@ export class EmployeeService {
     };
   }
 
-  //notification notified 
+  //notification notified
   async reqSheetUpdate(employeeId: string, projectId?: string) {
-
     const employee = await this.prisma.employee.findUnique({
       where: { id: employeeId },
-
     });
 
-    if (!employee)  throw new NotFoundException(`employee with ID ${employeeId}not found`);
-
+    if (!employee)
+      throw new NotFoundException(`employee with ID ${employeeId}not found`);
 
     const managers = await this.prisma.user.findMany({
       where: { role: 'MANAGER' },
       select: { id: true },
     });
 
-    if (managers.length === 0)  throw new ConflictException('no managers found  receive the request');
+    if (managers.length === 0)
+      throw new ConflictException('no managers found  receive the request');
 
     const receiverIds = managers.map((m) => m.id);
 
-    let sendingList ;
+    let sendingList;
     console.log('Sending notification to:', receiverIds);
     if (receiverIds.length) {
-       sendingList = await this.notificationService.create(
-        
+      sendingList = await this.notificationService.create(
         {
           receiverIds,
           context: `Employee ${employee.id} requested a sheet update.`,
-        type: NotificationType.SHEET_UPDATE_REQUEST,
-        projectId,
+          type: NotificationType.SHEET_UPDATE_REQUEST,
+          projectId,
         },
         employee.id,
       );
     }
     console.log('Notification result:', sendingList);
 
-    
-
     // return {
     //   message: 'Sheet update request sent successfully',
     //    sendingList,
     // };
-       return {
+    return {
       message: 'Sheet update request sent successfully',
       notifications: sendingList,
     };
   }
+  private calculateOverdueDays(deadline: Date): number {
+    const now = new Date();
+    const diff =
+      (now.getTime() - new Date(deadline).getTime()) / (1000 * 60 * 60 * 24);
+    return Math.floor(diff);
+  }
 
+  private getPriorityLabel(priority: string): string {
+    if (priority === 'LOW') return 'Low';
+    if (priority === 'MEDIUM') return 'Medium';
+    if (priority === 'HIGH') return 'Critical';
+    return 'Low';
+  }
+
+  async getTopOverdueProjects(employeeId: string) {
+    // Fetch all projects assigned to employee
+    const assignments = await this.prisma.projectEmployee.findMany({
+      where: { employeeId },
+      include: { project: true },
+    });
+
+    const formatted = assignments.map((item) => {
+      const overdueDays = this.calculateOverdueDays(item.project.deadline);
+      return {
+        id: item.project.id,
+        name: item.project.name,
+        status: item.project.status,
+        overdueDays: overdueDays > 0 ? overdueDays : 0,
+        priority: this.getPriorityLabel(item.project.priority),
+        deadline: item.project.deadline,
+      };
+    });
+
+    // Sort by most overdue
+    const overdueProjects = formatted
+      .filter((p) => p.overdueDays > 0)
+      .sort((a, b) => b.overdueDays - a.overdueDays);
+
+    return {
+      totalProjects: formatted.length,
+      overdueCount: overdueProjects.length,
+      projects: formatted,
+      overdueProjects,
+    };
+  }
+  async getSubmissionStatus(managerId: string, month: number, year: number) {
+    // Create month date range
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0, 23, 59, 59);
+
+    const submissions = await this.prisma.submitted.findMany({
+      where: {
+        project: {
+          managerId: managerId,
+        },
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      include: {
+        project: true,
+      },
+    });
+
+    const total = submissions.length;
+
+    let submitted = 0;
+    let live = 0;
+    let returned = 0;
+    let overdue = 0;
+
+    const now = new Date();
+
+    submissions.forEach((item) => {
+      const status = item.status.toUpperCase();
+
+      if (status === 'APPROVED' || status === 'SUBMITTED') submitted++;
+      if (status === 'PENDING') live++;
+      if (status === 'REJECTED') returned++;
+
+      if (new Date(item.project.deadline) < now && status !== 'APPROVED') {
+        overdue++;
+      }
+    });
+
+    return {
+      total,
+      counts: {
+        submitted,
+        live,
+        returned,
+        overdue,
+      },
+      percentages: {
+        submitted: total ? Math.round((submitted / total) * 100) : 0,
+        live: total ? Math.round((live / total) * 100) : 0,
+        returned: total ? Math.round((returned / total) * 100) : 0,
+        overdue: total ? Math.round((overdue / total) * 100) : 0,
+      },
+      month,
+      year,
+    };
+  }
 }
