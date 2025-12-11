@@ -4,6 +4,7 @@ import {
   UseGuards,
   Req,
   UnauthorizedException,
+  Query,
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
@@ -11,11 +12,12 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { EmployDashboardService } from '../service/employ.dashboard.service';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('employeeDashboard')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class EmployDashboardController {
-  constructor(private readonly employService: EmployDashboardService) {}
+  constructor(private readonly employService: EmployDashboardService) { }
 
   @Get('dashboard')
   @Roles('EMPLOYEE')
@@ -71,43 +73,6 @@ export class EmployDashboardController {
     const result = await this.employService.getEmployeePerformance(employeeId);
     return {
       message: 'Employee performance fetched successfully',
-      data: result,
-    };
-  }
-
-   @Get('projects/top-overdue')
-  @Roles('EMPLOYEE')
-  async getTopOverdue(@Req() req: RequestWithUser) {
-    const employeeId = req.user.employeeId;
-    if (!employeeId) {
-      throw new UnauthorizedException('Employee ID not found in token');
-    }
-
-    const result = await this.employService.getTopOverdueProjects(employeeId);
-
-    return {
-      statusCode: 200,
-      success: true,
-      message: 'Top overdue projects fetched successfully',
-      data: result,
-    };
-  }
-
-  @Get('submission-status')
-  @Roles('EMPLOYEE')
-  async getSubmissionStatus(@Req() req: RequestWithUser) {
-    const employeeId = req.user.employeeId;
-
-    if (!employeeId) {
-      throw new UnauthorizedException('Employee ID not found in token');
-    }
-
-    const result = await this.employService.getSubmissionStatus(employeeId);
-
-    return {
-      statusCode: 200,
-      success: true,
-      message: 'Submission status fetched successfully',
       data: result,
     };
   }

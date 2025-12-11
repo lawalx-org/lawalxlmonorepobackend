@@ -98,40 +98,4 @@ export class ManagerController {
       managerId,
     );
   }
-     @Get('projects/top-overdue')
-  @Roles('MANAGER')
-  async getTopOverdue(@Req() req: RequestWithUser) {
-    const managerId = req.user.managerId;
-    if (!managerId) {
-      throw new UnauthorizedException('Employee ID not found in token');
-    }
-
-    const result = await this.managerService.getTopOverdueProjects(managerId);
-
-    return {
-      statusCode: 200,
-      success: true,
-      message: 'Top overdue projects fetched successfully',
-      data: result,
-    };
-  }
-
-  @Get('submission-status')
-  @Roles('MANAGER')
-  async getSubmissionStatus(@Req() req: RequestWithUser) {
-    const managerId = req.user.managerId;
-
-    if (!managerId) {
-      throw new UnauthorizedException('Employee ID not found in token');
-    }
-
-    const result = await this.managerService.getSubmissionStatus(managerId);
-
-    return {
-      statusCode: 200,
-      success: true,
-      message: 'Submission status fetched successfully',
-      data: result,
-    };
-  }
 }
