@@ -4,6 +4,7 @@ import {
   UseGuards,
   Req,
   UnauthorizedException,
+  Query,
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
@@ -11,11 +12,12 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { EmployDashboardService } from '../service/employ.dashboard.service';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('employeeDashboard')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class EmployDashboardController {
-  constructor(private readonly employService: EmployDashboardService) {}
+  constructor(private readonly employService: EmployDashboardService) { }
 
   @Get('dashboard')
   @Roles('EMPLOYEE')
@@ -74,4 +76,65 @@ export class EmployDashboardController {
       data: result,
     };
   }
+
+  @Get('projects-overdue')
+  async overdue(@Req() req: RequestWithUser) {
+    const employeeId = req.user.employeeId;
+
+    if (!employeeId) {
+      throw new UnauthorizedException('employeeId not found in token');
+    }
+
+    const result = await this.employService.employeeOverdueProject(employeeId);
+
+    return {
+      message: "Employee overdue projects fetched successfully",
+      data: result,
+    };
+  }
+
+  @Get("project-status-graph")
+  @ApiQuery({
+    name: 'period',
+    enum: ['week', 'month', 'year'],
+    required: false,
+    description: 'Select period for project status graph',
+    example: 'month',
+  })
+  async getProjectStatusGraph(
+    @Req() req: RequestWithUser,
+    @Query("period") period: "week" | "month" | "year" = "month"
+  ) {
+    const employeeId = req.user.employeeId;
+
+    if (!employeeId) {
+      throw new UnauthorizedException("employeeId not found in token");
+    }
+
+    const result = await this.employService.getEmployeeSubmittingStack(
+      employeeId,
+      period
+    );
+
+    return {
+      message: "Employee project status graph fetched successfully",
+      data: result,
+    };
+  }
+
+  @Get("upcoming-deadline")
+  async upcomingDeadline(@Req() req: RequestWithUser) {
+    const employeeId = req.user.employeeId;
+    if (!employeeId) {
+      throw new UnauthorizedException("employeeId ID not found in token");
+    }
+
+    const result = await this.employService.employeeUpcomingDeadlineProjects(employeeId);
+
+    return {
+      message: "Upcoming project deadlines fetched successfully",
+      data: result
+    };
+  }
 }
+
