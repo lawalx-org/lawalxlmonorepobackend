@@ -47,6 +47,15 @@ export class UserController {
     return { message: 'Users fetched successfully', data: result };
   }
 
+   @Get(':id')
+  async getUser(@Req() req: RequestWithUser) {
+    const id = req.user?.userId;
+    return {
+      message: 'User fetched successfully',
+      data: await this.userService.findOne(id!),
+    }
+  }
+
   @Get('managers')
   @Roles(Role.CLIENT)
   async findAllManagers(@Query() query: PaginationDto) {
