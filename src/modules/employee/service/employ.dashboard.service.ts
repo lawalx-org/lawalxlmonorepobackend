@@ -245,7 +245,7 @@ export class EmployDashboardService {
       };
     });
 
-    // Sort by most overdue
+    
     const overdueProjects = formatted
       .filter((p) => p.overdueDays > 0)
       .sort((a, b) => b.overdueDays - a.overdueDays);
@@ -262,26 +262,26 @@ export class EmployDashboardService {
     const submissions = await this.prisma.submitted.findMany({
       where: { employeeId },
       include: {
-        project: true, // IMPORTANT → Needed to calculate overdue
+        project: true, 
       }
     });
 
     const total = submissions.length;
 
-    let submitted = 0;  // APPROVED
-    let live = 0;       // PENDING
-    let returned = 0;   // REJECTED
-    let overdue = 0;    // deadline < now AND not approved
+    let submitted = 0;  
+    let live = 0;      
+    let returned = 0;   
+    let overdue = 0;    
 
     const now = new Date();
 
     submissions.forEach((item) => {
-      // Status mapping
+      
       if (item.status === 'APPROVED') submitted++;
       if (item.status === 'PENDING') live++;
       if (item.status === 'REJECTED') returned++;
 
-      // Overdue logic: Project deadline passed AND not approved
+      
       if (new Date(item.project.deadline) < now && item.status !== 'APPROVED') {
         overdue++;
       }
