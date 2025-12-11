@@ -36,7 +36,7 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
-          username: root
+          username: sakib
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             docker compose down --remove-orphans
