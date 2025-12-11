@@ -227,7 +227,6 @@ export class EmployDashboardService {
   }
 
   async getTopOverdueProjects(employeeId: string) {
-    
     const assignments = await this.prisma.projectEmployee.findMany({
       where: { employeeId },
       include: { project: true },
@@ -245,7 +244,6 @@ export class EmployDashboardService {
       };
     });
 
-    // Sort by most overdue
     const overdueProjects = formatted
       .filter((p) => p.overdueDays > 0)
       .sort((a, b) => b.overdueDays - a.overdueDays);
@@ -258,51 +256,104 @@ export class EmployDashboardService {
     };
   }
 
-  async getSubmissionStatus(employeeId: string) {
+  // async getSubmissionStatus(employeeId: string) {
+  //   const submissions = await this.prisma.submitted.findMany({
+  //     where: { employeeId },
+  //     include: {
+  //       project: true,
+  //     }
+  //   });
+
+  //   const total = submissions.length;
+
+  //   let submitted = 0;
+  //   let live = 0;
+  //   let returned = 0;
+  //   let overdue = 0;
+
+  //   const now = new Date();
+
+  //   submissions.forEach((item) => {
+
+  //     if (item.status === 'APPROVED') submitted++;
+  //     if (item.status === 'PENDING') live++;
+  //     if (item.status === 'REJECTED') returned++;
+
+  //     if (new Date(item.project.deadline) < now && item.status !== 'APPROVED') {
+  //       overdue++;
+  //     }
+  //   });
+
+  //   return {
+  //     total,
+
+  //     counts: {
+  //       submitted,
+  //       live,
+  //       returned,
+  //       overdue,
+  //     },
+
+  //     percentages: {
+  //       submitted: total ? Math.round((submitted / total) * 100) : 0,
+  //       live: total ? Math.round((live / total) * 100) : 0,
+  //       returned: total ? Math.round((returned / total) * 100) : 0,
+  //       overdue: total ? Math.round((overdue / total) * 100) : 0,
+  //     }
+  //   };
+  // }
+  async getSubmissionStatus(employeeId: string, month: number, year: number) {
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0, 23, 59, 59);
+
     const submissions = await this.prisma.submitted.findMany({
-      where: { employeeId },
-      include: {
-        project: true, // IMPORTANT → Needed to calculate overdue
-      }
+      where: {
+        employeeId,
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      include: { project: true },
     });
 
     const total = submissions.length;
 
-    let submitted = 0;  // APPROVED
-    let live = 0;       // PENDING
-    let returned = 0;   // REJECTED
-    let overdue = 0;    // deadline < now AND not approved
+    let submitted = 0;
+    let live = 0;
+    let returned = 0;
+    let overdue = 0;
 
     const now = new Date();
 
     submissions.forEach((item) => {
-      // Status mapping
-      if (item.status === 'APPROVED') submitted++;
-      if (item.status === 'PENDING') live++;
-      if (item.status === 'REJECTED') returned++;
+      const status = item.status.toUpperCase();
 
-      // Overdue logic: Project deadline passed AND not approved
-      if (new Date(item.project.deadline) < now && item.status !== 'APPROVED') {
+      if (status === 'APPROVED' || status === 'SUBMITTED') submitted++;
+      if (status === 'PENDING') live++;
+      if (status === 'REJECTED') returned++;
+
+      if (new Date(item.project.deadline) < now && status !== 'APPROVED') {
         overdue++;
       }
     });
 
     return {
       total,
-
       counts: {
         submitted,
         live,
         returned,
         overdue,
       },
-
       percentages: {
         submitted: total ? Math.round((submitted / total) * 100) : 0,
         live: total ? Math.round((live / total) * 100) : 0,
         returned: total ? Math.round((returned / total) * 100) : 0,
         overdue: total ? Math.round((overdue / total) * 100) : 0,
-      }
+      },
+      month,
+      year,
     };
   }
 }

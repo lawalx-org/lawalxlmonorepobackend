@@ -12,6 +12,7 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { ChartService } from '../../chart/service/chart.service';
 import { ManagerService } from '../service/manager.service';
+import { GetSubmissionStatusQueryDto } from '../dto/get-submission-status.dto';
 
 @Controller('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -97,5 +98,73 @@ export class ManagerController {
     return await this.chartService.getManagerTopOverdueProjectsChartData(
       managerId,
     );
+  }
+  @Get('projects/top-overdue')
+  @Roles('MANAGER')
+  async getTopOverdue(@Req() req: RequestWithUser) {
+    const managerId = req.user.managerId;
+    if (!managerId) {
+      throw new UnauthorizedException('Employee ID not found in token');
+    }
+
+    const result = await this.managerService.getTopOverdueProjects(managerId);
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Top overdue projects fetched successfully',
+      data: result,
+    };
+  }
+
+  // @Get('submission-status')
+  // @Roles('MANAGER')
+  // async getSubmissionStatus(@Req() req: RequestWithUser) {
+  //   const managerId = req.user.managerId;
+
+  //   if (!managerId) {
+  //     throw new UnauthorizedException('Employee ID not found in token');
+  //   }
+
+  //   const result = await this.managerService.getSubmissionStatus(managerId);
+
+  //   return {
+  //     statusCode: 200,
+  //     success: true,
+  //     message: 'Submission status fetched successfully',
+  //     data: result,
+  //   };
+  // }
+  @Get('submission-status')
+  @Roles('MANAGER')
+  async getSubmissionStatus(
+    @Req() req: RequestWithUser,
+    @Query() query: GetSubmissionStatusQueryDto,
+  ) {
+    const managerId = req.user.managerId;
+
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    const now = new Date();
+
+    const selectedMonth = query.month
+      ? Number(query.month)
+      : now.getMonth() + 1;
+    const selectedYear = query.year ? Number(query.year) : now.getFullYear();
+
+    const result = await this.managerService.getSubmissionStatus(
+      managerId,
+      selectedMonth,
+      selectedYear,
+    );
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Submission status fetched successfully',
+      data: result,
+    };
   }
 }
