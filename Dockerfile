@@ -42,16 +42,16 @@ ENV NODE_ENV=${NODE_ENV}
 
 EXPOSE 5000
 
+# Start container with safety checks + migrations
 CMD bash -c '\
+  echo "⏳ Waiting for PostgreSQL..."; \
   until pg_isready -h postgres_db -p 5432 -U postgres; do \
-    echo "Waiting for PostgreSQL..."; \
     sleep 2; \
   done; \
+  echo "⚙️ Generating Prisma Client..."; \
+  npx prisma generate; \
+  echo "📦 Running Prisma Migrations..."; \
   npx prisma migrate deploy; \
-  if [ "$NODE_ENV" = "production" ]; then \
-    echo "🚀 Starting NestJS in Production Mode..."; \
-    node dist/main.js; \
-  else \
-    echo "🧑‍💻 Starting NestJS in Development Mode..."; \
-    npm run start:dev; \
-  fi'
+  echo "🚀 Starting NestJS API..."; \
+  node dist/main.js \
+'
