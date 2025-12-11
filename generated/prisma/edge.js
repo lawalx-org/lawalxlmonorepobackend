@@ -762,7 +762,11 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
+<<<<<<< HEAD
       "value": "C:\\projectnew\\lawalxlmonorepobackend-main\\generated\\prisma",
+=======
+      "value": "C:\\Sourav Chowdhury\\lawalxlmonorepobackend\\generated\\prisma",
+>>>>>>> f077efb (update employee dashboard)
       "fromEnvVar": null
     },
     "config": {
@@ -776,7 +780,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
+<<<<<<< HEAD
     "sourceFilePath": "C:\\projectnew\\lawalxlmonorepobackend-main\\prisma\\schema.prisma",
+=======
+    "sourceFilePath": "C:\\Sourav Chowdhury\\lawalxlmonorepobackend\\prisma\\schema.prisma",
+>>>>>>> f077efb (update employee dashboard)
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
