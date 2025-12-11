@@ -67,17 +67,10 @@ CMD bash -c '\
   until pg_isready -h postgres_db -p 5432 -U postgres; do \
     sleep 2; \
   done; \
-<<<<<<< HEAD
   echo "⚙️ Generating Prisma Client..."; \
   npx prisma generate; \
-=======
->>>>>>> ded1b45 (add the confirtions)
   echo "📦 Running Prisma Migrations..."; \
   npx prisma migrate deploy; \
   echo "🚀 Starting NestJS API..."; \
   node dist/main.js \
-<<<<<<< HEAD
 '
-=======
-'
->>>>>>> ded1b45 (add the confirtions)
