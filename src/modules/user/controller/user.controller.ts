@@ -47,7 +47,7 @@ export class UserController {
     return { message: 'Users fetched successfully', data: result };
   }
 
-   @Get(':id')
+   @Get("profile")
   async getUser(@Req() req: RequestWithUser) {
     const id = req.user?.userId;
     return {
