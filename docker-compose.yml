@@ -10,12 +10,6 @@ services:
     restart: always
     env_file:
       - .env
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@postgres_db:5432/appdb?schema=public"
-      REDIS_HOST: redis_cache
-      REDIS_PORT: 6379
-      NODE_ENV: production
-      SYSTEM_USERNAME: sakibsakib
     depends_on:
       - postgres_db
       - redis_cache

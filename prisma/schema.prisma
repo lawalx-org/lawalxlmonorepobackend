@@ -1,7 +1,8 @@
 // Prisma client generator
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 // Database configuration

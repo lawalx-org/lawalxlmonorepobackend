@@ -3,20 +3,30 @@
 # ------------------------
 FROM node:20-bullseye AS builder
 
+# Install required system dependencies
 RUN apt-get update && apt-get install -y \
   python3 make g++ gcc postgresql-client \
   && ln -sf python3 /usr/bin/python \
   && rm -rf /var/lib/apt/lists/*
 
+# Set working directory
 RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
 WORKDIR /usr/src/app
 USER node
 
+# Copy package files and install dependencies
 COPY --chown=node:node package*.json ./
 RUN npm ci
 
+# Copy entire project
 COPY --chown=node:node . .
+
+# Generate Prisma Client inside container
+RUN npx prisma generate
+
+# Build NestJS project
 RUN npm run build
+
 
 # ------------------------
 # Stage 2: Runtime
@@ -28,18 +38,27 @@ RUN apt-get update && apt-get install -y \
   && ln -sf python3 /usr/bin/python \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
 WORKDIR /usr/src/app
+
+# Create uploads directories and set permissions
+RUN mkdir -p /usr/src/app/uploads/profile-images && \
+    mkdir -p /usr/src/app/uploads-file/png && \
+    chown -R node:node /usr/src/app/uploads && \
+    chown -R node:node /usr/src/app/uploads-file
+
 USER node
 
+# Copy built files, node_modules, and prisma folder
 COPY --from=builder --chown=node:node /usr/src/app/dist ./dist
+COPY --from=builder --chown=node:node /usr/src/app/generated ./generated
 COPY --from=builder --chown=node:node /usr/src/app/node_modules ./node_modules
 COPY --from=builder --chown=node:node /usr/src/app/prisma ./prisma
 COPY --from=builder --chown=node:node /usr/src/app/package*.json ./
 
-ARG NODE_ENV=development
-ENV NODE_ENV=${NODE_ENV}
+# Set environment
+ENV NODE_ENV=production
 
+# Expose API port
 EXPOSE 5000
 
 # Start container with safety checks + migrations
@@ -48,10 +67,17 @@ CMD bash -c '\
   until pg_isready -h postgres_db -p 5432 -U postgres; do \
     sleep 2; \
   done; \
+<<<<<<< HEAD
   echo "⚙️ Generating Prisma Client..."; \
   npx prisma generate; \
+=======
+>>>>>>> ded1b45 (add the confirtions)
   echo "📦 Running Prisma Migrations..."; \
   npx prisma migrate deploy; \
   echo "🚀 Starting NestJS API..."; \
   node dist/main.js \
+<<<<<<< HEAD
 '
+=======
+'
+>>>>>>> ded1b45 (add the confirtions)

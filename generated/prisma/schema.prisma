@@ -1,0 +1,869 @@
+model Activity {
+  id          String             @id @default(uuid())
+  userId      String
+  timestamp   DateTime           @default(now())
+  description String
+  projectId   String
+  ipAddress   String?
+  actionType  ActivityActionType @default(GENERAL)
+  metadata    Json?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("activities")
+}
+
+model Client {
+  id                String           @id @default(uuid())
+  userId            String?          @unique
+  email             String           @unique
+  contactPersonName String?
+  clientLogo        String?
+  favicon           String?
+  primaryColor      String?
+  secondaryColor    String?
+  footerText        String?
+  supportMail       String?
+  subdomain         String?
+  serverLocation    String?
+  category          IndustryCategory @default(REALESTATE)
+  onboarding        Boolean          @default(false)
+  welcomeDashboard  Boolean          @default(false)
+  chartList         String[]
+  storage           String?
+  threshold         Int? // Valid range: 0–100
+  archiveAfter      Int? // Must be a day number
+  userWarning       Boolean          @default(false)
+  adminNote         String?
+  trialPeriod       Int?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  // Relations
+  user            User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
+  // managers              Manager[]
+  // employees             Employee[]
+  // viewers               Viewer[]
+  referredPersons ReferredPerson[]
+  tickets         Ticket[]
+  programs        Program[]
+
+  @@map("clients")
+}
+
+model Employee {
+  id          String   @id @default(uuid())
+  userId      String?  @unique
+  // clientId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  joinedDate  String
+  skills      String[]
+
+  // Relations
+  user             User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  projectEmployees ProjectEmployee[]
+  submitted        Submitted[]
+
+  @@map("employees")
+}
+
+model OtpVerification {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  otp       String
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [email], references: [email])
+
+  @@map("otp_verifications")
+}
+
+model Payment {
+  id            String   @id @default(uuid())
+  amount        Float
+  transactionId String   @unique
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("payments")
+}
+
+model Manager {
+  id          String   @id @default(uuid())
+  userId      String?  @unique
+  // clientId    String
+  skills      String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  joinedDate  String
+
+  // Relations
+  user                       User?                       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  projects                   Project[]
+  requestsToAddProjectMember RequestToAddProjectMember[]
+
+  @@map("managers")
+}
+
+// Core Notification model
+model Notification {
+  id          String           @id @default(uuid())
+  senderId    String
+  receiverIds String[]
+  projectId   String?
+  context     String
+  type        NotificationType
+  isRead      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relations
+  provisions NotificationProvision[]
+
+  @@map("notifications")
+}
+
+// Junction table for User-Notification many-to-many relationship
+model NotificationProvision {
+  userId         String
+  notificationId String
+
+  // Relations
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@id([userId, notificationId])
+  @@map("notification_provisions")
+}
+
+// reminder
+//employadd
+//manageradd
+//PROJECT_CREATED
+model NotificationPermissionEmployee {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  returnProject    Boolean  @default(true)
+  assignNewProject Boolean  @default(true)
+  projectPublish   Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_permissions_employee")
+}
+
+// Notification Permission for Managers
+model NotificationPermissionManager {
+  id                    String   @id @default(uuid())
+  userId                String   @unique
+  fileImportByEmployees Boolean  @default(true)
+  weeklySummary         Boolean  @default(true)
+  createNewProject      Boolean  @default(true)
+  submittedProject      Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_permissions_manager")
+}
+
+// Notification Permission for Clients
+model NotificationPermissionClient {
+  id                    String   @id @default(uuid())
+  userId                String   @unique
+  onProjectApproval     Boolean  @default(true)
+  onProjectRejection    Boolean  @default(true)
+  fileImportByEmployees Boolean  @default(true)
+  weeklySummary         Boolean  @default(true)
+  storageLimit          Boolean  @default(true)
+  billPayment           Boolean  @default(true)
+  overdueProject        Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_permissions_client")
+}
+
+// Notification Permission for Supporters
+model NotificationPermissionSupporter {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  assignNewProject Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_permissions_supporter")
+}
+
+// Notification Permission for Admins
+model NotificationPermissionAdmin {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  storageLimit       Boolean  @default(true)
+  receivedPayment    Boolean  @default(true)
+  createClient       Boolean  @default(true)
+  createTicket       Boolean  @default(true)
+  paymentCycleChange Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_permissions_admin")
+}
+
+// Notification Permission for Super Admins
+model NotificationPermissionSuperAdmin {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  storageLimit    Boolean  @default(true)
+  receivedPayment Boolean  @default(true)
+  createClient    Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  user SuperAdmin @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_permissions_super_admin")
+}
+
+model Program {
+  id                 String   @id @default(uuid())
+  userId             String
+  programName        String
+  datetime           String
+  programDescription String
+  priority           Priority
+  deadline           String
+  progress           Int?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  // Relations
+  client   Client    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects Project[]
+  tags     Tag[]
+
+  @@map("programs")
+}
+
+model Project {
+  id                     String        @id @default(uuid())
+  programId              String
+  name                   String
+  // uploadbeforeday           String
+  // uploadCycle               ProjectCycle
+  description            String
+  // dataReceivedTime          String?
+  // beforeSubmitData          Int?
+  // weakuploadData            String[]
+  // monthlyuploadData         String[]
+  status                 ProjectStatus @default(PENDING)
+  priority               Priority
+  deadline               DateTime
+  managerId              String
+  startDate              DateTime?
+  progress               Int?
+  chartList              String[] // Seed create that chart list
+  estimatedCompletedDate DateTime?
+  projectCompleteDate    DateTime? // this is project end date 
+  currentRate            String?
+  budget                 String?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+  latitude               Float?
+  longitude              Float?
+
+  // Relations
+  program                    Program                     @relation(fields: [programId], references: [id], onDelete: Cascade)
+  manager                    Manager                     @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  projectEmployees           ProjectEmployee[]
+  tasks                      Task[]
+  activities                 Activity[]
+  reviews                    Review[]
+  requestsToAddProjectMember RequestToAddProjectMember[]
+  submitted                  Submitted[]
+  reminders                  Reminder[]
+  sheets                     Sheet[]
+
+  @@map("projects")
+}
+
+model ProjectEmployee {
+  id         String   @id @default(uuid())
+  projectId  String
+  employeeId String
+  assignedAt DateTime @default(now())
+
+  // Relations
+  project  Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, employeeId])
+  @@map("project_employees")
+}
+
+model Review {
+  id           String        @id @default(uuid())
+  projectId    String
+  taskAssignId String?
+  status       ProjectStatus
+  managerId    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
+
+model SubmissionReturn {
+  id          String    @id @default(uuid())
+  submitted   Submitted @relation(fields: [submittedId], references: [id])
+  submittedId String    @unique
+  returnedAt  DateTime  @default(now())
+
+  @@map("submission_returns")
+}
+
+model Submitted {
+  id               String            @id @default(uuid())
+  information      String
+  submission       String
+  status           SubmittedStatus   @default(PENDING)
+  employee         Employee?         @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  employeeId       String?
+  project          Project           @relation(fields: [projectId], references: [id])
+  projectId        String
+  sheetId          String
+  submiteCells     String[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  submissionReturn SubmissionReturn? // Relation to the submission return
+}
+
+model SuperAdmin {
+  id             String   @id @default(uuid())
+  userId         String?  @unique
+  clientLogo     String?
+  favicon        String?
+  primaryColor   String?
+  secondaryColor String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  user                             User?                             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  notificationPermissionSuperAdmin NotificationPermissionSuperAdmin?
+
+  @@map("super_admins")
+}
+
+model Supporter {
+  id            String        @id @default(uuid())
+  userId        String?       @unique
+  supporterRole SupporterRole
+  skills        String[]
+  workload      Int? // Max number 4
+  workItems     String[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("supporters")
+}
+
+// model Tag {
+//   id    String @id @default(uuid())
+//   name  String @unique
+
+//   @@map("tags")
+// }
+
+model Task {
+  id           String      @id @default(uuid())
+  status       TaskStatus?
+  name         String
+  projectId    String
+  progress     Int?
+  dueDate      String?
+  assignedTo   String // Can be Employee or Manager ID
+  assigneeType String // "EMPLOYEE" or "MANAGER" to identify the type
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
+model Ticket {
+  id           String       @id @default(uuid())
+  clientId     String
+  supporterIds String[]
+  adminIds     String[]
+  companyName  String?
+  subject      String
+  status       TicketStatus @default(OPEN)
+  priority     Priority
+  issue        String
+  adminNote    String?
+  attachFile   String?
+  issueType    IssueType
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relations
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@map("tickets")
+}
+
+model User {
+  id              String     @id @default(uuid())
+  email           String     @unique
+  phoneNumber     String     @unique
+  password        String
+  name            String
+  role            Role       @default(VIEWER)
+  profileImage    String?
+  language        Language   @default(ENGLISH)
+  timezone        DateTime?
+  verification2FA Boolean    @default(false)
+  status          Boolean    @default(false)
+  lastActive      Boolean    @default(false)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  userStatus      UserStatus @default(ACTIVE)
+
+  // Relations
+  client     Client?
+  manager    Manager?
+  employee   Employee?
+  viewer     Viewer?
+  supporter  Supporter?
+  superAdmin SuperAdmin?
+
+  // Notification relations
+  notificationEmployee  NotificationPermissionEmployee?
+  notificationManager   NotificationPermissionManager?
+  notificationClient    NotificationPermissionClient?
+  notificationSupporter NotificationPermissionSupporter?
+  notificationAdmin     NotificationPermissionAdmin?
+
+  // Other relations
+  notifications   NotificationProvision[]
+  otpVerification OtpVerification?
+  payments        Payment[]
+  activities      Activity[]
+  file            File[]
+
+  @@map("users")
+}
+
+// Tags model
+model Tag {
+  id        String   @id @default(cuid())
+  programId String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@map("tags")
+}
+
+// ReferredPerson model
+model ReferredPerson {
+  id          String   @id @default(uuid())
+  name        String
+  userId      String
+  email       String?
+  phoneNumber Int?
+  aboutThere  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  client Client @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("referred_persons")
+}
+
+// RequestToAddProjectMember model
+model RequestToAddProjectMember {
+  id        String   @id @default(uuid())
+  clientId  String?
+  projectId String
+  managerId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  manager Manager @relation(fields: [managerId], references: [id], onDelete: Cascade)
+
+  @@map("request_to_add_project_members")
+}
+
+model Viewer {
+  id        String   @id @default(uuid())
+  userId    String?  @unique
+  // clientId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  // client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@map("viewers")
+}
+
+// model ChartTable {
+//   id        String    @id @default(uuid())
+//   title     String
+//   status    ChartStatus
+//   category  ChartName
+//   xAxis    Json
+//   yAxis    Json
+//   zAxis    Json?
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime  @updatedAt
+
+//   sheet     Sheet?
+// }
+
+model ChartTable {
+  id        String      @id @default(uuid())
+  title     String
+  status    ChartStatus
+  category  ChartName
+  xAxis     Json
+  yAxis     Json
+  zAxis     Json?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  sheet   Sheet?  @relation(fields: [sheetId], references: [id])
+  sheetId String? @unique
+}
+
+enum ChartStatus {
+  ACTIVE
+  INACTIVE
+  DEPRECATED
+  COMPLETED
+}
+
+enum ChartName {
+  BAR
+  LINE
+  PIE
+  DOUGHNUT
+  RADAR
+  POLAR_AREA
+  BUBBLE
+  SCATTER
+  AREA
+  MIXED
+  GAUGE
+  FUNNEL
+  TREEMAP
+  SUNBURST
+  SANKEY
+  TABLE
+  HEATMAP
+  HORIZONTAL_BAR
+  STACK_BAR_HORIZONTAL
+  COLUMN
+  PARETO
+  HISTOGRAM
+  WATERFALL
+  CANDLESTICK
+  GEOGRAPHY_GRAPH
+  SPLINE
+}
+
+enum Role {
+  VIEWER
+  EMPLOYEE
+  SUPPORTER
+  MANAGER
+  ADMIN
+  CLIENT
+  SUPERADMIN
+}
+
+enum Language {
+  ENGLISH
+}
+
+enum BillingCycle {
+  MONTHLY
+  HALFYEARLY
+  YEARLY
+  TWOYEARLY
+  ENTERPRISE
+}
+
+enum IndustryCategory {
+  REALESTATE
+  FINANCE
+  RENEWABLE_ENERGY
+  TRAVEL_AGENCY
+  BEAUTY_AND_WELLNESS
+}
+
+enum SupporterRole {
+  CALLATTENDANCE
+  SUPPORTMANAGER
+  SALESOFFICER
+  SYSTEMENGINEER
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+  NORMAL
+}
+
+enum ProjectCycle {
+  WEEKLY
+  BI_WEEKLY
+  MONTHLY
+}
+
+enum ProjectStatus {
+  PENDING
+  LIVE
+  DRAFT
+  OVERDUE
+  PROBLEM
+  COMPLETED
+}
+
+enum TaskStatus {
+  INPROGRESS
+  COMPLETED
+  OVERDUE
+  NOSTART
+}
+
+enum TicketStatus {
+  OPEN
+  UNASSIGNED
+  IN_PROGRESS
+  SOLVED
+}
+
+enum IssueType {
+  LOGINFAILED
+  SYSTEMERROR
+  OTHERPROBLEM
+}
+
+enum UserStatus {
+  ACTIVE
+  BANNED
+  DELETED
+  SUSPENDED
+}
+
+enum ActivityActionType {
+  ASSIGNEE_ADDED
+  ASSIGNEE_REMOVED
+  FILE_ADDED
+  FILE_REMOVED
+  LINK_ADDED
+  LINK_REMOVED
+  DUE_DATE_CHANGED
+  PROGRESS_CHANGED
+  SUBTASK_ADDED
+  SUBTASK_REMOVED
+  STATUS_CHANGED
+  PRIORITY_CHANGED
+  COMMENT_ADDED
+  PROJECT_CREATED
+  PROJECT_UPDATED
+  TASK_CREATED
+  TASK_COMPLETED
+  GENERAL
+}
+
+enum SubmittedStatus {
+  APPROVED
+  PENDING
+  REJECTED
+}
+
+enum NotificationType {
+  NEW_EMPLOYEE_ASSIGNED
+  NEW_MANAGER_ASSIGNED
+  SUBMISSION_UPDATED_STATUS
+  PROJECT_SUBMITTED
+  PROJECT_STATUS_UPDATE
+  PROJECT_CREATED
+  REMINDER
+  SHEET_UPDATE_REQUEST
+  FILE_CREATED
+  ACTIVITY_CREATED
+}
+
+model File {
+  id       String   @id @default(cuid())
+  filename String
+  url      String
+  filePath String
+  fileType String
+  size     Int
+  uploadAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  sheetId String
+  sheet   Sheet? @relation(fields: [sheetId], references: [id], onDelete: Cascade)
+}
+
+model Reminder {
+  id            String          @id @default(uuid())
+  message       String
+  nextTriggerAt DateTime?
+  repeatEvery   RepeatInterval?
+  isActive      Boolean         @default(true)
+  projectId     String
+  project       Project         @relation(fields: [projectId], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  repeatOnDays  DayOfWeek[]
+  repeatOnDates Int[]
+  remindBefore  Int?
+}
+
+enum RepeatInterval {
+  WEEKLY
+  BI_WEEKLY
+  MONTHLY
+}
+
+enum DayOfWeek {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+// model Sheet {
+//   id        String   @id @default(uuid())
+//   name      String
+//   cells     Cell[]
+//   snapshots SheetSnapshot[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   chartId    String      @unique
+//   projectId   String     @unique
+//   chart      ChartTable  @relation(fields: [chartId], references: [id])
+//   project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+// }
+
+model Sheet {
+  id        String          @id @default(uuid())
+  name      String
+  cells     Cell[]
+  snapshots SheetSnapshot[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  chartId   String
+  projectId String
+
+  chart   ChartTable?
+  project Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  files File[]
+
+  @@unique([projectId, chartId])
+}
+
+model Cell {
+  id        String   @id @default(uuid())
+  row       Int
+  col       Int
+  value     String
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sheetId, row, col])
+}
+
+model SheetSnapshot {
+  id        String   @id @default(uuid())
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
+  sheetId   String
+  data      Json
+  createdAt DateTime @default(now())
+}
+
+model submiteCell {
+  id         String   @id @default(uuid())
+  row        Int
+  col        Int
+  value      String
+  sheetId    String
+  employeeId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Prisma client generator
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+// Database configuration
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
