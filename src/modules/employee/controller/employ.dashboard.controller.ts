@@ -12,11 +12,12 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { EmployDashboardService } from '../service/employ.dashboard.service';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('employeeDashboard')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class EmployDashboardController {
-  constructor(private readonly employService: EmployDashboardService) {}
+  constructor(private readonly employService: EmployDashboardService) { }
 
   @Get('dashboard')
   @Roles('EMPLOYEE')

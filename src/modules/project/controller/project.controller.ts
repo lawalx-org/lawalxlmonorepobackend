@@ -7,6 +7,9 @@ import {
   UseGuards,
   Query,
   Patch,
+  Req,
+  UnauthorizedException,
+  Delete,
 } from '@nestjs/common';
 import { ProjectService } from '../service/project.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
@@ -18,6 +21,8 @@ import { Roles } from 'src/common/jwt/roles.decorator';
 import { Role } from 'generated/prisma';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UpdateProjectStatusDto } from '../dto/update-project-status.dto';
+import { UpdateProjectDto } from '../dto/update-project.dto';
+import { RequestWithUser } from 'src/types/RequestWithUser';
 
 @Controller('project')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -84,7 +89,7 @@ export class ProjectController {
     const result = await this.projectService.getSheets(id);
     return {
       message: 'Sheets retrieved successfully',
-      data:result,
+      data: result,
     };
   }
 
@@ -104,4 +109,29 @@ export class ProjectController {
     };
   }
 
+
+@Patch(':id')
+@Roles(Role.CLIENT)
+async updateProject(
+  @Req() req: RequestWithUser,
+  @Param('id') id: string,
+  @Body() dto: UpdateProjectDto
+) {
+  const clientId = req.user.clientId;
+  if (!clientId) throw new UnauthorizedException('Client ID not found in token');
+
+  const result = await this.projectService.updateProject(id, dto);
+
+  return {
+    message: "Project updated successfully",
+    data: result,
+  };
+}
+
+
+  @Delete(':id')
+  @Roles(Role.CLIENT)
+  async deleteProject(@Param('id') id: string) {
+    return this.projectService.deleteProject(id);
+  }
 }

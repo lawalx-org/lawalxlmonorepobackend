@@ -1,57 +1,36 @@
-<<<<<<< HEAD
-
-
-
-# ------------------------
-# Stage 1: Builder
-# ------------------------
-FROM node:18-alpine AS builder
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm ci
-RUN npm install -g @nestjs/cli
-RUN apk add --no-cache postgresql-client
-COPY . .
-=======
 # ------------------------
 # Stage 1: Builder
 # ------------------------
 FROM node:20-bullseye AS builder
 
+# Install required system dependencies
 RUN apt-get update && apt-get install -y \
   python3 make g++ gcc postgresql-client \
   && ln -sf python3 /usr/bin/python \
   && rm -rf /var/lib/apt/lists/*
 
+# Set working directory
 RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
 WORKDIR /usr/src/app
 USER node
 
+# Copy package files and install dependencies
 COPY --chown=node:node package*.json ./
 RUN npm ci
 
+# Copy entire project
 COPY --chown=node:node . .
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
+
+# Generate Prisma Client inside container
+RUN npx prisma generate
+
+# Build NestJS project
 RUN npm run build
+
 
 # ------------------------
 # Stage 2: Runtime
 # ------------------------
-<<<<<<< HEAD
-FROM node:18-alpine AS runtime
-WORKDIR /usr/src/app
-
-
-RUN apk add --no-cache postgresql-client
-
-
-COPY package*.json ./
-RUN npm ci
-RUN npm install -g @nestjs/cli
-
-COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/prisma ./prisma
-=======
 FROM node:20-bullseye AS runtime
 
 RUN apt-get update && apt-get install -y \
@@ -59,45 +38,39 @@ RUN apt-get update && apt-get install -y \
   && ln -sf python3 /usr/bin/python \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
 WORKDIR /usr/src/app
+
+# Create uploads directories and set permissions
+RUN mkdir -p /usr/src/app/uploads/profile-images && \
+    mkdir -p /usr/src/app/uploads-file/png && \
+    chown -R node:node /usr/src/app/uploads && \
+    chown -R node:node /usr/src/app/uploads-file
+
 USER node
 
+# Copy built files, node_modules, and prisma folder
 COPY --from=builder --chown=node:node /usr/src/app/dist ./dist
+COPY --from=builder --chown=node:node /usr/src/app/generated ./generated
 COPY --from=builder --chown=node:node /usr/src/app/node_modules ./node_modules
 COPY --from=builder --chown=node:node /usr/src/app/prisma ./prisma
 COPY --from=builder --chown=node:node /usr/src/app/package*.json ./
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
 
-ARG NODE_ENV=development
-ENV NODE_ENV=${NODE_ENV}
+# Set environment
+ENV NODE_ENV=production
 
+# Expose API port
 EXPOSE 5000
 
-<<<<<<< HEAD
-
-CMD if [ "$NODE_ENV" = "production" ]; then \
-      echo "🚀 Running Prisma Migrate Deploy for Production..."; \
-       npx prisma migrate deploy  && \
-      echo "✅ Starting NestJS in Production Mode..." && \
-      node dist/main.js; \
-    else \
-      echo "🚀 Running Prisma Migrate Deploy for Development..."; \
-      npx prisma migrate deploy && \
-      echo "🧑‍💻 Starting NestJS in Development Mode (Watch)..." && \
-      npm run start:dev; \
-    fi
-
-=======
+# Start container with safety checks + migrations
 CMD bash -c '\
+  echo "⏳ Waiting for PostgreSQL..."; \
   until pg_isready -h postgres_db -p 5432 -U postgres; do \
-    echo \"Waiting for PostgreSQL...\"; \
     sleep 2; \
   done; \
+  echo "⚙️ Generating Prisma Client..."; \
+  npx prisma generate; \
+  echo "📦 Running Prisma Migrations..."; \
   npx prisma migrate deploy; \
-  if [ \"$NODE_ENV\" = \"production\" ]; then \
-    node dist/main.js; \
-  else \
-    npm run start:dev; \
-  fi'
->>>>>>> dd05457b77be36f6987ac0270cf6ab0c67a3f42e
+  echo "🚀 Starting NestJS API..."; \
+  node dist/main.js \
+'

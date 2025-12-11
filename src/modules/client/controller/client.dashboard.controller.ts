@@ -114,7 +114,7 @@ export class ClientDashboardController {
         };
     }
 
-    
+
     //---------project overdue----------->
     @Get('overdue')
     async overdue(@Req() req: RequestWithUser) {
@@ -129,6 +129,8 @@ export class ClientDashboardController {
         }
     };
 
+    //------------project activity ------------//
+
     @Get('project-activity')
     async project_activity(@Req() req: RequestWithUser) {
         const clientId = req.user.clientId;
@@ -141,6 +143,23 @@ export class ClientDashboardController {
             data: result
         }
     };
+
+
+    //---------------upcomming dateline ------------------//
+    @Get("upcoming-deadline")
+    async upcomingDeadline(@Req() req: RequestWithUser) {
+        const clientId = req.user.clientId;
+        if (!clientId) {
+            throw new UnauthorizedException("clientId ID not found in token");
+        }
+
+        const result = await this.clientDashboardServices.upcomingDeadlineProjects();
+
+        return {
+            message: "Upcoming project deadlines fetched successfully",
+            data: result
+        };
+    }
 
 
 }

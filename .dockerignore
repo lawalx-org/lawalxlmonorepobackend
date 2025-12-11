@@ -46,7 +46,6 @@ __tests__/
 
 # Prisma
 prisma/dev.db
-prisma/migrations/
 *.db-journal
 
 # Misc
