@@ -41,8 +41,6 @@ jobs:
           script: |
             docker compose down --remove-orphans
             docker compose rm -f
-            docker compose pull
-            docker compose up -d
+            docker pull ${{ secrets.DOCKER_USERNAME }}/lawalbackendbackend:latest
+            docker compose up -d --force-recreate
             docker image prune -f
-
-      
