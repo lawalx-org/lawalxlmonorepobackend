@@ -1,9 +1,9 @@
 services:
-  lawalbackendbackend:
+  sever:
     build:
       context: .
       dockerfile: Dockerfile
-    image: sakibsakib/lawalbackendbackend:latest
+    image: softvence/lawalbackendbackend:latest
     profiles:
       - prod
     container_name: lawalbackendbackend
@@ -11,64 +11,69 @@ services:
     env_file:
       - .env
     depends_on:
-      - postgres_db
-      - redis_cache
+      - db
+      - redis
+    volumes:
+      - uploads:/app/uploads
+      - uploads-file:/app/uploads-file
+      - uploads-profile-images:/app/uploads-profile-images
     ports:
-      - '5000:5000'
+      - 2342:2342
     networks:
-      - app_network
+      - law_network
 
-  postgres_db:
+  db:
     image: postgres:15
-    container_name: postgres_db
+    container_name: law_db
     restart: always
     profiles:
       - prod
       - dev
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: appdb
-    ports:
-      - '5434:5432'
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - law_pgdata:/var/lib/postgresql/data
     networks:
-      - app_network
+      - law_network
 
-  redis_cache:
+  redis:
     image: redis:7
     container_name: redis_cache
     restart: always
     profiles:
       - prod
       - dev
-    ports:
-      - '6380:6379'
     volumes:
-      - redisdata:/data
+      - law_redisdata:/data
     networks:
-      - app_network
+      - law_network
 
   prisma_studio:
     image: node:20-bullseye
     container_name: prisma_studio
     working_dir: /app
+    profiles:
+      - dev
     restart: always
     depends_on:
-      - postgres_db
+      - db
     environment:
-      DATABASE_URL: 'postgresql://postgres:postgres@postgres_db:5432/appdb?schema=public'
+      DATABASE_URL: 'postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres_db:5432/${POSTGRES_DB}'
     command: sh -c "npm install --silent && npx prisma studio --port 5555 --browser none"
     ports:
       - '5555:5555'
     networks:
-      - app_network
+      - law_network
 
 volumes:
-  pgdata:
-  redisdata:
+  law_pgdata:
+  law_redisdata:
+  uploads-profile-images:
+  uploads-file:
+  uploads:
 
 networks:
-  app_network:
+  law_network:
     driver: bridge

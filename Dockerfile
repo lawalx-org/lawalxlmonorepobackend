@@ -62,15 +62,17 @@ ENV NODE_ENV=production
 EXPOSE 5000
 
 # Start container with safety checks + migrations
-CMD bash -c '\
-  echo "⏳ Waiting for PostgreSQL..."; \
-  until pg_isready -h postgres_db -p 5432 -U postgres; do \
+
+CMD ["bash", "-c", "\
+  echo '⏳ Waiting for PostgreSQL...'; \
+  until pg_isready -h db -p 5432 -U \"$POSTGRES_USER\"; do \
     sleep 2; \
   done; \
-  echo "⚙️ Generating Prisma Client..."; \
+  echo '⚙️ Generating Prisma Client...'; \
   npx prisma generate; \
-  echo "📦 Running Prisma Migrations..."; \
+  echo '📦 Running Prisma Migrations...'; \
   npx prisma migrate deploy; \
-  echo "🚀 Starting NestJS API..."; \
-  node dist/main.js \
-'
+  echo '🚀 Starting NestJS API...'; \
+  exec node dist/main.js \
+"]
+
