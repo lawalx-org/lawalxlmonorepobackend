@@ -21,6 +21,7 @@ import { ManagerModule } from './modules/manager/manager.module';
 import { SeedService } from './common/seed/seed.services';
 import { EmployeeModule } from './modules/employee/employee.module';
 import { SheetModule } from './modules/sheet/sheet.module';
+import { InfrastructureModule } from './modules/infrastructure/infrastructure.module';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { SheetModule } from './modules/sheet/sheet.module';
     BullModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
-        const redisConfig = configService.get<string>('redis');
+        const redisConfig = configService.get('redis');
         return {
           connection: {
             host: redisConfig.host,
@@ -61,6 +62,7 @@ import { SheetModule } from './modules/sheet/sheet.module';
     RedisModule,
     ChartModule,
     SheetModule,
+    InfrastructureModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, SeedService],

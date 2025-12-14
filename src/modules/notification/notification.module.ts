@@ -39,6 +39,7 @@ import { NotificationService } from './service/notification.service';
 import { Gateway } from './service/notification.getway';
 import { SchedulerService } from './service/scheduler.service';
 import { NotificationProcessor } from './service/notification.processor';
+import type { StringValue } from 'ms';
 
 @Module({
   imports: [
@@ -50,7 +51,8 @@ import { NotificationProcessor } from './service/notification.processor';
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('jwt_secret'),
         signOptions: {
-          expiresIn: configService.get<string>('jwt_expires_in') || '1d',
+          expiresIn:
+            configService.get('jwt_expires_in') || ('1d' as StringValue),
         },
       }),
       inject: [ConfigService],

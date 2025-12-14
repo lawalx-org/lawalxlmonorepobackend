@@ -12,6 +12,7 @@ import * as Twilio from 'twilio';
 import { generateOTP } from './utiles.services';
 import { JwtService } from '@nestjs/jwt';
 import { buildJwtPayload } from '../utils/userbasetoken';
+import type { StringValue } from 'ms';
 
 @Injectable()
 export class OtpService {
@@ -87,12 +88,16 @@ export class OtpService {
 
     const accessToken = this.jwtService.sign(jwtPayload, {
       secret: this.configService.get<string>('jwt_access_secret'),
-      expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+      expiresIn: this.configService.get<string>(
+        'jwt_access_expires_in',
+      ) as StringValue,
     });
 
     const refreshToken = this.jwtService.sign(jwtPayload, {
       secret: this.configService.get<string>('jwt_refresh_secret'),
-      expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
+      expiresIn: this.configService.get<string>(
+        'jwt_refresh_expires_in',
+      ) as StringValue,
     });
 
     return { accessToken, refreshToken };
@@ -100,7 +105,6 @@ export class OtpService {
 
   //  Send verification code
   async sendVerificationCode(to: string) {
-    
     const data = await this.client.verify.v2
       .services(this.verifyServiceSid)
       .verifications.create({ to, channel: 'sms' });
@@ -159,12 +163,16 @@ export class OtpService {
 
       const accessToken = this.jwtService.sign(jwtPayload, {
         secret: this.configService.get<string>('jwt_access_secret'),
-        expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+        expiresIn: this.configService.get<string>(
+          'jwt_access_expires_in',
+        ) as StringValue,
       });
 
       const refreshToken = this.jwtService.sign(jwtPayload, {
         secret: this.configService.get<string>('jwt_refresh_secret'),
-        expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
+        expiresIn: this.configService.get<string>(
+          'jwt_refresh_expires_in',
+        ) as StringValue,
       });
 
       return {

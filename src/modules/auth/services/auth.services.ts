@@ -17,6 +17,7 @@ import { UserStatus } from 'generated/prisma';
 import { maskEmail, maskPhone } from './utiles.services';
 import { buildJwtPayload } from '../utils/userbasetoken';
 import { resetPasswordTemplate } from 'src/modules/utils/template/resetpassowordtemplate';
+import { StringValue } from 'ms';
 
 @Injectable()
 export class AuthService {
@@ -60,7 +61,9 @@ export class AuthService {
 
       const specialToken = this.jwtService.sign(jwtPayload, {
         secret: this.configService.get<string>('jwt_access_secret'),
-        expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+        expiresIn: this.configService.get<string>(
+          'jwt_access_expires_in',
+        ) as StringValue,
       });
 
       return { email, phone, specialToken };
@@ -68,12 +71,16 @@ export class AuthService {
 
     const accessToken = this.jwtService.sign(jwtPayload, {
       secret: this.configService.get<string>('jwt_access_secret'),
-      expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+      expiresIn: this.configService.get<string>(
+        'jwt_access_expires_in',
+      ) as StringValue,
     });
 
     const refreshToken = this.jwtService.sign(jwtPayload, {
       secret: this.configService.get<string>('jwt_refresh_secret'),
-      expiresIn: this.configService.get<string>('jwt_refresh_expires_in'),
+      expiresIn: this.configService.get<string>(
+        'jwt_refresh_expires_in',
+      ) as StringValue,
     });
 
     return { accessToken, refreshToken };
@@ -162,7 +169,9 @@ export class AuthService {
 
       const accessToken = this.jwtService.sign(payload, {
         secret: this.configService.get<string>('jwt_access_secret'),
-        expiresIn: this.configService.get<string>('jwt_access_expires_in'),
+        expiresIn: this.configService.get<string>(
+          'jwt_access_expires_in',
+        ) as StringValue,
       });
 
       return { accessToken };

@@ -11,6 +11,7 @@ import { OtpController } from './controller/otp.controller';
 import { OtpService } from './services/otp.services';
 import { GoogleStrategy } from './utils/google.stratey';
 import { PassportModule } from '@nestjs/passport';
+import { StringValue } from 'ms';
 
 @Module({
   imports: [
@@ -19,10 +20,12 @@ import { PassportModule } from '@nestjs/passport';
     JwtModule.registerAsync({
       imports: [ConfigModule, PassportModule.register({ session: false })],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('jwt_access_secret'),
         signOptions: {
-          expiresIn: configService.get<string>('jwt_access_expires_in'),
+          expiresIn: configService.get<string>(
+            'jwt_access_expires_in',
+          ) as StringValue,
         },
       }),
     }),
