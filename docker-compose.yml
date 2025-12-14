@@ -1,11 +1,11 @@
-
-
 services:
   lawalbackendbackend:
     build:
       context: .
       dockerfile: Dockerfile
     image: sakibsakib/lawalbackendbackend:latest
+    profiles:
+      - prod
     container_name: lawalbackendbackend
     restart: always
     env_file:
@@ -14,7 +14,7 @@ services:
       - postgres_db
       - redis_cache
     ports:
-      - "5000:5000"
+      - '5000:5000'
     networks:
       - app_network
 
@@ -22,12 +22,15 @@ services:
     image: postgres:15
     container_name: postgres_db
     restart: always
+    profiles:
+      - prod
+      - dev
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: appdb
     ports:
-      - "5434:5432"
+      - '5434:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
@@ -37,8 +40,11 @@ services:
     image: redis:7
     container_name: redis_cache
     restart: always
+    profiles:
+      - prod
+      - dev
     ports:
-      - "6380:6379"
+      - '6380:6379'
     volumes:
       - redisdata:/data
     networks:
@@ -52,10 +58,10 @@ services:
     depends_on:
       - postgres_db
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@postgres_db:5432/appdb?schema=public"
+      DATABASE_URL: 'postgresql://postgres:postgres@postgres_db:5432/appdb?schema=public'
     command: sh -c "npm install --silent && npx prisma studio --port 5555 --browser none"
     ports:
-      - "5555:5555"
+      - '5555:5555'
     networks:
       - app_network
 

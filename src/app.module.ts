@@ -33,7 +33,7 @@ import { SheetModule } from './modules/sheet/sheet.module';
     BullModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
-        const redisConfig = configService.get('redis');
+        const redisConfig = configService.get<string>('redis');
         return {
           connection: {
             host: redisConfig.host,
