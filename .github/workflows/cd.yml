@@ -41,12 +41,23 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Test SSH Connection
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            echo "✅ SSH connection successful"
+            whoami
+            uptime
+
       - name: Copy Compose File
         uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_PASSWORD }}
           source: 'docker-compose.yaml'
           target: '/home/${{secrets.VPS_USER}}/projects/${{secrets.PACKAGE_NAME}}'
 
@@ -55,7 +66,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_PASSWORD }}
           script: |
             cd /home/${{secrets.VPS_USER}}/projects/${{ secrets.PACKAGE_NAME }}
             # Pull the latest images
