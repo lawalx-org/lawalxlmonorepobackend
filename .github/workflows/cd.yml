@@ -46,7 +46,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_PASSWORD }}
+          password: ${{ secrets.VPS_PASSWORD }}
           source: 'docker-compose.yaml'
           target: '~/projects/${{ secrets.PACKAGE_NAME }}'
 
@@ -55,7 +55,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_PASSWORD }}
+          password: ${{ secrets.VPS_PASSWORD }}
           script: |
             cd ~/projects/${{ secrets.PACKAGE_NAME }}
             # Pull the latest images
