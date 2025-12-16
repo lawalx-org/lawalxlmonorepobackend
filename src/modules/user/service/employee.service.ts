@@ -136,136 +136,129 @@ export class EmployeeService {
   //   });
   // }
   async create(createEmployeeDto: CreateEmployeeDto) {
-  const {
-    sendWelcomeEmail,
-    notifyProjectManager,
-    skills,
-    projects,
-    email,
-    password: plainTextPassword,
-    phoneNumber,
-    name,
-    description,
-    joinedDate,
-  } = createEmployeeDto;
+    const {
+      sendWelcomeEmail,
+      notifyProjectManager,
+      skills,
+      projects,
+      email,
+      password: plainTextPassword,
+      phoneNumber,
+      name,
+      description,
+      joinedDate,
+    } = createEmployeeDto;
 
-  const existingUser = await this.prisma.user.findFirst({
-    where: { OR: [{ email }, { phoneNumber }] },
-  });
-
-  if (existingUser) {
-    throw new ConflictException(
-      'User with this email or phone number already exists',
-    );
-  }
-
-  if (projects?.length) {
-    const projectCount = await this.prisma.project.count({
-      where: { id: { in: projects } },
+    const existingUser = await this.prisma.user.findFirst({
+      where: { OR: [{ email }, { phoneNumber }] },
     });
 
-    if (projectCount !== projects.length) {
-      throw new NotFoundException('One or more projects not found.');
+    if (existingUser) {
+      throw new ConflictException(
+        'User with this email or phone number already exists',
+      );
     }
-  }
 
-  const saltRounds = Number(
-    this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
-  );
+    if (projects?.length) {
+      const projectCount = await this.prisma.project.count({
+        where: { id: { in: projects } },
+      });
 
-  const hashedPassword = await bcrypt.hash(plainTextPassword, saltRounds);
+      if (projectCount !== projects.length) {
+        throw new NotFoundException('One or more projects not found.');
+      }
+    }
 
+    const saltRounds = Number(
+      this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
+    );
 
-  const result = await this.prisma.$transaction(async (prisma) => {
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        phoneNumber,
-        password: hashedPassword,
-        role: Role.EMPLOYEE,
-      },
+    const hashedPassword = await bcrypt.hash(plainTextPassword, saltRounds);
+
+    const result = await this.prisma.$transaction(async (prisma) => {
+      const user = await prisma.user.create({
+        data: {
+          name,
+          email,
+          phoneNumber,
+          password: hashedPassword,
+          role: Role.EMPLOYEE,
+        },
+      });
+
+      await prisma.notificationPermissionEmployee.create({
+        data: { userId: user.id },
+      });
+
+      await prisma.employee.create({
+        data: {
+          userId: user.id,
+          description,
+          joinedDate,
+          projectEmployees: projects
+            ? {
+                create: projects.map((projectId) => ({
+                  project: { connect: { id: projectId } },
+                })),
+              }
+            : undefined,
+          skills: skills || [],
+        },
+      });
+
+      // return user to process after transaction
+      return user;
     });
 
-
-   await prisma.notificationPermissionEmployee.create({
-      data: { userId: user.id },
-    });
-
-    
-    await prisma.employee.create({
-      data: {
-        userId: user.id,
-        description,
-        joinedDate,
-        projectEmployees: projects
-          ? {
-              create: projects.map((projectId) => ({
-                project: { connect: { id: projectId } },
-              })),
-            }
-          : undefined,
-        skills: skills || [],
-      },
-    });
-
-    // return user to process after transaction
-    return user;
-  });
-
-
-  // Send Welcome Email (safe)
-  if (sendWelcomeEmail) {
-    await this.emailService.sendMail(
-      result.email,
-      'Welcome to the Team!',
-      welcomeEmailTemplate(
-        result.name,
+    // Send Welcome Email (safe)
+    if (sendWelcomeEmail) {
+      await this.emailService.sendMail(
         result.email,
-        joinedDate,
-        plainTextPassword,
-      ),
-    );
+        'Welcome to the Team!',
+        welcomeEmailTemplate(
+          result.name,
+          result.email,
+          joinedDate,
+          plainTextPassword,
+        ),
+      );
+    }
+
+    // Notify Project Managers (safe)
+    if (notifyProjectManager && projects?.length) {
+      const projectManagers = await this.prisma.project.findMany({
+        where: { id: { in: projects } },
+        select: {
+          manager: {
+            select: { userId: true },
+          },
+        },
+      });
+      console.log(projectManagers);
+      const receiverIds = [
+        ...new Set(
+          projectManagers
+            .map((p) => p.manager?.userId)
+            .filter((id) => id !== null && id !== undefined),
+        ),
+      ];
+      if (receiverIds.length) {
+        await this.notificationService.create(
+          {
+            receiverIds,
+            context: `A new employee ${name} has been assigned to a project you are managing.`,
+            type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
+          },
+          result.id,
+        );
+      }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userWithoutPassword } = result;
+
+    return userWithoutPassword;
   }
-
-  // Notify Project Managers (safe)
-if (notifyProjectManager && projects?.length) {
-  const projectManagers = await this.prisma.project.findMany({
-    where: { id: { in: projects } },
-    select: {
-      manager: {
-        select: { userId: true },
-      },
-    },
-  });
-   console.log(projectManagers)
-  const receiverIds = [
-    ...new Set(
-      projectManagers
-        .map((p) => p.manager?.userId)
-        .filter((id) => id !== null && id !== undefined)
-    ),
-  ];
-  if (receiverIds.length) {
-    await this.notificationService.create(
-      {
-        receiverIds,
-        context: `A new employee ${name} has been assigned to a project you are managing.`,
-        type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
-      },
-      result.id,
-    );
-  }
-}
-
-
- 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { password, ...userWithoutPassword } = result;
-
-  return userWithoutPassword;
-}
-
 
   async findOne(id: string) {
     const employee = await this.prisma.employee.findUnique({

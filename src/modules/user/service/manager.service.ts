@@ -6,7 +6,7 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
-import { Role } from 'generated/prisma';
+import { Manager, Role } from 'generated/prisma';
 import { CreateManagerDto } from '../dto/create-manager.dto';
 import { EmailService } from '../../utils/services/emailService';
 import { welcomeEmailTemplate } from '../../utils/template/welcometempleted';
@@ -24,7 +24,7 @@ export class ManagerService {
     private readonly configService: ConfigService,
     private readonly emailService: EmailService,
     private readonly notificationService: NotificationService,
-  ) { }
+  ) {}
 
   // async create(createManagerDto: CreateManagerDto) {
   //   const {
@@ -188,15 +188,14 @@ export class ManagerService {
           skills: skills || [],
           projects: projects
             ? {
-              connect: projects.map((projectId) => ({ id: projectId })),
-            }
+                connect: projects.map((projectId) => ({ id: projectId })),
+              }
             : undefined,
         },
       });
 
       return user;
     });
-
 
     if (sendWelcomeEmail) {
       await this.emailService.sendMail(
@@ -205,7 +204,6 @@ export class ManagerService {
         welcomeEmailTemplate(name, email, joinedDate, password),
       );
     }
-
 
     if (notifyProjectManager && projects?.length) {
       const projectManagers = await this.prisma.project.findMany({
@@ -221,10 +219,10 @@ export class ManagerService {
         ...new Set(
           projectManagers
             .map((p) => p.manager?.userId)
-            .filter((id) => id !== null && id !== undefined)
+            .filter((id) => id !== null && id !== undefined),
         ),
       ];
-      console.log(receiverIds)
+
       if (receiverIds.length) {
         await this.notificationService.create(
           {
@@ -242,10 +240,28 @@ export class ManagerService {
   }
 
   async findOne(id: string) {
-    const manager = await this.prisma.manager.findUnique({
-      where: { userId: id },
+    if (!id) throw new NotFoundException('Manager id is required!');
+
+    let manager: any;
+    console.log('before find: ', manager);
+    manager = await this.prisma.manager.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    console.log('after find with id: ', manager);
+    manager = await this.prisma.manager.findUnique({
+      //where: { userId: id },
+      where: {
+        userId: id,
+      },
       include: { user: true },
     });
+    console.log('after find with userId: ', manager);
 
     if (!manager) {
       throw new NotFoundException(`Manager with ID "${id}" not found`);

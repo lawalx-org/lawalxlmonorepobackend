@@ -18,4 +18,5 @@ model Manager {
   requestsToAddProjectMember RequestToAddProjectMember[]
 
   @@map("managers")
+  @@index([userId, id])
 }
