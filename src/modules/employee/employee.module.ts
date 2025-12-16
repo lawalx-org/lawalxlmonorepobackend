@@ -10,9 +10,15 @@ import { EmployDashboardController } from './controller/employ.dashboard.control
 import { NotificationModule } from '../notification/notification.module';
 
 @Module({
-  imports: [PrismaModule, UserModule,SubmittedModule, ChartModule,NotificationModule ],
-  controllers: [EmployeeController,EmployDashboardController],
-  providers: [EmployeeService,EmployDashboardService],
+  imports: [
+    PrismaModule,
+    UserModule,
+    SubmittedModule,
+    ChartModule,
+    NotificationModule,
+  ],
+  controllers: [EmployeeController, EmployDashboardController],
+  providers: [EmployeeService, EmployDashboardService],
   exports: [EmployeeService],
 })
 export class EmployeeModule {}

@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { ManagerService } from '../service/manager.service';
 import { CreateManagerDto } from '../dto/create-manager.dto';
-import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { Role } from 'generated/prisma';
 import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';

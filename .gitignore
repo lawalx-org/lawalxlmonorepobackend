@@ -72,6 +72,5 @@ generated/
 # /generated/prisma
 
 # /generated/prisma
-
-
-
+.env
+.env.production
