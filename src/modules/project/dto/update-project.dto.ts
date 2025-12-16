@@ -1,16 +1,15 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { 
-  IsOptional, 
-  IsString, 
-  IsEnum, 
-  IsNumber, 
-  IsDateString, 
-  IsArray 
+import {
+  IsOptional,
+  IsString,
+  IsEnum,
+  IsNumber,
+  IsDateString,
+  IsArray,
 } from 'class-validator';
-import { Priority, ProjectStatus } from 'generated/prisma';
+import { Priority } from 'generated/prisma';
 
 export class UpdateProjectDto {
-
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
@@ -71,19 +70,18 @@ export class UpdateProjectDto {
   @IsArray()
   chartList?: string[];
 
-
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  managerId?: string; 
+  managerId?: string;
 
   @ApiPropertyOptional({ type: [String] })
   @IsOptional()
   @IsArray()
-  addEmployeeIds?: string[]; 
+  addEmployeeIds?: string[];
 
   @ApiPropertyOptional({ type: [String] })
   @IsOptional()
   @IsArray()
-  removeEmployeeIds?: string[]; 
+  removeEmployeeIds?: string[];
 }

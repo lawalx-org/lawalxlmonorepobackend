@@ -27,7 +27,7 @@ import { RequestWithUser } from 'src/types/RequestWithUser';
 @Controller('project')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ProjectController {
-  constructor(private readonly projectService: ProjectService) { }
+  constructor(private readonly projectService: ProjectService) {}
 
   //  Create a new project
   @Post()
@@ -93,41 +93,43 @@ export class ProjectController {
     };
   }
 
-
-
-  // Update project status by his won id 
+  // Update project status by his won id
   @Patch('status')
   @Roles(Role.CLIENT)
   @ApiOperation({ summary: 'Update the status of a project' })
-  @ApiResponse({ status: 200, description: 'Project status updated successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'Project status updated successfully',
+  })
   @ApiResponse({ status: 404, description: 'Project not found' })
   async updateStatus(@Body() updateProjectStatusDto: UpdateProjectStatusDto) {
-    const updatedProject = await this.projectService.updateProjectStatus(updateProjectStatusDto);
+    const updatedProject = await this.projectService.updateProjectStatus(
+      updateProjectStatusDto,
+    );
     return {
       message: `Project status updated to ${updatedProject.status} successfully`,
       project: updatedProject,
     };
   }
 
+  @Patch(':id')
+  @Roles(Role.CLIENT)
+  async updateProject(
+    @Req() req: RequestWithUser,
+    @Param('id') id: string,
+    @Body() dto: UpdateProjectDto,
+  ) {
+    const clientId = req.user.clientId;
+    if (!clientId)
+      throw new UnauthorizedException('Client ID not found in token');
 
-@Patch(':id')
-@Roles(Role.CLIENT)
-async updateProject(
-  @Req() req: RequestWithUser,
-  @Param('id') id: string,
-  @Body() dto: UpdateProjectDto
-) {
-  const clientId = req.user.clientId;
-  if (!clientId) throw new UnauthorizedException('Client ID not found in token');
+    const result = await this.projectService.updateProject(id, dto);
 
-  const result = await this.projectService.updateProject(id, dto);
-
-  return {
-    message: "Project updated successfully",
-    data: result,
-  };
-}
-
+    return {
+      message: 'Project updated successfully',
+      data: result,
+    };
+  }
 
   @Delete(':id')
   @Roles(Role.CLIENT)
