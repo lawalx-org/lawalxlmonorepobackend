@@ -46,7 +46,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             echo "✅ SSH connection successful"
             whoami
@@ -57,7 +57,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           source: 'docker-compose.yaml'
           target: '/home/${{secrets.VPS_USER}}/projects/${{secrets.PACKAGE_NAME}}'
 
@@ -66,7 +66,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/${{secrets.VPS_USER}}/projects/${{ secrets.PACKAGE_NAME }}
             # Pull the latest images
