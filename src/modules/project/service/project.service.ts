@@ -1,5 +1,10 @@
-import { Injectable, NotFoundException, Logger, BadRequestException } from '@nestjs/common';
-import { Prisma, ProjectStatus } from 'generated/prisma';
+import {
+  Injectable,
+  NotFoundException,
+  Logger,
+  BadRequestException,
+} from '@nestjs/common';
+import { Prisma } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
 import { FindAllProjectsDto } from '../dto/find-all-projects.dto';
@@ -18,7 +23,7 @@ export class ProjectService {
     private readonly prisma: PrismaService,
     private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
-  ) { }
+  ) {}
 
   // async create(createProjectDto: CreateProjectDto) {
   //   const { employeeIds, managerId, programId, ...projectData } =
@@ -93,7 +98,7 @@ export class ProjectService {
       ...projectData
     } = createProjectDto;
 
-    console.log(managerId)
+    console.log(managerId);
 
     // --- Pre-validation before transaction ---
     const [manager, program] = await Promise.all([
@@ -316,18 +321,17 @@ export class ProjectService {
 
   //get sheet with project id
   async getSheets(projectId: string) {
-
     const project = await this.prisma.project.findUnique({
       where: { id: projectId },
       select: { id: true },
     });
 
-    if (!project) throw new NotFoundException(`Project with ID ${projectId}not found`);
-
+    if (!project)
+      throw new NotFoundException(`Project with ID ${projectId}not found`);
 
     const sheets = await this.prisma.sheet.findMany({
       where: {
-        projectId
+        projectId,
       },
     });
 
@@ -337,7 +341,6 @@ export class ProjectService {
   //   async updateProjectStatus(updateProjectStatusDto: UpdateProjectStatusDto) {
   //   const { projectId, status } = updateProjectStatusDto;
 
-
   //   const existingProject = await this.prisma.project.findUnique({
   //     where: { id: projectId },
   //   });
@@ -346,10 +349,9 @@ export class ProjectService {
   //     throw new NotFoundException(`Project with ID "${projectId}" not found`);
   //   }
 
-
   //   const updatedProject = await this.prisma.project.update({
   //     where: { id: projectId },
-  //     data: { status }, 
+  //     data: { status },
   //   });
 
   //   return updatedProject;
@@ -358,25 +360,24 @@ export class ProjectService {
   async updateProjectStatus(updateProjectStatusDto: UpdateProjectStatusDto) {
     const { projectId, status } = updateProjectStatusDto;
 
-
     const project = await this.prisma.project.findUnique({
       where: {
-        id: projectId
+        id: projectId,
       },
       include: {
         manager: {
           include: {
-            user: true
-          }
+            user: true,
+          },
         },
         projectEmployees: {
           include: {
             employee: {
               include: {
-                user: true
-              }
-            }
-          }
+                user: true,
+              },
+            },
+          },
         },
       },
     });
@@ -385,12 +386,10 @@ export class ProjectService {
       throw new NotFoundException(`Project with ID "${projectId}" not found`);
     }
 
-
     const updatedProject = await this.prisma.project.update({
       where: { id: projectId },
       data: { status },
     });
-
 
     if (status === 'LIVE') {
       const managerUserId = project.manager?.user?.id;
@@ -410,78 +409,86 @@ export class ProjectService {
           context: `Project ${project.name} is now LIVE.`,
           type: NotificationType.PROJECT_STATUS_UPDATE,
         },
-        managerUserId
+        managerUserId,
       );
     }
 
     return updatedProject;
   }
 
-
-async updateProject(id: string, dto: UpdateProjectDto) {
-  const project = await this.prisma.project.findUnique({
-    where: { id },
-  });
-
-  if (!project) {
-    throw new NotFoundException(`Project with ID "${id}" not found`);
-  }
-
-  const removeIds = dto.removeEmployeeIds || [];
-  const addIds = dto.addEmployeeIds || [];
-
-  const updatedProject = await this.prisma.$transaction(async (prisma) => {
-
-    // Remove non-relation fields
-    const projectData: any = { ...dto };
-    delete projectData.addEmployeeIds;
-    delete projectData.removeEmployeeIds;
-
-    
-  //  Check if managerId exists
-  if (dto.managerId) {
-    const managerExists = await this.prisma.manager.findUnique({
-      where: { id: dto.managerId },
-    });
-
-    if (!managerExists) {
-      throw new NotFoundException(
-        `Manager with ID "${dto.managerId}" does not exist`
-      );
-    }
-  }
-
-    // Update project main fields
-    const updated = await prisma.project.update({
+  async updateProject(id: string, dto: UpdateProjectDto) {
+    const project = await this.prisma.project.findUnique({
       where: { id },
-      data: projectData,
+      include: {
+        manager: true,
+      },
+    });
+    console.log('project: ', project);
+
+    if (!project) {
+      throw new NotFoundException(`Project with ID "${id}" not found`);
+    }
+
+    const removeIds = dto.removeEmployeeIds || [];
+    const addIds = dto.addEmployeeIds || [];
+
+    const updatedProject = await this.prisma.$transaction(async (prisma) => {
+      // Remove non-relation fields
+      const projectData: any = { ...dto };
+      delete projectData.addEmployeeIds;
+      delete projectData.removeEmployeeIds;
+
+      //  Check if managerId exists
+      if (dto.managerId) {
+        const managerExists =
+          (await this.prisma.manager.findUnique({
+            where: { id: dto.managerId },
+          })) ||
+          (await this.prisma.user.findUnique({
+            where: {
+              id: dto.managerId,
+            },
+          }));
+
+        console.log('managerExists: ', managerExists);
+
+        if (!managerExists) {
+          throw new NotFoundException(
+            `Manager with ID "${dto.managerId}" does not exist`,
+          );
+        }
+      }
+
+      // Update project main fields
+      const updated = await prisma.project.update({
+        where: { id },
+        data: projectData,
+      });
+
+      if (removeIds.length > 0) {
+        await prisma.projectEmployee.deleteMany({
+          where: {
+            projectId: id,
+            employeeId: { in: removeIds },
+          },
+        });
+      }
+      if (addIds.length > 0) {
+        await prisma.projectEmployee.createMany({
+          data: addIds.map((employeeId) => ({
+            projectId: id,
+            employeeId,
+          })),
+          skipDuplicates: true,
+        });
+      }
+
+      return updated;
     });
 
-    if (removeIds.length > 0) {
-      await prisma.projectEmployee.deleteMany({
-        where: {
-          projectId: id,
-          employeeId: { in: removeIds },
-        },
-      });
-    }
-    if (addIds.length > 0) {
-      await prisma.projectEmployee.createMany({
-        data: addIds.map((employeeId) => ({
-          projectId: id,
-          employeeId,
-        })),
-        skipDuplicates: true,
-      });
-    }
+    return updatedProject;
+  }
 
-    return updated;
-  });
-
-  return updatedProject;
-}
-
-  
   async deleteProject(id: string) {
     const project = await this.prisma.project.findUnique({
       where: { id },
@@ -493,22 +500,32 @@ async updateProject(id: string, dto: UpdateProjectDto) {
       },
     });
 
-    if (!project) throw new NotFoundException(`Project with ID "${id}" not found`);
+    if (!project)
+      throw new NotFoundException(`Project with ID "${id}" not found`);
 
     const sheetIds = project.sheets?.map((s: { id: string }) => s.id) || [];
-    const employeeIds = project.projectEmployees?.map((e: { id: string }) => e.id) || [];
+    const employeeIds =
+      project.projectEmployees?.map((e: { id: string }) => e.id) || [];
     const taskIds = project.tasks?.map((t: { id: string }) => t.id) || [];
-    const activityIds = project.activities?.map((a: { id: string }) => a.id) || [];
+    const activityIds =
+      project.activities?.map((a: { id: string }) => a.id) || [];
 
-    if (sheetIds.length || employeeIds.length || taskIds.length || activityIds.length) {
+    if (
+      sheetIds.length ||
+      employeeIds.length ||
+      taskIds.length ||
+      activityIds.length
+    ) {
       const errors: string[] = [];
       if (sheetIds.length) errors.push(`sheets (${sheetIds.join(', ')})`);
-      if (employeeIds.length) errors.push(`employees (${employeeIds.join(', ')})`);
+      if (employeeIds.length)
+        errors.push(`employees (${employeeIds.join(', ')})`);
       if (taskIds.length) errors.push(`tasks (${taskIds.join(', ')})`);
-      if (activityIds.length) errors.push(`activities (${activityIds.join(', ')})`);
+      if (activityIds.length)
+        errors.push(`activities (${activityIds.join(', ')})`);
 
       throw new BadRequestException(
-        `Cannot delete project. There are related: ${errors.join(', ')}.`
+        `Cannot delete project. There are related: ${errors.join(', ')}.`,
       );
     }
 
@@ -518,6 +535,4 @@ async updateProject(id: string, dto: UpdateProjectDto) {
       message: `Project with ID "${id}" has been deleted successfully.`,
     };
   }
-
-
 }
