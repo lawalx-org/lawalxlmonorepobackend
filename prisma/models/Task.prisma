@@ -1,18 +1,17 @@
-
 model Task {
-  id          String      @id @default(uuid())
-  status      TaskStatus?
-  name        String
-  projectId   String
-  progress    Int?
-  dueDate     String?
-  assignedTo  String      // Can be Employee or Manager ID
-  assigneeType String     // "EMPLOYEE" or "MANAGER" to identify the type
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id           String      @id @default(uuid())
+  status       TaskStatus?
+  name         String
+  projectId    String
+  progress     Int?
+  dueDate      String?
+  assignedTo   String // Can be Employee or Manager ID
+  assigneeType String // "EMPLOYEE" or "MANAGER" to identify the type
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   // Relations
-  project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@map("tasks")
 }

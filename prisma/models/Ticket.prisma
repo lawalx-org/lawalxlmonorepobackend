@@ -1,22 +1,21 @@
-
 model Ticket {
-  id              String          @id @default(uuid())
-  clientId        String
-  supporterIds    String[]
-  adminIds        String[]
-  companyName     String?
-  subject         String
-  status          TicketStatus    @default(OPEN)
-  priority        Priority
-  issue           String
-  adminNote       String?
-  attachFile      String?
-  issueType       IssueType
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id           String       @id @default(uuid())
+  clientId     String
+  supporterIds String[]
+  adminIds     String[]
+  companyName  String?
+  subject      String
+  status       TicketStatus @default(OPEN)
+  priority     Priority
+  issue        String
+  adminNote    String?
+  attachFile   String?
+  issueType    IssueType
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 
   // Relations
-  client          Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
   @@map("tickets")
 }

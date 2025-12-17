@@ -1,5 +1,3 @@
-
-
 model OtpVerification {
   id        String   @id @default(uuid())
   email     String   @unique

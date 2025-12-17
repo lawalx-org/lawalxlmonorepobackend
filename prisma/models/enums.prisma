@@ -77,14 +77,12 @@ enum IssueType {
   OTHERPROBLEM
 }
 
-
 enum UserStatus {
   ACTIVE
   BANNED
   DELETED
   SUSPENDED
 }
-
 
 enum ActivityActionType {
   ASSIGNEE_ADDED
@@ -105,18 +103,13 @@ enum ActivityActionType {
   TASK_CREATED
   TASK_COMPLETED
   GENERAL
-
 }
-
 
 enum SubmittedStatus {
   APPROVED
   PENDING
   REJECTED
-  }
-
-
-
+}
 
 enum NotificationType {
   NEW_EMPLOYEE_ASSIGNED

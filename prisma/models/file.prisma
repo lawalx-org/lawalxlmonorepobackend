@@ -13,5 +13,5 @@ model File {
   updatedAt DateTime @default(now()) @updatedAt
 
   sheetId String
-  sheet   Sheet?  @relation(fields: [sheetId], references: [id], onDelete: Cascade)
+  sheet   Sheet? @relation(fields: [sheetId], references: [id], onDelete: Cascade)
 }

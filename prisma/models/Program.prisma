@@ -1,20 +1,19 @@
-
 model Program {
-  id                  String    @id @default(uuid())
-  userId              String
-  programName         String
-  datetime            String
-  programDescription  String
-  priority            Priority
-  deadline            String
-  progress            Int?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
+  id                 String   @id @default(uuid())
+  userId             String
+  programName        String
+  datetime           String
+  programDescription String
+  priority           Priority
+  deadline           String
+  progress           Int?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   // Relations
-  client              Client    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  projects            Project[]
-   tags      Tag[]
+  client   Client    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects Project[]
+  tags     Tag[]
 
   @@map("programs")
 }

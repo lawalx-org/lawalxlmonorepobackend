@@ -12,23 +12,20 @@
 //   sheet     Sheet?
 // }
 
-
 model ChartTable {
-  id        String    @id @default(uuid())
+  id        String      @id @default(uuid())
   title     String
   status    ChartStatus
   category  ChartName
   xAxis     Json
   yAxis     Json
   zAxis     Json?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
-  sheet     Sheet? @relation(fields: [sheetId], references: [id])
-  sheetId   String? @unique
+  sheet   Sheet?  @relation(fields: [sheetId], references: [id])
+  sheetId String? @unique
 }
-
-
 
 enum ChartStatus {
   ACTIVE
@@ -36,9 +33,6 @@ enum ChartStatus {
   DEPRECATED
   COMPLETED
 }
-
-
-
 
 enum ChartName {
   BAR
@@ -68,4 +62,3 @@ enum ChartName {
   GEOGRAPHY_GRAPH
   SPLINE
 }
-

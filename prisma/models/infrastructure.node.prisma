@@ -1,0 +1,24 @@
+model InfrastructureNode {
+  id                      String  @id @default(uuid())
+  infrastructureProjectId String
+  parentId                String?
+
+  name String
+
+  // Progress
+  progress         Float? // only leaf
+  computedProgress Float   @default(0)
+  weight           Float   @default(1)
+  isLeaf           Boolean @default(true)
+
+  // Relations
+  infrastructureProject InfrastructureProject @relation(fields: [infrastructureProjectId], references: [id])
+  parent                InfrastructureNode?   @relation("NodeChildren", fields: [parentId], references: [id])
+  children              InfrastructureNode[]  @relation("NodeChildren")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([infrastructureProjectId])
+  @@index([parentId])
+}

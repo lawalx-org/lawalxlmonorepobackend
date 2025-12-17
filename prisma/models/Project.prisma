@@ -1,57 +1,55 @@
-
 model Project {
-  id                        String        @id @default(uuid())
-  programId                 String
-  name                      String
+  id                     String        @id @default(uuid())
+  programId              String
+  name                   String
   // uploadbeforeday           String
   // uploadCycle               ProjectCycle
-  description               String
+  description            String
   // dataReceivedTime          String?
   // beforeSubmitData          Int?
   // weakuploadData            String[]
   // monthlyuploadData         String[]
-  status                    ProjectStatus @default(PENDING)
-  priority                  Priority
-  deadline                  DateTime
-  managerId                 String
-  startDate                 DateTime?
-  progress                  Int?
-  chartList                 String[]      // Seed create that chart list
-  estimatedCompletedDate    DateTime?
-  projectCompleteDate       DateTime?   // this is project end date 
-  currentRate               String?
-  budget                    String?
-  createdAt                 DateTime      @default(now())
-  updatedAt                 DateTime      @updatedAt
-  latitude                  Float?
-  longitude                 Float?
+  status                 ProjectStatus @default(PENDING)
+  priority               Priority
+  deadline               DateTime
+  managerId              String
+  startDate              DateTime?
+  progress               Int?
+  chartList              String[] // Seed create that chart list
+  estimatedCompletedDate DateTime?
+  projectCompleteDate    DateTime? // this is project end date 
+  currentRate            String?
+  budget                 String?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+  latitude               Float?
+  longitude              Float?
 
   // Relations
-  program                   Program       @relation(fields: [programId], references: [id], onDelete: Cascade)
-  manager                   Manager       @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  program                    Program                     @relation(fields: [programId], references: [id], onDelete: Cascade)
+  manager                    Manager                     @relation(fields: [managerId], references: [id], onDelete: Cascade)
   projectEmployees           ProjectEmployee[]
-  tasks                     Task[]
-  activities                Activity[]
-  reviews                   Review[]
+  tasks                      Task[]
+  activities                 Activity[]
+  reviews                    Review[]
   requestsToAddProjectMember RequestToAddProjectMember[]
-  submitted                 Submitted[]
-  reminders Reminder[]
-  sheets                    Sheet[] 
+  submitted                  Submitted[]
+  reminders                  Reminder[]
+  sheets                     Sheet[]
+
   @@map("projects")
 }
 
-
-
 model ProjectEmployee {
-  id          String     @id @default(uuid())
-  projectId   String
-  employeeId  String
-  assignedAt  DateTime   @default(now())
+  id         String   @id @default(uuid())
+  projectId  String
+  employeeId String
+  assignedAt DateTime @default(now())
 
   // Relations
-  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  employee    Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  project  Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 
-  @@unique([projectId, employeeId]) 
+  @@unique([projectId, employeeId])
   @@map("project_employees")
 }
