@@ -1,8 +1,8 @@
 model SubmissionReturn {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   submitted   Submitted @relation(fields: [submittedId], references: [id])
-  submittedId String   @unique
-  returnedAt  DateTime @default(now())
+  submittedId String    @unique
+  returnedAt  DateTime  @default(now())
 
   @@map("submission_returns")
 }

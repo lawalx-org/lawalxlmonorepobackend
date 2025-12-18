@@ -1,19 +1,17 @@
-
-
 // Core Notification model
 model Notification {
-  id          String    @id @default(uuid())
-  senderId   String
+  id          String           @id @default(uuid())
+  senderId    String
   receiverIds String[]
   projectId   String?
   context     String
   type        NotificationType
-  isRead      Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  isRead      Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   // Relations
-  provisions  NotificationProvision[]
+  provisions NotificationProvision[]
 
   @@map("notifications")
 }
@@ -24,15 +22,12 @@ model NotificationProvision {
   notificationId String
 
   // Relations
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
 
   @@id([userId, notificationId])
   @@map("notification_provisions")
 }
-
-
-
 
 // reminder
 //employadd

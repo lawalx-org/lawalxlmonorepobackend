@@ -1,42 +1,41 @@
 model User {
-  id                String    @id @default(uuid())
-  email            String    @unique
-  phoneNumber      String       @unique  
-  password         String
-  name             String
-  role             Role      @default(VIEWER)
-  profileImage     String?
-  language         Language  @default(ENGLISH)
-  timezone         DateTime?
-  verification2FA  Boolean   @default(false)
-  status           Boolean   @default(false)
-  lastActive       Boolean   @default(false)
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  userStatus       UserStatus @default(ACTIVE)
-  
+  id              String     @id @default(uuid())
+  email           String     @unique
+  phoneNumber     String     @unique
+  password        String
+  name            String
+  role            Role       @default(VIEWER)
+  profileImage    String?
+  language        Language   @default(ENGLISH)
+  timezone        DateTime?
+  verification2FA Boolean    @default(false)
+  status          Boolean    @default(false)
+  lastActive      Boolean    @default(false)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  userStatus      UserStatus @default(ACTIVE)
 
   // Relations
-  client                    Client?
-  manager                   Manager?
-  employee                  Employee?
-  viewer                    Viewer?
-  supporter                 Supporter?
-  superAdmin                SuperAdmin?
-  
+  client     Client?
+  manager    Manager?
+  employee   Employee?
+  viewer     Viewer?
+  supporter  Supporter?
+  superAdmin SuperAdmin?
+
   // Notification relations
-  notificationEmployee      NotificationPermissionEmployee?
-  notificationManager       NotificationPermissionManager?
-  notificationClient        NotificationPermissionClient?
-  notificationSupporter     NotificationPermissionSupporter?
-  notificationAdmin         NotificationPermissionAdmin?
-  
+  notificationEmployee  NotificationPermissionEmployee?
+  notificationManager   NotificationPermissionManager?
+  notificationClient    NotificationPermissionClient?
+  notificationSupporter NotificationPermissionSupporter?
+  notificationAdmin     NotificationPermissionAdmin?
+
   // Other relations
-  notifications             NotificationProvision[]
-  otpVerification           OtpVerification?
-  payments                  Payment[]
-  activities  Activity[]
-  file        File[]
+  notifications   NotificationProvision[]
+  otpVerification OtpVerification?
+  payments        Payment[]
+  activities      Activity[]
+  file            File[]
 
   @@map("users")
 }

@@ -1,0 +1,8 @@
+model InfrastructureProjectSnapshot {
+  id                      String   @id @default(uuid())
+
+  infrastructureProjectId String
+  takenAt                 DateTime
+
+  data Json // full tree snapshot
+}

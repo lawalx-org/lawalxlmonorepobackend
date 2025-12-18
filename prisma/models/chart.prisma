@@ -12,17 +12,16 @@
 //   sheet     Sheet?
 // }
 
-
 model ChartTable {
-  id        String    @id @default(uuid())
+  id        String      @id @default(uuid())
   title     String
   status    ChartStatus
   category  ChartName
   xAxis     Json
   yAxis     Json?
   zAxis     Json?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
   // Relation to Sheet (one-to-one optional)
   sheet     Sheet?    @relation("ChartToSheet", fields: [sheetId], references: [id])
@@ -32,17 +31,12 @@ model ChartTable {
   barChart  barChart? 
 }
 
-
-
 enum ChartStatus {
   ACTIVE
   INACTIVE
   DEPRECATED
   COMPLETED
 }
-
-
-
 
 enum ChartName {
   BAR

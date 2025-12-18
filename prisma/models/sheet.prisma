@@ -6,7 +6,6 @@
 //   createdAt DateTime @default(now())
 //   updatedAt DateTime @updatedAt
 
-
 //   chartId    String      @unique
 //   projectId   String     @unique
 //   chart      ChartTable  @relation(fields: [chartId], references: [id])
@@ -14,12 +13,12 @@
 // }
 
 model Sheet {
-  id        String      @id @default(uuid())
+  id        String          @id @default(uuid())
   name      String
   cells     Cell[]
   snapshots SheetSnapshot[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 
   chartId   String
   projectId String
@@ -27,11 +26,10 @@ model Sheet {
   chart ChartTable? @relation("ChartToSheet")
   project   Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  files     File[]
+  files File[]
 
   @@unique([projectId, chartId])
 }
-
 
 model Cell {
   id        String   @id @default(uuid())
@@ -54,16 +52,13 @@ model SheetSnapshot {
   createdAt DateTime @default(now())
 }
 
-
-
-
 model submiteCell {
-  id        String   @id @default(uuid())
-  row       Int
-  col       Int
-  value     String
-  sheetId   String
+  id         String   @id @default(uuid())
+  row        Int
+  col        Int
+  value      String
+  sheetId    String
   employeeId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
