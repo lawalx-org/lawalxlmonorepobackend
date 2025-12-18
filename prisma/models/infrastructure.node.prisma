@@ -1,7 +1,8 @@
 model InfrastructureNode {
   id                      String  @id @default(uuid())
+
   infrastructureProjectId String
-  parentId                String?
+  parentId                String? // null = top-level node under project
 
   name String
 

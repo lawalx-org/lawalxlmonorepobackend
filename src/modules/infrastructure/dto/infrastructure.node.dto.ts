@@ -1,4 +1,9 @@
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  ApiPropertyOptional,
+  PartialType,
+} from '@nestjs/swagger';
 import {
   IsUUID,
   IsString,
@@ -18,6 +23,10 @@ export class InfrastructureNodeDto {
   })
   @IsUUID()
   infrastructureProjectId: string;
+
+  @ApiHideProperty()
+  @IsOptional()
+  infrastructureProject?: InfrastructureDto;
 
   @ApiPropertyOptional({
     description: 'Parent node ID if this is a child node',
@@ -43,5 +52,5 @@ export class InfrastructureNodeDto {
 }
 
 export class UpdateInfrastructureNodeDto extends PartialType(
-  InfrastructureDto,
+  InfrastructureNodeDto,
 ) {}

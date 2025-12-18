@@ -1,3 +1,4 @@
+import { InfrastructureNode, Prisma } from 'generated/prisma';
 import slug from 'slugify';
 
 export const slugify = (textContent: string, replacement: '-' | '_' = '-') =>
@@ -18,3 +19,11 @@ export const omit = <T extends object, K extends keyof T>(
     Object.entries(obj).filter(([key]) => !keys.includes(key as K)),
   ) as Omit<T, K>;
 };
+
+export const buildNodeTree = (nodes: InfrastructureNode[], parentId?: string) =>
+  nodes
+    .filter((n) => n.parentId === parentId)
+    .map((n) => ({
+      ...n,
+      children: buildNodeTree(nodes, n.id),
+    }));

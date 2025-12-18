@@ -1,65 +1,63 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Patch,
   Post,
 } from '@nestjs/common';
-import { InfrastructureService } from './infrastructure.service';
 import { ApiTags } from '@nestjs/swagger';
 import { InfrastructureDto } from './dto/infrastructure.dto';
-import { InfrastructureNodeDto } from './dto/infrastructure.node.dto';
+import { InfrastructureService } from './infrastructure.service';
+import {
+  InfrastructureNodeDto,
+  UpdateInfrastructureNodeDto,
+} from './dto/infrastructure.node.dto';
 
 @ApiTags('Infrastructure')
 @Controller('infrastructure')
 export class InfrastructureController {
   constructor(private readonly service: InfrastructureService) {}
 
-  @Post('project')
-  async store(@Body() project: InfrastructureDto) {
-    try {
-      const createdProject = await this.service.createProject(project);
-      if (!createdProject)
-        throw new BadRequestException('Fail to create project');
-      return createdProject;
-    } catch (err) {
-      console.log(err);
-      return err.message;
-    }
+  @Post('projects')
+  createProject(@Body() dto: InfrastructureDto) {
+    return this.service.createProject(dto);
   }
 
-  @Post(':id/children')
-  async addChild(
-    @Param('id') id: string,
-    @Body() child: InfrastructureNodeDto,
+  @Get('projects')
+  getProjects() {
+    // TODO: add pagination and sorting
+    return this.service.findManyProjects();
+  }
+
+  @Get('projects/:projectId/nodes')
+  getRootNodes(@Param('projectId') projectId: string) {
+    return this.service.findRootNodes(projectId);
+  }
+
+  // nodes from here...
+  @Post('nodes')
+  createNode(@Body() dto: InfrastructureNodeDto) {
+    return this.service.createNode(dto);
+  }
+
+  @Get('nodes/:nodeId/children')
+  getChildren(@Param('nodeId') nodeId: string) {
+    return this.service.findChildren(nodeId);
+  }
+
+  @Patch('nodes/:nodeId/progress')
+  updateProgress(
+    @Param('nodeId') nodeId: string,
+    @Body() dto: UpdateInfrastructureNodeDto,
   ) {
-    try {
-      return await this.service.addChild(id, child);
-    } catch (err) {
-      return err.message;
-    }
+    console.log(dto);
+    return this.service.updateProgress(nodeId, dto.progress ? dto.progress : 0);
   }
 
-  @Patch(':id/progress')
-  async updateProgress(
-    @Param('id') id: string,
-    @Body('progress') progress: number,
-  ) {
-    try {
-      return await this.service.updateProgress(id, progress);
-    } catch (err) {
-      return err.message;
-    }
-  }
-
-  @Delete(':id')
-  async delete(@Param('id') id: string) {
-    try {
-      return await this.service.deleteNode(id);
-    } catch (err) {
-      return err.message;
-    }
+  @Delete('nodes/:nodeId')
+  deleteNode(@Param('nodeId') nodeId: string) {
+    return this.service.deleteNode(nodeId);
   }
 }

@@ -13,92 +13,129 @@ import { InfrastructureNodeDto } from './dto/infrastructure.node.dto';
 export class InfrastructureService {
   constructor(private readonly repo: InfrastructureRepository) {}
 
-  async createProject(project: InfrastructureDto) {
-    if (!project.name)
-      throw new BadRequestException('Project name is required');
-    // TODO: create slug from name
-    const projectSlug = slugify(project.name);
-    // TODO: check if slug already exists
-    const existingProject = await this.repo.findBySlug(projectSlug);
-    if (existingProject)
-      throw new ConflictException('Project with this slug already exists');
+  // project
+  async createProject(dto: InfrastructureDto) {
+    if (!dto.name) throw new BadRequestException('Project name is required');
 
-    return await this.repo.createProject({
-      ...project,
-      slug: projectSlug,
+    const slug = slugify(dto.name);
+    if (await this.repo.findBySlug(slug)) {
+      throw new ConflictException('Project slug already exists');
+    }
+
+    return this.repo.createProject({
+      name: dto.name,
+      slug,
+    });
+  }
+  async findManyProjects() {
+    const projects = await this.repo.findManyProjects();
+
+    return projects.map((project) => {
+      const tree = this.buildTree(project.nodes);
+
+      return {
+        ...project,
+        nodes: tree, // 👈 nested tree
+      };
     });
   }
 
-  async addChild(projectId: string, child: InfrastructureNodeDto) {
-    const project = await this.repo.findProjectById(projectId);
-    if (!project) throw new NotFoundException('Project not found');
+  async findRootNodes(projectId: string) {
+    return this.repo.findRootNodes(projectId);
+  }
 
-    const parent = await this.repo.findById();
-    if (!parent) throw new Error('Parent not found');
+  async createNode(dto: InfrastructureNodeDto) {
+    const { infrastructureProjectId, parentId, name } = dto;
 
-    // Parent becomes non-leaf
-    if (child.isLeaf) {
-      await this.repo.update(parent.id, {
-        isLeaf: false,
-        progress: null,
-      });
+    if (!infrastructureProjectId || !name) {
+      throw new BadRequestException('Invalid node payload');
     }
 
-    const node = await this.repo.create({
-      ...child,
-      parent: { connect: { id: parentId } },
-      infrastructureProject: {
-        connect: { id: parent.infrastructureProjectId },
-      },
+    const project = await this.repo.findProjectById(infrastructureProjectId);
+    if (!project) throw new NotFoundException('Project not found');
+
+    // Validate parent (if exists)
+    if (parentId) {
+      const parent = await this.repo.findNodeById(parentId);
+      if (!parent) throw new NotFoundException('Parent node not found');
+
+      if (parent.infrastructureProjectId !== infrastructureProjectId) {
+        throw new ConflictException('Parent belongs to another project');
+      }
+
+      // Parent becomes non-leaf
+      if (parent.isLeaf) {
+        await this.repo.updateNode(parent.id, {
+          isLeaf: false,
+          progress: null,
+        });
+      }
+    }
+
+    const node = await this.repo.createNode({
+      name,
+      infrastructureProject: { connect: { id: infrastructureProjectId } },
+      parent: parentId ? { connect: { id: parentId } } : undefined,
       isLeaf: true,
       progress: 0,
       computedProgress: 0,
     });
 
-    await this.propagateProgressUp(parentId);
+    await this.propagateUp(parentId);
+    await this.updateProjectProgress(infrastructureProjectId);
 
     return node;
   }
+
+  async findChildren(nodeId: string) {
+    return this.repo.findChildren(nodeId);
+  }
+
   async updateProgress(nodeId: string, progress: number) {
-    const node = await this.repo.findById(nodeId);
+    const node = await this.repo.findNodeById(nodeId);
 
     if (!node) throw new NotFoundException('Node not found');
-    if (!node.isLeaf)
+    if (!node.isLeaf) {
       throw new ConflictException('Only leaf nodes can be updated');
+    }
 
-    await this.repo.update(nodeId, {
+    await this.repo.updateNode(nodeId, {
       progress,
       computedProgress: progress,
     });
 
-    await this.propagateProgressUp(node.parentId);
+    await this.propagateUp(node.parentId);
+    await this.updateProjectProgress(node.infrastructureProjectId);
   }
-  async deleteNode(nodeId: string) {
-    const node = await this.repo.findById(nodeId);
 
-    if (!node) throw new Error('Node not found');
-    if (!node.isLeaf) throw new Error('Cannot delete non-leaf node');
+  async deleteNode(nodeId: string) {
+    const node = await this.repo.findNodeById(nodeId);
+
+    if (!node) throw new NotFoundException('Node not found');
+    if (!node.isLeaf) {
+      throw new ConflictException('Cannot delete non-leaf node');
+    }
 
     const parentId = node.parentId;
-    await this.repo.delete(nodeId);
+    const projectId = node.infrastructureProjectId;
 
-    if (parentId) {
-      const count = await this.repo.countChildren(parentId);
+    await this.repo.deleteNode(nodeId);
 
-      if (count === 0) {
-        // Parent becomes leaf again
-        await this.repo.update(parentId, {
-          isLeaf: true,
-          progress: 0,
-          computedProgress: 0,
-        });
-      }
-
-      await this.propagateProgressUp(parentId);
+    // Parent may become leaf again
+    if (parentId && (await this.repo.countChildren(parentId)) === 0) {
+      await this.repo.updateNode(parentId, {
+        isLeaf: true,
+        progress: 0,
+        computedProgress: 0,
+      });
     }
+
+    await this.propagateUp(parentId);
+    await this.updateProjectProgress(projectId);
   }
 
-  private async propagateProgressUp(nodeId?: string | null) {
+  // private
+  private async propagateUp(nodeId?: string | null) {
     if (!nodeId) return;
 
     const children = await this.repo.findChildren(nodeId);
@@ -109,12 +146,30 @@ export class InfrastructureService {
       children.reduce((s, c) => s + c.computedProgress * c.weight, 0) /
       totalWeight;
 
-    const node = await this.repo.findById(nodeId);
+    const node = await this.repo.findNodeById(nodeId);
+    if (!node) return;
 
-    if (!node) throw new NotFoundException('No not found!');
     if (node.computedProgress !== computed) {
-      await this.repo.update(nodeId, { computedProgress: computed });
-      await this.propagateProgressUp(node.parentId);
+      await this.repo.updateNode(nodeId, { computedProgress: computed });
+      await this.propagateUp(node.parentId);
     }
+  }
+
+  private async updateProjectProgress(projectId: string) {
+    const roots = await this.repo.findRootNodes(projectId);
+    if (roots.length === 0) return;
+
+    const avg =
+      roots.reduce((s, n) => s + n.computedProgress, 0) / roots.length;
+
+    await this.repo.updateProject(projectId, { computedProgress: avg });
+  }
+  private buildTree(nodes: any[], parentId: string | null = null) {
+    return nodes
+      .filter((node) => node.parentId === parentId)
+      .map((node) => ({
+        ...node,
+        children: this.buildTree(nodes, node.id),
+      }));
   }
 }
