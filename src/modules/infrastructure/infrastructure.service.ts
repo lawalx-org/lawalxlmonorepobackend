@@ -35,7 +35,7 @@ export class InfrastructureService {
 
       return {
         ...project,
-        nodes: tree, // 👈 nested tree
+        nodes: tree,
       };
     });
   }
@@ -164,7 +164,7 @@ export class InfrastructureService {
 
     await this.repo.updateProject(projectId, { computedProgress: avg });
   }
-  private buildTree(nodes: any[], parentId: string | null = null) {
+  private buildTree<N = any>(nodes: N[], parentId: string | null = null) {
     return nodes
       .filter((node) => node.parentId === parentId)
       .map((node) => ({
