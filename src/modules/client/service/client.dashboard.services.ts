@@ -144,7 +144,8 @@ async getDashboardOverview() {
   });
 
   const overdueAddedItems = await this.prisma.project.findMany({
-    where: { status: "OVERDUE", createdAt: { gte: thisMonthStart } },
+    // where: { status: "OVERDUE", createdAt: { gte: thisMonthStart } },
+    where: { status: "OVERDUE",},
     orderBy: { createdAt: "desc" }
   });
 
@@ -278,8 +279,8 @@ async getDashboardOverview() {
 
     // If no programId is provided, get the first program
     if (!programId) {
-      const firstProgram = await this.prisma.project.findFirst({
-        orderBy: { createdAt: 'asc' }
+      const firstProgram = await this.prisma.program.findFirst({
+        // orderBy: { createdAt: 'asc' }
       });
 
       if (!firstProgram) {
