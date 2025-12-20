@@ -23,8 +23,8 @@ model Sheet {
   chartId   String
   projectId String
 
-  chart   ChartTable?
-  project Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  chart ChartTable? @relation("ChartToSheet")
+  project   Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   files File[]
 

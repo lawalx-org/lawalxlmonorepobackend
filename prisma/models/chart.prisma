@@ -18,13 +18,17 @@ model ChartTable {
   status    ChartStatus
   category  ChartName
   xAxis     Json
-  yAxis     Json
+  yAxis     Json?
   zAxis     Json?
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
-  sheet   Sheet?  @relation(fields: [sheetId], references: [id])
-  sheetId String? @unique
+  // Relation to Sheet (one-to-one optional)
+  sheet     Sheet?    @relation("ChartToSheet", fields: [sheetId], references: [id])
+  sheetId   String?   @unique
+
+  // Relation to barChart (one-to-one optional)
+  barChart  barChart? 
 }
 
 enum ChartStatus {
@@ -62,3 +66,38 @@ enum ChartName {
   GEOGRAPHY_GRAPH
   SPLINE
 }
+
+
+//barChart
+model barChart {
+  id               String    @id @default(uuid())
+  numberOfDataset  Int
+  firstFiledDataset Int
+  lastFiledDAtaset  Int
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+//relations
+
+  chartTable  ChartTable @relation( fields: [ChartTableId], references: [id])
+  ChartTableId String  @unique
+  showWidgets      ShowWidget[]
+}
+
+model ShowWidget {
+  id              Int           @id @default(autoincrement())
+  legend_name     String
+  color           String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+
+  //relations
+  barChart     barChart @relation(fields: [barChartId], references: [id])
+  barChartId   String 
+}
+
+
+
+
+//

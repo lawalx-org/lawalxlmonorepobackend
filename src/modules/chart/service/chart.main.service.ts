@@ -1,25 +1,82 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { UpdateChartDto } from '../dto/update-chart.dto';
-import { ChartStatus, Prisma } from 'generated/prisma';
+import { ChartName, ChartStatus, Prisma, barChart } from 'generated/prisma';
+import { AppError } from 'src/errors/AppError';
+import { CreateBarChartDto, ShowWidgetDto } from '../dto/barchartDto';
 
 @Injectable()
 export class ChartMainService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   //create chart
-  create(createChartDto: CreateChartDto) {
-    const { xAxis, yAxis, zAxis, ...rest } = createChartDto;
-    return this.prisma.chartTable.create({
-      data: {
-        ...rest,
-        xAxis: JSON.parse(xAxis),
-        yAxis: JSON.parse(yAxis),
-        zAxis: zAxis ? JSON.parse(zAxis) : Prisma.JsonNull,
-      },
+  async create(createChartDto: CreateChartDto) {
+    let subChat = {};
+    const { xAxis, yAxis, zAxis, title, status, category, } = createChartDto;
+
+
+
+
+
+    const result = await this.prisma.$transaction(async (txPrisma) => {
+      const mainChart = await txPrisma.chartTable.create({
+        data: {
+          title,
+          status,
+          category,
+          xAxis: JSON.parse(xAxis),
+          yAxis: yAxis ? JSON.parse(yAxis) : Prisma.JsonNull,
+          zAxis: zAxis ? JSON.parse(zAxis) : Prisma.JsonNull,
+        },
+      });
+
+
+      switch (category) {
+        case ChartName.BAR: {
+          
+          const { numberOfDataset, firstFiledDataset, lastFiledDAtaset, showWidgets } = createChartDto
+
+       
+
+            subChat = await txPrisma.barChart.create({
+              data: {
+                ChartTableId: mainChart.id,
+                numberOfDataset: numberOfDataset!,
+                firstFiledDataset: firstFiledDataset!,
+                lastFiledDAtaset: lastFiledDAtaset!,
+              
+                showWidgets: showWidgets ? {
+                  create: showWidgets.map(widget => ({
+                    legend_name: widget.legend_name ?? 'Default Legend',
+                    color: widget.color ?? '#000000',
+                  })),
+                } : undefined,
+              },
+            });
+
+          break;
+        }
+
+        default: {
+          throw new BadRequestException(`Chart type "${status}" is not supported`);
+        }
+      }
+
+
+
+
+
+      return { ...mainChart  }
+
+
     });
+
+
+
+    return result;
   }
+
 
   //find all active charts
   async findAllActive() {
@@ -49,9 +106,22 @@ export class ChartMainService {
     return inactiveCharts;
   }
 
-  findOne(id: string) {
-    return this.prisma.chartTable.findUnique({ where: { id } });
-  }
+ findOne(id: string) {
+  return this.prisma.chartTable.findUnique({
+    where: { id },
+    include: {
+     
+      barChart: {
+        include: {
+        
+          showWidgets: true, 
+        },
+      },
+     
+      sheet: true, 
+    },
+  });
+}
 
   //update chart
   update(id: string, updateChartDto: UpdateChartDto) {

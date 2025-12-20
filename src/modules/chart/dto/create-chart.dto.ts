@@ -1,8 +1,9 @@
 import { IsString, IsEnum, IsOptional, IsJSON } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { ChartName, ChartStatus } from 'generated/prisma';
+import { CreateBarChartDto } from './barchartDto';
 
-export class CreateChartDto {
+export class CreateChartDto extends CreateBarChartDto   {
   @ApiProperty({
     example: 'Weekly Sleep Pattern',
     description: 'Title of the chart.',
@@ -37,8 +38,9 @@ export class CreateChartDto {
     example: '{"labels":["Mon","Tue","Wed"],"values":[70,80,90]}',
     description: 'Y-axis data in JSON format.',
   })
+  @IsOptional()
   @IsJSON()
-  yAxis: string;
+  yAxis?: string;
 
   @ApiProperty({
     example: '{"labels":["Mon","Tue","Wed"],"values":[1,2,3]}',
