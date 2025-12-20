@@ -131,18 +131,18 @@ export class ClientDashboardController {
 
     //------------project activity ------------//
 
-    @Get('project-activity')
-    async project_activity(@Req() req: RequestWithUser) {
-        const clientId = req.user.clientId;
-        if (!clientId) {
-            throw new UnauthorizedException('clientId ID not found in token');
-        }
-        const result = await this.clientDashboardServices.getProjectsActivity();
-        return {
-            message: "projects activity fetch successfully",
-            data: result
-        }
-    };
+    // @Get('project-activity')
+    // async project_activity(@Req() req: RequestWithUser) {
+    //     const clientId = req.user.clientId;
+    //     if (!clientId) {
+    //         throw new UnauthorizedException('clientId ID not found in token');
+    //     }
+    //     const result = await this.clientDashboardServices.getProjectsActivity();
+    //     return {
+    //         message: "projects activity fetch successfully",
+    //         data: result
+    //     }
+    // };
 
 
     //---------------upcomming dateline ------------------//
