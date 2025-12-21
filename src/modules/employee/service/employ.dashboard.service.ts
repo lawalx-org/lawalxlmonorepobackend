@@ -5,54 +5,223 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class EmployDashboardService {
   constructor(private readonly prisma: PrismaService) {}
 
+  // async getEmployeeDashboard(employeeId: string) {
+  //   const totalProjectsAssigned = await this.prisma.projectEmployee.count({
+  //     where: {
+  //       employeeId,
+  //     },
+  //   });
+
+  //   const totalSubmissions = await this.prisma.submitted.count({
+  //     where: {
+  //       employeeId,
+  //     },
+  //   });
+
+  //   const totalReturns = await this.prisma.submissionReturn.count({
+  //     where: {
+  //       submitted: {
+  //         employeeId,
+  //       },
+  //     },
+  //   });
+
+  //   const projects = await this.prisma.projectEmployee.findMany({
+  //     where: {
+  //       employeeId,
+  //     },
+  //     include: {
+  //       project: true,
+  //     },
+  //   });
+
+  //   const liveProjects = projects.filter((p) => p.project.status === 'LIVE');
+
+  //   const overdueProjects = projects.filter(
+  //     (p) =>
+  //       p.project.deadline < new Date() && p.project.status !== 'COMPLETED',
+  //   );
+
+  //   return {
+  //     totalProjectsAssigned,
+  //     totalSubmissions,
+  //     totalReturns,
+  //     liveProjects: {
+  //       count: liveProjects.length,
+  //       projects: liveProjects.map((p) => p.project),
+  //     },
+  //     overdueProjects: {
+  //       count: overdueProjects.length,
+  //       projects: overdueProjects.map((p) => p.project),
+  //     },
+  //   };
+  // }
+
+  /* ---------- Helpers ---------- */
+  private getMonthRange(date: Date) {
+    const start = new Date(date.getFullYear(), date.getMonth(), 1);
+    const end = new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      0,
+      23,
+      59,
+      59,
+    );
+    return { start, end };
+  }
+
+  private calculateGrowth(current: number, previous: number): number {
+    if (previous === 0) return current > 0 ? 100 : 0;
+    return Number((((current - previous) / previous) * 100).toFixed(1));
+  }
+
+  /* ---------- Dashboard ---------- */
   async getEmployeeDashboard(employeeId: string) {
-    const totalProjectsAssigned = await this.prisma.projectEmployee.count({
-      where: {
-        employeeId,
-      },
+    const now = new Date();
+
+    const currentMonth = this.getMonthRange(now);
+    const previousMonth = this.getMonthRange(
+      new Date(now.getFullYear(), now.getMonth() - 1, 1),
+    );
+
+    /* ================= Assigned Projects ================= */
+    const totalAssigned = await this.prisma.projectEmployee.count({
+      where: { employeeId },
     });
 
-    const totalSubmissions = await this.prisma.submitted.count({
+    const currentAssigned = await this.prisma.projectEmployee.count({
       where: {
         employeeId,
-      },
-    });
-
-    const totalReturns = await this.prisma.submissionReturn.count({
-      where: {
-        submitted: {
-          employeeId,
+        project: {
+          createdAt: {
+            gte: currentMonth.start,
+            lte: currentMonth.end,
+          },
         },
       },
     });
 
-    const projects = await this.prisma.projectEmployee.findMany({
+    const previousAssigned = await this.prisma.projectEmployee.count({
       where: {
         employeeId,
-      },
-      include: {
-        project: true,
+        project: {
+          createdAt: {
+            gte: previousMonth.start,
+            lte: previousMonth.end,
+          },
+        },
       },
     });
 
-    const liveProjects = projects.filter((p) => p.project.status === 'LIVE');
-
-    const overdueProjects = projects.filter(
-      (p) =>
-        p.project.deadline < new Date() && p.project.status !== 'COMPLETED',
-    );
-
-    return {
-      totalProjectsAssigned,
-      totalSubmissions,
-      totalReturns,
-      liveProjects: {
-        count: liveProjects.length,
-        projects: liveProjects.map((p) => p.project),
+    /* ================= Submitted For Review ================= */
+    const currentSubmissions = await this.prisma.submitted.count({
+      where: {
+        employeeId,
+        createdAt: {
+          gte: currentMonth.start,
+          lte: currentMonth.end,
+        },
       },
+    });
+
+    const previousSubmissions = await this.prisma.submitted.count({
+      where: {
+        employeeId,
+        createdAt: {
+          gte: previousMonth.start,
+          lte: previousMonth.end,
+        },
+      },
+    });
+
+    /* ================= Returned For Edit (FIXED) ================= */
+    const currentReturns = await this.prisma.submissionReturn.count({
+      where: {
+        submitted: {
+          employeeId,
+          createdAt: {
+            gte: currentMonth.start,
+            lte: currentMonth.end,
+          },
+        },
+      },
+    });
+
+    const previousReturns = await this.prisma.submissionReturn.count({
+      where: {
+        submitted: {
+          employeeId,
+          createdAt: {
+            gte: previousMonth.start,
+            lte: previousMonth.end,
+          },
+        },
+      },
+    });
+
+    /* ================= Live Projects ================= */
+    const currentLiveProjects = await this.prisma.projectEmployee.count({
+      where: {
+        employeeId,
+        project: {
+          status: 'LIVE',
+          createdAt: {
+            gte: currentMonth.start,
+            lte: currentMonth.end,
+          },
+        },
+      },
+    });
+
+    const previousLiveProjects = await this.prisma.projectEmployee.count({
+      where: {
+        employeeId,
+        project: {
+          status: 'LIVE',
+          createdAt: {
+            gte: previousMonth.start,
+            lte: previousMonth.end,
+          },
+        },
+      },
+    });
+
+    /* ================= Overdue Projects ================= */
+    const overdueProjects = await this.prisma.projectEmployee.count({
+      where: {
+        employeeId,
+        project: {
+          deadline: { lt: new Date() },
+          status: { not: 'COMPLETED' },
+        },
+      },
+    });
+
+    /* ================= Response ================= */
+    return {
+      totalAssignedProject: {
+        count: totalAssigned,
+        growth: this.calculateGrowth(currentAssigned, previousAssigned),
+      },
+
+      submittedForReview: {
+        count: currentSubmissions,
+        growth: this.calculateGrowth(currentSubmissions, previousSubmissions),
+      },
+
+      returnedForEdit: {
+        count: currentReturns,
+        growth: this.calculateGrowth(currentReturns, previousReturns),
+      },
+
+      liveProjects: {
+        count: currentLiveProjects,
+        growth: this.calculateGrowth(currentLiveProjects, previousLiveProjects),
+      },
+
       overdueProjects: {
-        count: overdueProjects.length,
-        projects: overdueProjects.map((p) => p.project),
+        count: overdueProjects,
       },
     };
   }
