@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - '**'
-
 jobs:
   build-test:
     name: Build and Test
@@ -26,12 +25,11 @@ jobs:
 
       - name: Just build test
         run: npm run build
-
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
     needs: [build-test]
-    if: github.ref == "refs/heads/dev" || github.ref == "refs/heads/main"
 
     steps:
       - name: Checkout code
@@ -61,8 +59,8 @@ jobs:
   deploy:
     name: Deploy to VPS
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     needs: [build-test, build-and-push]
-    if: github.ref == "refs/heads/main"
 
     steps:
       - name: Checkout repo
@@ -118,13 +116,11 @@ jobs:
           script: |
             sudo systemctl restart caddy
             echo "✅ Caddy server restarted"
-
   deploy-check:
     name: Check if Deploy was Successful
     runs-on: ubuntu-latest
-    needs: [build-test, build-and-push, deploy]
     if: github.ref == 'refs/heads/main'
-
+    needs: [build-test, build-and-push, deploy]
     steps:
       - name: Enter vps and check if deploy was successful
         uses: appleboy/ssh-action@v1.0.3
