@@ -3,8 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { UpdateChartDto } from '../dto/update-chart.dto';
 import { ChartName, ChartStatus, Prisma, barChart } from 'generated/prisma';
-import { AppError } from 'src/errors/AppError';
-import { CreateBarChartDto, ShowWidgetDto } from '../dto/barchartDto';
+
 
 @Injectable()
 export class ChartMainService {
@@ -34,26 +33,52 @@ export class ChartMainService {
 
       switch (category) {
         case ChartName.BAR: {
-          
+
           const { numberOfDataset, firstFiledDataset, lastFiledDAtaset, showWidgets } = createChartDto
 
-       
 
-            subChat = await txPrisma.barChart.create({
-              data: {
-                ChartTableId: mainChart.id,
-                numberOfDataset: numberOfDataset!,
-                firstFiledDataset: firstFiledDataset!,
-                lastFiledDAtaset: lastFiledDAtaset!,
-              
-                showWidgets: showWidgets ? {
-                  create: showWidgets.map(widget => ({
-                    legend_name: widget.legend_name ?? 'Default Legend',
+
+          subChat = await txPrisma.barChart.create({
+            data: {
+              ChartTableId: mainChart.id,
+              numberOfDataset: numberOfDataset!,
+              firstFiledDataset: firstFiledDataset!,
+              lastFiledDAtaset: lastFiledDAtaset!,
+
+              showWidgets: showWidgets ? {
+                create: showWidgets.map(widget => ({
+                  legend_name: widget.legend_name ?? 'Default Legend',
+                  color: widget.color ?? '#000000',
+                })),
+              } : undefined,
+            },
+          });
+
+          break;
+        }
+        case ChartName.HORIZONTAL_BAR: {
+
+          const { numberOfDataset, firstFieldDataset, lastFieldDataset, widgets } = createChartDto
+
+
+
+          subChat = await txPrisma.horizontalBarChart.create({
+            data: {
+              chartTableId: mainChart.id,
+              numberOfDataset: numberOfDataset!,
+              firstFieldDataset: firstFieldDataset!,
+              lastFieldDataset: lastFieldDataset!,
+
+              widgets: widgets
+                ? {
+                  create: widgets.map(widget => ({
+                    legendName: widget.legendName ?? 'Default Legend',
                     color: widget.color ?? '#000000',
                   })),
-                } : undefined,
-              },
-            });
+                }
+                : undefined,
+            },
+          });
 
           break;
         }
@@ -67,7 +92,7 @@ export class ChartMainService {
 
 
 
-      return { ...mainChart  }
+      return { ...mainChart }
 
 
     });
@@ -106,22 +131,28 @@ export class ChartMainService {
     return inactiveCharts;
   }
 
- findOne(id: string) {
-  return this.prisma.chartTable.findUnique({
-    where: { id },
-    include: {
-     
-      barChart: {
-        include: {
-        
-          showWidgets: true, 
+  findOne(id: string) {
+    return this.prisma.chartTable.findUnique({
+      where: { id },
+      include: {
+
+        barChart: {
+          include: {
+
+            showWidgets: true,
+          },
         },
+        horizontalBarChart: {
+          include: {
+
+             widgets: true,
+          },
+        },
+
+        sheet: true,
       },
-     
-      sheet: true, 
-    },
-  });
-}
+    });
+  }
 
   //update chart
   update(id: string, updateChartDto: UpdateChartDto) {
