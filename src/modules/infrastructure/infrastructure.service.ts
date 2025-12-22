@@ -35,7 +35,7 @@ export class InfrastructureService {
 
       return {
         ...project,
-        nodes: tree, // 👈 nested tree
+        nodes: tree,
       };
     });
   }

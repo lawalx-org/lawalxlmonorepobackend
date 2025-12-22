@@ -42,10 +42,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Test SSH Connection
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
+          username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             echo "✅ SSH connection successful"
@@ -53,22 +53,22 @@ jobs:
             uptime
 
       - name: Copy Compose File
-        uses: appleboy/scp-action@v1
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
+          username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           source: 'docker-compose.yaml'
-          target: '/home/${{secrets.VPS_USER}}/projects/${{secrets.PACKAGE_NAME}}'
+          target: '/home/${{ secrets.VPS_USERNAME }}/projects/${{secrets.PACKAGE_NAME}}'
 
       - name: Deploy to VPS via SSH
-        uses: appleboy/scp-action@v1
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
+          username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /home/${{secrets.VPS_USER}}/projects/${{ secrets.PACKAGE_NAME }}
+            cd /home/${{ secrets.VPS_USERNAME }}/projects/${{ secrets.PACKAGE_NAME }}
             # Pull the latest images
             docker compose --profile prod pull
 
@@ -80,3 +80,13 @@ jobs:
 
             # Prune unused Docker objects (optional, cleans disk)
             docker system prune -f
+
+        - name: Restart Caddy server
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.VPS_HOST }}
+            username: ${{ secrets.VPS_USERNAME }}
+            key: ${{ secrets.VPS_SSH_KEY }}
+            script: |
+              sudo systemctl restart caddy
+              echo "✅ Caddy server restarted"
