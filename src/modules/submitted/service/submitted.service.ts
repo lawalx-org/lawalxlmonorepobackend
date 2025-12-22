@@ -366,36 +366,36 @@ export class SubmittedService {
           }
 
           // ✅ UPDATE CELL USING COMPOSITE UNIQUE KEY
-          // await prisma.cell.update({
-          //   where: {
-          //     sheetId_row_col: {
-          //       sheetId: submitted.sheetId,
-          //       row: submiteCell.row,
-          //       col: submiteCell.col,
-          //     },
-          //   },
-          //   data: {
-          //     value: submiteCell.value,
-          //   },
-          // });
-          // await prisma.cell.upsert({
-          //   where: {
-          //     sheetId_row_col: {
-          //       sheetId: submitted.sheetId,
-          //       row: submiteCell.row,
-          //       col: submiteCell.col,
-          //     },
-          //   },
-          //   update: {
-          //     value: submiteCell.value,
-          //   },
-          //   create: {
-          //     sheetId: submitted.sheetId,
-          //     row: submiteCell.row,
-          //     col: submiteCell.col,
-          //     value: submiteCell.value,
-          //   },
-          // });
+          await prisma.cell.update({
+            where: {
+              sheetId_row_col: {
+                sheetId: submitted.sheetId,
+                row: submiteCell.row,
+                col: submiteCell.col,
+              },
+            },
+            data: {
+              value: submiteCell.value,
+            },
+          });
+          await prisma.cell.upsert({
+            where: {
+              sheetId_row_col: {
+                sheetId: submitted.sheetId,
+                row: submiteCell.row,
+                col: submiteCell.col,
+              },
+            },
+            update: {
+              value: submiteCell.value,
+            },
+            create: {
+              sheetId: submitted.sheetId,
+              row: submiteCell.row,
+              col: submiteCell.col,
+              value: submiteCell.value,
+            },
+          });
         }
       }
 
