@@ -152,13 +152,21 @@ jobs:
               echo "Error: App is not responding correctly (HTTP Status: $response_code)."
               exit 1
             fi
-
   notify:
     name: Notify Telegram Project Group on Failure
     runs-on: ubuntu-latest
     if: |
-      always() && failure() && (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main')
-
+      always() &&
+      (needs.build-test.result == 'failure' ||
+      needs.build-and-push.result == 'failure' ||
+      needs.deploy.result == 'failure' ||
+      needs.deploy-check.result == 'failure') &&
+      (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main')
+    needs:
+      - build-test
+      - build-and-push
+      - deploy
+      - deploy-check
     steps:
       - name: Send Telegram Notification
         uses: devlopersabbir/telegram-action-notifier@v1
