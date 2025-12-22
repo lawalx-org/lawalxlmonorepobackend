@@ -9,7 +9,7 @@ services:
     container_name: lawalbackendbackend
     restart: always
     env_file:
-      - .env.production
+      - .env
     depends_on:
       - db
       - redis
