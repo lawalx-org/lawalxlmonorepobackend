@@ -59,7 +59,7 @@ COPY --from=builder --chown=node:node /usr/src/app/package*.json ./
 ENV NODE_ENV=production
 
 # Expose API port
-EXPOSE 5000
+EXPOSE 2342
 
 # Start container with safety checks + migrations
 
