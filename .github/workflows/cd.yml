@@ -3,7 +3,7 @@ name: Test, Build, Push, Deploy, Check, Notify Action
 on:
   push:
     branches:
-      - main
+      - '**'
   pull_request:
     branches:
       - '**'
@@ -18,7 +18,7 @@ jobs:
       - name: Setup latest nodejs
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 24
 
       - name: Install dependencies
         run: npm install
