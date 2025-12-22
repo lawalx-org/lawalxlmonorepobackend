@@ -155,19 +155,18 @@ jobs:
   notify:
     name: Notify Telegram Project Group on Failure
     runs-on: ubuntu-latest
-  if: |
-    always() &&
-    (needs.build-test.result == 'failure' ||
-     needs.build-and-push.result == 'failure' ||
-     needs.deploy.result == 'failure' ||
-     needs.deploy-check.result == 'failure') &&
-    (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main')
-
-  needs:
-    - build-test
-    - build-and-push
-    - deploy
-    - deploy-check
+    if: |
+      always() &&
+      (needs.build-test.result == 'failure' ||
+      needs.build-and-push.result == 'failure' ||
+      needs.deploy.result == 'failure' ||
+      needs.deploy-check.result == 'failure') &&
+      (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main')
+    needs:
+      - build-test
+      - build-and-push
+      - deploy
+      - deploy-check
     steps:
       - name: Send Telegram Notification
         uses: devlopersabbir/telegram-action-notifier@v1
