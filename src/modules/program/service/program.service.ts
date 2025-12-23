@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProgramDto } from '../dto/create-program.dto';
 import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
@@ -14,15 +18,13 @@ export class ProgramService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createProgramDto: CreateProgramDto, userId: string) {
-    const {  ...programData } = createProgramDto;
+    const { ...programData } = createProgramDto;
     const client = await this.prisma.client.findUnique({
       where: { id: userId },
     });
     if (!client) {
       throw new NotFoundException(`Client with ID "${userId}" not found`);
     }
-
- 
 
     return this.prisma.program.create({
       data: {
@@ -31,14 +33,11 @@ export class ProgramService {
         client: {
           connect: { id: userId },
         },
-        
       },
     });
   }
 
-  async findAll(
-    query: GetAllProgramsDto,
-  ): Promise<PaginatedResult<any>> {
+  async findAll(query: GetAllProgramsDto): Promise<PaginatedResult<any>> {
     const {
       page,
       limit,
@@ -92,6 +91,10 @@ export class ProgramService {
       'program',
       {
         where,
+        include: {
+          projects: true, 
+          tags: true, 
+        },
       },
       { page: page ?? 1, limit: limit ?? 10 },
     );
@@ -160,20 +163,17 @@ export class ProgramService {
   }
 
   async updateProgramName(programId: string, programName: string) {
-  const program = await this.prisma.program.findUnique({
-    where: { id: programId },
-  });
+    const program = await this.prisma.program.findUnique({
+      where: { id: programId },
+    });
 
-  if (!program) {
-    throw new NotFoundException(`Program with ID "${programId}" not found`);
+    if (!program) {
+      throw new NotFoundException(`Program with ID "${programId}" not found`);
+    }
+
+    return this.prisma.program.update({
+      where: { id: programId },
+      data: { programName },
+    });
   }
-
-
-  return this.prisma.program.update({
-    where: { id: programId },
-    data: { programName },
-  });
 }
-
-}
-
