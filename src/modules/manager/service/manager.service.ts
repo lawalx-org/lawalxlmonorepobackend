@@ -551,4 +551,72 @@ export class ManagerService {
       year,
     };
   }
+
+  async upcomingDeadlineProjects(managerId: string, days = 8) {
+    const today = new Date();
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+
+    const projects = await this.prisma.project.findMany({
+      where: {
+        managerId,
+        status: 'LIVE',
+        deadline: {
+          gte: today,
+          lte: new Date(today.getTime() + days * ONE_DAY),
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        deadline: true,
+        program: {
+          select: {
+            programName: true,
+          },
+        },
+        projectEmployees: {
+          select: {
+            employee: {
+              select: {
+                id: true,
+                user: {
+                  select: {
+                    name: true,
+                    profileImage: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        deadline: 'asc',
+      },
+    });
+
+    const formatted = projects.map((project) => {
+      const deadline = new Date(project.deadline);
+      const diffMs = deadline.getTime() - today.getTime();
+      const daysLeft = Math.ceil(diffMs / ONE_DAY);
+
+      return {
+        programName: project.program?.programName ?? 'No Program',
+        projectId: project.id,
+        projectName: project.name,
+        deadline: project.deadline,
+        daysLeft,
+        employees: project.projectEmployees.map((pe) => ({
+          id: pe.employee.id,
+          name: pe.employee.user?.name ?? 'Unknown',
+          profileImage: pe.employee.user?.profileImage ?? null,
+        })),
+      };
+    });
+
+    return {
+      total: formatted.length,
+      projects: formatted,
+    };
+  }
 }

@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Param,
   Query,
   Req,
   UnauthorizedException,
@@ -166,5 +167,21 @@ export class ManagerController {
       message: 'Submission status fetched successfully',
       data: result,
     };
+  }
+  @Get('projects/upcoming-deadlines')
+  @Roles('MANAGER')
+  async getUpcomingDeadlineProjects(
+    @Req() req: RequestWithUser,
+    @Query('days') days?: string,
+  ) {
+    const managerId = req.user.managerId;
+
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    const limitDays = days ? Number(days) : 8;
+
+    return this.managerService.upcomingDeadlineProjects(managerId, limitDays);
   }
 }

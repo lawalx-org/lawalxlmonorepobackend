@@ -60,4 +60,9 @@ export class FindAllProjectsDto extends PaginationDto {
   @IsOptional()
   @IsString()
   employeeId?: string;
+
+  @ApiPropertyOptional({ description: 'Filter by viewer ID' })
+  @IsOptional()
+  @IsString()
+  viewerId?: string;
 }
