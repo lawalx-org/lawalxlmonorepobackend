@@ -1,14 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { InfrastructureProjectDto } from './dto/infrastructure.dto';
 
 @Injectable()
 export class InfrastructureRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  createProject(data: { name: string; slug: string }) {
+  createProject(data: InfrastructureProjectDto) {
     return this.prisma.infrastructureProject.create({
-      data: { ...data, computedProgress: 0 },
+      data: {
+        ...data,
+        slug: data.slug!,
+        assigned: { create: [] },
+        nodes: { create: [] },
+      },
     });
   }
 

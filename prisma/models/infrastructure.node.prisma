@@ -1,12 +1,22 @@
 model InfrastructureNode {
-  id                      String  @id @default(uuid())
+  id String @id @default(uuid())
 
   infrastructureProjectId String
   parentId                String? // null = top-level node under project
 
-  name String
+  taskName String
+  slug     String @unique
 
-  // Progress
+  duration            Int      @default(0)
+  startDate           DateTime @default(now())
+  finishDate          DateTime @default(now())
+  priority            String   @default("NONE")
+  actualHour          Float    @default(0)
+  plannedHour         Float    @default(0)
+  plannedCost         Float    @default(0)
+  plannedResourceCost Float    @default(0)
+
+  // Progress 
   progress         Float? // only leaf
   computedProgress Float   @default(0)
   weight           Float   @default(1)
@@ -22,4 +32,6 @@ model InfrastructureNode {
 
   @@index([infrastructureProjectId])
   @@index([parentId])
+  @@index([isLeaf])
+  @@index([slug, id])
 }

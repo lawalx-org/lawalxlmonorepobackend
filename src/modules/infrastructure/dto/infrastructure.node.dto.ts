@@ -7,48 +7,150 @@ import {
 import {
   IsUUID,
   IsString,
+  IsInt,
   IsOptional,
+  IsDateString,
   IsNumber,
   IsBoolean,
+  Min,
 } from 'class-validator';
-import { InfrastructureDto } from './infrastructure.dto';
+import { Priority, priority } from '../contants';
 
 export class InfrastructureNodeDto {
-  @ApiProperty({ description: 'Name of the node' })
-  @IsString()
-  name: string;
+  @IsUUID()
+  id: string;
 
   @ApiProperty({
-    description: 'ID of the infrastructure project this node belongs to',
+    description: 'Infrastructure project ID this node belongs to',
+    example: 'b1c2d3e4-f5a6-7890-abcd-0987654321ef',
   })
   @IsUUID()
   infrastructureProjectId: string;
 
-  @ApiHideProperty()
+  @ApiPropertyOptional({
+    description: 'Parent node ID (null for top-level nodes)',
+    example: 'c1d2e3f4-a5b6-7890-abcd-112233445566',
+  })
   @IsOptional()
-  infrastructureProject?: InfrastructureDto;
+  @IsUUID()
+  parentId?: string | null;
+
+  @ApiProperty({
+    description: 'Task name of the node',
+    example: 'Foundation Work',
+  })
+  @IsString()
+  taskName: string;
+  @IsString()
+  slug: string;
+
+  @ApiProperty({
+    description: 'Task duration (days)',
+    example: 10,
+    default: 0,
+  })
+  @IsInt()
+  @Min(0)
+  duration: number;
+
+  @ApiProperty({
+    description: 'Start date of the task',
+    example: '2025-01-01T00:00:00.000Z',
+  })
+  @IsDateString()
+  startDate: Date;
+
+  @ApiProperty({
+    description: 'Finish date of the task',
+    example: '2025-01-10T00:00:00.000Z',
+  })
+  @IsDateString()
+  finishDate: Date;
+
+  @ApiProperty({
+    description: 'Priority of the task',
+    example: 'NONE',
+  })
+  @IsString()
+  priority: Priority;
+
+  @ApiProperty({
+    description: 'Actual hours spent',
+    example: 12.5,
+    default: 0,
+  })
+  @IsNumber()
+  actualHour: number;
+
+  @ApiProperty({
+    description: 'Planned hours',
+    example: 15,
+    default: 0,
+  })
+  @IsNumber()
+  plannedHour: number;
+
+  @ApiProperty({
+    description: 'Planned cost',
+    example: 25000,
+    default: 0,
+  })
+  @IsNumber()
+  plannedCost: number;
+
+  @ApiProperty({
+    description: 'Planned resource cost',
+    example: 12000,
+    default: 0,
+  })
+  @IsNumber()
+  plannedResourceCost: number;
 
   @ApiPropertyOptional({
-    description: 'Parent node ID if this is a child node',
+    description: 'Progress value (only for leaf nodes)',
+    example: 0.6,
   })
-  @IsUUID()
   @IsOptional()
-  parentId?: string;
-
-  @ApiPropertyOptional({ description: 'Progress value (only for leaf nodes)' })
   @IsNumber()
-  @IsOptional()
-  progress?: number;
+  progress?: number | null;
 
-  @ApiPropertyOptional({ description: 'Weight for the node' })
+  @ApiProperty({
+    description: 'Computed progress (auto-calculated)',
+    example: 0.45,
+    default: 0,
+  })
   @IsNumber()
-  @IsOptional()
-  weight?: number;
+  computedProgress: number;
 
-  @ApiPropertyOptional({ description: 'Indicates if this node is a leaf node' })
+  @ApiProperty({
+    description: 'Weight of the node in progress calculation',
+    example: 1,
+    default: 1,
+  })
+  @IsNumber()
+  weight: number;
+
+  @ApiProperty({
+    description: 'Indicates whether the node is a leaf',
+    example: true,
+    default: true,
+  })
   @IsBoolean()
-  @IsOptional()
-  isLeaf?: boolean;
+  isLeaf: boolean;
+
+  @ApiProperty({
+    description: 'Node creation timestamp',
+    example: '2025-01-01T12:00:00.000Z',
+  })
+  @IsDateString()
+  createdAt?: Date;
+
+  @ApiProperty({
+    description: 'Node last update timestamp',
+    example: '2025-01-05T12:00:00.000Z',
+  })
+  @IsDateString()
+  updatedAt?: Date;
 }
 
 export class UpdateInfrastructureNodeDto extends PartialType(

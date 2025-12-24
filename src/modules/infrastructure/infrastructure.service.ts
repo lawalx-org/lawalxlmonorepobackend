@@ -5,25 +5,27 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InfrastructureRepository } from './infrastructure.repository';
-import { InfrastructureDto } from './dto/infrastructure.dto';
 import { slugify } from './functions';
 import { InfrastructureNodeDto } from './dto/infrastructure.node.dto';
+import { InfrastructureProjectDto } from './dto/infrastructure.dto';
 
 @Injectable()
 export class InfrastructureService {
   constructor(private readonly repo: InfrastructureRepository) {}
 
   // project
-  async createProject(dto: InfrastructureDto) {
-    if (!dto.name) throw new BadRequestException('Project name is required');
+  async createProject(dto: InfrastructureProjectDto) {
+    if (!dto.taskName)
+      throw new BadRequestException('Project name is required');
 
-    const slug = slugify(dto.name);
+    const slug = slugify(dto.taskName);
     if (await this.repo.findBySlug(slug)) {
       throw new ConflictException('Project slug already exists');
     }
 
     return this.repo.createProject({
-      name: dto.name,
+      ...dto,
+      taskName: dto.taskName,
       slug,
     });
   }
@@ -45,27 +47,32 @@ export class InfrastructureService {
   }
 
   async createNode(dto: InfrastructureNodeDto) {
-    const { infrastructureProjectId, parentId, name } = dto;
-
-    if (!infrastructureProjectId || !name) {
+    if (!dto.infrastructureProjectId || !dto.taskName)
       throw new BadRequestException('Invalid node payload');
+
+    const slug = slugify(dto.taskName);
+    if (await this.repo.findBySlug(slug)) {
+      throw new ConflictException('Project slug already exists');
     }
 
-    const project = await this.repo.findProjectById(infrastructureProjectId);
+    const project = await this.repo.findProjectById(
+      dto.infrastructureProjectId,
+    );
     if (!project) throw new NotFoundException('Project not found');
 
     // Validate parent (if exists)
-    if (parentId) {
-      const parent = await this.repo.findNodeById(parentId);
+    if (dto.parentId) {
+      const parent = await this.repo.findNodeById(dto.parentId);
       if (!parent) throw new NotFoundException('Parent node not found');
 
-      if (parent.infrastructureProjectId !== infrastructureProjectId) {
+      if (parent.infrastructureProjectId !== dto.infrastructureProjectId) {
         throw new ConflictException('Parent belongs to another project');
       }
 
       // Parent becomes non-leaf
       if (parent.isLeaf) {
         await this.repo.updateNode(parent.id, {
+          ...dto,
           isLeaf: false,
           progress: null,
         });
@@ -73,16 +80,18 @@ export class InfrastructureService {
     }
 
     const node = await this.repo.createNode({
-      name,
-      infrastructureProject: { connect: { id: infrastructureProjectId } },
-      parent: parentId ? { connect: { id: parentId } } : undefined,
+      ...dto,
+      taskName: dto.taskName,
+      slug,
+      infrastructureProject: { connect: { id: dto.infrastructureProjectId } },
+      parent: dto.parentId ? { connect: { id: dto.parentId } } : undefined,
       isLeaf: true,
       progress: 0,
       computedProgress: 0,
     });
 
-    await this.propagateUp(parentId);
-    await this.updateProjectProgress(infrastructureProjectId);
+    await this.propagateUp(dto.parentId);
+    await this.updateProjectProgress(dto.infrastructureProjectId);
 
     return node;
   }
@@ -164,6 +173,7 @@ export class InfrastructureService {
 
     await this.repo.updateProject(projectId, { computedProgress: avg });
   }
+
   private buildTree(nodes: any[], parentId: string | null = null) {
     return nodes
       .filter((node) => node.parentId === parentId)

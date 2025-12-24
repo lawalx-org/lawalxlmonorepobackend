@@ -8,20 +8,21 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { InfrastructureDto } from './dto/infrastructure.dto';
 import { InfrastructureService } from './infrastructure.service';
 import {
   InfrastructureNodeDto,
   UpdateInfrastructureNodeDto,
 } from './dto/infrastructure.node.dto';
+import { InfrastructureProjectDto } from './dto/infrastructure.dto';
 
+// TODO: Proper error handling from controller
 @ApiTags('Infrastructure')
 @Controller('infrastructure')
 export class InfrastructureController {
   constructor(private readonly service: InfrastructureService) {}
 
   @Post('projects')
-  createProject(@Body() dto: InfrastructureDto) {
+  createProject(@Body() dto: InfrastructureProjectDto) {
     return this.service.createProject(dto);
   }
 

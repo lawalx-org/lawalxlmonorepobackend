@@ -106,9 +106,9 @@ model HorizontalBarChart {
   updatedAt         DateTime @updatedAt
 
   // One-to-one with ChartTable
-  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
-  chartTableId String     @unique
-  widgets ShowWidgetHorizontalBar[]
+  chartTable   ChartTable                @relation(fields: [chartTableId], references: [id])
+  chartTableId String                    @unique
+  widgets      ShowWidgetHorizontalBar[]
 }
 
 //hr-bar-chart-widget
@@ -122,4 +122,3 @@ model ShowWidgetHorizontalBar {
   horizontalBarChart   HorizontalBarChart @relation(fields: [horizontalBarChartId], references: [id])
   horizontalBarChartId String
 }
-
