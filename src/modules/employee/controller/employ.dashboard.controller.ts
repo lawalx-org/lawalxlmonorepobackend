@@ -146,4 +146,21 @@ export class EmployDashboardController {
       data: result,
     };
   }
+
+  @Get('projects/upcoming-deadlines')
+  @Roles('EMPLOYEE')
+  async getUpcomingDeadlineProjects(
+    @Req() req: RequestWithUser,
+    @Query('days') days?: string,
+  ) {
+    const employeeId = req.user.employeeId;
+
+    if (!employeeId) {
+      throw new UnauthorizedException('Employee ID not found in token');
+    }
+
+    const limitDays = days ? Number(days) : 8;
+
+    return this.employService.upcomingDeadlineProjects(employeeId, limitDays);
+  }
 }
