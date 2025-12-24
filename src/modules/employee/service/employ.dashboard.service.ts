@@ -525,4 +525,78 @@ export class EmployDashboardService {
       year,
     };
   }
+
+  async upcomingDeadlineProjects(employeeId: string, days = 8) {
+    const today = new Date();
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+
+    const projects = await this.prisma.project.findMany({
+      where: {
+        status: 'LIVE',
+        deadline: {
+          gte: today,
+          lte: new Date(today.getTime() + days * ONE_DAY),
+        },
+        projectEmployees: {
+          some: {
+            employeeId,
+          },
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        deadline: true,
+        program: {
+          select: {
+            programName: true,
+          },
+        },
+        projectEmployees: {
+          where: {
+            employeeId,
+          },
+          select: {
+            employee: {
+              select: {
+                id: true,
+                user: {
+                  select: {
+                    name: true,
+                    profileImage: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        deadline: 'asc',
+      },
+    });
+
+    const formatted = projects.map((project) => {
+      const diffMs = new Date(project.deadline).getTime() - today.getTime();
+      const daysLeft = Math.ceil(diffMs / ONE_DAY);
+
+      return {
+        programName: project.program?.programName ?? 'No Program',
+        projectId: project.id,
+        projectName: project.name,
+        deadline: project.deadline,
+        daysLeft,
+        employees: project.projectEmployees.map((pe) => ({
+          id: pe.employee.id,
+          name: pe.employee.user?.name ?? 'Unknown',
+          profileImage: pe.employee.user?.profileImage ?? null,
+        })),
+      };
+    });
+
+    return {
+      total: formatted.length,
+      projects: formatted,
+    };
+  }
 }
