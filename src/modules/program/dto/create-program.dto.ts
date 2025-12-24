@@ -7,6 +7,9 @@ import {
   IsOptional,
   IsArray,
   IsUUID,
+  IsNumber,
+  Min,
+  Max,
 } from 'class-validator';
 import { Priority } from 'generated/prisma';
 
@@ -51,6 +54,27 @@ export class CreateProgramDto {
   @IsISO8601()
   @IsNotEmpty()
   deadline: string;
+  @ApiPropertyOptional({
+    example: 23.810332,
+    description: 'Latitude of the program location',
+    minimum: -90,
+    maximum: 90,
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(-90)
+  @Max(90)
+  latitude?: number;
 
- 
+  @ApiPropertyOptional({
+    example: 90.412518,
+    description: 'Longitude of the program location',
+    minimum: -180,
+    maximum: 180,
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(-180)
+  @Max(180)
+  longitude?: number;
 }
