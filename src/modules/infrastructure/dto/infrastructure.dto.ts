@@ -8,7 +8,6 @@ import {
   IsUUID,
   IsObject,
   IsNumber,
-  isNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Priority } from '../contants';
