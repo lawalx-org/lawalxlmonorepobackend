@@ -1,9 +1,4 @@
-import {
-  ApiHideProperty,
-  ApiProperty,
-  ApiPropertyOptional,
-  PartialType,
-} from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import {
   IsUUID,
   IsString,
@@ -14,15 +9,12 @@ import {
   IsBoolean,
   Min,
 } from 'class-validator';
-import { Priority, priority } from '../contants';
+import { Priority } from '../contants';
 
 export class InfrastructureNodeDto {
-  @IsUUID()
-  id: string;
-
   @ApiProperty({
     description: 'Infrastructure project ID this node belongs to',
-    example: 'b1c2d3e4-f5a6-7890-abcd-0987654321ef',
+    example: '0699c9bd-dc72-437e-b4cd-f40844ef5579',
   })
   @IsUUID()
   infrastructureProjectId: string;
@@ -41,7 +33,9 @@ export class InfrastructureNodeDto {
   })
   @IsString()
   taskName: string;
+
   @IsString()
+  @IsOptional()
   slug: string;
 
   @ApiProperty({
@@ -137,20 +131,6 @@ export class InfrastructureNodeDto {
   })
   @IsBoolean()
   isLeaf: boolean;
-
-  @ApiProperty({
-    description: 'Node creation timestamp',
-    example: '2025-01-01T12:00:00.000Z',
-  })
-  @IsDateString()
-  createdAt?: Date;
-
-  @ApiProperty({
-    description: 'Node last update timestamp',
-    example: '2025-01-05T12:00:00.000Z',
-  })
-  @IsDateString()
-  updatedAt?: Date;
 }
 
 export class UpdateInfrastructureNodeDto extends PartialType(

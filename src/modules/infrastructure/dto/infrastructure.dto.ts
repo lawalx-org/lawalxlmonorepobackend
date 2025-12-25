@@ -1,4 +1,4 @@
-import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
   IsString,
   IsInt,
@@ -7,13 +7,14 @@ import {
   IsDateString,
   IsUUID,
   IsObject,
+  IsNumber,
+  isNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { InfrastructureNodeDto } from './infrastructure.node.dto'; // Assuming you have a node DTO
-import { BaseUserDto } from 'src/modules/user/dto/base-user.dto';
-import { Priority, priority } from '../contants';
+import { Priority } from '../contants';
 export class InfrastructureProjectDto {
   @IsUUID()
+  @IsOptional()
   id: string;
 
   @ApiProperty({
@@ -24,6 +25,7 @@ export class InfrastructureProjectDto {
   taskName: string;
 
   @IsString()
+  @IsOptional()
   slug: string;
 
   @ApiProperty({
@@ -64,7 +66,7 @@ export class InfrastructureProjectDto {
     description: 'Calculated progress of the project',
     type: Number,
   })
-  @IsString()
+  @IsNumber()
   computedProgress: number;
 
   @ApiProperty({
@@ -78,28 +80,28 @@ export class InfrastructureProjectDto {
     description: 'Actual hours spent on the project',
     type: Number,
   })
-  @IsString()
+  @IsNumber()
   actualHour: number;
 
   @ApiProperty({
     description: 'Planned hours for the project',
     type: Number,
   })
-  @IsString()
+  @IsNumber()
   plannedHour: number;
 
   @ApiProperty({
     description: 'Planned cost for the project',
     type: Number,
   })
-  @IsString()
+  @IsNumber()
   plannedCost: number;
 
   @ApiProperty({
     description: 'Planned resource cost for the project',
     type: Number,
   })
-  @IsString()
+  @IsNumber()
   plannedResourceCost: number;
 
   @ApiProperty({
@@ -111,17 +113,14 @@ export class InfrastructureProjectDto {
   @IsObject()
   metadata: Record<string, any>;
 
-  // @ApiProperty({
-  //   description: 'List of associated infrastructure nodes',
-  //   type: [InfrastructureNodeDto],
-  // })
-  // @IsArray()
-  // @Type(() => InfrastructureNodeDto)
-  // nodes: InfrastructureNodeDto[];
+  @IsDateString()
+  @IsOptional()
+  createdAt?: Date;
 
   @IsDateString()
-  createdAt: Date;
-
-  @IsDateString()
-  updatedAt: Date;
+  @IsOptional()
+  updatedAt?: Date;
 }
+export class UpdateInfrastructureProjectDto extends PartialType(
+  InfrastructureProjectDto,
+) {}
