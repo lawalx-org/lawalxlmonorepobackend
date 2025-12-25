@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ProjectStatus } from 'generated/prisma';
+import { ProjectStatus, SubmittedStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -778,5 +778,61 @@ export class ManagerService {
     const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
     return days > 0 ? `${days} days` : 'Overdue';
   }
+
+  async getManagerSubmissions(
+  managerId: string,
+  status?: SubmittedStatus,
+  fromDate?: string,
+  toDate?: string,
+) {
+  return this.prisma.submitted.findMany({
+    where: {
+      project: {
+        managerId: managerId,
+      },
+      ...(status && { status }),
+      ...(fromDate || toDate
+        ? {
+            createdAt: {
+              ...(fromDate && { gte: new Date(fromDate) }),
+              ...(toDate && { lte: new Date(toDate) }),
+            },
+          }
+        : {}),
+    },
+    include: {
+      employee: {
+        select: {
+          id: true,
+          description: true,
+          joinedDate: true,
+          skills: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phoneNumber: true,
+              profileImage: true,
+              role: true,
+              userStatus: true,
+            },
+          },
+        },
+      },
+      project: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+}
+
+
 
 }

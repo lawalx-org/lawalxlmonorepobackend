@@ -138,7 +138,7 @@ export class ManagerController {
   //     data: result,
   //   };
   // }
-  
+
   @Get('submission-status')
   @Roles('MANAGER')
   async getSubmissionStatus(
@@ -209,5 +209,38 @@ export class ManagerController {
 
     // This service call returns the combined data for the UI image provided
     return this.managerService.getProgramDashboard(managerId);
+  }
+
+  @Get('all-manager-submission')
+  @Roles('MANAGER')
+  @ApiOperation({ summary: 'Get all submissions for manager projects' })
+  @ApiQuery({ name: 'status', required: false, enum: SubmittedStatus })
+  @ApiQuery({ name: 'fromDate', required: false, example: '2025-01-01' })
+  @ApiQuery({ name: 'toDate', required: false, example: '2025-01-31' })
+  async managerSubmissions(
+    @Req() req: RequestWithUser,
+    @Query('status') status?: SubmittedStatus,
+    @Query('fromDate') fromDate?: string,
+    @Query('toDate') toDate?: string,
+  ) {
+    const managerId = req.user.managerId;
+
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    const result = await this.managerService.getManagerSubmissions(
+      managerId,
+      status,
+      fromDate,
+      toDate,
+    );
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'All submissions fetched successfully',
+      data: result,
+    };
   }
 }
