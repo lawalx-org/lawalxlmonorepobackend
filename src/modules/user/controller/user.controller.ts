@@ -47,13 +47,13 @@ export class UserController {
     return { message: 'Users fetched successfully', data: result };
   }
 
-   @Get("profile")
+  @Get('profile')
   async getUser(@Req() req: RequestWithUser) {
     const id = req.user?.userId;
     return {
       message: 'User fetched successfully',
       data: await this.userService.findOne(id!),
-    }
+    };
   }
 
   @Get('managers')
@@ -94,7 +94,7 @@ export class UserController {
 
   @Patch()
   @UseInterceptors(FileInterceptor('profileImage', multerOptions))
-   @ApiConsumes('multipart/form-data') 
+  @ApiConsumes('multipart/form-data')
   @ApiBody({ type: UpdateUserDto })
   async update(
     @Req() req: RequestWithUser,
@@ -110,9 +110,30 @@ export class UserController {
     if (file) {
       updateUserDto.profileImage = file.path;
     }
-    
+
     const result = await this.userService.update(userId, updateUserDto);
     return { message: 'User updated successfully', data: result };
+  }
+
+  @Patch(':id')
+  @UseInterceptors(FileInterceptor('profileImage', multerOptions))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: UpdateUserDto })
+  async updateById(
+    @Param('id') userId: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (file) {
+      updateUserDto.profileImage = file.path;
+    }
+
+    const result = await this.userService.update(userId, updateUserDto);
+
+    return {
+      message: 'User updated successfully',
+      data: result,
+    };
   }
 
   @Delete(':id')
@@ -146,5 +167,3 @@ export class UserController {
   //   return this.userService.convertEmployeeToManager(id, convertDto);
   // }
 }
-
-
