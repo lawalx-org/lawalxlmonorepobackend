@@ -917,59 +917,40 @@ export class ManagerService {
     });
   }
 
-  async showSubmissionsOverview(managerId: string) {
-    const submissionsByStatus = await this.prisma.submitted.groupBy({
-      by: ['status'],
-      where: {
-        project: {
-          managerId: managerId,
-        },
-      },
-      _count: {
-        status: true,
-      },
-    });
+async showSubmissionsOverview(managerId: string) {
 
-    const submissionOverview = submissionsByStatus.reduce(
-      (acc, item) => {
-        acc[item.status] = item._count.status;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
-    // const projectsWithSubmissions = await this.prisma.project.count({
-    //   where: {
-    //     managerId: managerId,
-    //     submitted: {
-    //       some: {},
-    //     },
-    //   },
-    // });
-
-    // const overdueProjects = await this.prisma.project.count({
-    //   where: {
-    //     managerId: managerId,
-    //     status: 'OVERDUE',
-    //   },
-    // });
-
-    const overdueWithSubmissions = await this.prisma.project.count({
-      where: {
+  const submissions = await this.prisma.submitted.findMany({
+    where: {
+      project: {
         managerId: managerId,
-        status: 'OVERDUE',
-        submitted: {
-          some: {},
-        },
       },
-    });
+    },
+    select: {
+      status: true,
+    },
+  });
 
-    // Combine all results
-    return {
-      submissions: submissionOverview,
-      overdueWithSubmissions,
-    };
-  }
+  const submissionOverview = submissions.reduce((acc, sub) => {
+    acc[sub.status] = (acc[sub.status] ?? 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const overdueWithSubmissions = await this.prisma.project.count({
+    where: {
+      managerId: managerId,
+      status: 'OVERDUE',
+      submitted: {
+        some: {},
+      },
+    },
+  });
+
+  return {
+    submissions: submissionOverview,
+    overdueWithSubmissions,
+  };
+}
+
 
 async getSubmissionActivity(managerId: string) {
   const submissions = await this.prisma.submitted.findMany({
