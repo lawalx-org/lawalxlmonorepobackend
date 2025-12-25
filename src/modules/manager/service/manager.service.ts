@@ -1,5 +1,5 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { SubmittedStatus } from 'generated/prisma';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { ProjectStatus, SubmittedStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -620,80 +620,219 @@ export class ManagerService {
       projects: formatted,
     };
   }
+  async getProjectManagerDashboard(managerId: string) {
+    /* ---------------- TOTAL PROJECTS ---------------- */
+    const totalProjects = await this.prisma.project.count({
+      where: { managerId },
+    });
 
-  // async getManagerSubmissions(managerId: string) {
-  //   return this.prisma.submitted.findMany({
-  //     where: {
-  //       project: {
-  //         managerId: managerId,
-  //       },
-  //     },
-  //     select: {
-  //       id: true,
-  //       information: true,
-  //       status: true,
-  //       createdAt: true,
-  //     },
-  //     orderBy: {
-  //       createdAt: 'desc',
-  //     },
-  //   });
-  // }
-
-
- async getManagerSubmissions(
-    managerId: string, 
-    status?: SubmittedStatus,
-    fromDate?: string,
-    toDate?: string,
-  ) {
-
-
-    const submissions = await this.prisma.submitted.findMany({
+    /* ---------------- ASSIGNED STAFF ---------------- */
+    const assignedStaff = await this.prisma.projectEmployee.findMany({
       where: {
-        project: { managerId},
-        ...(status && { status }),
-        ...(fromDate || toDate
-          ? {
-              createdAt: {
-                ...(fromDate && { gte: new Date(fromDate) }),
-                ...(toDate && { lte: new Date(toDate) }),
-              },
-            }
-          : {}),
+        project: { managerId },
+      },
+      distinct: ['employeeId'],
+      select: {
+        employeeId: true,
+      },
+    });
+
+    const assignedStaffCount = assignedStaff.length;
+
+    /* ---------------- PROGRAM COMPLETION ---------------- */
+    const programs = await this.prisma.program.findMany({
+      where: {
+        projects: {
+          some: { managerId },
+        },
       },
       include: {
-        employee: {
-          select: {
-            id: true,
-            description: true,
-            joinedDate: true,
-            skills: true,
-            user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-                phoneNumber: true,
-                profileImage: true,
-                role: true,
-                userStatus: true,
+        projects: {
+          where: { managerId },
+          select: { status: true },
+        },
+      },
+    });
+
+    const completedPrograms = programs.filter(
+      (program) =>
+        program.projects.length > 0 &&
+        program.projects.every(
+          (project) => project.status === ProjectStatus.COMPLETED,
+        ),
+    );
+
+    const programCompletion =
+      programs.length === 0
+        ? 0
+        : Math.round((completedPrograms.length / programs.length) * 100);
+
+    /* ---------------- PENDING REVIEWS ---------------- */
+    const pendingReviews = await this.prisma.review.count({
+      where: {
+        project: { managerId },
+        status: 'PENDING',
+      },
+    });
+
+    return {
+      totalProjects,
+      assignedStaff: assignedStaffCount,
+      programCompletion,
+      pendingReviews,
+    };
+  }
+
+
+
+
+
+  async getProgramDashboard(managerId: string) {
+    // Fetch program with all nested relations
+    const program = await this.prisma.program.findFirst({
+      where: {
+        projects: { some: { managerId } },
+      },
+      include: {
+        tags: true,
+        client: true, 
+        projects: {
+          where: { managerId },
+          include: {
+            projectEmployees: {
+              include: {
+                employee: {
+                  include: {
+                    user: { select: { name: true, profileImage: true } },
+                  },
+                },
               },
             },
           },
         },
-        project: {
-          select: {
-            id: true,
-            name: true,
+      },
+    });
+
+    if (!program) {
+      throw new NotFoundException('No active program found for this manager');
+    }
+
+    const now = new Date();
+
+    // ALERT LOGIC: Find projects past their deadline that aren't completed
+    const overdueProjects = program.projects.filter(
+      (p) => new Date(p.deadline) < now && p.status !== 'COMPLETED',
+    );
+
+    const alerts = overdueProjects.map((p) => ({
+      type: 'CRITICAL',
+      title: 'Project Overdue',
+      subText: p.name,
+      time: 'System Alert',
+    }));
+
+    return {
+      // Main Project Table
+      projects: program.projects.map((p) => ({
+        id: p.id,
+        name: p.name,
+        priority: p.priority,
+        deadline: p.deadline,
+        progress: p.progress || 0,
+        assignStuff: {
+          avatars: p.projectEmployees.slice(0, 3).map((pe) => ({
+            name: pe.employee.user?.name,
+            image: pe.employee.user?.profileImage,
+          })),
+          extraCount: Math.max(0, p.projectEmployees.length - 3),
+        },
+      })),
+
+      // Sidebar Metadata
+      sidebar: {
+        programManager: {
+          // FIX: Use contactPersonName as seen in your Client model error
+          name: program.client?.contactPersonName || 'No Manager Assigned',
+          email: program.client?.email || '',
+          image: program.client?.clientLogo, 
+        },
+        duration: {
+          start: program.datetime,
+          end: program.deadline,
+          daysRemaining: this.calculateDaysRemaining(program.deadline),
+        },
+        // FIX: Use .name instead of .tagName based on your error message
+        tags: program.tags.map((t) => t.name), 
+        alerts: {
+          issueCount: alerts.length, // This populates the "3 Issues" red badge
+          list: alerts,
+        },
+      },
+    };
+  }
+  
+
+  private calculateDaysRemaining(deadlineStr: string): string {
+    const deadline = new Date(deadlineStr);
+    const diff = deadline.getTime() - new Date().getTime();
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    return days > 0 ? `${days} days` : 'Overdue';
+  }
+
+  async getManagerSubmissions(
+  managerId: string,
+  status?: SubmittedStatus,
+  fromDate?: string,
+  toDate?: string,
+) {
+  return this.prisma.submitted.findMany({
+    where: {
+      project: {
+        managerId: managerId,
+      },
+      ...(status && { status }),
+      ...(fromDate || toDate
+        ? {
+            createdAt: {
+              ...(fromDate && { gte: new Date(fromDate) }),
+              ...(toDate && { lte: new Date(toDate) }),
+            },
+          }
+        : {}),
+    },
+    include: {
+      employee: {
+        select: {
+          id: true,
+          description: true,
+          joinedDate: true,
+          skills: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phoneNumber: true,
+              profileImage: true,
+              role: true,
+              userStatus: true,
+            },
           },
         },
       },
-      orderBy: { createdAt: 'desc' },
-    });
+      project: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+}
 
-    return submissions;
-  }
 
 
 }

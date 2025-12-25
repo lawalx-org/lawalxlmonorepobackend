@@ -138,6 +138,7 @@ export class ManagerController {
   //     data: result,
   //   };
   // }
+
   @Get('submission-status')
   @Roles('MANAGER')
   async getSubmissionStatus(
@@ -186,6 +187,29 @@ export class ManagerController {
 
     return this.managerService.upcomingDeadlineProjects(managerId, limitDays);
   }
+  @Get('project-dashboard')
+  async getProjectManagerDashboard(@Req() req: RequestWithUser) {
+    const managerId = req.user.managerId;
+
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    return this.managerService.getProjectManagerDashboard(managerId);
+  }
+
+  @Get('program-dashboard')
+  @Roles('MANAGER')
+  async getProgramDashboard(@Req() req: RequestWithUser) {
+    const managerId = req.user.managerId;
+
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    // This service call returns the combined data for the UI image provided
+    return this.managerService.getProgramDashboard(managerId);
+  }
 
   @Get('all-manager-submission')
   @Roles('MANAGER')
@@ -200,7 +224,6 @@ export class ManagerController {
     @Query('toDate') toDate?: string,
   ) {
     const managerId = req.user.managerId;
-    console.log(managerId)
 
     if (!managerId) {
       throw new UnauthorizedException('Manager ID not found in token');
@@ -220,6 +243,4 @@ export class ManagerController {
       data: result,
     };
   }
-
-
 }
