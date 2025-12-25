@@ -30,6 +30,8 @@ model ChartTable {
   // Relation to barChart (one-to-one optional)
   barChart           barChart?
   horizontalBarChart HorizontalBarChart?
+  pi                 Pi?
+  heatmap            HeatMapChart?
 }
 
 enum ChartStatus {
@@ -106,9 +108,9 @@ model HorizontalBarChart {
   updatedAt         DateTime @updatedAt
 
   // One-to-one with ChartTable
-  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
-  chartTableId String     @unique
-  widgets ShowWidgetHorizontalBar[]
+  chartTable   ChartTable                @relation(fields: [chartTableId], references: [id])
+  chartTableId String                    @unique
+  widgets      ShowWidgetHorizontalBar[]
 }
 
 //hr-bar-chart-widget
@@ -123,3 +125,51 @@ model ShowWidgetHorizontalBar {
   horizontalBarChartId String
 }
 
+//pi chart 
+// pi chart
+model Pi {
+  id              String         @id @default(uuid())
+  numberOfDataset Int
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  widgets         ShowWidgetPi[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+model ShowWidgetPi {
+  id         Int      @id @default(autoincrement())
+  legendName String
+  color      String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  //relation
+  piChart   Pi     @relation(fields: [piChartId], references: [id])
+  piChartId String
+}
+
+model HeatMapChart {
+  id                String @id @default(uuid())
+  numberOfDataset_X Int
+  numberOfDataset_Y Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+
+  widgets ShowWidgetHeatMap[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+model ShowWidgetHeatMap {
+  id         Int    @id @default(autoincrement())
+  legendName String
+
+  //relation
+  heatmap   HeatMapChart @relation(fields: [heatmapId], references: [id])
+  heatmapId String
+}
