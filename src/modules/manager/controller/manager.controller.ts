@@ -290,4 +290,17 @@ export class ManagerController {
       data: overview,
     };
   }
+
+   @Get('activity')
+  async getSubmissionActivity(@Req() req: RequestWithUser) {
+        const userId = req.user.managerId;
+    if (!userId) {
+      throw new UnauthorizedException('User ID not found in token');
+    }
+    const data = await this.managerService.getSubmissionActivity(userId);
+    return {
+      success: true,
+      data,
+    };
+  }
 }
