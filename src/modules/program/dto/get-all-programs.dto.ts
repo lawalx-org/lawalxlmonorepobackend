@@ -6,6 +6,9 @@ import {
   IsInt,
   IsEnum,
   IsArray,
+  IsNumber,
+  Min,
+  Max,
 } from 'class-validator';
 import { PaginationDto } from 'src/modules/utils/pagination/pagination.dto';
 import { Type, Transform } from 'class-transformer';
@@ -66,4 +69,39 @@ export class GetAllProgramsDto extends PaginationDto {
   @IsArray()
   @IsString({ each: true })
   tags?: string[];
+  @ApiPropertyOptional({
+    description: 'Filter by latitude',
+    example: 23.810332,
+    minimum: -90,
+    maximum: 90,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(-90)
+  @Max(90)
+  latitude?: number;
+
+  @ApiPropertyOptional({
+    description: 'Filter by longitude',
+    example: 90.412518,
+    minimum: -180,
+    maximum: 180,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(-180)
+  @Max(180)
+  longitude?: number;
+
+  @ApiPropertyOptional({
+    description: 'Search radius in kilometers (used with latitude & longitude)',
+    example: 5,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1)
+  radiusKm?: number;
 }

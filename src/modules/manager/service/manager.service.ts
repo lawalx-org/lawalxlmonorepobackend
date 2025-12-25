@@ -3,19 +3,94 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ManagerService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
+  // async getManagerDashboard(managerId: string) {
+  //   const projects = await this.prisma.project.findMany({
+  //     where: {
+  //       managerId,
+  //     },
+  //     include: {
+  //       projectEmployees: {
+  //         include: {
+  //           employee: true,
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   const employeeIds = projects.flatMap((p) =>
+  //     p.projectEmployees.map((pe) => pe.employeeId),
+  //   );
+
+  //   const totalProjectsAssigned = projects.length;
+
+  //   const totalSubmissions = await this.prisma.submitted.count({
+  //     where: {
+  //       employeeId: {
+  //         in: employeeIds,
+  //       },
+  //     },
+  //   });
+
+  //   const totalReturns = await this.prisma.submissionReturn.count({
+  //     where: {
+  //       submitted: {
+  //         employeeId: {
+  //           in: employeeIds,
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   const liveProjects = projects.filter((p) => p.status === 'LIVE').length;
+
+  //   const overdueProjects = projects.filter(
+  //     (p) => p.deadline < new Date() && p.status !== 'COMPLETED',
+  //   ).length;
+
+  //   return {
+  //     totalProjectsAssigned,
+  //     totalSubmissions,
+  //     totalReturns,
+  //     liveProjects,
+  //     overdueProjects,
+  //   };
+  // }
+
+  /* ---------- Helpers ---------- */
+  private getMonthRange(date: Date) {
+    const start = new Date(date.getFullYear(), date.getMonth(), 1);
+    const end = new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      0,
+      23,
+      59,
+      59,
+    );
+    return { start, end };
+  }
+
+  private calculateGrowth(current: number, previous: number): number {
+    if (previous === 0) return current > 0 ? 100 : 0;
+    return Number((((current - previous) / previous) * 100).toFixed(1));
+  }
+
+  /* ---------- Dashboard ---------- */
   async getManagerDashboard(managerId: string) {
+    const now = new Date();
+
+    const currentMonth = this.getMonthRange(now);
+    const previousMonth = this.getMonthRange(
+      new Date(now.getFullYear(), now.getMonth() - 1, 1),
+    );
+
+    /* ================= Projects ================= */
     const projects = await this.prisma.project.findMany({
-      where: {
-        managerId,
-      },
+      where: { managerId },
       include: {
-        projectEmployees: {
-          include: {
-            employee: true,
-          },
-        },
+        projectEmployees: true,
       },
     });
 
@@ -23,38 +98,132 @@ export class ManagerService {
       p.projectEmployees.map((pe) => pe.employeeId),
     );
 
-    const totalProjectsAssigned = projects.length;
+    /* ================= Assigned Projects ================= */
+    const totalAssigned = projects.length;
 
-    const totalSubmissions = await this.prisma.submitted.count({
+    const currentAssigned = await this.prisma.project.count({
       where: {
-        employeeId: {
-          in: employeeIds,
+        managerId,
+        createdAt: {
+          gte: currentMonth.start,
+          lte: currentMonth.end,
         },
       },
     });
 
-    const totalReturns = await this.prisma.submissionReturn.count({
+    const previousAssigned = await this.prisma.project.count({
+      where: {
+        managerId,
+        createdAt: {
+          gte: previousMonth.start,
+          lte: previousMonth.end,
+        },
+      },
+    });
+
+    /* ================= Submitted For Review ================= */
+    const currentSubmissions = await this.prisma.submitted.count({
+      where: {
+        employeeId: { in: employeeIds },
+        createdAt: {
+          gte: currentMonth.start,
+          lte: currentMonth.end,
+        },
+      },
+    });
+
+    const previousSubmissions = await this.prisma.submitted.count({
+      where: {
+        employeeId: { in: employeeIds },
+        createdAt: {
+          gte: previousMonth.start,
+          lte: previousMonth.end,
+        },
+      },
+    });
+
+    /* ================= Returned For Edit ================= */
+    const currentReturns = await this.prisma.submissionReturn.count({
       where: {
         submitted: {
-          employeeId: {
-            in: employeeIds,
+          employeeId: { in: employeeIds },
+          createdAt: {
+            gte: currentMonth.start,
+            lte: currentMonth.end,
           },
         },
       },
     });
 
-    const liveProjects = projects.filter((p) => p.status === 'LIVE').length;
+    const previousReturns = await this.prisma.submissionReturn.count({
+      where: {
+        submitted: {
+          employeeId: { in: employeeIds },
+          createdAt: {
+            gte: previousMonth.start,
+            lte: previousMonth.end,
+          },
+        },
+      },
+    });
 
-    const overdueProjects = projects.filter(
-      (p) => p.deadline < new Date() && p.status !== 'COMPLETED',
-    ).length;
+    /* ================= Live Projects ================= */
+    const currentLiveProjects = await this.prisma.project.count({
+      where: {
+        managerId,
+        status: 'LIVE',
+        createdAt: {
+          gte: currentMonth.start,
+          lte: currentMonth.end,
+        },
+      },
+    });
 
+    const previousLiveProjects = await this.prisma.project.count({
+      where: {
+        managerId,
+        status: 'LIVE',
+        createdAt: {
+          gte: previousMonth.start,
+          lte: previousMonth.end,
+        },
+      },
+    });
+
+    /* ================= Overdue Projects ================= */
+    const overdueProjects = await this.prisma.project.count({
+      where: {
+        managerId,
+        deadline: { lt: new Date() },
+        status: { not: 'COMPLETED' },
+      },
+    });
+
+    /* ================= Response ================= */
     return {
-      totalProjectsAssigned,
-      totalSubmissions,
-      totalReturns,
-      liveProjects,
-      overdueProjects,
+      totalAssignedProject: {
+        count: totalAssigned,
+        growth: this.calculateGrowth(currentAssigned, previousAssigned),
+      },
+
+      submittedForReview: {
+        count: currentSubmissions,
+        growth: this.calculateGrowth(currentSubmissions, previousSubmissions),
+      },
+
+      returnedForEdit: {
+        count: currentReturns,
+        growth: this.calculateGrowth(currentReturns, previousReturns),
+      },
+
+      liveProjects: {
+        count: currentLiveProjects,
+        growth: this.calculateGrowth(currentLiveProjects, previousLiveProjects),
+      },
+
+      overdueProjects: {
+        count: overdueProjects,
+      },
     };
   }
 
@@ -380,6 +549,74 @@ export class ManagerService {
       },
       month,
       year,
+    };
+  }
+
+  async upcomingDeadlineProjects(managerId: string, days = 8) {
+    const today = new Date();
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+
+    const projects = await this.prisma.project.findMany({
+      where: {
+        managerId,
+        status: 'LIVE',
+        deadline: {
+          gte: today,
+          lte: new Date(today.getTime() + days * ONE_DAY),
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        deadline: true,
+        program: {
+          select: {
+            programName: true,
+          },
+        },
+        projectEmployees: {
+          select: {
+            employee: {
+              select: {
+                id: true,
+                user: {
+                  select: {
+                    name: true,
+                    profileImage: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        deadline: 'asc',
+      },
+    });
+
+    const formatted = projects.map((project) => {
+      const deadline = new Date(project.deadline);
+      const diffMs = deadline.getTime() - today.getTime();
+      const daysLeft = Math.ceil(diffMs / ONE_DAY);
+
+      return {
+        programName: project.program?.programName ?? 'No Program',
+        projectId: project.id,
+        projectName: project.name,
+        deadline: project.deadline,
+        daysLeft,
+        employees: project.projectEmployees.map((pe) => ({
+          id: pe.employee.id,
+          name: pe.employee.user?.name ?? 'Unknown',
+          profileImage: pe.employee.user?.profileImage ?? null,
+        })),
+      };
+    });
+
+    return {
+      total: formatted.length,
+      projects: formatted,
     };
   }
 }
