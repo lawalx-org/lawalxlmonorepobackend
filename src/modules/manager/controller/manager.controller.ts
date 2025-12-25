@@ -1,7 +1,10 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   Param,
+  Patch,
   Query,
   Req,
   UnauthorizedException,
@@ -14,8 +17,9 @@ import { RequestWithUser } from 'src/types/RequestWithUser';
 import { ChartService } from '../../chart/service/chart.service';
 import { ManagerService } from '../service/manager.service';
 import { GetSubmissionStatusQueryDto } from '../dto/get-submission-status.dto';
-import { ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SubmittedStatus } from 'generated/prisma';
+import { UpdateProjectDto } from '../dto/UpdateProjectDto';
 
 @Controller('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -243,4 +247,104 @@ export class ManagerController {
       data: result,
     };
   }
+
+  @Get('submissions')
+  @Roles('MANAGER')
+  @ApiQuery({ name: 'status', required: false, enum: SubmittedStatus })
+  @ApiQuery({ name: 'fromDate', required: false, type: String })
+  @ApiQuery({ name: 'toDate', required: false, type: String })
+  async getSubmissions(
+    @Req() req: RequestWithUser,
+    @Query('status') status?: SubmittedStatus,
+    @Query('fromDate') fromDate?: string,
+    @Query('toDate') toDate?: string,
+  ) {
+    const userId = req.user.managerId;
+
+    if (!userId) {
+      throw new UnauthorizedException('User ID not found in token');
+    }
+
+    const submissions = await this.managerService.showSubmissionsData(
+      userId,
+      status,
+      fromDate,
+      toDate,
+    );
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Submissions fetched successfully',
+      data: submissions,
+    };
+  }
+
+  @Get('my-projects')
+  @Roles('MANAGER')
+  @ApiOperation({ summary: 'Get all projects assigned to the manager' })
+  async projectReview(@Req() req: RequestWithUser) {
+    const userId = req.user.managerId;
+
+    if (!userId) {
+      throw new UnauthorizedException('User ID not found in token');
+    }
+
+    const projects = await this.managerService.projectReview(userId);
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Assigned projects fetched successfully',
+      data: projects,
+    };
+  }
+
+  @Patch('project/:id/update-status')
+  @Roles('MANAGER')
+  @ApiTags('Manager Projects')
+  @ApiOperation({
+    summary: 'Update project status, priority',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Project ID',
+    example: 'a3d2b1c4-1234-5678-9101-acde12345678',
+  })
+  @ApiBody({
+    type: UpdateProjectDto,
+    description: 'Fields to update (all optional)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Project updated successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Project not found',
+  })
+  async updateProjectStatus(
+    @Param('id') projectId: string,
+    @Body() dto: UpdateProjectDto,
+  ) {
+    const project = await this.managerService.updateProjectStatus(
+      projectId,
+      dto,
+    );
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Project updated successfully',
+      data: project,
+    };
+  }
+
+   @Delete('project/:id/delete-project')
+   @Roles('MANAGER')
+    async deleteProject(@Param('id') id: string) {
+      return this.managerService.deleteProject(id);
+    }
+
+
 }

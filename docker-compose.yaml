@@ -1,5 +1,5 @@
 services:
-  sever:
+  server:
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,6 +9,7 @@ services:
     container_name: lawalbackendbackend
     restart: always
     env_file:
+      - .env
       - .env.production
     depends_on:
       - db
