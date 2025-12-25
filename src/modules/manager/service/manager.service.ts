@@ -770,6 +770,7 @@ export class ManagerService {
       },
     };
   }
+  
 
   private calculateDaysRemaining(deadlineStr: string): string {
     const deadline = new Date(deadlineStr);
