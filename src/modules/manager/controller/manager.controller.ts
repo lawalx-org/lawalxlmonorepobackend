@@ -200,6 +200,7 @@ export class ManagerController {
     @Query('toDate') toDate?: string,
   ) {
     const managerId = req.user.managerId;
+    console.log(managerId)
 
     if (!managerId) {
       throw new UnauthorizedException('Manager ID not found in token');
