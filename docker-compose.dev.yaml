@@ -1,34 +1,8 @@
 services:
-  server:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: softvence/lawalbackendbackend:latest
-    profiles:
-      - prod
-    container_name: lawalbackendbackend
-    restart: always
-    env_file:
-      - .env
-    depends_on:
-      - db
-      - redis
-    volumes:
-      - uploads:/app/uploads
-      - uploads-file:/app/uploads-file
-      - uploads-profile-images:/app/uploads-profile-images
-    ports:
-      - 2342:2342
-    networks:
-      - law_network
-
   db:
     image: postgres:15
     container_name: law_db
     restart: always
-    profiles:
-      - prod
-      - dev
     ports:
       - 5432:5432
     environment:
@@ -44,9 +18,6 @@ services:
     image: redis:7
     container_name: law_redis_cache
     restart: always
-    profiles:
-      - prod
-      - dev
     ports:
       - 6379:6379
     volumes:

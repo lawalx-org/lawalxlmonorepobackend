@@ -12,10 +12,7 @@ import {
 import { Type } from 'class-transformer';
 import { Priority } from 'generated/prisma';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  CreateReminderDto,
-  CreateReminderProjectDto,
-} from 'src/modules/notification/dto/create-reminder.dto';
+import { CreateReminderProjectDto } from 'src/modules/notification/dto/create-reminder.dto';
 
 export class CreateProjectDto extends CreateReminderProjectDto {
   @ApiProperty({
