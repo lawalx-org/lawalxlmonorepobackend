@@ -916,21 +916,21 @@ export class ManagerService {
       {} as Record<string, number>,
     );
 
-    const projectsWithSubmissions = await this.prisma.project.count({
-      where: {
-        managerId: managerId,
-        submitted: {
-          some: {},
-        },
-      },
-    });
+    // const projectsWithSubmissions = await this.prisma.project.count({
+    //   where: {
+    //     managerId: managerId,
+    //     submitted: {
+    //       some: {},
+    //     },
+    //   },
+    // });
 
-    const overdueProjects = await this.prisma.project.count({
-      where: {
-        managerId: managerId,
-        status: 'OVERDUE',
-      },
-    });
+    // const overdueProjects = await this.prisma.project.count({
+    //   where: {
+    //     managerId: managerId,
+    //     status: 'OVERDUE',
+    //   },
+    // });
 
     const overdueWithSubmissions = await this.prisma.project.count({
       where: {
@@ -945,8 +945,6 @@ export class ManagerService {
     // Combine all results
     return {
       submissions: submissionOverview,
-      projectsWithSubmissions,
-      overdueProjects,
       overdueWithSubmissions,
     };
   }

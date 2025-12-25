@@ -276,10 +276,15 @@ export class ManagerController {
     };
   }
 
-  @Get('overview/:managerId')
-  async getOverview(@Param('managerId') managerId: string) {
-    const overview =
-      await this.managerService.showSubmissionsOverview(managerId);
+   @Get('overview/:managerId')
+  @Roles('MANAGER')
+  async getOverview( @Req() req: RequestWithUser) {
+    const userId = req.user.managerId;
+
+    if (!userId) {
+      throw new UnauthorizedException('User ID not found in token');
+    }
+    const overview = await this.managerService.showSubmissionsOverview(userId);
     return {
       message: 'overview successfully for submit status and overdue project',
       data: overview,
