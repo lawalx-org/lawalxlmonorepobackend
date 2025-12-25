@@ -13,6 +13,7 @@ model Project {
   priority               Priority
   deadline               DateTime
   managerId              String
+  viewerId               String
   startDate              DateTime?
   progress               Int?
   chartList              String[] // Seed create that chart list

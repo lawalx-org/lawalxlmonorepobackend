@@ -36,8 +36,6 @@ export class ChartMainService {
 
           const { numberOfDataset, firstFiledDataset, lastFiledDAtaset, showWidgets } = createChartDto
 
-
-
           subChat = await txPrisma.barChart.create({
             data: {
               ChartTableId: mainChart.id,
@@ -60,8 +58,6 @@ export class ChartMainService {
 
           const { numberOfDataset, firstFieldDataset, lastFieldDataset, widgets } = createChartDto
 
-
-
           subChat = await txPrisma.horizontalBarChart.create({
             data: {
               chartTableId: mainChart.id,
@@ -82,23 +78,56 @@ export class ChartMainService {
 
           break;
         }
+        case ChartName.PIE: {
+
+          const { numberOfDataset,widgets } = createChartDto
+          subChat = await txPrisma.pi.create({
+            data: {
+              chartTableId: mainChart.id,
+              numberOfDataset: numberOfDataset!,
+              widgets: widgets
+                ? {
+                  create: widgets.map(widget => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    color: widget.color ?? '#1cce0cff',
+                  })),
+                }
+                : undefined,
+            },
+          });
+
+          break;
+        }
+        case ChartName.HEATMAP: {
+
+          const { numberOfDataset_X,numberOfDataset_Y,firstFieldDataset,lastFieldDataset,widgets } = createChartDto
+          subChat = await txPrisma.heatMapChart.create({
+            data: {
+              chartTableId: mainChart.id,
+              numberOfDataset_X: numberOfDataset_X!,
+              numberOfDataset_Y: numberOfDataset_Y!,
+              firstFieldDataset: firstFieldDataset!,
+              lastFieldDataset: lastFieldDataset!,
+              widgets: widgets
+                ? {
+                  create: widgets.map(widget => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    // color: widget.color ?? '#e6ff5b9c',
+                  })),
+                }
+                : undefined,
+            },
+          });
+
+          break;
+        }
 
         default: {
           throw new BadRequestException(`Chart type "${status}" is not supported`);
         }
       }
-
-
-
-
-
       return { ...mainChart }
-
-
     });
-
-
-
     return result;
   }
 
@@ -143,6 +172,18 @@ export class ChartMainService {
           },
         },
         horizontalBarChart: {
+          include: {
+
+             widgets: true,
+          },
+        },
+        pi: {
+          include: {
+
+             widgets: true,
+          },
+        },
+        heatmap: {
           include: {
 
              widgets: true,
