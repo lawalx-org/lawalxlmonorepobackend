@@ -97,7 +97,6 @@ export class ProjectService {
       name,
       ...projectData
     } = createProjectDto;
-
     // --- Pre-validation before transaction ---
     const [manager, program] = await Promise.all([
       this.prisma.manager.findUnique({
