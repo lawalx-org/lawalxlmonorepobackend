@@ -870,109 +870,61 @@ async showSubmissionsData(
   });
 }
 
+async showSubmissionsOverview(managerId: string) {
+  const submissionsByStatus = await this.prisma.submitted.groupBy({
+    by: ['status'],
+    where: {
+      project: {
+        managerId: managerId,
+      },
+    },
+    _count: {
+      status: true,
+    },
+  });
 
-async projectReview(managerId: string) {
-  if (!managerId) {
-    throw new UnauthorizedException('Manager not found for this user');
-  }
 
-  return this.prisma.project.findMany({
+
+  const submissionOverview = submissionsByStatus.reduce((acc, item) => {
+    acc[item.status] = item._count.status;
+    return acc;
+  }, {} as Record<string, number>);
+
+
+  const projectsWithSubmissions = await this.prisma.project.count({
     where: {
       managerId: managerId,
-    },
-    include: {
-      program: true,
-      manager: {
-        include: {
-          user: true,
-        },
+      submitted: {
+        some: {}, 
+        
       },
-      projectEmployees: {
-        include: {
-          employee: {
-            include: {
-              user: true,
-            },
-          },
-        },
-      },
-      tasks: true,
-      activities: true,
-      reviews: true,
-      submitted: true,
-      reminders: true,
-      sheets: true,
-    },
-    orderBy: {
-      createdAt: 'desc',
     },
   });
+
+  const overdueProjects = await this.prisma.project.count({
+    where: {
+      managerId: managerId,
+      status: 'OVERDUE',
+    },
+  });
+
+  const overdueWithSubmissions = await this.prisma.project.count({
+    where: {
+      managerId: managerId,
+      status: 'OVERDUE',
+      submitted: {
+        some: {},
+      },
+    },
+  });
+
+  // Combine all results
+  return {
+    submissions: submissionOverview,
+    projectsWithSubmissions,
+    overdueProjects,
+    overdueWithSubmissions,
+  };
 }
-
-async updateProjectStatus(
-  projectId: string,
-  dto: UpdateProjectDto,
-) {
-  const project = await this.prisma.project.findUnique({
-    where: { id: projectId },
-  });
-
-  if (!project) {
-    throw new NotFoundException(`Project with ID "${projectId}" not found`);
-  }
-
-  return this.prisma.project.update({
-    where: { id: projectId },
-    data: {
-      ...(dto.name && { name: dto.name }),    
-      ...(dto.status && { status: dto.status }),
-      ...(dto.priority && { priority: dto.priority }),
-    },
-  });
-}
-
-  async deleteProject(id: string) {
-    const project = await this.prisma.project.findUnique({
-      where: { id },
-      include: {
-        sheets: true,
-        projectEmployees: true,
-        tasks: true,
-        activities: true,
-      },
-    });
-
-    if (!project)
-      throw new NotFoundException(`Project with ID "${id}" not found`);
-
-    const sheetIds = project.sheets?.map((s: { id: string }) => s.id) || [];
-    const taskIds = project.tasks?.map((t: { id: string }) => t.id) || [];
-    const activityIds =
-      project.activities?.map((a: { id: string }) => a.id) || [];
-
-    if (
-      sheetIds.length ||
-      taskIds.length ||
-      activityIds.length
-    ) {
-      const errors: string[] = [];
-      if (sheetIds.length) errors.push(`sheets (${sheetIds.join(', ')})`);
-      if (taskIds.length) errors.push(`tasks (${taskIds.join(', ')})`);
-      if (activityIds.length)
-        errors.push(`activities (${activityIds.join(', ')})`);
-
-      throw new BadRequestException(
-        `Cannot delete project. There are related: ${errors.join(', ')}.`,
-      );
-    }
-
-    await this.prisma.project.delete({ where: { id } });
-
-    return {
-      message: `Project with ID "${id}" has been deleted successfully.`,
-    };
-  }
-
-
 
 }
