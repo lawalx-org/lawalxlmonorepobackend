@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { SubmittedStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ManagerService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   // async getManagerDashboard(managerId: string) {
   //   const projects = await this.prisma.project.findMany({
@@ -619,4 +620,80 @@ export class ManagerService {
       projects: formatted,
     };
   }
+
+  // async getManagerSubmissions(managerId: string) {
+  //   return this.prisma.submitted.findMany({
+  //     where: {
+  //       project: {
+  //         managerId: managerId,
+  //       },
+  //     },
+  //     select: {
+  //       id: true,
+  //       information: true,
+  //       status: true,
+  //       createdAt: true,
+  //     },
+  //     orderBy: {
+  //       createdAt: 'desc',
+  //     },
+  //   });
+  // }
+
+async getManagerSubmissions(
+  managerId: string,
+  status?: SubmittedStatus,
+  fromDate?: string,
+  toDate?: string,
+) {
+  return this.prisma.submitted.findMany({
+    where: {
+      project: {
+        managerId: managerId,
+      },
+      ...(status && { status }),
+      ...(fromDate || toDate
+        ? {
+            createdAt: {
+              ...(fromDate && { gte: new Date(fromDate) }),
+              ...(toDate && { lte: new Date(toDate) }),
+            },
+          }
+        : {}),
+    },
+    include: {
+      employee: {
+        select: {
+          id: true,
+          description: true,
+          joinedDate: true,
+          skills: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phoneNumber: true,
+              profileImage: true,
+              role: true,
+              userStatus: true,
+            },
+          },
+        },
+      },
+      project: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+}
+
+
+
 }

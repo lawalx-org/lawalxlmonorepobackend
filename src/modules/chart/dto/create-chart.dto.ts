@@ -3,10 +3,14 @@ import { ApiProperty, IntersectionType } from '@nestjs/swagger';
 import { ChartName, ChartStatus } from 'generated/prisma';
 import { CreateBarChartDto } from './barchartDto';
 import { Create_Hr_BarChartDto } from './hr_bar_chartDto';
+import { Create_Pi_ChartDto } from './pi_ChartDto';
+import { HeatMap_ChartDto } from './heatMap_chartDto';
 
 export class CreateChartDto extends IntersectionType(
   CreateBarChartDto,
   Create_Hr_BarChartDto,
+  Create_Pi_ChartDto,
+  HeatMap_ChartDto
 ) {
   @ApiProperty({
     example: 'Weekly Sleep Pattern',
