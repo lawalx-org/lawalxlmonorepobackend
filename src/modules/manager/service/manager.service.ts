@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ManagerService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   // async getManagerDashboard(managerId: string) {
   //   const projects = await this.prisma.project.findMany({
@@ -770,6 +770,7 @@ export class ManagerService {
       },
     };
   }
+  
 
   private calculateDaysRemaining(deadlineStr: string): string {
     const deadline = new Date(deadlineStr);

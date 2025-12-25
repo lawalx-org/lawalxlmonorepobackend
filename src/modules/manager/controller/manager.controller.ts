@@ -14,6 +14,8 @@ import { RequestWithUser } from 'src/types/RequestWithUser';
 import { ChartService } from '../../chart/service/chart.service';
 import { ManagerService } from '../service/manager.service';
 import { GetSubmissionStatusQueryDto } from '../dto/get-submission-status.dto';
+import { ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { SubmittedStatus } from 'generated/prisma';
 
 @Controller('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -21,7 +23,7 @@ export class ManagerController {
   constructor(
     private readonly chartService: ChartService,
     private readonly managerService: ManagerService,
-  ) {}
+  ) { }
 
   @Get('dashboard')
   @Roles('MANAGER')
@@ -136,6 +138,7 @@ export class ManagerController {
   //     data: result,
   //   };
   // }
+  
   @Get('submission-status')
   @Roles('MANAGER')
   async getSubmissionStatus(
