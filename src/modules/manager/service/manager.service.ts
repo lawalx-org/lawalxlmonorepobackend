@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ManagerService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   // async getManagerDashboard(managerId: string) {
   //   const projects = await this.prisma.project.findMany({
@@ -683,27 +683,40 @@ export class ManagerService {
     };
   }
 
-
-
-
-
   async getProgramDashboard(managerId: string) {
-    // Fetch program with all nested relations
+    /* ---------------- FETCH PROGRAM ---------------- */
     const program = await this.prisma.program.findFirst({
       where: {
-        projects: { some: { managerId } },
+        projects: {
+          some: { managerId },
+        },
       },
       include: {
         tags: true,
-        client: true, 
         projects: {
           where: { managerId },
           include: {
+            manager: {
+              include: {
+                user: {
+                  select: {
+                    name: true,
+                    email: true,
+                    profileImage: true,
+                  },
+                },
+              },
+            },
             projectEmployees: {
               include: {
                 employee: {
                   include: {
-                    user: { select: { name: true, profileImage: true } },
+                    user: {
+                      select: {
+                        name: true,
+                        profileImage: true,
+                      },
+                    },
                   },
                 },
               },
@@ -717,122 +730,133 @@ export class ManagerService {
       throw new NotFoundException('No active program found for this manager');
     }
 
+    /* ---------------- MANAGER INFO ---------------- */
+    const managerUser = program.projects[0]?.manager?.user ?? null;
+
+    /* ---------------- ALERT LOGIC ---------------- */
     const now = new Date();
 
-    // ALERT LOGIC: Find projects past their deadline that aren't completed
     const overdueProjects = program.projects.filter(
-      (p) => new Date(p.deadline) < now && p.status !== 'COMPLETED',
+      (project) =>
+        new Date(project.deadline) < now &&
+        project.status !== ProjectStatus.COMPLETED,
     );
 
-    const alerts = overdueProjects.map((p) => ({
+    const alerts = overdueProjects.map((project) => ({
       type: 'CRITICAL',
       title: 'Project Overdue',
-      subText: p.name,
+      subText: project.name,
       time: 'System Alert',
     }));
 
+    /* ---------------- RESPONSE ---------------- */
     return {
-      // Main Project Table
-      projects: program.projects.map((p) => ({
-        id: p.id,
-        name: p.name,
-        priority: p.priority,
-        deadline: p.deadline,
-        progress: p.progress || 0,
+      projects: program.projects.map((project) => ({
+        id: project.id,
+        name: project.name,
+        priority: project.priority,
+        deadline: project.deadline,
+        progress: project.progress ?? 0,
         assignStuff: {
-          avatars: p.projectEmployees.slice(0, 3).map((pe) => ({
-            name: pe.employee.user?.name,
-            image: pe.employee.user?.profileImage,
+          avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
+            name: pe.employee.user?.name || '',
+            image: pe.employee.user?.profileImage || null,
           })),
-          extraCount: Math.max(0, p.projectEmployees.length - 3),
+          extraCount: Math.max(0, project.projectEmployees.length - 3),
         },
       })),
 
-      // Sidebar Metadata
       sidebar: {
-        programManager: {
-          // FIX: Use contactPersonName as seen in your Client model error
-          name: program.client?.contactPersonName || 'No Manager Assigned',
-          email: program.client?.email || '',
-          image: program.client?.clientLogo, 
-        },
+        programManager: managerUser
+          ? {
+              name: managerUser.name,
+              email: managerUser.email,
+              image: managerUser.profileImage,
+            }
+          : {
+              name: 'No Manager Assigned',
+              email: '',
+              image: null,
+            },
+
         duration: {
           start: program.datetime,
           end: program.deadline,
           daysRemaining: this.calculateDaysRemaining(program.deadline),
         },
-        // FIX: Use .name instead of .tagName based on your error message
-        tags: program.tags.map((t) => t.name), 
+
+        tags: program.tags.map((tag) => tag.name),
+
         alerts: {
-          issueCount: alerts.length, // This populates the "3 Issues" red badge
+          issueCount: alerts.length,
           list: alerts,
         },
       },
     };
   }
-  
 
-  private calculateDaysRemaining(deadlineStr: string): string {
-    const deadline = new Date(deadlineStr);
-    const diff = deadline.getTime() - new Date().getTime();
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    return days > 0 ? `${days} days` : 'Overdue';
+  /* ---------------- HELPER ---------------- */
+  private calculateDaysRemaining(deadline: string): string {
+    const end = new Date(deadline);
+    const now = new Date();
+
+    const diffTime = end.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays > 0 ? `${diffDays} days` : 'Expired';
   }
 
   async getManagerSubmissions(
-  managerId: string,
-  status?: SubmittedStatus,
-  fromDate?: string,
-  toDate?: string,
-) {
-  return this.prisma.submitted.findMany({
-    where: {
-      project: {
-        managerId: managerId,
+    managerId: string,
+    status?: SubmittedStatus,
+    fromDate?: string,
+    toDate?: string,
+  ) {
+    return this.prisma.submitted.findMany({
+      where: {
+        project: {
+          managerId: managerId,
+        },
+        ...(status && { status }),
+        ...(fromDate || toDate
+          ? {
+              createdAt: {
+                ...(fromDate && { gte: new Date(fromDate) }),
+                ...(toDate && { lte: new Date(toDate) }),
+              },
+            }
+          : {}),
       },
-      ...(status && { status }),
-      ...(fromDate || toDate
-        ? {
-            createdAt: {
-              ...(fromDate && { gte: new Date(fromDate) }),
-              ...(toDate && { lte: new Date(toDate) }),
-            },
-          }
-        : {}),
-    },
-    include: {
-      employee: {
-        select: {
-          id: true,
-          description: true,
-          joinedDate: true,
-          skills: true,
-          user: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              phoneNumber: true,
-              profileImage: true,
-              role: true,
-              userStatus: true,
+      include: {
+        employee: {
+          select: {
+            id: true,
+            description: true,
+            joinedDate: true,
+            skills: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                phoneNumber: true,
+                profileImage: true,
+                role: true,
+                userStatus: true,
+              },
             },
           },
         },
-      },
-      project: {
-        select: {
-          id: true,
-          name: true,
+        project: {
+          select: {
+            id: true,
+            name: true,
+          },
         },
       },
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
-}
-
-
-
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
 }
