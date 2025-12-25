@@ -13,9 +13,9 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { ChartService } from '../../chart/service/chart.service';
 import { ManagerService } from '../service/manager.service';
-import { GetSubmissionStatusQueryDto } from '../dto/get-submission-status.dto';
 import { ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { SubmittedStatus } from 'generated/prisma';
+import { GetSubmissionStatusQueryDto } from 'src/modules/employee/dto/get-submission-status.dto';
 
 @Controller('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -288,6 +288,19 @@ export class ManagerController {
     return {
       message: 'overview successfully for submit status and overdue project',
       data: overview,
+    };
+  }
+
+   @Get('activity')
+  async getSubmissionActivity(@Req() req: RequestWithUser) {
+        const userId = req.user.managerId;
+    if (!userId) {
+      throw new UnauthorizedException('User ID not found in token');
+    }
+    const data = await this.managerService.getSubmissionActivity(userId);
+    return {
+      success: true,
+      data,
     };
   }
 }

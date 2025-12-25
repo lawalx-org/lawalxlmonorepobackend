@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ManagerService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   // async getManagerDashboard(managerId: string) {
   //   const projects = await this.prisma.project.findMany({
@@ -769,15 +769,15 @@ export class ManagerService {
       sidebar: {
         programManager: managerUser
           ? {
-              name: managerUser.name,
-              email: managerUser.email,
-              image: managerUser.profileImage,
-            }
+            name: managerUser.name,
+            email: managerUser.email,
+            image: managerUser.profileImage,
+          }
           : {
-              name: 'No Manager Assigned',
-              email: '',
-              image: null,
-            },
+            name: 'No Manager Assigned',
+            email: '',
+            image: null,
+          },
 
         duration: {
           start: program.datetime,
@@ -820,11 +820,11 @@ export class ManagerService {
         ...(status && { status }),
         ...(fromDate || toDate
           ? {
-              createdAt: {
-                ...(fromDate && { gte: new Date(fromDate) }),
-                ...(toDate && { lte: new Date(toDate) }),
-              },
-            }
+            createdAt: {
+              ...(fromDate && { gte: new Date(fromDate) }),
+              ...(toDate && { lte: new Date(toDate) }),
+            },
+          }
           : {}),
       },
       include: {
@@ -874,20 +874,42 @@ export class ManagerService {
         ...(status && { status }),
         ...(fromDate || toDate
           ? {
-              createdAt: {
-                ...(fromDate && { gte: new Date(fromDate) }),
-                ...(toDate && { lte: new Date(toDate) }),
-              },
-            }
+            createdAt: {
+              ...(fromDate && { gte: new Date(fromDate) }),
+              ...(toDate && { lte: new Date(toDate) }),
+            },
+          }
           : {}),
       },
       include: {
         employee: {
-          include: {
-            user: true,
+          select: {
+            id: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                phoneNumber: true,
+                profileImage: true,
+                role: true,
+                userStatus: true,
+              },
+            },
           },
         },
-        project: true,
+       project: {
+          select: {
+            id: true,
+            name: true,
+            status:true,
+            priority:true,
+            startDate:true,
+            estimatedCompletedDate:true,
+            projectCompleteDate:true,
+            createdAt:true
+          },
+        },
       },
       orderBy: {
         createdAt: 'desc',
@@ -948,4 +970,53 @@ export class ManagerService {
       overdueWithSubmissions,
     };
   }
+
+async getSubmissionActivity(managerId: string) {
+  const submissions = await this.prisma.submitted.findMany({
+    include: {
+      employee: {
+        select: {
+          id: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              profileImage: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const employeeMap = new Map<string, any>();
+
+  submissions.forEach((sub) => {
+    const empId = sub.employee?.id ?? 'unknown';
+
+    if (!employeeMap.has(empId)) {
+      employeeMap.set(empId, {
+        employee: {
+          id: sub.employee?.id ?? empId,
+          name: sub.employee?.user?.name ?? 'Unknown',
+          profileImage: sub.employee?.user?.profileImage ?? 'default.png',
+        },
+        totalSubmissions: 0,
+        statusSummary: {} as Record<string, number>,
+      });
+    }
+
+    const empData = employeeMap.get(empId);
+    empData.totalSubmissions += 1;
+
+    const status = sub.status;
+    empData.statusSummary[status] = (empData.statusSummary[status] ?? 0) + 1;
+  });
+
+
+  return Array.from(employeeMap.values());
+}
+
+
+
 }
