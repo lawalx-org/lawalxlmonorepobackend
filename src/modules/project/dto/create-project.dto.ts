@@ -8,6 +8,7 @@ import {
   IsNumber,
   IsInt,
   IsArray,
+  IsObject,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Priority } from 'generated/prisma';
@@ -22,6 +23,19 @@ export class CreateProjectDto extends CreateReminderProjectDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  // from here our infrastructure code
+  @IsString()
+  @IsOptional()
+  slug: string;
+
+  @ApiProperty({
+    description: 'Calculated progress of the project',
+    type: Number,
+  })
+  @IsNumber()
+  computedProgress: number;
+  // end infrastructure code
 
   @ApiProperty({
     description: 'The ID of the program this project belongs to',
@@ -144,4 +158,13 @@ export class CreateProjectDto extends CreateReminderProjectDto {
   @IsNumber()
   @IsOptional()
   longitude?: number;
+
+  @ApiProperty({
+    description: 'Additional metadata information for the project',
+    type: Object,
+    required: false,
+  })
+  @IsOptional()
+  @IsObject()
+  metadata: Record<string, any>;
 }

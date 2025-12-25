@@ -29,6 +29,8 @@ model InfrastructureNode {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
 
   @@index([infrastructureProjectId])
   @@index([parentId])

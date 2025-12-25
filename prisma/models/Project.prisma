@@ -2,6 +2,14 @@ model Project {
   id                     String        @id @default(uuid())
   programId              String
   name                   String
+
+  // sabbir infrastructure start from here...
+  slug                   String        @unique
+  computedProgress       Float          @default(0)
+  nodes InfrastructureNode[]
+
+  // sabbir infrastructure end from here...
+
   // uploadbeforeday           String
   // uploadCycle               ProjectCycle
   description            String
@@ -38,7 +46,19 @@ model Project {
   reminders                  Reminder[]
   sheets                     Sheet[]
 
-  @@map("projects")
+    @@index([programId])
+    @@index([slug])
+    @@index([managerId])
+    @@index([viewerId])
+    @@index([status])
+    @@index([priority])
+    @@index([deadline])
+    @@index([estimatedCompletedDate])
+    @@index([projectCompleteDate])
+    @@index([createdAt])
+    @@index([updatedAt])
+
+    @@map("projects")
 }
 
 model ProjectEmployee {
