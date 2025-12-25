@@ -13,9 +13,9 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { ChartService } from '../../chart/service/chart.service';
 import { ManagerService } from '../service/manager.service';
-import { GetSubmissionStatusQueryDto } from '../dto/get-submission-status.dto';
 import { ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { SubmittedStatus } from 'generated/prisma';
+import { GetSubmissionStatusQueryDto } from 'src/modules/employee/dto/get-submission-status.dto';
 
 @Controller('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)

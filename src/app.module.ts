@@ -17,11 +17,11 @@ import { RedisModule } from './common/db/redis/redis.module';
 import { BullModule } from '@nestjs/bullmq';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ChartModule } from './modules/chart/chart.module';
-import { ManagerModule } from './modules/manager/manager.module';
 import { SeedService } from './common/seed/seed.services';
 import { EmployeeModule } from './modules/employee/employee.module';
 import { SheetModule } from './modules/sheet/sheet.module';
 import { InfrastructureModule } from './modules/infrastructure/infrastructure.module';
+import { ManagerModule } from './modules/manager/manager.module';
 
 @Module({
   imports: [
