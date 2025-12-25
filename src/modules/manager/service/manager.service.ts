@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { SubmittedStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -640,60 +640,60 @@ export class ManagerService {
   //   });
   // }
 
-async getManagerSubmissions(
-  managerId: string,
-  status?: SubmittedStatus,
-  fromDate?: string,
-  toDate?: string,
-) {
-  return this.prisma.submitted.findMany({
-    where: {
-      project: {
-        managerId: managerId,
+
+ async getManagerSubmissions(
+    managerId: string, 
+    status?: SubmittedStatus,
+    fromDate?: string,
+    toDate?: string,
+  ) {
+
+
+    const submissions = await this.prisma.submitted.findMany({
+      where: {
+        project: { managerId},
+        ...(status && { status }),
+        ...(fromDate || toDate
+          ? {
+              createdAt: {
+                ...(fromDate && { gte: new Date(fromDate) }),
+                ...(toDate && { lte: new Date(toDate) }),
+              },
+            }
+          : {}),
       },
-      ...(status && { status }),
-      ...(fromDate || toDate
-        ? {
-            createdAt: {
-              ...(fromDate && { gte: new Date(fromDate) }),
-              ...(toDate && { lte: new Date(toDate) }),
-            },
-          }
-        : {}),
-    },
-    include: {
-      employee: {
-        select: {
-          id: true,
-          description: true,
-          joinedDate: true,
-          skills: true,
-          user: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              phoneNumber: true,
-              profileImage: true,
-              role: true,
-              userStatus: true,
+      include: {
+        employee: {
+          select: {
+            id: true,
+            description: true,
+            joinedDate: true,
+            skills: true,
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                phoneNumber: true,
+                profileImage: true,
+                role: true,
+                userStatus: true,
+              },
             },
           },
         },
-      },
-      project: {
-        select: {
-          id: true,
-          name: true,
+        project: {
+          select: {
+            id: true,
+            name: true,
+          },
         },
       },
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
-}
+      orderBy: { createdAt: 'desc' },
+    });
 
+    return submissions;
+  }
 
 
 }
