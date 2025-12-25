@@ -1,9 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 import { BaseUserDto } from './base-user.dto';
 
 export class CreateViewerDto extends BaseUserDto {
-  // @ApiProperty({ example: 'your-client-id' })
-  // @IsString()
-  // clientId: string;
+  @ApiProperty({
+    example: ['project-id-1', 'project-id-2'],
+    description: 'Array of project IDs associated with the viewer',
+    type: [String],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  projectId: string[];
 }
