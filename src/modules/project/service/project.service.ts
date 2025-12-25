@@ -98,8 +98,6 @@ export class ProjectService {
       ...projectData
     } = createProjectDto;
 
-    console.log(managerId);
-
     // --- Pre-validation before transaction ---
     const [manager, program] = await Promise.all([
       this.prisma.manager.findUnique({
@@ -536,4 +534,3 @@ export class ProjectService {
     };
   }
 }
-
