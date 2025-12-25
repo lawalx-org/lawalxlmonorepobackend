@@ -4,9 +4,10 @@ import {
   IsBoolean,
   IsDateString,
   IsString,
+  IsArray,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { Language } from 'generated/prisma';
+import { Language, Role, UserStatus } from 'generated/prisma';
 import { Transform } from 'class-transformer'; 
 
 export class UpdateUserDto {
@@ -47,4 +48,19 @@ export class UpdateUserDto {
   @IsBoolean()
   @IsOptional()
   verification2FA?: boolean;
+
+    @ApiPropertyOptional({ example: 'EMPLOYEE', enum: Role })
+  @IsEnum(Role)
+  @IsOptional()
+  role?: Role;
+
+  @ApiPropertyOptional({ example: 'ACTIVE', enum: UserStatus })
+  @IsEnum(UserStatus)
+  @IsOptional()
+  userStatus?: UserStatus;
+
+  @ApiPropertyOptional({ description: 'Assign project IDs to this user', type: [String] })
+  @IsArray()
+  @IsOptional()
+  projectIds?: string[];
 }
