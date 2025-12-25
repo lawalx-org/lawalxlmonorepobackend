@@ -1,4 +1,4 @@
-import { InfrastructureNode, Prisma } from 'generated/prisma';
+import { InfrastructureNode } from 'generated/prisma';
 import slug from 'slugify';
 
 export const slugify = (textContent: string, replacement: '-' | '_' = '-') =>
