@@ -184,4 +184,27 @@ export class ManagerController {
 
     return this.managerService.upcomingDeadlineProjects(managerId, limitDays);
   }
+  @Get('project-dashboard')
+  async getProjectManagerDashboard(@Req() req: RequestWithUser) {
+    const managerId = req.user.managerId;
+
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    return this.managerService.getProjectManagerDashboard(managerId);
+  }
+
+  @Get('program-dashboard')
+  @Roles('MANAGER')
+  async getProgramDashboard(@Req() req: RequestWithUser) {
+    const managerId = req.user.managerId;
+
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    // This service call returns the combined data for the UI image provided
+    return this.managerService.getProgramDashboard(managerId);
+  }
 }
