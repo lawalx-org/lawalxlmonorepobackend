@@ -988,8 +988,9 @@ export class ManagerService {
   }));
 }
 
-async showSubmissionsOverview(managerId: string) {
 
+
+async showSubmissionsOverview(managerId: string) {
   const managerProjects = await this.prisma.project.findMany({
     where: { managerId },
     select: { id: true },
@@ -997,11 +998,16 @@ async showSubmissionsOverview(managerId: string) {
   const projectIds = managerProjects.map((p) => p.id);
 
   if (projectIds.length === 0) {
+    const defaultOverview = Object.values(SubmittedStatus).reduce(
+      (acc, status) => ({ ...acc, [status]: 0 }),
+      {} as Record<string, number>
+    );
     return {
-      submissions: {},
+      submissions: defaultOverview,
       overdueWithSubmissions: 0,
     };
   }
+
   const submissionsByStatus = await this.prisma.submitted.groupBy({
     by: ['status'],
     where: {
@@ -1010,13 +1016,15 @@ async showSubmissionsOverview(managerId: string) {
     _count: { status: true },
   });
 
+  const submissionOverview: Record<string, number> = Object.values(SubmittedStatus).reduce(
+    (acc, status) => ({ ...acc, [status]: 0 }),
+    {}
+  );
 
-  const submissionOverview = submissionsByStatus.reduce((acc, item) => {
-    const status = item.status ?? 'UNKNOWN';
-    acc[status] = item._count.status;
-    return acc;
-  }, {} as Record<string, number>);
-
+  submissionsByStatus.forEach((item) => {
+    const status = item.status as SubmittedStatus;
+    submissionOverview[status] = item._count.status;
+  });
 
   const overdueWithSubmissions = await this.prisma.project.count({
     where: {
@@ -1031,6 +1039,7 @@ async showSubmissionsOverview(managerId: string) {
     overdueWithSubmissions,
   };
 }
+
 
 
 
@@ -1058,6 +1067,11 @@ async getSubmissionActivity(managerId: string) {
     const empId = sub.employee?.id ?? 'unknown';
 
     if (!employeeMap.has(empId)) {
+      const defaultStatusSummary = Object.values(SubmittedStatus).reduce(
+        (acc, status) => ({ ...acc, [status]: 0 }),
+        {} as Record<string, number>
+      );
+
       employeeMap.set(empId, {
         employee: {
           id: sub.employee?.id ?? empId,
@@ -1065,21 +1079,18 @@ async getSubmissionActivity(managerId: string) {
           profileImage: sub.employee?.user?.profileImage ?? 'default.png',
         },
         totalSubmissions: 0,
-        statusSummary: {} as Record<string, number>,
+        statusSummary: defaultStatusSummary,
       });
     }
 
     const empData = employeeMap.get(empId);
     empData.totalSubmissions += 1;
 
-    const status = sub.status;
+    const status = sub.status as SubmittedStatus;
     empData.statusSummary[status] = (empData.statusSummary[status] ?? 0) + 1;
   });
 
-
   return Array.from(employeeMap.values());
 }
-
-
 
 }

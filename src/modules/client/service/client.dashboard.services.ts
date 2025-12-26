@@ -618,7 +618,7 @@ async showAllSubmission(params: {
       },
       include: {
         employee: {
-          include: {
+          select: {
             user: {
               select: {
                 id: true,

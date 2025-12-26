@@ -175,7 +175,7 @@ export class ClientDashboardController {
     //         data: result
     //     }
     // }
-    @Get()
+    @Get("all-submissions")
     @ApiQuery({
         name: 'startDate',
         required: false,
