@@ -860,88 +860,169 @@ export class ManagerService {
     });
   }
 
+  // async showSubmissionsData(
+  //   managerId: string,
+  //   status?: SubmittedStatus,
+  //   fromDate?: string,
+  //   toDate?: string,
+  // ) {
+  //   return this.prisma.submitted.findMany({
+  //     where: {
+  //       project: {
+  //         managerId: managerId,
+  //       },
+  //       ...(status && { status }),
+  //       ...(fromDate || toDate
+  //         ? {
+  //           createdAt: {
+  //             ...(fromDate && { gte: new Date(fromDate) }),
+  //             ...(toDate && { lte: new Date(toDate) }),
+  //           },
+  //         }
+  //         : {}),
+  //     },
+  //     include: {
+  //       employee: {
+  //         select: {
+  //           id: true,
+  //           user: {
+  //             select: {
+  //               id: true,
+  //               name: true,
+  //               email: true,
+  //               phoneNumber: true,
+  //               profileImage: true,
+  //               role: true,
+  //               userStatus: true,
+  //             },
+  //           },
+  //         },
+  //       },
+  //      project: {
+  //         select: {
+  //           id: true,
+  //           name: true,
+  //           status:true,
+  //           priority:true,
+  //           startDate:true,
+  //           estimatedCompletedDate:true,
+  //           projectCompleteDate:true,
+  //           createdAt:true
+  //         },
+  //       },
+  //     },
+  //     orderBy: {
+  //       createdAt: 'desc',
+  //     },
+  //   });
+  // }
+  
   async showSubmissionsData(
-    managerId: string,
-    status?: SubmittedStatus,
-    fromDate?: string,
-    toDate?: string,
-  ) {
-    return this.prisma.submitted.findMany({
-      where: {
-        project: {
-          managerId: managerId,
-        },
-        ...(status && { status }),
-        ...(fromDate || toDate
-          ? {
+  managerId: string,
+  status?: SubmittedStatus,
+  fromDate?: string,
+  toDate?: string,
+) {
+  const submissions = await this.prisma.submitted.findMany({
+    where: {
+      project: { managerId },
+      ...(status && { status }),
+      ...(fromDate || toDate
+        ? {
             createdAt: {
               ...(fromDate && { gte: new Date(fromDate) }),
               ...(toDate && { lte: new Date(toDate) }),
             },
           }
-          : {}),
-      },
-      include: {
-        employee: {
-          select: {
-            id: true,
-            user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-                phoneNumber: true,
-                profileImage: true,
-                role: true,
-                userStatus: true,
-              },
+        : {}),
+    },
+    include: {
+      employee: {
+        select: {
+          id: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phoneNumber: true,
+              profileImage: true,
+              role: true,
+              userStatus: true,
             },
           },
         },
-       project: {
-          select: {
-            id: true,
-            name: true,
-            status:true,
-            priority:true,
-            startDate:true,
-            estimatedCompletedDate:true,
-            projectCompleteDate:true,
-            createdAt:true
-          },
+      },
+      project: {
+        select: {
+          id: true,
+          name: true,
+          status: true,
+          priority: true,
+          startDate: true,
+          estimatedCompletedDate: true,
+          projectCompleteDate: true,
+          createdAt: true,
         },
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-  }
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return submissions.map((sub) => ({
+    ...sub,
+    employee: sub.employee
+      ? sub.employee
+      : {
+          id: 'unknown',
+          user: {
+            id: 'unknown',
+            name: 'Unknown Employee',
+            email: null,
+            phoneNumber: null,
+            profileImage: null,
+            role: null,
+            userStatus: null,
+          },
+        },
+  }));
+}
 
 async showSubmissionsOverview(managerId: string) {
 
-  const submissions = await this.prisma.submitted.findMany({
+  const managerProjects = await this.prisma.project.findMany({
+    where: { managerId },
+    select: { id: true },
+  });
+  const projectIds = managerProjects.map((p) => p.id);
+
+  if (projectIds.length === 0) {
+    return {
+      submissions: {},
+      overdueWithSubmissions: 0,
+    };
+  }
+  const submissionsByStatus = await this.prisma.submitted.groupBy({
+    by: ['status'],
     where: {
-      project: {
-        managerId: managerId,
-      },
+      projectId: { in: projectIds },
     },
-    select: {
-      status: true,
-    },
+    _count: { status: true },
   });
 
-  const submissionOverview = submissions.reduce((acc, sub) => {
-    acc[sub.status] = (acc[sub.status] ?? 0) + 1;
+
+  const submissionOverview = submissionsByStatus.reduce((acc, item) => {
+    const status = item.status ?? 'UNKNOWN';
+    acc[status] = item._count.status;
     return acc;
   }, {} as Record<string, number>);
 
+
   const overdueWithSubmissions = await this.prisma.project.count({
     where: {
-      managerId: managerId,
+      id: { in: projectIds },
       status: 'OVERDUE',
-      submitted: {
-        some: {},
-      },
+      submitted: { some: {} },
     },
   });
 
@@ -950,6 +1031,7 @@ async showSubmissionsOverview(managerId: string) {
     overdueWithSubmissions,
   };
 }
+
 
 
 async getSubmissionActivity(managerId: string) {
