@@ -24,7 +24,7 @@ model Project {
   viewerId               String
   startDate              DateTime?
   progress               Int? // mendetory
-  chartList              String[] // Seed create that chart list
+  chartList              String[] // Seed create that chart list // TODO: ChartList Should be a array of chartList item
   estimatedCompletedDate DateTime?
   projectCompleteDate    DateTime? // this is project end date 
   currentRate            String?

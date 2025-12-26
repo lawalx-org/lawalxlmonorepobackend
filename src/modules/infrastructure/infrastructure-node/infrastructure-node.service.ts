@@ -32,7 +32,7 @@ export class InfrastructureNodeService {
 
     const slug = slugify(dto.taskName);
     if (await this.infrastructureRepo.findNodeBySlug(slug)) {
-      throw new ConflictException('Project slug already exists');
+      throw new ConflictException('Node slug already exists');
     }
 
     const project = await this.infrastructureRepo.findProjectById(

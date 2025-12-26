@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>Infrastructure Tree</title>
-
     <style>
       body {
         font-family: system-ui, Arial, sans-serif;
@@ -11,11 +10,9 @@
         color: #e5e7eb;
         padding: 20px;
       }
-
       h1 {
         margin-bottom: 20px;
       }
-
       .project {
         background: #020617;
         border-radius: 10px;
@@ -23,32 +20,27 @@
         margin-bottom: 24px;
         box-shadow: 0 0 0 1px #1e293b;
       }
-
       .project-title {
         font-size: 18px;
         font-weight: 600;
         margin-bottom: 12px;
       }
-
       ul {
         list-style: none;
         padding-left: 18px;
         margin-left: 6px;
         border-left: 1px dashed #334155;
       }
-
       li {
         margin: 6px 0;
         position: relative;
       }
-
       li::before {
         content: '•';
         color: #38bdf8;
         position: absolute;
         left: -14px;
       }
-
       .node {
         padding: 4px 6px;
         border-radius: 4px;
@@ -57,15 +49,12 @@
         gap: 6px;
         align-items: center;
       }
-
       .leaf {
         color: #22c55e;
       }
-
       .non-leaf {
         color: #facc15;
       }
-
       .progress {
         font-size: 12px;
         opacity: 0.8;
@@ -76,71 +65,6 @@
     <h1>Infrastructure Project Tree</h1>
     <div id="app"></div>
 
-    <script>
-      const API_URL =
-        'https://lawal.sakibalhasa.xyz/api/v1/infrastructure/projects';
-
-      function renderNodes(nodes) {
-        if (!nodes || !nodes.length) return null;
-
-        const ul = document.createElement('ul');
-
-        nodes.forEach((node) => {
-          const li = document.createElement('li');
-
-          const nodeEl = document.createElement('span');
-          nodeEl.className = `node ${node.isLeaf ? 'leaf' : 'non-leaf'}`;
-          nodeEl.textContent = node.name;
-
-          const progress = document.createElement('span');
-          progress.className = 'progress';
-          progress.textContent =
-            node.progress !== null
-              ? `(${node.progress}%)`
-              : `(computed: ${node.computedProgress}%)`;
-
-          li.appendChild(nodeEl);
-          li.appendChild(progress);
-
-          if (node.children && node.children.length > 0) {
-            li.appendChild(renderNodes(node.children));
-          }
-
-          ul.appendChild(li);
-        });
-
-        return ul;
-      }
-
-      async function loadProjects() {
-        const res = await fetch(API_URL);
-        const json = await res.json();
-
-        const container = document.getElementById('app');
-
-        json.data.forEach((project) => {
-          const projectDiv = document.createElement('div');
-          projectDiv.className = 'project';
-
-          const title = document.createElement('div');
-          title.className = 'project-title';
-          title.textContent = `${project.name} (${project._count.nodes} nodes) | ${Math.floor(project.computedProgress)}%`;
-
-          projectDiv.appendChild(title);
-
-          if (project.nodes && project.nodes.length > 0) {
-            projectDiv.appendChild(renderNodes(project.nodes));
-          } else {
-            projectDiv.appendChild(
-              document.createTextNode('No nodes available.'),
-            );
-          }
-
-          container.appendChild(projectDiv);
-        });
-      }
-
-      loadProjects();
-    </script>
+    <script src="./app.js"></script>
   </body>
 </html>

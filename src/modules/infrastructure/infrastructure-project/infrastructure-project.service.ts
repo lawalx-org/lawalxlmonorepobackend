@@ -10,53 +10,71 @@
 // import { InfrastructureService } from '../infrastructure.service';
 // import { InfrastructureRepository } from '../infrastructure.repository';
 
-// @Injectable()
-// export class InfrastructureProjectService {
-//   constructor(
-//     private readonly projectRepo: InfrastructureProjectRepository,
-//     private readonly infrastructureRepo: InfrastructureRepository,
-//     private readonly infrastructureService: InfrastructureService,
-//   ) {}
+import { Injectable } from '@nestjs/common';
+import { InfrastructureProjectRepository } from './infrastructure-project.repository';
+import { InfrastructureService } from '../infrastructure.service';
 
-//   // project
-//   async createProject(dto: InfrastructureProjectDto) {
-//     if (!dto.taskName)
-//       throw new BadRequestException('Project name is required');
+@Injectable()
+export class InfrastructureProjectService {
+  constructor(
+    private readonly inProjectRepo: InfrastructureProjectRepository,
+    //     private readonly infrastructureRepo: InfrastructureRepository,
+    private readonly infrastructureService: InfrastructureService,
+  ) {}
 
-//     const slug = slugify(dto.taskName);
-//     if (await this.infrastructureRepo.findByProjectSlug(slug)) {
-//       throw new ConflictException('Project slug already exists');
-//     }
+  //   // project
+  //   async createProject(dto: InfrastructureProjectDto) {
+  //     if (!dto.taskName)
+  //       throw new BadRequestException('Project name is required');
 
-//     return this.projectRepo.createProject({
-//       ...dto,
-//       taskName: dto.taskName,
-//       // assigned take has multiple users who is assigned to the project
-//       // dto.assigned gives us array of user ids like assigned: ["userid1", "userid2", "userid3"]
-//       assigned: dto.assigned
-//         ? {
-//             connect: dto.assigned.map((id) => ({ id: id })),
-//           }
-//         : undefined,
-//       slug,
-//     });
-//   }
+  //     const slug = slugify(dto.taskName);
+  //     if (await this.infrastructureRepo.findByProjectSlug(slug)) {
+  //       throw new ConflictException('Project slug already exists');
+  //     }
 
-//   async findManyProjects() {
-//     const projects = await this.projectRepo.findManyProjects();
+  //     return this.projectRepo.createProject({
+  //       ...dto,
+  //       taskName: dto.taskName,
+  //       // assigned take has multiple users who is assigned to the project
+  //       // dto.assigned gives us array of user ids like assigned: ["userid1", "userid2", "userid3"]
+  //       assigned: dto.assigned
+  //         ? {
+  //             connect: dto.assigned.map((id) => ({ id: id })),
+  //           }
+  //         : undefined,
+  //       slug,
+  //     });
+  //   }
 
-//     return projects.map((project) => {
-//       const tree = this.infrastructureService.buildTree(project.nodes);
+  async findManyProjects() {
+    const projects = await this.inProjectRepo.findManyProjects();
+    return projects;
+    return projects.map((project) => {
+      const tree = this.infrastructureService.buildTree(project.nodes);
 
-//       return {
-//         ...project,
-//         nodes: tree,
-//       };
-//     });
-//   }
+      return {
+        ...project,
+        nodes: tree,
+      };
+    });
+  }
+  /**
+   * @deprecated
+   */
+  async findManyNestedProjects() {
+    const projects = await this.inProjectRepo.findManyProjects();
+    // return projects;
+    return projects.map((project) => {
+      const tree = this.infrastructureService.buildTree(project.nodes);
 
-//   async deleteProject(id: string) {
-//     if (!id) throw new NotFoundException('Delete project id is required!');
-//     return this.projectRepo.deleteProject(id);
-//   }
-// }
+      return {
+        ...project,
+        nodes: tree,
+      };
+    });
+  }
+  //   async deleteProject(id: string) {
+  //     if (!id) throw new NotFoundException('Delete project id is required!');
+  //     return this.projectRepo.deleteProject(id);
+  //   }
+}

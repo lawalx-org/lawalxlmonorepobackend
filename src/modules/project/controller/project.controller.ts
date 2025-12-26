@@ -19,15 +19,24 @@ import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { Role } from 'generated/prisma';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateProjectStatusDto } from '../dto/update-project-status.dto';
 import { UpdateProjectDto } from '../dto/update-project.dto';
 import { RequestWithUser } from 'src/types/RequestWithUser';
+import { InfrastructureProjectService } from 'src/modules/infrastructure/infrastructure-project/infrastructure-project.service';
+import { InfrastructureNodeDto } from 'src/modules/infrastructure/dto/infrastructure.node.dto';
+import { InfrastructureService } from 'src/modules/infrastructure/infrastructure.service';
+import { InfrastructureNodeService } from 'src/modules/infrastructure/infrastructure-node/infrastructure-node.service';
 
 @Controller('project')
-@UseGuards(JwtAuthGuard, RolesGuard)
+// @UseGuards(JwtAuthGuard, RolesGuard) // // TODO: need to be enable
 export class ProjectController {
-  constructor(private readonly projectService: ProjectService) {}
+  constructor(
+    private readonly projectService: ProjectService,
+    private readonly inProjectService: InfrastructureProjectService,
+    private readonly inService: InfrastructureService,
+    private readonly inNodeService: InfrastructureNodeService,
+  ) {}
 
   //  Create a new project
   @Post()
@@ -42,6 +51,30 @@ export class ProjectController {
       project: newProject,
     };
   }
+  // ==================== SABBIR ================== //
+  @ApiOperation({ summary: 'Create tier' })
+  @Post('tier')
+  // @Roles(Role.CLIENT)
+  async createPorjectTier(@Body() dto: InfrastructureNodeDto) {
+    this.inService.checkPriority(dto.priority);
+
+    const tier = await this.inNodeService.createNode(dto);
+    return {
+      message: 'Project node/tier created successfully',
+      project: tier,
+    };
+  }
+  // create project tier
+  @Get('with-nodes')
+  @ApiOperation({ summary: 'Get all projects with nodes' })
+  async findAllWithNodes() {
+    return await this.inProjectService.findManyProjects();
+    // return {
+    //   message: 'Projects retrieved successfully',
+    //   projects: allProjects,
+    // };
+  }
+  // ==================== SABBIR ================== //
 
   // Get all projects (with pagination/filter)
   @Get()

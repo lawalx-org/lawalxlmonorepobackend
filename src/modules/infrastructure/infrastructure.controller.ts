@@ -12,10 +12,7 @@ import {
   InfrastructureNodeDto,
   UpdateInfrastructureNodeDto,
 } from './dto/infrastructure.node.dto';
-import { InfrastructureProjectDto } from './dto/infrastructure.dto';
-// import { InfrastructureProjectService } from './infrastructure-project/infrastructure-project.service';
 import { InfrastructureNodeService } from './infrastructure-node/infrastructure-node.service';
-import { priority } from './contants';
 import { InfrastructureService } from './infrastructure.service';
 
 // TODO: Proper error handling from controller
@@ -47,9 +44,7 @@ export class InfrastructureController {
   }
 
   // nodes from here...
-  @ApiTags(
-    'Create node which is belong in project, if node has parent then just include it otherwise exclude',
-  )
+  @ApiTags('Create Tier')
   @Post('nodes')
   createNode(@Body() dto: InfrastructureNodeDto) {
     this.service.checkPriority(dto.priority);

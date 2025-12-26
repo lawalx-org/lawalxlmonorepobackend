@@ -11,6 +11,7 @@ import { InfrastructureNodeRepository } from '../infrastructure/infrastructure-n
 import { InfrastructureProjectRepository } from '../infrastructure/infrastructure-project/infrastructure-project.repository';
 import { InfrastructureService } from '../infrastructure/infrastructure.service';
 import { InfrastructureNodeService } from '../infrastructure/infrastructure-node/infrastructure-node.service';
+import { InfrastructureProjectService } from '../infrastructure/infrastructure-project/infrastructure-project.service';
 
 @Module({
   imports: [NotificationModule, InfrastructureModule],
@@ -27,6 +28,7 @@ import { InfrastructureNodeService } from '../infrastructure/infrastructure-node
     InfrastructureProjectRepository,
     // services
     InfrastructureService,
+    InfrastructureProjectService,
     InfrastructureNodeService,
   ],
   exports: [ReminderService],

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Export XLSX Blueprint</title>
+
+    <!-- SheetJS CDN -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script> -->
+    <script src="./exceljs.js"></script>
+    <style>
+      body {
+        font-family: system-ui, Arial, sans-serif;
+        background: #0f172a;
+        color: #e5e7eb;
+        padding: 20px;
+      }
+
+      button {
+        padding: 10px 16px;
+        border-radius: 6px;
+        border: none;
+        background: #38bdf8;
+        color: #020617;
+        font-size: 14px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      button:hover {
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Export Infrastructure Blueprint (XLSX)</h1>
+
+    <button onclick="exportXlsx()">Download Excel</button>
+
+    <script>
+      /**
+       * FIXED BLUEPRINT (Header Row)
+       * This structure MUST NOT change
+       */
+      const BLUEPRINT_HEADERS = [
+        'Project Name',
+        'Node Name',
+        'Parent Node',
+        'Progress (%)',
+      ];
+
+      /**
+       * Example data
+       * In real case → this can come from API response
+       */
+      const DATA_ROWS = [
+        {
+          projectName: 'College Building',
+          nodeName: 'Floor 1',
+          parentNode: 'ROOT',
+          progress: 40,
+        },
+        {
+          projectName: 'College Building',
+          nodeName: 'Room 101',
+          parentNode: 'Floor 1',
+          progress: 80,
+        },
+        {
+          projectName: 'College Building',
+          nodeName: 'Washroom',
+          parentNode: 'Floor 1',
+          progress: 60,
+        },
+      ];
+
+      /**
+       * Convert data into worksheet-compatible 2D array
+       * This keeps the blueprint FIXED
+       */
+      function buildWorksheetData() {
+        const rows = [];
+
+        // 1️⃣ Push header row
+        rows.push(BLUEPRINT_HEADERS);
+
+        // 2️⃣ Push data rows in same order as blueprint
+        DATA_ROWS.forEach((item) => {
+          rows.push([
+            item.projectName,
+            item.nodeName,
+            item.parentNode,
+            item.progress,
+          ]);
+        });
+
+        return rows;
+      }
+
+      /**
+       * Main export function
+       */
+      function exportXlsx() {
+        // Create workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Build worksheet data
+        const worksheetData = buildWorksheetData();
+
+        // Convert array -> worksheet
+        const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+        // Append worksheet to workbook
+        XLSX.utils.book_append_sheet(
+          workbook,
+          worksheet,
+          'Infrastructure Blueprint',
+        );
+
+        // Download file
+        XLSX.writeFile(workbook, 'infrastructure_blueprint.xlsx');
+      }
+    </script>
+  </body>
+</html>

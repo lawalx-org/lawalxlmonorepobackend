@@ -77,6 +77,36 @@ export class InfrastructureService {
         children: this.buildTree(nodes, node.id),
       }));
   }
+  /**
+   * @deprecated
+   */
+  buildNestedTree(nodes: any[]) {
+    const nodeMap = new Map<string, any>();
+    const roots: any[] = [];
+
+    // Initialize map
+    for (const node of nodes) {
+      nodeMap.set(node.id, { ...node, children: [] });
+    }
+
+    // Build tree
+    for (const node of nodes) {
+      //  Prevent self reference
+      if (node.parentId && node.parentId === node.id) {
+        continue;
+      }
+
+      if (node.parentId && nodeMap.has(node.parentId)) {
+        nodeMap.get(node.parentId).children.push(nodeMap.get(node.id));
+      } else {
+        // Root node
+        roots.push(nodeMap.get(node.id));
+      }
+    }
+
+    return roots;
+  }
+
   checkPriority(p: Priority) {
     if (!priority.includes(p)) {
       throw new BadRequestException(
