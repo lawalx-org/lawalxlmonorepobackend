@@ -146,6 +146,13 @@ export class ProjectService {
         data: {
           ...projectData,
           name,
+          // ============== SABBIR =============== //
+          slug,
+          computedProgress: createProjectDto.computedProgress ?? 0,
+          progress: createProjectDto.progress ?? 0,
+          metadata: {},
+          // ============== SABBIR =============== //
+
           manager: { connect: { id: managerId } },
           program: { connect: { id: programId } },
           projectEmployees: {

@@ -4,9 +4,10 @@ model Project {
   name      String
 
   // sabbir infrastructure start from here...
-  slug             String               @unique
+  slug             String?              @unique
   computedProgress Float                @default(0)
   nodes            InfrastructureNode[]
+  metadata         Json?                @default("{}")
   // sabbir infrastructure end from here...
 
   // uploadbeforeday           String
@@ -22,7 +23,7 @@ model Project {
   managerId              String
   viewerId               String
   startDate              DateTime?
-  progress               Int?
+  progress               Int? // mendetory
   chartList              String[] // Seed create that chart list
   estimatedCompletedDate DateTime?
   projectCompleteDate    DateTime? // this is project end date 

@@ -40,18 +40,23 @@ export class InfrastructureController {
   //   return this.projectService.findManyProjects();
   // }
 
+  @ApiTags('Get single project nodes')
   @Get('projects/:projectId/nodes')
   getRootNodes(@Param('projectId') projectId: string) {
     return this.service.findRootNodes(projectId);
   }
 
   // nodes from here...
+  @ApiTags(
+    'Create node which is belong in project, if node has parent then just include it otherwise exclude',
+  )
   @Post('nodes')
   createNode(@Body() dto: InfrastructureNodeDto) {
     this.service.checkPriority(dto.priority);
     return this.nodeService.createNode(dto);
   }
 
+  @ApiTags('Get a spasific node childs')
   @Get('nodes/:nodeId/children')
   getChildren(@Param('nodeId') nodeId: string) {
     return this.nodeService.findNodeChildren(nodeId);

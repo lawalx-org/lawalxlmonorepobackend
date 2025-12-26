@@ -115,7 +115,16 @@ export class InfrastructureNodeService {
   }
 
   async findNodeChildren(parentNodeId: string) {
-    return await this.nodeRepo.findChildren(parentNodeId);
+    const nodes = await this.nodeRepo.findChildren(parentNodeId);
+    return nodes;
+    // return nodes.map((node) => {
+    //   const tree = this.infrastructureService.buildTree(node);
+
+    //   return {
+    //     ...nodes,
+    //     nodes: tree,
+    //   };
+    // });
   }
 
   async deleteNode(nodeId: string) {
