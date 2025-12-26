@@ -6,14 +6,14 @@ export class InfrastructureRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   findByProjectSlug(slug: string) {
-    return this.prisma.infrastructureProject.findUnique({ where: { slug } });
+    return this.prisma.project.findUnique({ where: { slug } });
   }
   findNodeBySlug(slug: string) {
     return this.prisma.infrastructureNode.findUnique({ where: { slug } });
   }
 
   findProjectById(id: string) {
-    return this.prisma.infrastructureProject.findUnique({ where: { id } });
+    return this.prisma.project.findUnique({ where: { id } });
   }
 
   findNodeById(id: string) {

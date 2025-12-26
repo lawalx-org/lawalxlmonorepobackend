@@ -4,13 +4,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { slugify } from './functions';
-import { InfrastructureNodeDto } from './dto/infrastructure.node.dto';
-import { InfrastructureProjectDto } from './dto/infrastructure.dto';
 import { InfrastructureRepository } from './infrastructure.repository';
 import { InfrastructureNodeRepository } from './infrastructure-node/infrastructure-node.repository';
-import { InfrastructureProjectRepository } from './infrastructure-project/infrastructure-project.repository';
 import { priority, Priority } from './contants';
+import { InfrastructureProjectRepository } from './infrastructure-project/infrastructure-project.repository';
 
 @Injectable()
 export class InfrastructureService {
@@ -38,7 +35,7 @@ export class InfrastructureService {
     });
 
     await this.propagateUp(node.parentId);
-    await this.updateProjectProgress(node.infrastructureProjectId);
+    await this.updateProjectProgress(node.projectId);
   }
 
   // private

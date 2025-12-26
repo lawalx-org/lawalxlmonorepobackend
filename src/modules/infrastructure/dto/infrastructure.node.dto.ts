@@ -13,11 +13,11 @@ import { Priority } from '../contants';
 
 export class InfrastructureNodeDto {
   @ApiProperty({
-    description: 'Infrastructure project ID this node belongs to',
+    description: 'Project ID this node belongs to',
     example: '0699c9bd-dc72-437e-b4cd-f40844ef5579',
   })
   @IsUUID()
-  infrastructureProjectId: string;
+  projectId: string;
 
   @ApiPropertyOptional({
     description: 'Parent node ID (null for top-level nodes)',

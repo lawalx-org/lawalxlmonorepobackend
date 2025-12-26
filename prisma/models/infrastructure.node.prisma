@@ -1,9 +1,6 @@
 model InfrastructureNode {
   id String @id @default(uuid())
 
-  infrastructureProjectId String
-  parentId                String? // null = top-level node under project
-
   taskName String
   slug     String @unique
 
@@ -22,17 +19,18 @@ model InfrastructureNode {
   weight           Float   @default(1)
   isLeaf           Boolean @default(true)
 
-  // Relations
-  infrastructureProject InfrastructureProject @relation(fields: [infrastructureProjectId], references: [id])
-  parent                InfrastructureNode?   @relation("NodeChildren", fields: [parentId], references: [id])
-  children              InfrastructureNode[]  @relation("NodeChildren")
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Project   Project? @relation(fields: [projectId], references: [id])
-  projectId String?
 
-  @@index([infrastructureProjectId])
+  // Relations - link with project
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+  parentId  String? // null = top-level node under project
+
+  parent   InfrastructureNode?  @relation("NodeChildren", fields: [parentId], references: [id])
+  children InfrastructureNode[] @relation("NodeChildren")
+
+  @@index([projectId])
   @@index([parentId])
   @@index([isLeaf])
   @@index([slug, id])

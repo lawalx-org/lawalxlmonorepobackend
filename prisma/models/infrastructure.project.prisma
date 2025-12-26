@@ -1,27 +1,27 @@
-model InfrastructureProject {
-  id String @id @default(uuid())
+// model InfrastructureProject {
+//   id String @id @default(uuid())
 
-  taskName String
-  slug     String @unique
+//   taskName String
+//   slug     String @unique
 
-  duration            Int      @default(0)
-  startDate           DateTime @default(now())
-  finishDate          DateTime @default(now())
-  assigned            User[]   @relation("AssignedProject")
-  computedProgress    Float    @default(0)
-  priority            String   @default("NONE")
-  actualHour          Float    @default(0)
-  plannedHour         Float    @default(0)
-  plannedCost         Float    @default(0)
-  plannedResourceCost Float    @default(0)
+//   duration            Int      @default(0)
+//   startDate           DateTime @default(now())
+//   finishDate          DateTime @default(now())
+//   assigned            User[]   @relation("AssignedProject")
+//   computedProgress    Float    @default(0)
+//   priority            String   @default("NONE")
+//   actualHour          Float    @default(0)
+//   plannedHour         Float    @default(0)
+//   plannedCost         Float    @default(0)
+//   plannedResourceCost Float    @default(0)
 
-  nodes InfrastructureNode[]
+//   nodes InfrastructureNode[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
 
-  // metadata JSON field for dynamic user-defined columns ex: {remarks: "something"}
-  metadata Json? @default("{}")
+//   // metadata JSON field for dynamic user-defined columns ex: {remarks: "something"}
+//   metadata Json? @default("{}")
 
-  @@index([slug, id])
-}
+//   @@index([slug, id])
+// }
