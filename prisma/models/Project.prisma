@@ -1,13 +1,13 @@
 model Project {
-  id                     String        @id @default(uuid())
-  programId              String
-  name                   String
+  id        String @id @default(uuid())
+  programId String
+  name      String
 
   // sabbir infrastructure start from here...
-  slug                   String        @unique
-  computedProgress       Float          @default(0)
-  nodes InfrastructureNode[]
-
+  slug             String?              @unique
+  computedProgress Float                @default(0)
+  nodes            InfrastructureNode[]
+  metadata         Json?                @default("{}")
   // sabbir infrastructure end from here...
 
   // uploadbeforeday           String
@@ -23,7 +23,7 @@ model Project {
   managerId              String
   viewerId               String
   startDate              DateTime?
-  progress               Int?
+  progress               Int? // mendetory
   chartList              String[] // Seed create that chart list
   estimatedCompletedDate DateTime?
   projectCompleteDate    DateTime? // this is project end date 
@@ -46,19 +46,18 @@ model Project {
   reminders                  Reminder[]
   sheets                     Sheet[]
 
-    @@index([programId])
-    @@index([slug])
-    @@index([managerId])
-    @@index([viewerId])
-    @@index([status])
-    @@index([priority])
-    @@index([deadline])
-    @@index([estimatedCompletedDate])
-    @@index([projectCompleteDate])
-    @@index([createdAt])
-    @@index([updatedAt])
-
-    @@map("projects")
+  @@index([programId])
+  @@index([slug])
+  @@index([managerId])
+  @@index([viewerId])
+  @@index([status])
+  @@index([priority])
+  @@index([deadline])
+  @@index([estimatedCompletedDate])
+  @@index([projectCompleteDate])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@map("projects")
 }
 
 model ProjectEmployee {

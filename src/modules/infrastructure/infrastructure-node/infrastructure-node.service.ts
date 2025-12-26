@@ -27,7 +27,7 @@ export class InfrastructureNodeService {
   }
 
   async createNode(dto: InfrastructureNodeDto) {
-    if (!dto.infrastructureProjectId || !dto.taskName)
+    if (!dto.projectId || !dto.taskName)
       throw new BadRequestException('Invalid node payload');
 
     const slug = slugify(dto.taskName);
@@ -36,7 +36,7 @@ export class InfrastructureNodeService {
     }
 
     const project = await this.infrastructureRepo.findProjectById(
-      dto.infrastructureProjectId,
+      dto.projectId,
     );
     if (!project) throw new NotFoundException('Project not found');
 
@@ -45,7 +45,7 @@ export class InfrastructureNodeService {
       const parent = await this.infrastructureRepo.findNodeById(dto.parentId);
       if (!parent) throw new NotFoundException('Parent node not found');
 
-      if (parent.infrastructureProjectId !== dto.infrastructureProjectId) {
+      if (parent.projectId !== dto.projectId) {
         throw new ConflictException('Parent belongs to another project');
       }
 
@@ -59,13 +59,13 @@ export class InfrastructureNodeService {
       }
     }
 
-    const { infrastructureProjectId, parentId, ...rest } = dto;
+    const { projectId, parentId, ...rest } = dto;
 
     const node = await this.nodeRepo.createNode({
       ...rest,
       slug,
-      infrastructureProject: {
-        connect: { id: infrastructureProjectId },
+      project: {
+        connect: { id: projectId },
       },
       parent: parentId ? { connect: { id: parentId } } : undefined,
       isLeaf: true,
@@ -74,9 +74,7 @@ export class InfrastructureNodeService {
     });
 
     await this.infrastructureService.propagateUp(dto.parentId);
-    await this.infrastructureService.updateProjectProgress(
-      dto.infrastructureProjectId,
-    );
+    await this.infrastructureService.updateProjectProgress(dto.projectId);
 
     return node;
   }
@@ -110,16 +108,23 @@ export class InfrastructureNodeService {
 
     if (progress) {
       await this.infrastructureService.propagateUp(node.parentId);
-      await this.infrastructureService.updateProjectProgress(
-        node.infrastructureProjectId,
-      );
+      await this.infrastructureService.updateProjectProgress(node.projectId);
     }
 
     return updated;
   }
 
   async findNodeChildren(parentNodeId: string) {
-    return await this.nodeRepo.findChildren(parentNodeId);
+    const nodes = await this.nodeRepo.findChildren(parentNodeId);
+    return nodes;
+    // return nodes.map((node) => {
+    //   const tree = this.infrastructureService.buildTree(node);
+
+    //   return {
+    //     ...nodes,
+    //     nodes: tree,
+    //   };
+    // });
   }
 
   async deleteNode(nodeId: string) {
@@ -131,7 +136,7 @@ export class InfrastructureNodeService {
     }
 
     const parentId = node.parentId;
-    const projectId = node.infrastructureProjectId;
+    const projectId = node.projectId;
 
     await this.nodeRepo.deleteNode(nodeId);
 
