@@ -1005,6 +1005,8 @@ async showSubmissionsOverview(managerId: string) {
     return {
       submissions: defaultOverview,
       overdueWithSubmissions: 0,
+      overduePercentage: 0,
+      overdueProjects: [],
     };
   }
 
@@ -1026,19 +1028,27 @@ async showSubmissionsOverview(managerId: string) {
     submissionOverview[status] = item._count.status;
   });
 
-  const overdueWithSubmissions = await this.prisma.project.count({
+
+  const overdueProjects = await this.prisma.project.findMany({
     where: {
       id: { in: projectIds },
       status: 'OVERDUE',
       submitted: { some: {} },
     },
+    select: { id: true, name: true }, 
   });
+
+  const overdueCount = overdueProjects.length;
+  const totalProjects = projectIds.length;
+
+  const projectoverdue = totalProjects > 0 ? (overdueCount / totalProjects) * 100 : 0;
 
   return {
     submissions: submissionOverview,
-    overdueWithSubmissions,
+    projectoverdue,     
   };
 }
+
 
 
 
