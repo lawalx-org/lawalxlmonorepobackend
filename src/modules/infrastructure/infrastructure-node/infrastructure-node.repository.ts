@@ -8,7 +8,7 @@ export class InfrastructureNodeRepository {
 
   findRootNodes(projectId: string) {
     return this.prisma.infrastructureNode.findMany({
-      where: { infrastructureProjectId: projectId, parentId: null },
+      where: { projectId, parentId: null },
       orderBy: { createdAt: 'asc' },
     });
   }

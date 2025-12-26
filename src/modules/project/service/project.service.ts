@@ -3,6 +3,7 @@ import {
   NotFoundException,
   Logger,
   BadRequestException,
+  ConflictException,
 } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -15,6 +16,8 @@ import { NotificationService } from 'src/modules/notification/service/notificati
 import { UpdateProjectDto } from '../dto/update-project.dto';
 import { UpdateProjectStatusDto } from '../dto/update-project-status.dto';
 import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
+import { slugify } from 'src/modules/infrastructure/functions';
+import { InfrastructureRepository } from 'src/modules/infrastructure/infrastructure.repository';
 
 @Injectable()
 export class ProjectService {
@@ -23,6 +26,7 @@ export class ProjectService {
     private readonly prisma: PrismaService,
     private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
+    private readonly infrastructureRepo: InfrastructureRepository,
   ) {}
 
   // async create(createProjectDto: CreateProjectDto) {
@@ -97,6 +101,7 @@ export class ProjectService {
       name,
       ...projectData
     } = createProjectDto;
+
     // --- Pre-validation before transaction ---
     const [manager, program] = await Promise.all([
       this.prisma.manager.findUnique({
@@ -127,6 +132,15 @@ export class ProjectService {
 
     // --- Main transaction ---
     const project = await this.prisma.$transaction(async (tx) => {
+      // ============= SABBIR ================ //
+      // brefore creating our post just check with slug
+      if (!name) throw new BadRequestException('Project name is required');
+
+      const slug = slugify(name);
+      if (await this.infrastructureRepo.findByProjectSlug(slug)) {
+        throw new ConflictException('Project slug already exists');
+      }
+      // ============== SABBIR =============== //
       // Create the new project
       const newProject = await tx.project.create({
         data: {

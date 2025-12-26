@@ -37,8 +37,5 @@ model User {
   activities      Activity[]
   file            File[]
 
-  // The inverse of the "assigned" relation in InfrastructureProject
-  assignedProjects InfrastructureProject[] @relation("AssignedProject")
-
   @@map("users")
 }
