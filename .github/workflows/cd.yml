@@ -94,17 +94,17 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/${{ secrets.VPS_USERNAME }}/projects/${{ secrets.PACKAGE_NAME }}
-            # Pull the latest images
-            docker compose --profile prod pull
-
-            # Stop and remove existing containers safely
-            # docker compose --profile prod down --remove-orphans
-
-            # Start containers in detached mode
-            docker compose --profile prod up -d
-
-            # Prune unused Docker objects (optional, cleans disk)
-            docker system prune -f
+            # Force pull latest images
+            docker compose --profile prod pull --no-parallel
+            
+            # Stop containers
+            docker compose --profile prod down
+            
+            # Remove old images (important!)
+            docker image prune -af
+            
+            # Recreate containers with new images
+            docker compose --profile prod up -d --force-recreate
 
       - name: Restart Caddy server
         uses: appleboy/ssh-action@v1.0.3

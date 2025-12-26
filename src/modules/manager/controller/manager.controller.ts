@@ -276,7 +276,7 @@ export class ManagerController {
     };
   }
 
-   @Get('overview/:managerId')
+   @Get('overview')
   @Roles('MANAGER')
   async getOverview( @Req() req: RequestWithUser) {
     const userId = req.user.managerId;
