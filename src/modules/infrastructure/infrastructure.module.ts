@@ -5,7 +5,6 @@ import { InfrastructureNodeRepository } from './infrastructure-node/infrastructu
 import { InfrastructureProjectRepository } from './infrastructure-project/infrastructure-project.repository';
 import { InfrastructureService } from './infrastructure.service';
 import { InfrastructureNodeService } from './infrastructure-node/infrastructure-node.service';
-import { InfrastructureProjectService } from './infrastructure-project/infrastructure-project.service';
 
 @Module({
   imports: [],
@@ -17,7 +16,6 @@ import { InfrastructureProjectService } from './infrastructure-project/infrastru
     // services
     InfrastructureService,
     InfrastructureNodeService,
-    InfrastructureProjectService,
   ],
 })
 export class InfrastructureModule {}

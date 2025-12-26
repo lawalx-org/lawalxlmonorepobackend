@@ -1,8 +1,8 @@
-model InfrastructureProjectSnapshot {
-  id String @id @default(uuid())
+// model InfrastructureProjectSnapshot {
+//   id String @id @default(uuid())
 
-  infrastructureProjectId String
-  takenAt                 DateTime
+//   infrastructureProjectId String
+//   takenAt                 DateTime
 
-  data Json // full tree snapshot
-}
+//   data Json // full tree snapshot
+// }

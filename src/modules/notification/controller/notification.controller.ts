@@ -1,9 +1,13 @@
-import { Controller, Get, Post, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Req, Patch } from '@nestjs/common';
 import { NotificationService } from '../service/notification.service';
 import { CreateNotificationDto } from '../dto/create-notification.dto';
 import { JwtAuthGuard } from '../../../common/jwt/jwt.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { RequestWithUser } from '../../../types/RequestWithUser';
+import { Roles } from 'src/common/jwt/roles.decorator';
+import { UpdateEmployeeNotificationDto } from '../dto/update-employee-notification.dto';
+import { UpdateManagerNotificationDto } from '../dto/update-manager-notification.dto';
+import { UpdateClientNotificationDto } from '../dto/update-client-notification.dto';
 
 @ApiTags('Notification')
 @Controller('notification')
@@ -31,5 +35,34 @@ export class NotificationController {
   findSentNotifications(@Req() req: RequestWithUser) {
     console.log('request user', req.user);
     return this.notificationService.findSentNotifications(req.user.userId);
+  }
+   // ================= EMPLOYEE =================
+  @Patch('employee')
+  @Roles('EMPLOYEE')
+  updateEmployee(
+    @Req() req: RequestWithUser,
+    @Body() dto: UpdateEmployeeNotificationDto,
+  ) {
+    return this.notificationService.updateEmployeePermission(req.user.userId, dto);
+  }
+
+  // ================= MANAGER =================
+  @Patch('manager')
+  @Roles('MANAGER')
+  updateManager(
+    @Req() req: RequestWithUser,
+    @Body() dto: UpdateManagerNotificationDto,
+  ) {
+    return this.notificationService.updateManagerPermission(req.user.userId, dto);
+  }
+
+  // ================= CLIENT =================
+  @Patch('client')
+  @Roles('CLIENT')
+  updateClient(
+    @Req() req: RequestWithUser,
+    @Body() dto: UpdateClientNotificationDto,
+  ) {
+    return this.notificationService.updateClientPermission(req.user.userId, dto);
   }
 }
