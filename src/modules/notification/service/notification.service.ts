@@ -2,6 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNotificationDto } from '../dto/create-notification.dto';
 import { Gateway } from './notification.getway';
+import { UpdateEmployeeNotificationDto } from '../dto/update-employee-notification.dto';
+import { UpdateManagerNotificationDto } from '../dto/update-manager-notification.dto';
+import { UpdateClientNotificationDto } from '../dto/update-client-notification.dto';
 
 @Injectable()
 export class NotificationService {
@@ -97,5 +100,38 @@ export class NotificationService {
       },
     });
     return notifications;
+  }
+
+  // ================= EMPLOYEE =================
+  async updateEmployeePermission(
+    userId: string,
+    dto: UpdateEmployeeNotificationDto,
+  ) {
+    return this.prisma.notificationPermissionEmployee.update({
+      where: { userId },
+      data: dto,
+    });
+  }
+
+  // ================= MANAGER =================
+  async updateManagerPermission(
+    userId: string,
+    dto: UpdateManagerNotificationDto,
+  ) {
+    return this.prisma.notificationPermissionManager.update({
+      where: { userId },
+      data: dto,
+    });
+  }
+
+  // ================= CLIENT =================
+  async updateClientPermission(
+    userId: string,
+    dto: UpdateClientNotificationDto,
+  ) {
+    return this.prisma.notificationPermissionClient.update({
+      where: { userId },
+      data: dto,
+    });
   }
 }
