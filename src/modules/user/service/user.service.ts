@@ -21,6 +21,7 @@ import {
   PaginatedResult,
 } from 'src/modules/utils/pagination/pagination.utils';
 import { deleteProfileImage } from 'src/modules/utils/file.utils';
+import { mapUserWithAssignedProjects } from '../dto/user.mapper';
 
 @Injectable()
 export class UserService {
@@ -61,23 +62,66 @@ export class UserService {
     }
   }
 
-  async findAll(
-    query: { page: number; limit: number } = { page: 1, limit: 10 },
-  ): Promise<PaginatedResult<any>> {
-    const paginatedUsers = await paginate(
-      this.prisma,
-      'user',
-      {},
-      { page: query.page, limit: query.limit },
-    );
+async findAll(
+  query: { page: number; limit: number } = { page: 1, limit: 10 },
+) {
+  const users = await paginate<any>(
+    this.prisma,
+    'user',
+    {
+      include: {
+        manager: {
+          include: {
+            projects: {
+              select: { id: true, name: true },
+            },
+          },
+        },
+        employee: {
+          include: {
+            projectEmployees: {
+              include: {
+                project: {
+                  select: { id: true, name: true },
+                },
+              },
+            },
+          },
+        },
+        viewer: true,
+      },
+    },
+    {
+      page: query.page,
+      limit: query.limit,
+    },
+  );
 
-    paginatedUsers.data = paginatedUsers.data.map((user: any) => {
-      const { password, ...result } = user;
-      return result;
-    });
+  // Collect viewer project IDs
+  const viewerProjectIds = users.data.flatMap(
+    (u: any) => u.viewer?.projectId || [],
+  );
 
-    return paginatedUsers;
-  }
+  // Fetch viewer projects
+  const viewerProjects = viewerProjectIds.length
+    ? await this.prisma.project.findMany({
+        where: { id: { in: viewerProjectIds } },
+        select: { id: true, name: true },
+      })
+    : [];
+
+  const viewerProjectMap = new Map(
+    viewerProjects.map(p => [p.id, p]),
+  );
+
+  users.data = users.data.map(user =>
+    mapUserWithAssignedProjects(user, viewerProjectMap),
+  );
+
+  return users;
+}
+
+
 
   async findOne(id: string) {
     const user = await this.prisma.user.findUnique({

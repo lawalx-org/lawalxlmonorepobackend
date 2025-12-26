@@ -161,5 +161,19 @@ export class ClientDashboardController {
         };
     }
 
+    @Get()
+    async showAllSubmission(@Req() req: RequestWithUser) {
+        const clientId = req.user.clientId;
+        if (!clientId) {
+            throw new UnauthorizedException("clientId ID not found in token");
+        }
+
+        const result = await this.clientDashboardServices.showAllSubmission();
+        return{
+            message :"submission fetch successfully",
+            data:result
+        }
+    }
+
 
 }

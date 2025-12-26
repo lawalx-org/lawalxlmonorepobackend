@@ -6,218 +6,218 @@ import { PrismaService } from "src/prisma/prisma.service";
 export class ClientDashboardServices {
   constructor(private readonly prisma: PrismaService) { }
 
-async getDashboardOverview() {
-  const now = new Date();
-  const thisMonthStart = startOfMonth(now);
-  const lastMonthStart = startOfMonth(subMonths(now, 1));
+  async getDashboardOverview() {
+    const now = new Date();
+    const thisMonthStart = startOfMonth(now);
+    const lastMonthStart = startOfMonth(subMonths(now, 1));
 
-  // -------- Growth Function ------------
-  const calcGrowth = (thisMonth: number, lastMonth: number) => {
-    if (lastMonth === 0 && thisMonth === 0) return 0;
-    if (lastMonth === 0 && thisMonth > 0) return 100;
-    if (lastMonth > 0 && thisMonth === 0) return -100;
+    // -------- Growth Function ------------
+    const calcGrowth = (thisMonth: number, lastMonth: number) => {
+      if (lastMonth === 0 && thisMonth === 0) return 0;
+      if (lastMonth === 0 && thisMonth > 0) return 100;
+      if (lastMonth > 0 && thisMonth === 0) return -100;
 
-    const growth = ((thisMonth - lastMonth) / lastMonth) * 100;
-    return Number(growth.toFixed(1));
-  };
-
-
-  // ------------------- Programs -----------------------
-  const totalPrograms = await this.prisma.program.count();
-
-  const programsAddedItems = await this.prisma.program.findMany({
-    where: { createdAt: { gte: thisMonthStart } },
-    orderBy: { createdAt: "desc" }
-  });
-  const programsThisMonth = programsAddedItems.length;
-
-  const programsLastMonth = await this.prisma.program.count({
-    where: { createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
-  });
-
-  const programGrowth = calcGrowth(programsThisMonth, programsLastMonth);
+      const growth = ((thisMonth - lastMonth) / lastMonth) * 100;
+      return Number(growth.toFixed(1));
+    };
 
 
+    // ------------------- Programs -----------------------
+    const totalPrograms = await this.prisma.program.count();
 
-  // ------------------- Projects -----------------------
-  const totalProjects = await this.prisma.project.count();
+    const programsAddedItems = await this.prisma.program.findMany({
+      where: { createdAt: { gte: thisMonthStart } },
+      orderBy: { createdAt: "desc" }
+    });
+    const programsThisMonth = programsAddedItems.length;
 
-  const projectsAddedItems = await this.prisma.project.findMany({
-    where: { createdAt: { gte: thisMonthStart } },
-    orderBy: { createdAt: "desc" }
-  });
-  const projectsThisMonth = projectsAddedItems.length;
+    const programsLastMonth = await this.prisma.program.count({
+      where: { createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
+    });
 
-  const projectsLastMonth = await this.prisma.project.count({
-    where: { createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
-  });
-
-  const projectGrowth = calcGrowth(projectsThisMonth, projectsLastMonth);
+    const programGrowth = calcGrowth(programsThisMonth, programsLastMonth);
 
 
 
-  // ------------------- Live Projects -------------------
-  const totalLive = await this.prisma.project.count({
-    where: { status: "LIVE" },
-  });
+    // ------------------- Projects -----------------------
+    const totalProjects = await this.prisma.project.count();
 
-  const liveAddedItems = await this.prisma.project.findMany({
-    where: { status: "LIVE", createdAt: { gte: thisMonthStart } },
-    orderBy: { createdAt: "desc" }
-  });
-  const liveThisMonth = liveAddedItems.length;
+    const projectsAddedItems = await this.prisma.project.findMany({
+      where: { createdAt: { gte: thisMonthStart } },
+      orderBy: { createdAt: "desc" }
+    });
+    const projectsThisMonth = projectsAddedItems.length;
 
-  const liveLastMonth = await this.prisma.project.count({
-    where: {
-      status: "LIVE",
-      createdAt: { gte: lastMonthStart, lt: thisMonthStart }
-    },
-  });
+    const projectsLastMonth = await this.prisma.project.count({
+      where: { createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
+    });
 
-  const liveUsersThisMonth = await this.prisma.projectEmployee.count({
-    where: {
-      assignedAt: { gte: thisMonthStart },
-      project: { status: "LIVE" }
-    }
-  });
-
-  const liveGrowth = calcGrowth(liveThisMonth, liveLastMonth);
+    const projectGrowth = calcGrowth(projectsThisMonth, projectsLastMonth);
 
 
 
-  // ------------------- Draft Projects ------------------
-  const totalDraft = await this.prisma.project.count({
-    where: { status: "DRAFT" },
-  });
+    // ------------------- Live Projects -------------------
+    const totalLive = await this.prisma.project.count({
+      where: { status: "LIVE" },
+    });
 
-  const draftAddedItems = await this.prisma.project.findMany({
-    where: { status: "DRAFT", createdAt: { gte: thisMonthStart } },
-    orderBy: { createdAt: "desc" }
-  });
-  const draftThisMonth = draftAddedItems.length;
+    const liveAddedItems = await this.prisma.project.findMany({
+      where: { status: "LIVE", createdAt: { gte: thisMonthStart } },
+      orderBy: { createdAt: "desc" }
+    });
+    const liveThisMonth = liveAddedItems.length;
 
-  const draftLastMonth = await this.prisma.project.count({
-    where: { status: "DRAFT", createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
-  });
+    const liveLastMonth = await this.prisma.project.count({
+      where: {
+        status: "LIVE",
+        createdAt: { gte: lastMonthStart, lt: thisMonthStart }
+      },
+    });
 
-  const draftUsersThisMonth = await this.prisma.projectEmployee.count({
-    where: {
-      assignedAt: { gte: thisMonthStart },
-      project: { status: "DRAFT" }
-    }
-  });
+    const liveUsersThisMonth = await this.prisma.projectEmployee.count({
+      where: {
+        assignedAt: { gte: thisMonthStart },
+        project: { status: "LIVE" }
+      }
+    });
 
-  const draftGrowth = calcGrowth(draftThisMonth, draftLastMonth);
-
-
-
-  // ------------------- Pending Review ------------------
-  const totalPendingReview = await this.prisma.submitted.count({
-    where: { status: "PENDING" }
-  });
-
-  const pendingAddedItems = await this.prisma.submitted.findMany({
-    where: { status: "PENDING", createdAt: { gte: thisMonthStart } },
-    orderBy: { createdAt: "desc" }
-  });
-  const pendingThisMonth = pendingAddedItems.length;
-
-  const pendingLastMonth = await this.prisma.submitted.count({
-    where: { status: "PENDING", createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
-  });
-
-  const pendingUsersThisMonth = await this.prisma.submitted.count({
-    where: {
-      status: "PENDING",
-      createdAt: { gte: thisMonthStart },
-      employeeId: { not: null }
-    }
-  });
-
-  const pendingGrowth = calcGrowth(pendingThisMonth, pendingLastMonth);
+    const liveGrowth = calcGrowth(liveThisMonth, liveLastMonth);
 
 
 
-  // ------------------- Submit Overdue -------------------
-  const totalOverdue = await this.prisma.project.count({
-    where: { status: "OVERDUE" }
-  });
+    // ------------------- Draft Projects ------------------
+    const totalDraft = await this.prisma.project.count({
+      where: { status: "DRAFT" },
+    });
 
-  const overdueAddedItems = await this.prisma.project.findMany({
-    // where: { status: "OVERDUE", createdAt: { gte: thisMonthStart } },
-    where: { status: "OVERDUE",},
-    orderBy: { createdAt: "desc" }
-  });
+    const draftAddedItems = await this.prisma.project.findMany({
+      where: { status: "DRAFT", createdAt: { gte: thisMonthStart } },
+      orderBy: { createdAt: "desc" }
+    });
+    const draftThisMonth = draftAddedItems.length;
 
-  const submitOverdueUsersThisMonth = await this.prisma.projectEmployee.count({
-    where: {
-      assignedAt: { gte: thisMonthStart },
-      project: { status: "OVERDUE" }
-    }
-  });
+    const draftLastMonth = await this.prisma.project.count({
+      where: { status: "DRAFT", createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
+    });
 
-  const overduePercentage = totalProjects === 0
-    ? 0
-    : Number(((totalOverdue / totalProjects) * 100).toFixed(1));
+    const draftUsersThisMonth = await this.prisma.projectEmployee.count({
+      where: {
+        assignedAt: { gte: thisMonthStart },
+        project: { status: "DRAFT" }
+      }
+    });
+
+    const draftGrowth = calcGrowth(draftThisMonth, draftLastMonth);
 
 
 
-  // ------------------- Return With Added Items ------------------
-  return {
-    programs: {
-      total: totalPrograms,
-      lastMonth: programsLastMonth,
-      thisMonth: programsThisMonth,
-      addedCount: programsThisMonth,
-      addedItems: programsAddedItems,
-      growth: programGrowth,
-    },
+    // ------------------- Pending Review ------------------
+    const totalPendingReview = await this.prisma.submitted.count({
+      where: { status: "PENDING" }
+    });
 
-    projects: {
-      total: totalProjects,
-      lastMonth: projectsLastMonth,
-      thisMonth: projectsThisMonth,
-      addedCount: projectsThisMonth,
-      addedItems: projectsAddedItems,
-      growth: projectGrowth,
-    },
+    const pendingAddedItems = await this.prisma.submitted.findMany({
+      where: { status: "PENDING", createdAt: { gte: thisMonthStart } },
+      orderBy: { createdAt: "desc" }
+    });
+    const pendingThisMonth = pendingAddedItems.length;
 
-    liveProjects: {
-      total: totalLive,
-      lastMonth: liveLastMonth,
-      thisMonth: liveThisMonth,
-      addedCount: liveUsersThisMonth,
-      addedItems: liveAddedItems,
-      growth: liveGrowth,
-    },
+    const pendingLastMonth = await this.prisma.submitted.count({
+      where: { status: "PENDING", createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
+    });
 
-    draftProjects: {
-      total: totalDraft,
-      lastMonth: draftLastMonth,
-      thisMonth: draftThisMonth,
-      addedCount: draftUsersThisMonth,
-      addedItems: draftAddedItems,
-      growth: draftGrowth,
-    },
+    const pendingUsersThisMonth = await this.prisma.submitted.count({
+      where: {
+        status: "PENDING",
+        createdAt: { gte: thisMonthStart },
+        employeeId: { not: null }
+      }
+    });
 
-    pendingReview: {
-      total: totalPendingReview,
-      lastMonth: pendingLastMonth,
-      thisMonth: pendingThisMonth,
-      addedCount: pendingUsersThisMonth,
-      addedItems: pendingAddedItems,
-      growth: pendingGrowth,
-    },
+    const pendingGrowth = calcGrowth(pendingThisMonth, pendingLastMonth);
 
-    submitOverdue: {
-      total: totalProjects,
-      projectOverdue: totalOverdue,
-      projectOverduePercentage: overduePercentage,
-      addedCount: submitOverdueUsersThisMonth,
-      addedItems: overdueAddedItems,
-    }
-  };
-}
+
+
+    // ------------------- Submit Overdue -------------------
+    const totalOverdue = await this.prisma.project.count({
+      where: { status: "OVERDUE" }
+    });
+
+    const overdueAddedItems = await this.prisma.project.findMany({
+      // where: { status: "OVERDUE", createdAt: { gte: thisMonthStart } },
+      where: { status: "OVERDUE", },
+      orderBy: { createdAt: "desc" }
+    });
+
+    const submitOverdueUsersThisMonth = await this.prisma.projectEmployee.count({
+      where: {
+        assignedAt: { gte: thisMonthStart },
+        project: { status: "OVERDUE" }
+      }
+    });
+
+    const overduePercentage = totalProjects === 0
+      ? 0
+      : Number(((totalOverdue / totalProjects) * 100).toFixed(1));
+
+
+
+    // ------------------- Return With Added Items ------------------
+    return {
+      programs: {
+        total: totalPrograms,
+        lastMonth: programsLastMonth,
+        thisMonth: programsThisMonth,
+        addedCount: programsThisMonth,
+        addedItems: programsAddedItems,
+        growth: programGrowth,
+      },
+
+      projects: {
+        total: totalProjects,
+        lastMonth: projectsLastMonth,
+        thisMonth: projectsThisMonth,
+        addedCount: projectsThisMonth,
+        addedItems: projectsAddedItems,
+        growth: projectGrowth,
+      },
+
+      liveProjects: {
+        total: totalLive,
+        lastMonth: liveLastMonth,
+        thisMonth: liveThisMonth,
+        addedCount: liveUsersThisMonth,
+        addedItems: liveAddedItems,
+        growth: liveGrowth,
+      },
+
+      draftProjects: {
+        total: totalDraft,
+        lastMonth: draftLastMonth,
+        thisMonth: draftThisMonth,
+        addedCount: draftUsersThisMonth,
+        addedItems: draftAddedItems,
+        growth: draftGrowth,
+      },
+
+      pendingReview: {
+        total: totalPendingReview,
+        lastMonth: pendingLastMonth,
+        thisMonth: pendingThisMonth,
+        addedCount: pendingUsersThisMonth,
+        addedItems: pendingAddedItems,
+        growth: pendingGrowth,
+      },
+
+      submitOverdue: {
+        total: totalProjects,
+        projectOverdue: totalOverdue,
+        projectOverduePercentage: overduePercentage,
+        addedCount: submitOverdueUsersThisMonth,
+        addedItems: overdueAddedItems,
+      }
+    };
+  }
 
 
   //employees activity
@@ -594,6 +594,35 @@ async getDashboardOverview() {
       total: filtered.length,
       projects: filtered
     };
+  }
+
+  async showAllSubmission() {
+    return await this.prisma.submitted.findMany({
+      include: {
+        employee: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                profileImage:true,
+              },
+            },
+          },
+        },
+        project: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        submissionReturn: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
 
