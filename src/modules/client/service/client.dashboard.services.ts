@@ -597,7 +597,7 @@ export class ClientDashboardServices {
     };
   }
 
-async showAllSubmission(params: {
+  async showAllSubmission(params: {
     startDate?: string;
     endDate?: string;
     status?: SubmittedStatus;
@@ -609,11 +609,11 @@ async showAllSubmission(params: {
         ...(status && { status }),
         ...(startDate || endDate
           ? {
-              createdAt: {
-                ...(startDate && { gte: new Date(startDate) }),
-                ...(endDate && { lte: new Date(endDate) }),
-              },
-            }
+            createdAt: {
+              ...(startDate && { gte: new Date(startDate) }),
+              ...(endDate && { lte: new Date(endDate) }),
+            },
+          }
           : {}),
       },
       include: {
@@ -642,7 +642,20 @@ async showAllSubmission(params: {
     });
   }
 
+  async updateStatus(id: string, status: SubmittedStatus) {
+    const submitted = await this.prisma.submitted.findUnique({
+      where: { id },
+    });
 
+    if (!submitted) {
+      throw new NotFoundException('Submission not found');
+    }
+
+    return this.prisma.submitted.update({
+      where: { id },
+      data: { status },
+    });
+  }
 
 
 

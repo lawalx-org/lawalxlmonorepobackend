@@ -45,6 +45,7 @@ model Project {
   submitted                  Submitted[]
   reminders                  Reminder[]
   sheets                     Sheet[]
+  favorites                   FavoriteProject[] 
 
   @@index([programId])
   @@index([slug])

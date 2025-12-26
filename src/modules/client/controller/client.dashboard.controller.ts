@@ -1,11 +1,12 @@
-import { Controller, Get, Query, Req, UnauthorizedException, UseGuards } from "@nestjs/common";
-import { ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, Param, Patch, Query, Req, UnauthorizedException, UseGuards } from "@nestjs/common";
+import { ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { ClientDashboardServices } from "../service/client.dashboard.services";
 import { JwtAuthGuard } from "src/common/jwt/jwt.guard";
 import { RolesGuard } from "src/common/jwt/roles.guard";
 import { Roles } from "src/common/jwt/roles.decorator";
 import { RequestWithUser } from "src/types/RequestWithUser";
 import { SubmittedStatus } from "generated/prisma";
+import { UpdateSubmittedStatusDto } from "../dto/update-submitted-status.dto";
 
 
 @ApiTags('client dashboard')
@@ -199,9 +200,9 @@ export class ClientDashboardController {
         @Query('startDate') startDate?: string,
         @Query('endDate') endDate?: string,
         @Query('status') status?: SubmittedStatus,
-        
+
     ) {
-          const clientId = req.user.clientId;
+        const clientId = req.user.clientId;
         if (!clientId) {
             throw new UnauthorizedException("clientId ID not found in token");
         }
@@ -211,6 +212,19 @@ export class ClientDashboardController {
             status,
         });
     }
+
+    // @Patch(':id/submission-status')
+    // @ApiOperation({ summary: 'Update submission status' })
+    // @ApiParam({
+    //     name: 'id',
+    //     example: 'b3c8e9c2-7f2e-4a3c-9d1a-123456789abc',
+    // })
+    // updateStatus(
+    //     @Param('id') id: string,
+    //     @Body() dto: UpdateSubmittedStatusDto,
+    // ) {
+    //     return this.clientDashboardServices.updateStatus(id, dto.status);
+    // }
 
 
 }

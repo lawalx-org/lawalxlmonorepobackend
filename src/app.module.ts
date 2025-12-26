@@ -22,6 +22,7 @@ import { EmployeeModule } from './modules/employee/employee.module';
 import { SheetModule } from './modules/sheet/sheet.module';
 import { InfrastructureModule } from './modules/infrastructure/infrastructure.module';
 import { ManagerModule } from './modules/manager/manager.module';
+import { FavoriteModule } from './modules/favouriteProject/favourite.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { ManagerModule } from './modules/manager/manager.module';
     ChartModule,
     SheetModule,
     InfrastructureModule,
+    FavoriteModule
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, SeedService],

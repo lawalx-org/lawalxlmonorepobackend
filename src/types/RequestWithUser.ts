@@ -11,6 +11,7 @@ export interface JwtPayload {
   adminId?: string;
   viewerId?: string;
   superAdminId?: string;
+  
 }
 
 export interface RequestWithUser extends Request {
