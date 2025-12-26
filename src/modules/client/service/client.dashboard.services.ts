@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { startOfMonth, subMonths } from "date-fns";
+import { SubmittedStatus } from "generated/prisma";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
@@ -596,8 +597,25 @@ export class ClientDashboardServices {
     };
   }
 
-  async showAllSubmission() {
-    return await this.prisma.submitted.findMany({
+async showAllSubmission(params: {
+    startDate?: string;
+    endDate?: string;
+    status?: SubmittedStatus;
+  }) {
+    const { startDate, endDate, status } = params;
+
+    return this.prisma.submitted.findMany({
+      where: {
+        ...(status && { status }),
+        ...(startDate || endDate
+          ? {
+              createdAt: {
+                ...(startDate && { gte: new Date(startDate) }),
+                ...(endDate && { lte: new Date(endDate) }),
+              },
+            }
+          : {}),
+      },
       include: {
         employee: {
           include: {
@@ -606,7 +624,6 @@ export class ClientDashboardServices {
                 id: true,
                 name: true,
                 email: true,
-                profileImage:true,
               },
             },
           },
@@ -624,6 +641,7 @@ export class ClientDashboardServices {
       },
     });
   }
+
 
 
 

@@ -5,6 +5,7 @@ import { JwtAuthGuard } from "src/common/jwt/jwt.guard";
 import { RolesGuard } from "src/common/jwt/roles.guard";
 import { Roles } from "src/common/jwt/roles.decorator";
 import { RequestWithUser } from "src/types/RequestWithUser";
+import { SubmittedStatus } from "generated/prisma";
 
 
 @ApiTags('client dashboard')
@@ -161,18 +162,54 @@ export class ClientDashboardController {
         };
     }
 
+    // @Get()
+    // async showAllSubmission(@Req() req: RequestWithUser) {
+    //     const clientId = req.user.clientId;
+    //     if (!clientId) {
+    //         throw new UnauthorizedException("clientId ID not found in token");
+    //     }
+
+    //     const result = await this.clientDashboardServices.showAllSubmission();
+    //     return {
+    //         message: "submission fetch successfully",
+    //         data: result
+    //     }
+    // }
     @Get()
-    async showAllSubmission(@Req() req: RequestWithUser) {
-        const clientId = req.user.clientId;
+    @ApiQuery({
+        name: 'startDate',
+        required: false,
+        example: '2025-01-01',
+        description: 'Filter submissions from this date',
+    })
+    @ApiQuery({
+        name: 'endDate',
+        required: false,
+        example: '2025-12-31',
+        description: 'Filter submissions up to this date',
+    })
+    @ApiQuery({
+        name: 'status',
+        required: false,
+        enum: SubmittedStatus,
+        description: 'Filter by submission status',
+    })
+    async showAllSubmission(
+        @Req() req: RequestWithUser,
+        @Query('startDate') startDate?: string,
+        @Query('endDate') endDate?: string,
+        @Query('status') status?: SubmittedStatus,
+        
+    ) {
+          const clientId = req.user.clientId;
         if (!clientId) {
             throw new UnauthorizedException("clientId ID not found in token");
         }
-
-        const result = await this.clientDashboardServices.showAllSubmission();
-        return{
-            message :"submission fetch successfully",
-            data:result
-        }
+        return this.clientDashboardServices.showAllSubmission({
+            startDate,
+            endDate,
+            status,
+        });
     }
 
 
