@@ -23,6 +23,7 @@ import {
 import { deleteProfileImage } from 'src/modules/utils/file.utils';
 import { mapUserWithAssignedProjects } from '../dto/user.mapper';
 import { ReplaceUserProjectDto } from '../dto/userUpdateAssignProject.Dto';
+import { UpdateUserProjectsDto } from '../dto/updateuserproject.Dto';
 
 @Injectable()
 export class UserService {
@@ -63,64 +64,59 @@ export class UserService {
     }
   }
 
-  async findAll(
-    query: { page: number; limit: number } = { page: 1, limit: 10 },
-  ) {
-    const users = await paginate<any>(
-      this.prisma,
-      'user',
-      {
-        include: {
-          manager: {
-            include: {
-              projects: {
-                select: { id: true, name: true },
-              },
+async findAll(
+  query: { page: number; limit: number } = { page: 1, limit: 10 },
+) {
+  const users = await paginate<any>(
+    this.prisma,
+    'user',
+    {
+      where: {
+        role: {
+          in: ['MANAGER', 'EMPLOYEE', 'VIEWER'],
+        },
+      },
+      include: {
+        manager: {
+          include: {
+            projects: {
+              select: { id: true, name: true },
             },
           },
-          employee: {
-            include: {
-              projectEmployees: {
-                include: {
-                  project: {
-                    select: { id: true, name: true },
-                  },
+        },
+        employee: {
+          include: {
+            projectEmployees: {
+              include: {
+                project: {
+                  select: { id: true, name: true },
                 },
               },
             },
           },
-          viewer: true,
         },
+        viewer: {
+          include: {
+            projectViewers: {
+              include: {
+                project: {
+                  select: { id: true, name: true },
+                },
+              },
+            },
+          },
+        }, 
       },
-      {
-        page: query.page,
-        limit: query.limit,
-      },
-    );
+    },
+    {
+      page: query.page,
+      limit: query.limit,
+    },
+  );
 
-    // Collect viewer project IDs
-    const viewerProjectIds = users.data.flatMap(
-      (u: any) => u.viewer?.projectId || [],
-    );
+  return users;
+}
 
-    // Fetch viewer projects
-    const viewerProjects = viewerProjectIds.length
-      ? await this.prisma.project.findMany({
-        where: { id: { in: viewerProjectIds } },
-        select: { id: true, name: true },
-      })
-      : [];
-
-    const viewerProjectMap = new Map(
-      viewerProjects.map(p => [p.id, p]),
-    );
-
-    users.data = users.data.map(user =>
-      mapUserWithAssignedProjects(user, viewerProjectMap),
-    );
-
-    return users;
-  }
 
 
 
@@ -238,109 +234,101 @@ export class UserService {
     return this.prisma.user.findMany({ where });
   }
 
-async replaceUserProject(dto: ReplaceUserProjectDto) {
-    const { oldProjectId, newProjectId, userId } = dto;
 
-    // 1️⃣ Check user exists
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    if (!user) throw new BadRequestException('User not found');
 
-    // 2️⃣ Determine user role and related table
-    switch (user.role) {
-      case 'EMPLOYEE':
-        await this.replaceEmployeeProject(userId, oldProjectId, newProjectId);
-        break;
 
-      case 'MANAGER':
-        await this.replaceManagerProject(userId, oldProjectId, newProjectId);
-        break;
+async updateUser_assign_Project_and_update_user_status(dto: UpdateUserProjectsDto) {
+  const { userId, removeProjectIds, addProjectIds, status } = dto;
 
-      case 'VIEWER':
-        await this.replaceViewerProject(userId, oldProjectId, newProjectId);
-        break;
 
-      default:
-        throw new BadRequestException('Unsupported user role');
+  const user = await this.prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      employee: { include: { projectEmployees: true } },
+      manager: { include: { projects: true } },
+      viewer: { include: { projectViewers: true } },
+    },
+  });
+
+  if (!user) throw new NotFoundException('User not found');
+
+  let relationType: 'employee' | 'manager' | 'viewer' | null = null;
+  let relationId: string | null = null;
+
+  if (user.employee) {
+    relationType = 'employee';
+    relationId = user.employee.id;
+  } else if (user.manager) {
+    relationType = 'manager';
+    relationId = user.manager.id;
+  } else if (user.viewer) {
+    relationType = 'viewer';
+    relationId = user.viewer.id;
+  } else {
+    throw new BadRequestException('User has no role relation');
+  }
+
+  return this.prisma.$transaction(async (tx) => {
+
+    if (removeProjectIds?.length) {
+      if (relationType === 'employee') {
+        await tx.projectEmployee.deleteMany({
+          where: { employeeId: relationId!, projectId: { in: removeProjectIds } },
+        });
+      } else if (relationType === 'manager') {
+        await tx.project.updateMany({
+          where: { managerId: relationId!, id: { in: removeProjectIds } },
+          data: { managerId: null }, // unassign manager
+        });
+      } else if (relationType === 'viewer') {
+        await tx.projectViewer.deleteMany({
+          where: { viewerId: relationId!, projectId: { in: removeProjectIds } },
+        });
+      }
     }
 
-    return { success: true, message: 'Project reassigned successfully' };
-  }
 
-  // Employee project reassignment
-  private async replaceEmployeeProject(
-    userId: string,
-    oldProjectId: string,
-    newProjectId: string,
-  ) {
-    const employee = await this.prisma.employee.findUnique({ where: { userId } });
-    if (!employee) throw new BadRequestException('User is not an employee');
+    if (addProjectIds?.length) {
+      if (relationType === 'employee') {
+        await tx.projectEmployee.createMany({
+          data: addProjectIds.map((projectId) => ({ employeeId: relationId!, projectId })),
+          skipDuplicates: true,
+        });
+      } else if (relationType === 'manager') {
+        await Promise.all(
+          addProjectIds.map((projectId) =>
+            tx.project.update({
+              where: { id: projectId },
+              data: { managerId: relationId! },
+            }),
+          ),
+        );
+      } else if (relationType === 'viewer') {
+        await tx.projectViewer.createMany({
+          data: addProjectIds.map((projectId) => ({ viewerId: relationId!, projectId })),
+          skipDuplicates: true,
+        });
+      }
+    }
 
-    const assignment = await this.prisma.projectEmployee.findUnique({
-      where: { projectId_employeeId: { projectId: oldProjectId, employeeId: employee.id } },
+
+    if (status) {
+      await tx.user.update({
+        where: { id: userId },
+        data: { userStatus: status },
+      });
+    }
+
+
+    return tx.user.findUnique({
+      where: { id: userId },
+      include: {
+        employee: { include: { projectEmployees: { include: { project: true } } } },
+        manager: { include: { projects: true } },
+        viewer: { include: { projectViewers: { include: { project: true } } } },
+      },
     });
-    if (!assignment) throw new BadRequestException('Employee not assigned to old project');
-
-    // Remove old assignment
-    await this.prisma.projectEmployee.delete({
-      where: { projectId_employeeId: { projectId: oldProjectId, employeeId: employee.id } },
-    });
-
-    // Assign new project (avoid duplicate)
-    await this.prisma.projectEmployee.upsert({
-      where: { projectId_employeeId: { projectId: newProjectId, employeeId: employee.id } },
-      create: { projectId: newProjectId, employeeId: employee.id },
-      update: {},
-    });
-  }
-
-  // Manager project reassignment
-  private async replaceManagerProject(
-    userId: string,
-    oldProjectId: string,
-    newProjectId: string,
-  ) {
-    const manager = await this.prisma.manager.findUnique({ where: { userId } });
-    if (!manager) throw new BadRequestException('User is not a manager');
-
-    const oldProject = await this.prisma.project.findUnique({ where: { id: oldProjectId } });
-    if (!oldProject) throw new BadRequestException('Old project not found');
-
-    if (oldProject.managerId !== manager.id)
-      throw new BadRequestException('Manager is not assigned to old project');
-
-    // Reassign new project
-    await this.prisma.project.update({
-      where: { id: newProjectId },
-      data: { managerId: manager.id },
-    });
-  }
-
-  // Viewer project reassignment
-  private async replaceViewerProject(
-    userId: string,
-    oldProjectId: string,
-    newProjectId: string,
-  ) {
-    const viewer = await this.prisma.viewer.findUnique({ where: { userId } });
-    if (!viewer) throw new BadRequestException('User is not a viewer');
-
-    if (!viewer.projectId.includes(oldProjectId))
-      throw new BadRequestException('Viewer not assigned to old project');
-
-    // Remove old project and add new project
-    const updatedProjects = viewer.projectId
-      .filter((id) => id !== oldProjectId)
-      .concat(newProjectId);
-
-    await this.prisma.viewer.update({
-      where: { id: viewer.id },
-      data: { projectId: updatedProjects },
-    });
-  }
-
-
-
-
-
+  });
+}
 
 }
