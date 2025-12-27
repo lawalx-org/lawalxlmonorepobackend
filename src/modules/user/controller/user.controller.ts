@@ -11,6 +11,7 @@ import {
   UnauthorizedException,
   UseInterceptors,
   UploadedFile,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from '../service/user.service';
 import { ManagerService } from '../service/manager.service';
@@ -25,8 +26,9 @@ import { PaginationDto } from 'src/modules/utils/pagination/pagination.dto';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/modules/utils/config/multer.config';
-import { ApiBody, ApiConsumes, ApiOperation, ApiParam } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { ReplaceUserProjectDto } from '../dto/userUpdateAssignProject.Dto';
+import { UpdateUserProjectsDto } from '../dto/updateuserproject.Dto';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -169,11 +171,21 @@ async findAll(@Query() query: PaginationDto, @Req() req) {
   //   return this.userService.convertEmployeeToManager(id, convertDto);
   // }
 
- @Patch('projects/replace')
-  @ApiOperation({ summary: 'Replace a project for a user' })
-  @ApiBody({ type: ReplaceUserProjectDto })
-  async replaceProject(@Body() dto: ReplaceUserProjectDto) {
-    return this.userService.replaceUserProject(dto);
+  @Patch(':userId/projects')
+  @ApiOperation({ summary: 'Update assigned projects and user status' })
+  @ApiResponse({ status: 200, description: 'User projects updated successfully'})
+  @ApiResponse({ status: 404, description: 'User or employee not found' })
+  async updateProjects(
+    @Body() dto: UpdateUserProjectsDto,
+  ) {
+
+    const updatedEmployee = await this.userService.updateUser_assign_Project_and_update_user_status(dto);
+
+    if (!updatedEmployee) {
+      throw new NotFoundException('user not found or could not be updated');
+    }
+
+    return updatedEmployee;
   }
 
 }

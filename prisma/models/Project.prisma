@@ -20,8 +20,7 @@ model Project {
   status                 ProjectStatus @default(PENDING)
   priority               Priority
   deadline               DateTime
-  managerId              String
-  viewerId               String
+  managerId              String?
   startDate              DateTime?
   progress               Int? // mendetory
   chartList              String[] // Seed create that chart list
@@ -36,7 +35,7 @@ model Project {
 
   // Relations
   program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
-  manager Manager @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  manager Manager? @relation(fields: [managerId], references: [id], onDelete: Cascade)
 
   projectEmployees           ProjectEmployee[]
   projectViewers             ProjectViewer[]
@@ -52,7 +51,6 @@ model Project {
   @@index([programId])
   @@index([slug])
   @@index([managerId])
-  @@index([viewerId])
   @@index([status])
   @@index([priority])
   @@index([deadline])
@@ -81,6 +79,7 @@ model ProjectViewer {
   id        String @id @default(uuid())
   projectId String
   viewerId  String
+   assignedAt DateTime @default(now())
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   viewer  Viewer  @relation(fields: [viewerId], references: [id], onDelete: Cascade)

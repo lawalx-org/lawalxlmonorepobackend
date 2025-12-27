@@ -27,7 +27,7 @@ export class ProjectService {
     private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
     private readonly infrastructureRepo: InfrastructureRepository,
-  ) {}
+  ) { }
 
   // async create(createProjectDto: CreateProjectDto) {
   //   const { employeeIds, managerId, programId, ...projectData } =
@@ -98,37 +98,38 @@ export class ProjectService {
       repeatOnDates,
       remindBefore,
       isActive,
+      viewerIds,
       name,
       ...projectData
     } = createProjectDto;
 
     // --- Pre-validation before transaction ---
-    const [manager, program] = await Promise.all([
-      this.prisma.manager.findUnique({
-        where: { id: managerId },
-        include: { user: true },
-      }),
+    const [program] = await Promise.all([
+      // this.prisma.manager.findUnique({
+      //   where: { id: managerId },
+      //   include: { user: true },
+      // }),
       this.prisma.program.findUnique({ where: { id: programId } }),
     ]);
 
-    if (!manager) {
-      throw new NotFoundException(`Manager with ID "${managerId}" not found`);
-    }
+    // if (!manager) {
+    //   throw new NotFoundException(`Manager with ID "${managerId}" not found`);
+    // }
 
     if (!program) {
       throw new NotFoundException(`Program with ID "${programId}" not found`);
     }
 
-    if (employeeIds && employeeIds.length > 0) {
-      const employees = await this.prisma.employee.findMany({
-        where: { id: { in: employeeIds } },
-        include: { user: true },
-      });
+    // if (employeeIds && employeeIds.length > 0) {
+    //   const employees = await this.prisma.employee.findMany({
+    //     where: { id: { in: employeeIds } },
+    //     include: { user: true },
+    //   });
 
-      if (employees.length !== employeeIds.length) {
-        throw new NotFoundException('One or more employees not found.');
-      }
-    }
+    //   if (employees.length !== employeeIds.length) {
+    //     throw new NotFoundException('One or more employees not found.');
+    //   }
+    // }
 
     // --- Main transaction ---
     const project = await this.prisma.$transaction(async (tx) => {
@@ -153,13 +154,23 @@ export class ProjectService {
           metadata: {},
           // ============== SABBIR =============== //
 
-          manager: { connect: { id: managerId } },
+          manager: managerId ? { connect: { id: managerId } } : undefined,
           program: { connect: { id: programId } },
           projectEmployees: {
             create: employeeIds?.map((employeeId) => ({
               employee: { connect: { id: employeeId } },
             })),
           },
+
+          projectViewers: viewerIds?.length
+            ? {
+              create: viewerIds.map((viewerId) => ({
+                viewer: { connect: { id: viewerId } },
+              })),
+            }
+            : undefined,
+          
+
         },
         include: {
           manager: { include: { user: true } },
@@ -167,6 +178,7 @@ export class ProjectService {
           projectEmployees: {
             include: { employee: { include: { user: true } } },
           },
+           projectViewers: { include: { viewer: { include: { user: true } } } },
         },
       });
 
