@@ -38,15 +38,16 @@ export class UserController {
     private readonly viewerService: ViewerService,
   ) { }
 
-  @Get()
-  @Roles(Role.CLIENT)
-  async findAll(@Query() query: PaginationDto) {
-    const result = await this.userService.findAll({
-      page: query.page ?? 1,
-      limit: query.limit ?? 10,
-    });
-    return { message: 'Users fetched successfully', data: result };
-  }
+@Get()
+@Roles(Role.CLIENT)
+async findAll(@Query() query: PaginationDto, @Req() req) {
+  const result = await this.userService.findAll({
+    page: query.page ?? 1,
+    limit: query.limit ?? 10,
+  });
+  return { message: 'Users fetched successfully', data: result };
+}
+
 
   @Get('profile')
   async getUser(@Req() req: RequestWithUser) {

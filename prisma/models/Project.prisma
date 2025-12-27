@@ -35,9 +35,11 @@ model Project {
   longitude              Float?
 
   // Relations
-  program                    Program                     @relation(fields: [programId], references: [id], onDelete: Cascade)
-  manager                    Manager                     @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  manager Manager @relation(fields: [managerId], references: [id], onDelete: Cascade)
+
   projectEmployees           ProjectEmployee[]
+  projectViewers             ProjectViewer[]
   tasks                      Task[]
   activities                 Activity[]
   reviews                    Review[]
@@ -45,7 +47,7 @@ model Project {
   submitted                  Submitted[]
   reminders                  Reminder[]
   sheets                     Sheet[]
-  favorites                   FavoriteProject[] 
+  favorites                  FavoriteProject[]
 
   @@index([programId])
   @@index([slug])
@@ -73,4 +75,16 @@ model ProjectEmployee {
 
   @@unique([projectId, employeeId])
   @@map("project_employees")
+}
+
+model ProjectViewer {
+  id        String @id @default(uuid())
+  projectId String
+  viewerId  String
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  viewer  Viewer  @relation(fields: [viewerId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, viewerId])
+  @@map("project_viewers")
 }
