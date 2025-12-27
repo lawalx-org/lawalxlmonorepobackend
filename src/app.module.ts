@@ -35,10 +35,21 @@ import { ManagerModule } from './modules/manager/manager.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
         const redisConfig = configService.get('redis');
+        const username = redisConfig.username;
+        const password = redisConfig.password;
+
         return {
           connection: {
             host: redisConfig.host,
             port: redisConfig.port,
+            ...(username &&
+              password && {
+                username,
+                password,
+                tls: {
+                  rejectUnauthorized: false,
+                },
+              }),
           },
         };
       },
