@@ -764,6 +764,8 @@ export class ManagerService {
           })),
           extraCount: Math.max(0, project.projectEmployees.length - 3),
         },
+        latitude: project.latitude,
+        logitude: project.longitude,
       })),
 
       sidebar: {
