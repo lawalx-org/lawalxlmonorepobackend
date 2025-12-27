@@ -25,7 +25,8 @@ import { PaginationDto } from 'src/modules/utils/pagination/pagination.dto';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/modules/utils/config/multer.config';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiParam } from '@nestjs/swagger';
+import { ReplaceUserProjectDto } from '../dto/userUpdateAssignProject.Dto';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -35,7 +36,7 @@ export class UserController {
     private readonly managerService: ManagerService,
     private readonly employeeService: EmployeeService,
     private readonly viewerService: ViewerService,
-  ) {}
+  ) { }
 
   @Get()
   @Roles(Role.CLIENT)
@@ -166,4 +167,12 @@ export class UserController {
   // ) {
   //   return this.userService.convertEmployeeToManager(id, convertDto);
   // }
+
+ @Patch('projects/replace')
+  @ApiOperation({ summary: 'Replace a project for a user' })
+  @ApiBody({ type: ReplaceUserProjectDto })
+  async replaceProject(@Body() dto: ReplaceUserProjectDto) {
+    return this.userService.replaceUserProject(dto);
+  }
+
 }

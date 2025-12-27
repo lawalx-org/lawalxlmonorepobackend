@@ -860,96 +860,197 @@ export class ManagerService {
     });
   }
 
+  // async showSubmissionsData(
+  //   managerId: string,
+  //   status?: SubmittedStatus,
+  //   fromDate?: string,
+  //   toDate?: string,
+  // ) {
+  //   return this.prisma.submitted.findMany({
+  //     where: {
+  //       project: {
+  //         managerId: managerId,
+  //       },
+  //       ...(status && { status }),
+  //       ...(fromDate || toDate
+  //         ? {
+  //           createdAt: {
+  //             ...(fromDate && { gte: new Date(fromDate) }),
+  //             ...(toDate && { lte: new Date(toDate) }),
+  //           },
+  //         }
+  //         : {}),
+  //     },
+  //     include: {
+  //       employee: {
+  //         select: {
+  //           id: true,
+  //           user: {
+  //             select: {
+  //               id: true,
+  //               name: true,
+  //               email: true,
+  //               phoneNumber: true,
+  //               profileImage: true,
+  //               role: true,
+  //               userStatus: true,
+  //             },
+  //           },
+  //         },
+  //       },
+  //      project: {
+  //         select: {
+  //           id: true,
+  //           name: true,
+  //           status:true,
+  //           priority:true,
+  //           startDate:true,
+  //           estimatedCompletedDate:true,
+  //           projectCompleteDate:true,
+  //           createdAt:true
+  //         },
+  //       },
+  //     },
+  //     orderBy: {
+  //       createdAt: 'desc',
+  //     },
+  //   });
+  // }
+  
   async showSubmissionsData(
-    managerId: string,
-    status?: SubmittedStatus,
-    fromDate?: string,
-    toDate?: string,
-  ) {
-    return this.prisma.submitted.findMany({
-      where: {
-        project: {
-          managerId: managerId,
-        },
-        ...(status && { status }),
-        ...(fromDate || toDate
-          ? {
+  managerId: string,
+  status?: SubmittedStatus,
+  fromDate?: string,
+  toDate?: string,
+) {
+  const submissions = await this.prisma.submitted.findMany({
+    where: {
+      project: { managerId },
+      ...(status && { status }),
+      ...(fromDate || toDate
+        ? {
             createdAt: {
               ...(fromDate && { gte: new Date(fromDate) }),
               ...(toDate && { lte: new Date(toDate) }),
             },
           }
-          : {}),
-      },
-      include: {
-        employee: {
-          select: {
-            id: true,
-            user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-                phoneNumber: true,
-                profileImage: true,
-                role: true,
-                userStatus: true,
-              },
+        : {}),
+    },
+    include: {
+      employee: {
+        select: {
+          id: true,
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              phoneNumber: true,
+              profileImage: true,
+              role: true,
+              userStatus: true,
             },
           },
         },
-       project: {
-          select: {
-            id: true,
-            name: true,
-            status:true,
-            priority:true,
-            startDate:true,
-            estimatedCompletedDate:true,
-            projectCompleteDate:true,
-            createdAt:true
-          },
+      },
+      project: {
+        select: {
+          id: true,
+          name: true,
+          status: true,
+          priority: true,
+          startDate: true,
+          estimatedCompletedDate: true,
+          projectCompleteDate: true,
+          createdAt: true,
         },
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-  }
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  return submissions.map((sub) => ({
+    ...sub,
+    employee: sub.employee
+      ? sub.employee
+      : {
+          id: 'unknown',
+          user: {
+            id: 'unknown',
+            name: 'Unknown Employee',
+            email: null,
+            phoneNumber: null,
+            profileImage: null,
+            role: null,
+            userStatus: null,
+          },
+        },
+  }));
+}
+
+
 
 async showSubmissionsOverview(managerId: string) {
+  const managerProjects = await this.prisma.project.findMany({
+    where: { managerId },
+    select: { id: true },
+  });
+  const projectIds = managerProjects.map((p) => p.id);
 
-  const submissions = await this.prisma.submitted.findMany({
+  if (projectIds.length === 0) {
+    const defaultOverview = Object.values(SubmittedStatus).reduce(
+      (acc, status) => ({ ...acc, [status]: 0 }),
+      {} as Record<string, number>
+    );
+    return {
+      submissions: defaultOverview,
+      overdueWithSubmissions: 0,
+      overduePercentage: 0,
+      overdueProjects: [],
+    };
+  }
+
+  const submissionsByStatus = await this.prisma.submitted.groupBy({
+    by: ['status'],
     where: {
-      project: {
-        managerId: managerId,
-      },
+      projectId: { in: projectIds },
     },
-    select: {
-      status: true,
-    },
+    _count: { status: true },
   });
 
-  const submissionOverview = submissions.reduce((acc, sub) => {
-    acc[sub.status] = (acc[sub.status] ?? 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const submissionOverview: Record<string, number> = Object.values(SubmittedStatus).reduce(
+    (acc, status) => ({ ...acc, [status]: 0 }),
+    {}
+  );
 
-  const overdueWithSubmissions = await this.prisma.project.count({
+  submissionsByStatus.forEach((item) => {
+    const status = item.status as SubmittedStatus;
+    submissionOverview[status] = item._count.status;
+  });
+
+
+  const overdueProjects = await this.prisma.project.findMany({
     where: {
-      managerId: managerId,
+      id: { in: projectIds },
       status: 'OVERDUE',
-      submitted: {
-        some: {},
-      },
+      submitted: { some: {} },
     },
+    select: { id: true, name: true }, 
   });
+
+  const overdueCount = overdueProjects.length;
+  const totalProjects = projectIds.length;
+
+  const projectoverdue = totalProjects > 0 ? (overdueCount / totalProjects) * 100 : 0;
 
   return {
     submissions: submissionOverview,
-    overdueWithSubmissions,
+    projectoverdue,     
   };
 }
+
+
+
 
 
 async getSubmissionActivity(managerId: string) {
@@ -976,6 +1077,11 @@ async getSubmissionActivity(managerId: string) {
     const empId = sub.employee?.id ?? 'unknown';
 
     if (!employeeMap.has(empId)) {
+      const defaultStatusSummary = Object.values(SubmittedStatus).reduce(
+        (acc, status) => ({ ...acc, [status]: 0 }),
+        {} as Record<string, number>
+      );
+
       employeeMap.set(empId, {
         employee: {
           id: sub.employee?.id ?? empId,
@@ -983,21 +1089,18 @@ async getSubmissionActivity(managerId: string) {
           profileImage: sub.employee?.user?.profileImage ?? 'default.png',
         },
         totalSubmissions: 0,
-        statusSummary: {} as Record<string, number>,
+        statusSummary: defaultStatusSummary,
       });
     }
 
     const empData = employeeMap.get(empId);
     empData.totalSubmissions += 1;
 
-    const status = sub.status;
+    const status = sub.status as SubmittedStatus;
     empData.statusSummary[status] = (empData.statusSummary[status] ?? 0) + 1;
   });
 
-
   return Array.from(employeeMap.values());
 }
-
-
 
 }
