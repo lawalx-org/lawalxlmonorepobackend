@@ -74,22 +74,30 @@ export class ClientDashboardController {
     @Get('timeline')
     @ApiQuery({ name: 'programId', required: false })
     @ApiQuery({ name: 'overdueTime', required: false })
+    @ApiQuery({ name: 'savedTime', required: false })
     async getTimeline(
         @Req() req: RequestWithUser,
         @Query('programId') programId?: string,
-        @Query('overdueTime') overdueTime?: string // This is the overdue filter
+        @Query('overdueTime') overdueTime?: string,
+        @Query('savedTime') savedTime?: string
     ) {
         const clientId = req.user.clientId;
         if (!clientId) {
             throw new UnauthorizedException('clientId ID not found in token');
         }
-        const timeline = await this.clientDashboardServices.getProjectTimeline(programId, overdueTime ? Number(overdueTime) : undefined);
+
+        const timeline = await this.clientDashboardServices.getProjectTimeline(
+            programId,
+            overdueTime ? Number(overdueTime) : undefined,
+            savedTime ? Number(savedTime) : undefined
+        );
 
         return {
             message: "Timeline fetched successfully",
             data: timeline
         };
     }
+
 
 
 
