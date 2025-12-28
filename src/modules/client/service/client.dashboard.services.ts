@@ -276,86 +276,92 @@ export class ClientDashboardServices {
   }
 
   // Project timeline service 
-  async getProjectTimeline(programId?: string, maxDays?: number) {
+async getProjectTimeline(
+  programId?: string,
+  maxOverdueDays?: number,
+  maxSavedDays?: number
+) {
 
-    // If no programId is provided, get the first program
-    if (!programId) {
-      const firstProgram = await this.prisma.program.findFirst({
-        // orderBy: { createdAt: 'asc' }
-      });
+  if (!programId) {
+    const firstProgram = await this.prisma.program.findFirst();
+    if (!firstProgram) {
+      return { message: "No programs found" };
+    }
+    programId = firstProgram.id;
+  }
 
-      if (!firstProgram) {
-        return { message: "No programs found" };
-      }
+  const projects = await this.prisma.project.findMany({
+    where: { programId },
+    select: {
+      id: true,
+      name: true,
+      startDate: true,
+      deadline: true,
+      projectCompleteDate: true
+    }
+  });
 
-      programId = firstProgram.id;
+  const ONE_DAY = 1000 * 60 * 60 * 24;
+
+  const ProjectData = projects.map(p => {
+    const start = p.startDate ? new Date(p.startDate).getTime() : null;
+    const deadline = p.deadline ? new Date(p.deadline).getTime() : null;
+    const completed = p.projectCompleteDate
+      ? new Date(p.projectCompleteDate).getTime()
+      : null;
+
+    let completionTime = 0;
+    let savedTime = 0;
+    let overdueTime = 0;
+
+    if (start && deadline) {
+      completionTime = Math.ceil((deadline - start) / ONE_DAY);
     }
 
-    // Fetch all projects based on the programId
-    const projects = await this.prisma.project.findMany({
-      where: {
-        programId
-      },
-      select: {
-        id: true,
-        name: true,
-        startDate: true,
-        deadline: true,
-        projectCompleteDate: true,
+    if (deadline && completed) {
+      if (completed < deadline) {
+        savedTime = Math.ceil((deadline - completed) / ONE_DAY);
+      } else if (completed > deadline) {
+        overdueTime = Math.ceil((completed - deadline) / ONE_DAY);
       }
-    });
+    }
 
-    const ONE_DAY = 1000 * 60 * 60 * 24;
-
-    // Calculate completion time, overdue time, and saved time for each project
-    const ProjectData = projects.map(p => {
-      const start = p.startDate ? new Date(p.startDate).getTime() : null;
-      const end = p.projectCompleteDate ? new Date(p.projectCompleteDate).getTime() : null;
-      const estimated = p.deadline ? new Date(p.deadline).getTime() : null;
-
-      let completionTime = 0;
-      let overdueTime = 0;
-      let savedTime = 0;
-
-      // Calculate completion time
-      if (start && end) {
-        completionTime = Math.ceil((end - start) / ONE_DAY);
-      }
-
-      // Calculate overdue time (if project is completed after the deadline)
-      if (estimated && end && end > estimated) {
-        overdueTime = Math.ceil((end - estimated) / ONE_DAY);
-      }
-
-      // Calculate saved time (if project is completed before the deadline)
-      if (estimated && end && end < estimated) {
-        savedTime = Math.ceil((estimated - end) / ONE_DAY);
-      }
-
-      return {
-        id: p.id,
-        name: p.name,
-        startDate: p.startDate,
-        estimatedCompletedDate: p.deadline,
-        project_end_Date: p.projectCompleteDate,
-        completionTime,
-        overdueTime,
-        savedTime
-      };
-    });
-
-    // Apply the filter:
-
-    const filteredProjects = maxDays
-      ? ProjectData.filter(item => item.overdueTime > 0 && item.overdueTime <= maxDays) // Show overdue projects with overdueTime <= maxDays
-      : ProjectData;
     return {
-      programId,
-      maxDays,
-      totalProjects: filteredProjects.length,
-      ProjectData: filteredProjects
+      id: p.id,
+      name: p.name,
+      startDate: p.startDate,
+      deadline: p.deadline,
+      project_end_Date: p.projectCompleteDate,
+      completionTime,
+      overdueTime,
+      savedTime
     };
+  });
+
+  //  apply filter
+  let filteredProjects = ProjectData;
+
+  if (maxOverdueDays !== undefined) {
+    filteredProjects = filteredProjects.filter(
+      p => p.overdueTime > 0 && p.overdueTime <= maxOverdueDays
+    );
   }
+
+  if (maxSavedDays !== undefined) {
+    filteredProjects = filteredProjects.filter(
+      p => p.savedTime > 0 && p.savedTime <= maxSavedDays
+    );
+  }
+
+  return {
+    programId,
+    maxOverdueDays,
+    maxSavedDays,
+    totalProjects: filteredProjects.length,
+    ProjectData: filteredProjects
+  };
+}
+
 
 
 
