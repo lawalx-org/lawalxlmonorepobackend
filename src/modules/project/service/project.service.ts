@@ -268,9 +268,19 @@ export class ProjectService {
   async findAll(query: FindAllProjectsDto) {
     const where = buildProjectFilter(query);
 
+    const includeProgram = {
+    program: {
+      select: {
+        id: true,
+        programName: true,
+      },
+    },
+  };
+
     if (query.limit !== 12) {
       // Return all projects if limit is not 12 or not provided
-      const projects = await this.prisma.project.findMany({ where });
+      const projects = await this.prisma.project.findMany({ where,
+      include: includeProgram, });
       return {
         data: projects,
         total: projects.length,
