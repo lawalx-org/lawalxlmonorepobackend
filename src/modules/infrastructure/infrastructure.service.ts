@@ -1,65 +1,73 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InfrastructureRepository } from './infrastructure.repository';
 import { InfrastructureNodeRepository } from './infrastructure-node/infrastructure-node.repository';
-import { InfrastructureProjectRepository } from './infrastructure-project/infrastructure-project.repository';
-import { InfrastructureNodeDto } from './dto/infrastructure.node.dto';
-import { Prisma } from 'generated/prisma';
-import { priority, Priority } from './contants';
+
+interface TreeNode {
+  id: string;
+  taskName: string;
+  slug: string;
+  progress: number | null;
+  computedProgress: number;
+  weight: number;
+  isLeaf: boolean;
+  children: TreeNode[];
+  duration?: number;
+  startDate?: Date;
+  finishDate?: Date;
+  priority?: number;
+  actualHour?: number;
+  plannedHour?: number;
+  plannedCost?: number;
+  plannedResourceCost?: number;
+  [key: string]: any;
+}
 
 @Injectable()
 export class InfrastructureService {
   constructor(
     private readonly infrastructureRepo: InfrastructureRepository,
     private readonly nodeRepo: InfrastructureNodeRepository,
-    private readonly projectRepo: InfrastructureProjectRepository,
   ) {}
 
   /**
    * Recursively propagate progress upward from a given node to its ancestors
    */
-  async propagateUp(
-    nodeId?: string | null,
-    visited = new Set<string>(),
-  ): Promise<void> {
+  async propagateUp(nodeId: string | null | undefined): Promise<void> {
     if (!nodeId) return;
-
-    // 🔒 Break circular references
-    if (visited.has(nodeId)) {
-      console.error('Circular reference detected at node:', nodeId);
-      return;
-    }
-    visited.add(nodeId);
 
     const node = await this.infrastructureRepo.findNodeById(nodeId);
     if (!node) return;
 
+    // Calculate weighted average of children's computed progress
     const children = await this.nodeRepo.findChildren(nodeId);
-    if (children.length === 0) return;
 
-    const totalWeight = children.reduce((sum, c) => sum + (c.weight ?? 0), 0);
+    if (children.length === 0) {
+      // No children - should be a leaf (but double-check)
+      return;
+    }
+
+    const totalWeight = children.reduce((sum, child) => sum + child.weight, 0);
 
     if (totalWeight === 0) {
+      // Avoid division by zero
       await this.nodeRepo.updateNode(nodeId, { computedProgress: 0 });
+      await this.propagateUp(node.parentId);
       return;
     }
 
     const weightedSum = children.reduce(
-      (sum, c) => sum + (c.computedProgress ?? 0) * (c.weight ?? 0),
+      (sum, child) => sum + child.computedProgress * child.weight,
       0,
     );
 
+    const newComputedProgress = weightedSum / totalWeight;
+
     await this.nodeRepo.updateNode(nodeId, {
-      computedProgress: weightedSum / totalWeight,
+      computedProgress: newComputedProgress,
     });
 
-    if (!node.parentId) return;
-
-    await this.propagateUp(node.parentId, visited);
+    // Continue propagating up
+    await this.propagateUp(node.parentId);
   }
 
   /**
@@ -96,7 +104,7 @@ export class InfrastructureService {
   /**
    * Build a tree structure from a root node
    */
-  async buildTree(node: any): Promise<any> {
+  async buildTree(node: any): Promise<TreeNode> {
     const children = await this.nodeRepo.findChildren(node.id);
 
     const childTrees = await Promise.all(
@@ -130,10 +138,23 @@ export class InfrastructureService {
     const rootNodes = await this.nodeRepo.findRootNodes(projectId);
 
     const trees = await Promise.all(
-      rootNodes.map((node) => this.buildTree(node)),
+      rootNodes.map((node: any) => this.buildTree(node)),
     );
 
-    return trees;
+    return trees as any;
+  }
+
+  /**
+   * Get tree structure from a specific node
+   */
+  async getNodeTree<T = any>(nodeId: string): Promise<T> {
+    const node = await this.infrastructureRepo.findNodeById(nodeId);
+
+    if (!node) {
+      throw new Error(`Node with ID ${nodeId} not found`);
+    }
+
+    return this.buildTree(node) as T;
   }
 
   /**
@@ -155,13 +176,5 @@ export class InfrastructureService {
       ...node,
       level: getLevel(node.id),
     }));
-  }
-
-  checkPriority(p: Priority) {
-    if (!priority.includes(p)) {
-      throw new BadRequestException(
-        `Priority must match with any of those [${priority}]`,
-      );
-    }
   }
 }
