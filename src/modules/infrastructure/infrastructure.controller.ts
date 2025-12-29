@@ -7,15 +7,13 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   InfrastructureNodeDto,
   UpdateInfrastructureNodeDto,
 } from './dto/infrastructure.node.dto';
-import { InfrastructureProjectDto } from './dto/infrastructure.dto';
 // import { InfrastructureProjectService } from './infrastructure-project/infrastructure-project.service';
 import { InfrastructureNodeService } from './infrastructure-node/infrastructure-node.service';
-import { priority } from './contants';
 import { InfrastructureService } from './infrastructure.service';
 
 // TODO: Proper error handling from controller
@@ -23,66 +21,76 @@ import { InfrastructureService } from './infrastructure.service';
 @Controller('infrastructure')
 export class InfrastructureController {
   constructor(
-    private readonly service: InfrastructureService,
+    private readonly infrastructureService: InfrastructureService,
     // private readonly projectService: InfrastructureProjectService,
     private readonly nodeService: InfrastructureNodeService,
   ) {}
 
-  // @Post('projects')
-  // createProject(@Body() dto: InfrastructureProjectDto) {
-  //   this.service.checkPriority(dto.priority);
-  //   return this.projectService.createProject(dto);
-  // }
-
-  // @Get('projects')
-  // getProjects() {
-  //   // TODO: add pagination and sorting
-  //   return this.projectService.findManyProjects();
-  // }
-
-  @ApiTags('Get single project nodes')
-  @Get('projects/:projectId/nodes')
-  getRootNodes(@Param('projectId') projectId: string) {
-    return this.service.findRootNodes(projectId);
+  /**
+   * Get all root nodes for a project
+   * GET /infrastructure-nodes/project/:projectId/roots
+   */
+  @Get('project/:projectId/roots')
+  async getRootNodes(@Param('projectId') projectId: string) {
+    return this.nodeService.findRootNodes(projectId);
   }
 
-  // nodes from here...
-  @ApiTags(
-    'Create node which is belong in project, if node has parent then just include it otherwise exclude',
-  )
-  @Post('nodes')
-  createNode(@Body() dto: InfrastructureNodeDto) {
-    this.service.checkPriority(dto.priority);
-    return this.nodeService.createNode(dto);
+  /**
+   * Get full tree structure for a project
+   * GET /infrastructure-nodes/project/:projectId/tree
+   */
+  @Get('project/:projectId/tree')
+  async getProjectTree(@Param('projectId') projectId: string) {
+    return this.infrastructureService.getProjectTree(projectId);
   }
 
-  @ApiTags('Get a spasific node childs')
-  @Get('nodes/:nodeId/children')
-  getChildren(@Param('nodeId') nodeId: string) {
+  /**
+   * Get flat list of all nodes in a project
+   * GET /infrastructure-nodes/project/:projectId/flat
+   */
+  @Get('project/:projectId/flat')
+  async getProjectNodesFlat(@Param('projectId') projectId: string) {
+    return this.infrastructureService.getProjectNodesFlat(projectId);
+  }
+
+  /**
+   * Get children of a specific node
+   * GET /infrastructure-nodes/:nodeId/children
+   */
+  @Get(':nodeId/children')
+  async getNodeChildren(@Param('nodeId') nodeId: string) {
     return this.nodeService.findNodeChildren(nodeId);
   }
 
-  @Patch('nodes/:nodeId')
-  updateInfrastructureNode(
+  /**
+   * Create a new infrastructure node
+   * POST /infrastructure-nodes
+   */
+  @ApiOperation({ summary: 'Create a new node' })
+  @Post()
+  async createNode(@Body() dto: InfrastructureNodeDto) {
+    return this.nodeService.createNode(dto);
+  }
+
+  /**
+   * Update an existing node
+   * PATCH /infrastructure-nodes/:nodeId
+   */
+  @Patch(':nodeId')
+  async updateNode(
     @Param('nodeId') nodeId: string,
     @Body() dto: UpdateInfrastructureNodeDto,
   ) {
     return this.nodeService.updateNode(nodeId, dto);
   }
-  @Patch('nodes/:nodeId/progress')
-  updateProgress(
-    @Param('nodeId') nodeId: string,
-    @Body() dto: UpdateInfrastructureNodeDto,
-  ) {
-    return this.service.updateProgress(nodeId, dto.progress ? dto.progress : 0);
-  }
-  // @Delete('project/:projectId')
-  // deleteProject(@Param('projectId') projectId: string) {
-  //   return this.projectService.deleteProject(projectId);
-  // }
 
-  @Delete('nodes/:nodeId')
-  deleteNode(@Param('nodeId') nodeId: string) {
-    return this.nodeService.deleteNode(nodeId);
+  /**
+   * Delete a node (only leaf nodes)
+   * DELETE /infrastructure-nodes/:nodeId
+   */
+  @Delete(':nodeId')
+  async deleteNode(@Param('nodeId') nodeId: string) {
+    await this.nodeService.deleteNode(nodeId);
+    return { message: 'Node deleted successfully' };
   }
 }

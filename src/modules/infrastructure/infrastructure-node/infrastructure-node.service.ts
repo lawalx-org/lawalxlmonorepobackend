@@ -32,7 +32,7 @@ export class InfrastructureNodeService {
 
     const slug = slugify(dto.taskName);
     if (await this.infrastructureRepo.findNodeBySlug(slug)) {
-      throw new ConflictException('Project slug already exists');
+      throw new ConflictException('Node slug already exists');
     }
 
     const project = await this.infrastructureRepo.findProjectById(
@@ -52,7 +52,6 @@ export class InfrastructureNodeService {
       // Parent becomes non-leaf
       if (parent.isLeaf) {
         await this.nodeRepo.updateNode(parent.id, {
-          ...dto,
           isLeaf: false,
           progress: null,
         });
@@ -73,6 +72,7 @@ export class InfrastructureNodeService {
       computedProgress: 0,
     });
 
+    console.log('node: ', node);
     await this.infrastructureService.propagateUp(dto.parentId);
     await this.infrastructureService.updateProjectProgress(dto.projectId);
 
@@ -82,29 +82,37 @@ export class InfrastructureNodeService {
   async updateNode(nodeId: string, dto: UpdateInfrastructureNodeDto) {
     const node = await this.infrastructureRepo.findNodeById(nodeId);
     if (!node) throw new NotFoundException('Node not found');
-    // Only Leaf progress will get update
-    if (dto.progress && !node.isLeaf)
-      throw new ConflictException('Only leaf nodes can have progress');
 
     const { parentId, progress, ...rest } = dto;
-    const data: Prisma.InfrastructureNodeUpdateInput = {
-      ...rest,
-    };
-    if (progress) {
-      data.progress = progress;
-      data.computedProgress = progress;
-    }
-    if (parentId !== node.parentId) {
-      throw new ConflictException("You can't change the parent ID of any leaf");
-      /**
-       * @features plan
-       */
-      // data.parent = parentId
-      //   ? { connect: { id: parentId } }
-      //   : { disconnect: true };
+
+    // 🚫 Prevent self-parent
+    if (parentId && parentId === nodeId) {
+      throw new ConflictException('Node cannot be its own parent');
     }
 
-    const updated = await this.nodeRepo.updateNode(nodeId, data);
+    // 🚫 Prevent circular ancestry
+    if (parentId) {
+      let currentParentId = parentId;
+
+      while (currentParentId) {
+        if (currentParentId === nodeId) {
+          throw new ConflictException('Circular parent reference detected');
+        }
+
+        const parent =
+          await this.infrastructureRepo.findNodeById(currentParentId);
+
+        if (!parent) break;
+        currentParentId = parent.parentId!;
+      }
+    }
+
+    // ❌ You already block parent changes — keep it
+    if (parentId !== node.parentId) {
+      throw new ConflictException("You can't change the parent ID of any leaf");
+    }
+
+    const updated = await this.nodeRepo.updateNode(nodeId, dto);
 
     if (progress) {
       await this.infrastructureService.propagateUp(node.parentId);
