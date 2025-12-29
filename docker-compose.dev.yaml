@@ -1,36 +1,73 @@
+# services:
+#   db:
+#     image: postgres:15
+#     container_name: law_db
+#     profiles:
+#       - dev
+#     ports:
+#       - "5432:5432"
+#     environment:
+#       POSTGRES_USER: user1
+#       POSTGRES_PASSWORD: userPass
+#       POSTGRES_DB: lawaldb
+#     volumes:
+#       - law_pgdata_new2:/var/lib/postgresql/data
+#     networks:
+#       - law_network
+
+
+
+
+#   redis:
+#     image: redis:7
+#     container_name: law_redis_cache
+#     restart: always
+#     ports:
+#       - 6379:6379
+#     volumes:
+#       - law_redisdata:/data
+#     networks:
+#       - law_network
+
+# volumes:
+#   law_pgdata_new2:
+#   law_redisdata:
+#   uploads-profile-images:
+#   uploads-file:
+#   uploads:
+
+# networks:
+#   law_network:
+#     driver: bridge
+
 services:
   db:
     image: postgres:15
     container_name: law_db
-    restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - law_pgdata:/var/lib/postgresql/data
+      - law_pgdata_new2:/var/lib/postgresql/data
     networks:
       - law_network
 
   redis:
     image: redis:7
     container_name: law_redis_cache
-    restart: always
     ports:
-      - 6379:6379
+      - "6379:6379"
     volumes:
       - law_redisdata:/data
     networks:
       - law_network
 
 volumes:
-  law_pgdata:
+  law_pgdata_new2:
   law_redisdata:
-  uploads-profile-images:
-  uploads-file:
-  uploads:
 
 networks:
   law_network:
