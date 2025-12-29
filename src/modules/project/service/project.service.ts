@@ -169,7 +169,7 @@ export class ProjectService {
               })),
             }
             : undefined,
-          
+
 
         },
         include: {
@@ -178,7 +178,7 @@ export class ProjectService {
           projectEmployees: {
             include: { employee: { include: { user: true } } },
           },
-           projectViewers: { include: { viewer: { include: { user: true } } } },
+          projectViewers: { include: { viewer: { include: { user: true } } } },
         },
       });
 
@@ -264,52 +264,64 @@ export class ProjectService {
 
     return project;
   }
+  
+async findAll(query: FindAllProjectsDto) {
+  const where = buildProjectFilter(query);
 
-  async findAll(query: FindAllProjectsDto) {
-    const where = buildProjectFilter(query);
-
-    const includeProgram = {
+  const includeProgram = {
     program: {
       select: {
-        id: true,
         programName: true,
       },
     },
   };
 
-    if (query.limit !== 12) {
-      // Return all projects if limit is not 12 or not provided
-      const projects = await this.prisma.project.findMany({ where,
-      include: includeProgram, });
-      return {
-        data: projects,
-        total: projects.length,
-        page: 1,
-        limit: projects.length,
-      };
-    }
+  const formatProjects = (projects: any[]) =>
+    projects.map(({ program, ...rest }) => ({
+      ...rest,
+      programName: program?.programName ?? null,
+    }));
 
-    // Standard pagination with a limit of 12
-    const { page = 1 } = query;
-    const limit = 12;
-    const skip = (page - 1) * limit;
+  // No pagination
+  if (query.limit !== 12) {
+    const projects = await this.prisma.project.findMany({
+      where,
+      include: includeProgram,
+    });
 
-    const [projects, total] = await this.prisma.$transaction([
-      this.prisma.project.findMany({
-        where,
-        skip,
-        take: limit,
-      }),
-      this.prisma.project.count({ where }),
-    ]);
+    const formatted = formatProjects(projects);
 
     return {
-      data: projects,
-      total,
-      page,
-      limit,
+      data: formatted,
+      total: formatted.length,
+      page: 1,
+      limit: formatted.length, 
     };
   }
+
+  // Pagination
+  const { page = 1 } = query;
+  const limit = 12;
+  const skip = (page - 1) * limit;
+
+  const [projects, total] = await this.prisma.$transaction([
+    this.prisma.project.findMany({
+      where,
+      skip,
+      take: limit,
+      include: includeProgram,
+    }),
+    this.prisma.project.count({ where }),
+  ]);
+
+  return {
+    data: formatProjects(projects),
+    total,
+    page,
+    limit,
+  };
+}
+
 
   async searchByName(query: SearchProjectByNameDto) {
     const { name, page = 1, limit = 10, employeeId } = query;
