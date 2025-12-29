@@ -307,7 +307,7 @@ export class ManagerController {
       data,
     };
   }
-  @Delete(':id')
+  @Delete(':id/delete-submission')
   async deleteSubmission(
     @Param('id') submissionId: string,
     @Req() req: RequestWithUser,
