@@ -18,7 +18,7 @@ import { GetSubmissionStatusQueryDto } from '../dto/get-submission-status.dto';
 @Controller('employeeDashboard')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class EmployDashboardController {
-  constructor(private readonly employService: EmployDashboardService) {}
+  constructor(private readonly employService: EmployDashboardService) { }
 
   @Get('dashboard')
   @Roles('EMPLOYEE')
@@ -163,4 +163,5 @@ export class EmployDashboardController {
 
     return this.employService.upcomingDeadlineProjects(employeeId, limitDays);
   }
+
 }

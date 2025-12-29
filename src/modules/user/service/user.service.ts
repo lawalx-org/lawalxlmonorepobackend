@@ -21,6 +21,9 @@ import {
   PaginatedResult,
 } from 'src/modules/utils/pagination/pagination.utils';
 import { deleteProfileImage } from 'src/modules/utils/file.utils';
+import { mapUserWithAssignedProjects } from '../dto/user.mapper';
+import { ReplaceUserProjectDto } from '../dto/userUpdateAssignProject.Dto';
+import { UpdateUserProjectsDto } from '../dto/updateuserproject.Dto';
 
 @Injectable()
 export class UserService {
@@ -28,7 +31,7 @@ export class UserService {
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
     private readonly cloudinary: CloudinaryService,
-  ) {}
+  ) { }
 
   async uploadMultipleImages(files: Express.Multer.File[]) {
     const results: UploadApiResponse[] = [];
@@ -61,23 +64,61 @@ export class UserService {
     }
   }
 
-  async findAll(
-    query: { page: number; limit: number } = { page: 1, limit: 10 },
-  ): Promise<PaginatedResult<any>> {
-    const paginatedUsers = await paginate(
-      this.prisma,
-      'user',
-      {},
-      { page: query.page, limit: query.limit },
-    );
+async findAll(
+  query: { page: number; limit: number } = { page: 1, limit: 10 },
+) {
+  const users = await paginate<any>(
+    this.prisma,
+    'user',
+    {
+      where: {
+        role: {
+          in: ['MANAGER', 'EMPLOYEE', 'VIEWER'],
+        },
+      },
+      include: {
+        manager: {
+          include: {
+            projects: {
+              select: { id: true, name: true },
+            },
+          },
+        },
+        employee: {
+          include: {
+            projectEmployees: {
+              include: {
+                project: {
+                  select: { id: true, name: true },
+                },
+              },
+            },
+          },
+        },
+        viewer: {
+          include: {
+            projectViewers: {
+              include: {
+                project: {
+                  select: { id: true, name: true },
+                },
+              },
+            },
+          },
+        }, 
+      },
+    },
+    {
+      page: query.page,
+      limit: query.limit,
+    },
+  );
 
-    paginatedUsers.data = paginatedUsers.data.map((user: any) => {
-      const { password, ...result } = user;
-      return result;
-    });
+  return users;
+}
 
-    return paginatedUsers;
-  }
+
+
 
   async findOne(id: string) {
     const user = await this.prisma.user.findUnique({
@@ -103,37 +144,37 @@ export class UserService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
 
-   
+
     const { password, ...safeUser } = user;
     return safeUser;
   }
 
 
 
- 
-async update(id: string, updateUserDto: UpdateUserDto) {
- 
-  const userExists = await this.prisma.user.findUnique({
-    where: { id },
-  });
 
-  if (!userExists) {
-    throw new NotFoundException(`User with ID ${id} not found`);
-  }
- 
-  if (updateUserDto.profileImage && userExists.profileImage && updateUserDto.profileImage !== userExists.profileImage) {
-    deleteProfileImage(userExists.profileImage);
-  }
- 
-  const user = await this.prisma.user.update({
-    where: { id },
-    data: updateUserDto,
-  });
+  async update(id: string, updateUserDto: UpdateUserDto) {
 
-  
-  const { password, ...result } = user;
-  return result;
-}
+    const userExists = await this.prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!userExists) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    if (updateUserDto.profileImage && userExists.profileImage && updateUserDto.profileImage !== userExists.profileImage) {
+      deleteProfileImage(userExists.profileImage);
+    }
+
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: updateUserDto,
+    });
+
+
+    const { password, ...result } = user;
+    return result;
+  }
 
 
   async remove(id: string) {
@@ -192,4 +233,102 @@ async update(id: string, updateUserDto: UpdateUserDto) {
     const where = buildDynamicPrismaFilter(dto);
     return this.prisma.user.findMany({ where });
   }
+
+
+
+
+async updateUser_assign_Project_and_update_user_status(dto: UpdateUserProjectsDto) {
+  const { userId, removeProjectIds, addProjectIds, status } = dto;
+
+
+  const user = await this.prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      employee: { include: { projectEmployees: true } },
+      manager: { include: { projects: true } },
+      viewer: { include: { projectViewers: true } },
+    },
+  });
+
+  if (!user) throw new NotFoundException('User not found');
+
+  let relationType: 'employee' | 'manager' | 'viewer' | null = null;
+  let relationId: string | null = null;
+
+  if (user.employee) {
+    relationType = 'employee';
+    relationId = user.employee.id;
+  } else if (user.manager) {
+    relationType = 'manager';
+    relationId = user.manager.id;
+  } else if (user.viewer) {
+    relationType = 'viewer';
+    relationId = user.viewer.id;
+  } else {
+    throw new BadRequestException('User has no role relation');
+  }
+
+  return this.prisma.$transaction(async (tx) => {
+
+    if (removeProjectIds?.length) {
+      if (relationType === 'employee') {
+        await tx.projectEmployee.deleteMany({
+          where: { employeeId: relationId!, projectId: { in: removeProjectIds } },
+        });
+      } else if (relationType === 'manager') {
+        await tx.project.updateMany({
+          where: { managerId: relationId!, id: { in: removeProjectIds } },
+          data: { managerId: null }, // unassign manager
+        });
+      } else if (relationType === 'viewer') {
+        await tx.projectViewer.deleteMany({
+          where: { viewerId: relationId!, projectId: { in: removeProjectIds } },
+        });
+      }
+    }
+
+
+    if (addProjectIds?.length) {
+      if (relationType === 'employee') {
+        await tx.projectEmployee.createMany({
+          data: addProjectIds.map((projectId) => ({ employeeId: relationId!, projectId })),
+          skipDuplicates: true,
+        });
+      } else if (relationType === 'manager') {
+        await Promise.all(
+          addProjectIds.map((projectId) =>
+            tx.project.update({
+              where: { id: projectId },
+              data: { managerId: relationId! },
+            }),
+          ),
+        );
+      } else if (relationType === 'viewer') {
+        await tx.projectViewer.createMany({
+          data: addProjectIds.map((projectId) => ({ viewerId: relationId!, projectId })),
+          skipDuplicates: true,
+        });
+      }
+    }
+
+
+    if (status) {
+      await tx.user.update({
+        where: { id: userId },
+        data: { userStatus: status },
+      });
+    }
+
+
+    return tx.user.findUnique({
+      where: { id: userId },
+      include: {
+        employee: { include: { projectEmployees: { include: { project: true } } } },
+        manager: { include: { projects: true } },
+        viewer: { include: { projectViewers: { include: { project: true } } } },
+      },
+    });
+  });
+}
+
 }

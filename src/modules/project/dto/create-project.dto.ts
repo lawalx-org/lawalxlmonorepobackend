@@ -77,16 +77,18 @@ export class CreateProjectDto extends CreateReminderProjectDto {
     example: 'a1b2c3d4-e5f6-7890-1234-567890abcdef',
   })
   @IsUUID()
-  @IsNotEmpty()
+  @IsOptional()
   managerId: string;
 
   @ApiProperty({
-    description: 'The ID of the viewer for this project',
-    example: 'a1b2c3d4-e5f6-7890-1234-567890abcdef',
+    description: 'The IDs of the employees assigned to this project',
+    example: ['a1b2c3d4-e5f6-7890-1234-567890abcdef'],
+    required: false,
   })
-  @IsUUID()
-  @IsNotEmpty()
-  viewerId: string;
+  @IsArray()
+  @IsUUID('all', { each: true })
+  @IsOptional()
+  viewerIds?: string[];
 
   @ApiProperty({
     description: 'The IDs of the employees assigned to this project',

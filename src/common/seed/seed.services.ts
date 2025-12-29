@@ -43,6 +43,11 @@ export class SeedService implements OnModuleInit {
           },
         });
         console.log(` Client entry created for: ${user.email}`);
+         await tx.notificationPermissionClient.create({
+          data: {
+            userId: user.id,
+          }
+        });
       } else {
         console.log(`Client already exists for: ${user.email}`);
       }
