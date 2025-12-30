@@ -10,7 +10,7 @@ import {
   PaginatedResult,
   paginate,
 } from 'src/modules/utils/pagination/pagination.utils';
-import { Prisma } from 'generated/prisma';
+import { Prisma, Role } from 'generated/prisma';
 import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program.dto';
 
 @Injectable()
@@ -174,6 +174,27 @@ export class ProgramService {
     return this.prisma.program.update({
       where: { id: programId },
       data: { programName },
+    });
+  }
+  async getProgramsByLoggedInUser(userId: string) {
+    // Check if user exists in the database
+    const userExists = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!userExists) {
+      throw new NotFoundException(`User with ID "${userId}" not found`);
+    }
+
+    return this.prisma.program.findMany({
+      where: { userId },
+      include: {
+        projects: {
+          where: { isDeleted: false },
+          orderBy: { createdAt: 'desc' },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
     });
   }
 }

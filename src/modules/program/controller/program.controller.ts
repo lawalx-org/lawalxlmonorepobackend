@@ -18,6 +18,7 @@ import { RequestWithUser } from 'src/types/RequestWithUser';
 import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
 import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program.dto';
 import { UpdateProgramNameDto } from '../dto/update-program.dto';
+import { Request } from 'express';
 
 @Controller('program')
 export class ProgramController {
@@ -43,6 +44,13 @@ export class ProgramController {
       message: 'Programs fetched successfully',
       data,
     };
+  }
+  @UseGuards(JwtAuthGuard)
+  @Get('program-filter-by-user')
+  async getMyPrograms(@Req() req: RequestWithUser) {
+    return this.programService.getProgramsByLoggedInUser(
+      req.user.userId, 
+    );
   }
 
   @Get(':id')
