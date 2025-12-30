@@ -27,7 +27,7 @@ export class ProjectService {
     private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
     private readonly infrastructureRepo: InfrastructureRepository,
-  ) { }
+  ) {}
 
   // async create(createProjectDto: CreateProjectDto) {
   //   const { employeeIds, managerId, programId, ...projectData } =
@@ -164,13 +164,11 @@ export class ProjectService {
 
           projectViewers: viewerIds?.length
             ? {
-              create: viewerIds.map((viewerId) => ({
-                viewer: { connect: { id: viewerId } },
-              })),
-            }
+                create: viewerIds.map((viewerId) => ({
+                  viewer: { connect: { id: viewerId } },
+                })),
+              }
             : undefined,
-
-
         },
         include: {
           manager: { include: { user: true } },
@@ -264,64 +262,63 @@ export class ProjectService {
 
     return project;
   }
-  
-async findAll(query: FindAllProjectsDto) {
-  const where = buildProjectFilter(query);
 
-  const includeProgram = {
-    program: {
-      select: {
-        programName: true,
+  async findAll(query: FindAllProjectsDto) {
+    const where = { ...buildProjectFilter(query), isDeleted: false };
+
+    const includeProgram = {
+      program: {
+        select: {
+          programName: true,
+        },
       },
-    },
-  };
+    };
 
-  const formatProjects = (projects: any[]) =>
-    projects.map(({ program, ...rest }) => ({
-      ...rest,
-      programName: program?.programName ?? null,
-    }));
+    const formatProjects = (projects: any[]) =>
+      projects.map(({ program, ...rest }) => ({
+        ...rest,
+        programName: program?.programName ?? null,
+      }));
 
-  // No pagination
-  if (query.limit !== 12) {
-    const projects = await this.prisma.project.findMany({
-      where,
-      include: includeProgram,
-    });
+    // No pagination
+    if (query.limit !== 12) {
+      const projects = await this.prisma.project.findMany({
+        where,
+        include: includeProgram,
+      });
 
-    const formatted = formatProjects(projects);
+      const formatted = formatProjects(projects);
+
+      return {
+        data: formatted,
+        total: formatted.length,
+        page: 1,
+        limit: formatted.length,
+      };
+    }
+
+    // Pagination
+    const { page = 1 } = query;
+    const limit = 12;
+    const skip = (page - 1) * limit;
+
+    const [projects, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where,
+        skip,
+        take: limit,
+        include: includeProgram,
+      }),
+      this.prisma.project.count({ where }),
+    ]);
 
     return {
-      data: formatted,
-      total: formatted.length,
-      page: 1,
-      limit: formatted.length, 
+      data: formatProjects(projects),
+      total,
+      page,
+      limit,
     };
   }
-
-  // Pagination
-  const { page = 1 } = query;
-  const limit = 12;
-  const skip = (page - 1) * limit;
-
-  const [projects, total] = await this.prisma.$transaction([
-    this.prisma.project.findMany({
-      where,
-      skip,
-      take: limit,
-      include: includeProgram,
-    }),
-    this.prisma.project.count({ where }),
-  ]);
-
-  return {
-    data: formatProjects(projects),
-    total,
-    page,
-    limit,
-  };
-}
-
 
   async searchByName(query: SearchProjectByNameDto) {
     const { name, page = 1, limit = 10, employeeId } = query;
@@ -586,5 +583,25 @@ async findAll(query: FindAllProjectsDto) {
     return {
       message: `Project with ID "${id}" has been deleted successfully.`,
     };
+  }
+  async softDelete(projectId: string) {
+    const project = await this.prisma.project.findFirst({
+      where: {
+        id: projectId,
+        isDeleted: false,
+      },
+    });
+
+    if (!project) {
+      throw new NotFoundException('Project not found');
+    }
+
+    return this.prisma.project.update({
+      where: { id: projectId },
+      data: {
+        isDeleted: true,
+        deletedAt: new Date(),
+      },
+    });
   }
 }

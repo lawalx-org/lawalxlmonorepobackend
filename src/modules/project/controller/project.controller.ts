@@ -136,4 +136,9 @@ export class ProjectController {
   async deleteProject(@Param('id') id: string) {
     return this.projectService.deleteProject(id);
   }
+
+  @Delete('manager-project-softdelete/:id')
+  softDelete(@Param('id') id: string) {
+    return this.projectService.softDelete(id);
+  }
 }
