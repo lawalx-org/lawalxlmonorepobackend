@@ -13,6 +13,13 @@ import { Priority } from '../contants';
 
 export class InfrastructureNodeDto {
   @ApiProperty({
+    description: 'ProgramId this just remember of our program',
+    example: '0699c9bd-dc72-437e-b4cd-f40844ef5579',
+  })
+  @IsUUID()
+  programId: string;
+
+  @ApiProperty({
     description: 'Project ID this node belongs to',
     example: '0699c9bd-dc72-437e-b4cd-f40844ef5579',
   })
@@ -45,6 +52,7 @@ export class InfrastructureNodeDto {
   })
   @IsInt()
   @Min(0)
+  @IsOptional()
   duration: number;
 
   @ApiProperty({
@@ -52,6 +60,7 @@ export class InfrastructureNodeDto {
     example: '2025-01-01T00:00:00.000Z',
   })
   @IsDateString()
+  @IsOptional()
   startDate: Date;
 
   @ApiProperty({
@@ -59,6 +68,7 @@ export class InfrastructureNodeDto {
     example: '2025-01-10T00:00:00.000Z',
   })
   @IsDateString()
+  @IsOptional()
   finishDate: Date;
 
   @ApiProperty({
@@ -66,6 +76,7 @@ export class InfrastructureNodeDto {
     example: 'NONE',
   })
   @IsString()
+  @IsOptional()
   priority: Priority;
 
   @ApiProperty({
@@ -74,6 +85,7 @@ export class InfrastructureNodeDto {
     default: 0,
   })
   @IsNumber()
+  @IsOptional()
   actualHour: number;
 
   @ApiProperty({
@@ -82,6 +94,7 @@ export class InfrastructureNodeDto {
     default: 0,
   })
   @IsNumber()
+  @IsOptional()
   plannedHour: number;
 
   @ApiProperty({
@@ -90,6 +103,7 @@ export class InfrastructureNodeDto {
     default: 0,
   })
   @IsNumber()
+  @IsOptional()
   plannedCost: number;
 
   @ApiProperty({
@@ -98,6 +112,7 @@ export class InfrastructureNodeDto {
     default: 0,
   })
   @IsNumber()
+  @IsOptional()
   plannedResourceCost: number;
 
   @ApiPropertyOptional({
@@ -114,6 +129,7 @@ export class InfrastructureNodeDto {
     default: 0,
   })
   @IsNumber()
+  @IsOptional()
   computedProgress: number;
 
   @ApiProperty({
@@ -122,6 +138,7 @@ export class InfrastructureNodeDto {
     default: 1,
   })
   @IsNumber()
+  @IsOptional()
   weight: number;
 
   @ApiProperty({
@@ -130,6 +147,7 @@ export class InfrastructureNodeDto {
     default: true,
   })
   @IsBoolean()
+  @IsOptional()
   isLeaf: boolean;
 }
 

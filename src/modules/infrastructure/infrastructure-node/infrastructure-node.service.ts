@@ -43,10 +43,14 @@ export class InfrastructureNodeService {
    * Create a new infrastructure node
    */
   async createNode(dto: InfrastructureNodeDto) {
-    if (!dto.projectId || !dto.taskName) {
+    if (!dto.projectId || !dto.programId || !dto.taskName) {
       throw new BadRequestException('Invalid node payload');
     }
 
+    const program = await this.infrastructureRepo.findProgramById(
+      dto.programId,
+    );
+    if (!program) throw new NotFoundException('Program not found');
     // Generate unique slug
     const baseSlug = this.slugify(dto.taskName);
     let slug = baseSlug;
@@ -99,6 +103,8 @@ export class InfrastructureNodeService {
       progress: 0,
       computedProgress: 0,
       weight: dto.weight || 1,
+      programId: program.id,
+      priority: dto.priority || 'NONE',
     });
 
     // Propagate progress changes

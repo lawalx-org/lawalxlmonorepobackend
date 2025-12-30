@@ -92,8 +92,8 @@ export class ProgramService {
       {
         where,
         include: {
-          projects: true, 
-          tags: true, 
+          projects: true,
+          tags: true,
         },
       },
       { page: page ?? 1, limit: limit ?? 10 },

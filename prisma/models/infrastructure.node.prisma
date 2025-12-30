@@ -4,7 +4,8 @@ model InfrastructureNode {
   taskName String
   slug     String @unique
 
-  nodeType String?
+  nodeType  String?
+  programId String? // no relation just take it as ref
 
   duration            Int      @default(0)
   startDate           DateTime @default(now())

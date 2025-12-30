@@ -13,9 +13,12 @@ model Program {
   updatedAt          DateTime @updatedAt
 
   // Relations
-  client   Client    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  client   Client       @relation(fields: [userId], references: [id], onDelete: Cascade)
   projects Project[]
   tags     Tag[]
+  // sabbir //
+  charts   ChartTable[]
+  // sabbir //
 
   @@map("programs")
 }

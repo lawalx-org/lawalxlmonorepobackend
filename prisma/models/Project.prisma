@@ -8,7 +8,7 @@ model Project {
   computedProgress Float                @default(0)
   nodes            InfrastructureNode[]
   metadata         Json?                @default("{}")
-  nodeType String?
+  nodeType         String?
   // sabbir infrastructure end from here...
 
   // uploadbeforeday           String

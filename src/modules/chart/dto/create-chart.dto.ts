@@ -1,4 +1,4 @@
-import { IsString, IsEnum, IsOptional, IsJSON } from 'class-validator';
+import { IsString, IsEnum, IsOptional, IsJSON, IsUUID } from 'class-validator';
 import { ApiProperty, IntersectionType } from '@nestjs/swagger';
 import { ChartName, ChartStatus } from 'generated/prisma';
 import { CreateBarChartDto } from './barchartDto';
@@ -10,7 +10,7 @@ export class CreateChartDto extends IntersectionType(
   CreateBarChartDto,
   Create_Hr_BarChartDto,
   Create_Pi_ChartDto,
-  HeatMap_ChartDto
+  HeatMap_ChartDto,
 ) {
   @ApiProperty({
     example: 'Weekly Sleep Pattern',
@@ -53,5 +53,11 @@ export class CreateChartDto extends IntersectionType(
   @IsOptional()
   @IsJSON()
   zAxis?: string;
-}
 
+  @ApiProperty({
+    example: 'program uuid',
+  })
+  @IsUUID()
+  @IsOptional()
+  programId?: string;
+}
