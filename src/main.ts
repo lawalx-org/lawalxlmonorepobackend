@@ -15,11 +15,10 @@ async function bootstrap() {
     rawBody: true,
     bodyParser: true,
   });
-app.enableCors({
-  origin: ['http://localhost:5173'],
-  credentials: true, 
-});
-
+  app.enableCors({
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5500'],
+    credentials: true,
+  });
 
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',

@@ -4,6 +4,8 @@ model InfrastructureNode {
   taskName String
   slug     String @unique
 
+  nodeType String?
+
   duration            Int      @default(0)
   startDate           DateTime @default(now())
   finishDate          DateTime @default(now())

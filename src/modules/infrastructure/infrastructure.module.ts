@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
-import { InfrastructureController } from './infrastructure.controller';
 import { InfrastructureRepository } from './infrastructure.repository';
 import { InfrastructureNodeRepository } from './infrastructure-node/infrastructure-node.repository';
 import { InfrastructureProjectRepository } from './infrastructure-project/infrastructure-project.repository';
 import { InfrastructureService } from './infrastructure.service';
 import { InfrastructureNodeService } from './infrastructure-node/infrastructure-node.service';
+import { InfrastructureNodeController } from './infrastructure.controller';
+import { InfrastructureExcelService } from './plugins/InfrastructureExcelService';
 
 @Module({
   imports: [],
-  controllers: [InfrastructureController],
+  controllers: [InfrastructureNodeController],
   providers: [
     InfrastructureRepository,
     InfrastructureNodeRepository,
@@ -16,6 +17,7 @@ import { InfrastructureNodeService } from './infrastructure-node/infrastructure-
     // services
     InfrastructureService,
     InfrastructureNodeService,
+    InfrastructureExcelService,
   ],
 })
 export class InfrastructureModule {}

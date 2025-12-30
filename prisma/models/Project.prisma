@@ -8,6 +8,7 @@ model Project {
   computedProgress Float                @default(0)
   nodes            InfrastructureNode[]
   metadata         Json?                @default("{}")
+  nodeType String?
   // sabbir infrastructure end from here...
 
   // uploadbeforeday           String
@@ -32,9 +33,11 @@ model Project {
   updatedAt              DateTime      @updatedAt
   latitude               Float?
   longitude              Float?
+  isDeleted              Boolean       @default(false)
+  deletedAt              DateTime?
 
   // Relations
-  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  program Program  @relation(fields: [programId], references: [id], onDelete: Cascade)
   manager Manager? @relation(fields: [managerId], references: [id], onDelete: Cascade)
 
   projectEmployees           ProjectEmployee[]
@@ -76,10 +79,10 @@ model ProjectEmployee {
 }
 
 model ProjectViewer {
-  id        String @id @default(uuid())
-  projectId String
-  viewerId  String
-   assignedAt DateTime @default(now())
+  id         String   @id @default(uuid())
+  projectId  String
+  viewerId   String
+  assignedAt DateTime @default(now())
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   viewer  Viewer  @relation(fields: [viewerId], references: [id], onDelete: Cascade)

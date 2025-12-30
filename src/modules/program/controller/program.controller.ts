@@ -21,7 +21,7 @@ import { UpdateProgramNameDto } from '../dto/update-program.dto';
 
 @Controller('program')
 export class ProgramController {
-  constructor(private readonly programService: ProgramService) { }
+  constructor(private readonly programService: ProgramService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('CLIENT')
@@ -30,7 +30,6 @@ export class ProgramController {
     @Body() createProgramDto: CreateProgramDto,
     @Req() req: RequestWithUser,
   ) {
-
     const userid = req.user.clientId;
 
     return this.programService.create(createProgramDto, userid!);
@@ -46,15 +45,13 @@ export class ProgramController {
     };
   }
 
-
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const data = await this.programService.findOne(id);
     return {
       message: 'Program fetched successfully',
       data,
-    }
-
+    };
   }
 
   @Get(':id/projects')
@@ -66,8 +63,7 @@ export class ProgramController {
     return {
       message: 'Projects fetched successfully',
       data,
-    }
-
+    };
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -78,11 +74,13 @@ export class ProgramController {
     @Body() body: UpdateProgramNameDto,
     @Req() req: RequestWithUser,
   ) {
-    const data = await this.programService.updateProgramName(id, body.programName);
+    const data = await this.programService.updateProgramName(
+      id,
+      body.programName,
+    );
     return {
       message: 'Program name updated successfully',
       data,
     };
   }
-
 }

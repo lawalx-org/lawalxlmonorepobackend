@@ -27,7 +27,7 @@ export class ProjectService {
     private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
     private readonly infrastructureRepo: InfrastructureRepository,
-  ) { }
+  ) {}
 
   // async create(createProjectDto: CreateProjectDto) {
   //   const { employeeIds, managerId, programId, ...projectData } =
@@ -164,13 +164,11 @@ export class ProjectService {
 
           projectViewers: viewerIds?.length
             ? {
-              create: viewerIds.map((viewerId) => ({
-                viewer: { connect: { id: viewerId } },
-              })),
-            }
+                create: viewerIds.map((viewerId) => ({
+                  viewer: { connect: { id: viewerId } },
+                })),
+              }
             : undefined,
-          
-
         },
         include: {
           manager: { include: { user: true } },
@@ -178,7 +176,7 @@ export class ProjectService {
           projectEmployees: {
             include: { employee: { include: { user: true } } },
           },
-           projectViewers: { include: { viewer: { include: { user: true } } } },
+          projectViewers: { include: { viewer: { include: { user: true } } } },
         },
       });
 
@@ -266,20 +264,40 @@ export class ProjectService {
   }
 
   async findAll(query: FindAllProjectsDto) {
-    const where = buildProjectFilter(query);
+    const where = { ...buildProjectFilter(query), isDeleted: false };
 
+    const includeProgram = {
+      program: {
+        select: {
+          programName: true,
+        },
+      },
+    };
+
+    const formatProjects = (projects: any[]) =>
+      projects.map(({ program, ...rest }) => ({
+        ...rest,
+        programName: program?.programName ?? null,
+      }));
+
+    // No pagination
     if (query.limit !== 12) {
-      // Return all projects if limit is not 12 or not provided
-      const projects = await this.prisma.project.findMany({ where });
+      const projects = await this.prisma.project.findMany({
+        where,
+        include: includeProgram,
+      });
+
+      const formatted = formatProjects(projects);
+
       return {
-        data: projects,
-        total: projects.length,
+        data: formatted,
+        total: formatted.length,
         page: 1,
-        limit: projects.length,
+        limit: formatted.length,
       };
     }
 
-    // Standard pagination with a limit of 12
+    // Pagination
     const { page = 1 } = query;
     const limit = 12;
     const skip = (page - 1) * limit;
@@ -289,12 +307,13 @@ export class ProjectService {
         where,
         skip,
         take: limit,
+        include: includeProgram,
       }),
       this.prisma.project.count({ where }),
     ]);
 
     return {
-      data: projects,
+      data: formatProjects(projects),
       total,
       page,
       limit,
@@ -564,5 +583,25 @@ export class ProjectService {
     return {
       message: `Project with ID "${id}" has been deleted successfully.`,
     };
+  }
+  async softDelete(projectId: string) {
+    const project = await this.prisma.project.findFirst({
+      where: {
+        id: projectId,
+        isDeleted: false,
+      },
+    });
+
+    if (!project) {
+      throw new NotFoundException('Project not found');
+    }
+
+    return this.prisma.project.update({
+      where: { id: projectId },
+      data: {
+        isDeleted: true,
+        deletedAt: new Date(),
+      },
+    });
   }
 }
