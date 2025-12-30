@@ -1,7 +1,10 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
   Param,
+  Patch,
   Query,
   Req,
   UnauthorizedException,
@@ -13,9 +16,10 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 import { RequestWithUser } from 'src/types/RequestWithUser';
 import { ChartService } from '../../chart/service/chart.service';
 import { ManagerService } from '../service/manager.service';
-import { ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { SubmittedStatus } from 'generated/prisma';
 import { GetSubmissionStatusQueryDto } from 'src/modules/employee/dto/get-submission-status.dto';
+import { UpdateSubmissionStatusDto } from '../dto/UpdateSubmissionStatusDto';
 
 @Controller('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -23,7 +27,7 @@ export class ManagerController {
   constructor(
     private readonly chartService: ChartService,
     private readonly managerService: ManagerService,
-  ) {}
+  ) { }
 
   @Get('dashboard')
   @Roles('MANAGER')
@@ -211,38 +215,38 @@ export class ManagerController {
     return this.managerService.getProgramDashboard(managerId);
   }
 
-  @Get('all-manager-submission')
-  @Roles('MANAGER')
-  @ApiOperation({ summary: 'Get all submissions for manager projects' })
-  @ApiQuery({ name: 'status', required: false, enum: SubmittedStatus })
-  @ApiQuery({ name: 'fromDate', required: false, example: '2025-01-01' })
-  @ApiQuery({ name: 'toDate', required: false, example: '2025-01-31' })
-  async managerSubmissions(
-    @Req() req: RequestWithUser,
-    @Query('status') status?: SubmittedStatus,
-    @Query('fromDate') fromDate?: string,
-    @Query('toDate') toDate?: string,
-  ) {
-    const managerId = req.user.managerId;
+  // @Get('all-manager-submission')
+  // @Roles('MANAGER')
+  // @ApiOperation({ summary: 'Get all submissions for manager projects' })
+  // @ApiQuery({ name: 'status', required: false, enum: SubmittedStatus })
+  // @ApiQuery({ name: 'fromDate', required: false, example: '2025-01-01' })
+  // @ApiQuery({ name: 'toDate', required: false, example: '2025-01-31' })
+  // async managerSubmissions(
+  //   @Req() req: RequestWithUser,
+  //   @Query('status') status?: SubmittedStatus,
+  //   @Query('fromDate') fromDate?: string,
+  //   @Query('toDate') toDate?: string,
+  // ) {
+  //   const managerId = req.user.managerId;
 
-    if (!managerId) {
-      throw new UnauthorizedException('Manager ID not found in token');
-    }
+  //   if (!managerId) {
+  //     throw new UnauthorizedException('Manager ID not found in token');
+  //   }
 
-    const result = await this.managerService.getManagerSubmissions(
-      managerId,
-      status,
-      fromDate,
-      toDate,
-    );
+  //   const result = await this.managerService.getManagerSubmissions(
+  //     managerId,
+  //     status,
+  //     fromDate,
+  //     toDate,
+  //   );
 
-    return {
-      statusCode: 200,
-      success: true,
-      message: 'All submissions fetched successfully',
-      data: result,
-    };
-  }
+  //   return {
+  //     statusCode: 200,
+  //     success: true,
+  //     message: 'All submissions fetched successfully',
+  //     data: result,
+  //   };
+  // }
 
   @Get('submissions')
   @Roles('MANAGER')
@@ -276,9 +280,9 @@ export class ManagerController {
     };
   }
 
-   @Get('overview')
+  @Get('overview')
   @Roles('MANAGER')
-  async getOverview( @Req() req: RequestWithUser) {
+  async getOverview(@Req() req: RequestWithUser) {
     const userId = req.user.managerId;
 
     if (!userId) {
@@ -291,16 +295,64 @@ export class ManagerController {
     };
   }
 
-   @Get('activity')
+  @Get('activity')
   async getSubmissionActivity(@Req() req: RequestWithUser) {
-        const userId = req.user.managerId;
+    const userId = req.user.managerId;
     if (!userId) {
       throw new UnauthorizedException('User ID not found in token');
     }
     const data = await this.managerService.getSubmissionActivity(userId);
     return {
-      success: true,
+      message: 'activity fetch  successfully',
       data,
     };
   }
+  @Delete(':id/delete-submission')
+  async deleteSubmission(
+    @Param('id') submissionId: string,
+    @Req() req: RequestWithUser,
+  ) {
+    const managerId = req.user.managerId;
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    const result = await this.managerService.deleteSubmissionForManager(
+      submissionId,
+      managerId,
+    );
+
+    return {
+      message: 'Submission deleted successfully',
+      data: result,
+    };
+  }
+
+
+
+@Patch(':id/status')
+@ApiOperation({ summary: 'Update status of a submission by manager' })
+@ApiBody({ type: UpdateSubmissionStatusDto })
+async updateStatus(
+  @Param('id') submissionId: string,
+  @Req() req: RequestWithUser,
+  @Body() updateDto: UpdateSubmissionStatusDto,
+) {
+  const managerId = req.user.managerId;
+  if (!managerId) {
+    throw new UnauthorizedException('Manager ID not found in token');
+  }
+
+  const result = await this.managerService.updateSubmissionStatus(
+    submissionId,
+    managerId,
+    updateDto.status,
+  );
+
+  return {
+    message: 'Submission status changed successfully',
+    data: result,
+  };
+
+}
 }

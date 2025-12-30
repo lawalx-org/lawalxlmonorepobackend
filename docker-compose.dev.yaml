@@ -2,9 +2,8 @@ services:
   db:
     image: postgres:15
     container_name: law_db
-    restart: always
     ports:
-      - 5432:5432
+      - '5432:5432'
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -17,9 +16,8 @@ services:
   redis:
     image: redis:7
     container_name: law_redis_cache
-    restart: always
     ports:
-      - 6379:6379
+      - '6379:6379'
     volumes:
       - law_redisdata:/data
     networks:
@@ -28,9 +26,6 @@ services:
 volumes:
   law_pgdata_new:
   law_redisdata:
-  uploads-profile-images:
-  uploads-file:
-  uploads:
 
 networks:
   law_network:
