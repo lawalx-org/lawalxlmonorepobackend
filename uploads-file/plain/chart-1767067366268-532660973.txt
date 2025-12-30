@@ -1,0 +1,17 @@
+
+HORIZONTAL_BAR
+{
+  "numberOfDataset": 5,
+  "firstFieldDataset": 0,
+  "lastFieldDataset": 4,
+  "widgets": [
+    {
+      "legendName": "Revenue",
+      "color": "#3B82F6"
+    }
+  ],
+  "title": "Weekly Sleep",
+  "status": "ACTIVE",
+  "category": "HORIZONTAL_BAR",
+  "xAxis": "{\"labels\":[\"Mon\",\"Tue\",\"Wed\"],\"values\":[6,7,8]}"
+}

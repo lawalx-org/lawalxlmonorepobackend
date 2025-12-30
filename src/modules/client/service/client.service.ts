@@ -7,6 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import * as fs from 'fs';
 import { NotificationService } from 'src/modules/notification/service/notification.service';
 import { NotificationType } from 'src/modules/notification/dto/create-notification.dto'
+import { ActivityActionType } from 'generated/prisma';
 
 
 
@@ -84,76 +85,64 @@ export class ClientService {
   async saveFile(
     file: Express.Multer.File,
     userId: string,
-    sheetId: string
+    sheetId: string,
+    ipAddress?: string
   ) {
     try {
+      return await this.prisma.$transaction(async (tx) => {
 
-      const sheet = await this.prisma.sheet.findUnique({
-        where: { id: sheetId },
-        include: {
-          project: true, 
-        },
-      });
+        const sheet = await tx.sheet.findUnique({
+          where: { id: sheetId },
+          include: { project: true },
+        });
 
-      if (!sheet) throw new NotFoundException('Sheet not found');
+        if (!sheet) {
+          throw new NotFoundException('Sheet not found');
+        }
 
-      const project = sheet.project;
+        const project = sheet.project;
 
 
-      const fileType = file.mimetype.split('/')[1];
-      const filePath = file.path;
-      const publicUrl = `/uploads-file/${fileType}/${file.filename}`;
+        const fileType = file.mimetype.split('/')[1];
+        const filePath = file.path;
+        const publicUrl = `/uploads-file/${fileType}/${file.filename}`;
 
-      const createdFile = await this.prisma.file.create({
-        data: {
-          filename: file.originalname,
-          url: publicUrl,
-          filePath,
-          fileType,
-          size: file.size,
-          userId,
-          sheetId,
-        },
-      });
+        const createdFile = await tx.file.create({
+          data: {
+            filename: file.originalname,
+            url: publicUrl,
+            filePath,
+            fileType,
+            size: file.size,
+            userId,
+            sheetId,
+          },
+        });
 
-      if (!project.managerId) {
-        console.log('Project has no manager, skipping notification');
+        await tx.activity.create({
+          data: {
+            userId,
+            projectId: sheet.projectId,
+            actionType: ActivityActionType.FILE_ADDED,
+            description: `File uploaded: ${createdFile.filename}`,
+            metadata: {
+              fileId: createdFile.id,
+              sheetName: sheet.name,
+              projectName: project.name,
+            },
+            ipAddress: ipAddress,
+          },
+        });
+
         return createdFile;
-      }
-
-
-      const manager = await this.prisma.manager.findUnique({
-        where: { id: project.managerId },
-        include: { user: true },
       });
-
-      if (!manager || !manager.user) return createdFile;
-
-      const permission = await this.prisma.notificationPermissionManager.findUnique({
-        where: { userId: manager.user.id },
-      });
-
-      if (!permission || !permission.fileImportByEmployees) {
-        console.log(` Manager ${manager.user.id} disabled file notifications`);
-        return createdFile;
-      }
-
-      await this.notificationService.create(
-        {
-          receiverIds: [manager.user.id],
-          context: `A new file ${createdFile.filename} was uploaded in sheet ${sheet.name} under project ${project.name}.`,
-          type: NotificationType.FILE_CREATED,
-        },
-        userId 
-      );
-
-      return createdFile;
 
     } catch (err) {
       console.error('Error saving file:', err);
       throw new InternalServerErrorException('File upload failed');
     }
   }
+
 
 
 

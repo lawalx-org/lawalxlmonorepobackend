@@ -32,14 +32,13 @@ export class ClientDashboardController {
     }
 
     //---------- employees activity------------->
-    @Get("employee-activity")
-    @ApiQuery({ name: 'limit', required: false })
-    @ApiQuery({ name: 'page', required: false })
+    @Get('employee-activity')
     @ApiQuery({ name: 'userId', required: false })
     @ApiQuery({ name: 'startDate', required: false })
     @ApiQuery({ name: 'endDate', required: false })
-
-
+    @ApiQuery({ name: 'limit', required: false })
+    @ApiQuery({ name: 'page', required: false })
+    @ApiQuery({ name: 'search', required: false })
     async activity(
         @Req() req: RequestWithUser,
         @Query('userId') userId?: string,
@@ -47,28 +46,43 @@ export class ClientDashboardController {
         @Query('endDate') endDate?: string,
         @Query('limit') limit?: string,
         @Query('page') page?: string,
+        @Query('search') search?: string,
     ) {
         const clientId = req.user.clientId;
         if (!clientId) {
             throw new UnauthorizedException('clientId ID not found in token');
         }
-        const pageNumber = page ? Number(page) : 1;
-        const take = limit ? Number(limit) : 10;
+
+
+        const userIdQuery = userId || false;
+        const startDateQuery = startDate || false;
+        const endDateQuery = endDate || false;
+        const limitQuery = limit || false;
+        const pageQuery = page || false;
+        const searchQuery = search || false;
+
+        const pageNumber = pageQuery ? Number(pageQuery) : 1;
+        const take = limitQuery ? Number(limitQuery) : 10;
         const skip = (pageNumber - 1) * take;
 
         const employees = await this.clientDashboardServices.getEmployeesActivity(
-            userId,
-            startDate ? new Date(startDate) : undefined,
-            endDate ? new Date(endDate) : undefined,
+            userIdQuery as any,
+            startDateQuery ? new Date(startDateQuery) : undefined,
+            endDateQuery ? new Date(endDateQuery) : undefined,
+            searchQuery as any,
             take,
-            skip
+            skip,
         );
 
         return {
-            message: "Employees activity fetched successfully",
-            data: employees,
+            statusCode: 200,
+            success: true,
+            message: "Request successful",
+            data: employees.result,
         };
     }
+
+
 
     //------------project timeline------------>
     @Get('timeline')
