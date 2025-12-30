@@ -40,7 +40,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-            - name: Set up Docker
+
       - name: Setup docker action
         uses: docker/setup-docker-action@v4
 
