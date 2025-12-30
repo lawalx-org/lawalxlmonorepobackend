@@ -5,6 +5,7 @@ import { InfrastructureProjectRepository } from './infrastructure-project/infras
 import { InfrastructureService } from './infrastructure.service';
 import { InfrastructureNodeService } from './infrastructure-node/infrastructure-node.service';
 import { InfrastructureNodeController } from './infrastructure.controller';
+import { InfrastructureExcelService } from './plugins/InfrastructureExcelService';
 
 @Module({
   imports: [],
@@ -16,6 +17,7 @@ import { InfrastructureNodeController } from './infrastructure.controller';
     // services
     InfrastructureService,
     InfrastructureNodeService,
+    InfrastructureExcelService,
   ],
 })
 export class InfrastructureModule {}
