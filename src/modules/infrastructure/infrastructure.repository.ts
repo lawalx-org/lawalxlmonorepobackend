@@ -19,4 +19,7 @@ export class InfrastructureRepository {
   findNodeById(id: string) {
     return this.prisma.infrastructureNode.findUnique({ where: { id } });
   }
+  findProgramById(id: string) {
+    return this.prisma.program.findUnique({ where: { id } });
+  }
 }
