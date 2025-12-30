@@ -67,7 +67,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          password: ${{ secrets.VPS_SSH_KEY }}
           script: |
             echo "✅ SSH connection successful"
             uptime
@@ -77,7 +77,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          password: ${{ secrets.VPS_SSH_KEY }}
           source: 'docker-compose.yaml'
           target: '/home/${{ secrets.VPS_USERNAME }}/projects/${{secrets.PACKAGE_NAME}}'
 
@@ -86,7 +86,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          password: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/root/projects/${{ secrets.PACKAGE_NAME }}
             # Force pull latest images
@@ -106,7 +106,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          password: ${{ secrets.VPS_SSH_KEY }}
           script: |
             sudo systemctl restart caddy
             echo "✅ Caddy server restarted"
@@ -121,7 +121,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          password: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/root/projects/${{ secrets.PACKAGE_NAME }}
             # check all container into my compose file file is running or not (fail-coz: [Restarting, Exited ]) actually status need to be up must be excluding fail-coz 
