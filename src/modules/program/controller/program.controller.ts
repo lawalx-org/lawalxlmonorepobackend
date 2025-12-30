@@ -18,10 +18,11 @@ import { RequestWithUser } from 'src/types/RequestWithUser';
 import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
 import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program.dto';
 import { UpdateProgramNameDto } from '../dto/update-program.dto';
+import { Request } from 'express';
 
 @Controller('program')
 export class ProgramController {
-  constructor(private readonly programService: ProgramService) { }
+  constructor(private readonly programService: ProgramService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('CLIENT')
@@ -30,7 +31,6 @@ export class ProgramController {
     @Body() createProgramDto: CreateProgramDto,
     @Req() req: RequestWithUser,
   ) {
-
     const userid = req.user.clientId;
 
     return this.programService.create(createProgramDto, userid!);
@@ -45,7 +45,13 @@ export class ProgramController {
       data,
     };
   }
-
+  @UseGuards(JwtAuthGuard)
+  @Get('program-filter-by-user')
+  async getMyPrograms(@Req() req: RequestWithUser) {
+    return this.programService.getProgramsByLoggedInUser(
+      req.user.userId, 
+    );
+  }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
@@ -53,8 +59,7 @@ export class ProgramController {
     return {
       message: 'Program fetched successfully',
       data,
-    }
-
+    };
   }
 
   @Get(':id/projects')
@@ -66,8 +71,7 @@ export class ProgramController {
     return {
       message: 'Projects fetched successfully',
       data,
-    }
-
+    };
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -78,11 +82,13 @@ export class ProgramController {
     @Body() body: UpdateProgramNameDto,
     @Req() req: RequestWithUser,
   ) {
-    const data = await this.programService.updateProgramName(id, body.programName);
+    const data = await this.programService.updateProgramName(
+      id,
+      body.programName,
+    );
     return {
       message: 'Program name updated successfully',
       data,
     };
   }
-
 }

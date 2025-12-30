@@ -2,145 +2,118 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Infrastructure Tree</title>
-
+    <title>Project Task Tree</title>
     <style>
       body {
-        font-family: system-ui, Arial, sans-serif;
-        background: #0f172a;
-        color: #e5e7eb;
+        font-family: Arial, sans-serif;
+        background: #f5f7fa;
         padding: 20px;
       }
 
       h1 {
-        margin-bottom: 20px;
+        margin-bottom: 16px;
       }
 
-      .project {
-        background: #020617;
-        border-radius: 10px;
-        padding: 16px;
-        margin-bottom: 24px;
-        box-shadow: 0 0 0 1px #1e293b;
+      .tree {
+        list-style-type: none;
+        padding-left: 20px;
       }
 
-      .project-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 12px;
-      }
-
-      ul {
-        list-style: none;
-        padding-left: 18px;
-        margin-left: 6px;
-        border-left: 1px dashed #334155;
-      }
-
-      li {
+      .tree li {
         margin: 6px 0;
         position: relative;
       }
 
-      li::before {
-        content: '•';
-        color: #38bdf8;
-        position: absolute;
-        left: -14px;
+      .node {
+        cursor: pointer;
+        padding: 6px 10px;
+        background: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        display: inline-block;
       }
 
-      .node {
-        padding: 4px 6px;
-        border-radius: 4px;
-        cursor: default;
-        display: inline-flex;
-        gap: 6px;
-        align-items: center;
+      .node:hover {
+        background: #eef3ff;
+      }
+
+      .children {
+        margin-left: 20px;
+        display: none;
+      }
+
+      .expanded > .children {
+        display: block;
       }
 
       .leaf {
-        color: #22c55e;
+        background: #e8f5e9;
       }
 
-      .non-leaf {
-        color: #facc15;
-      }
-
-      .progress {
+      .meta {
         font-size: 12px;
-        opacity: 0.8;
+        color: #555;
+        margin-left: 6px;
       }
     </style>
   </head>
   <body>
-    <h1>Infrastructure Project Tree</h1>
-    <div id="app"></div>
+    <h1>Infrastructure Task Tree</h1>
+    <ul id="treeRoot" class="tree"></ul>
 
     <script>
       const API_URL =
-        'https://lawal.sakibalhasa.xyz/api/v1/infrastructure/projects';
+        'http://localhost:2342/api/v1/infrastructure-nodes/project/f49a3aec-dcc9-4de1-9a6b-f829f9cd7435/tree';
 
-      function renderNodes(nodes) {
-        if (!nodes || !nodes.length) return null;
-
-        const ul = document.createElement('ul');
-
-        nodes.forEach((node) => {
-          const li = document.createElement('li');
-
-          const nodeEl = document.createElement('span');
-          nodeEl.className = `node ${node.isLeaf ? 'leaf' : 'non-leaf'}`;
-          nodeEl.textContent = node.name;
-
-          const progress = document.createElement('span');
-          progress.className = 'progress';
-          progress.textContent =
-            node.progress !== null
-              ? `(${node.progress}%)`
-              : `(computed: ${node.computedProgress}%)`;
-
-          li.appendChild(nodeEl);
-          li.appendChild(progress);
-
-          if (node.children && node.children.length > 0) {
-            li.appendChild(renderNodes(node.children));
-          }
-
-          ul.appendChild(li);
-        });
-
-        return ul;
-      }
-
-      async function loadProjects() {
+      async function fetchTree() {
         const res = await fetch(API_URL);
         const json = await res.json();
+        return json.data;
+      }
 
-        const container = document.getElementById('app');
+      function createNode(task) {
+        const li = document.createElement('li');
 
-        json.data.forEach((project) => {
-          const projectDiv = document.createElement('div');
-          projectDiv.className = 'project';
+        const nodeDiv = document.createElement('div');
+        nodeDiv.className = 'node' + (task.isLeaf ? ' leaf' : '');
+        nodeDiv.innerHTML = `
+      <strong>${task.taskName}</strong>
+      <span class="meta">
+        (Progress: ${task.computedProgress}% | Duration: ${task.duration})
+      </span>
+    `;
 
-          const title = document.createElement('div');
-          title.className = 'project-title';
-          title.textContent = `${project.name} (${project._count.nodes} nodes) | ${Math.floor(project.computedProgress)}%`;
+        li.appendChild(nodeDiv);
 
-          projectDiv.appendChild(title);
+        if (task.children && task.children.length > 0) {
+          const childrenUl = document.createElement('ul');
+          childrenUl.className = 'children';
 
-          if (project.nodes && project.nodes.length > 0) {
-            projectDiv.appendChild(renderNodes(project.nodes));
-          } else {
-            projectDiv.appendChild(
-              document.createTextNode('No nodes available.'),
-            );
-          }
+          task.children.forEach((child) => {
+            childrenUl.appendChild(createNode(child));
+          });
 
-          container.appendChild(projectDiv);
+          li.appendChild(childrenUl);
+
+          nodeDiv.addEventListener('click', () => {
+            li.classList.toggle('expanded');
+          });
+        }
+
+        return li;
+      }
+
+      async function renderTree() {
+        const root = document.getElementById('treeRoot');
+        root.innerHTML = '';
+
+        const data = await fetchTree();
+        data.forEach((task) => {
+          root.appendChild(createNode(task));
         });
       }
 
-      loadProjects();
+      renderTree();
     </script>
   </body>
 </html>
