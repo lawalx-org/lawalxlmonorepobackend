@@ -226,15 +226,30 @@ export class ClientDashboardServices {
     userId?: string,
     startDate?: Date,
     endDate?: Date,
+    search?: string, // new search parameter
     limit: number = 10,
     skip: number = 0,
   ) {
-
     const where: any = {};
+
+    // Filter by userId
+    if (userId) {
+      where.userId = userId;
+    }
+
+    // Filter by date range
     if (startDate || endDate) {
       where.timestamp = {};
       if (startDate) where.timestamp.gte = startDate;
       if (endDate) where.timestamp.lte = endDate;
+    }
+
+    // Search by user name or project name
+    if (search) {
+      where.OR = [
+        { user: { name: { contains: search, mode: "insensitive" } } },
+        { project: { name: { contains: search, mode: "insensitive" } } },
+      ];
     }
 
     const activities = await this.prisma.activity.findMany({
@@ -257,13 +272,17 @@ export class ClientDashboardServices {
           }
         }
       }
+
     });
 
     const result = activities.map(a => ({
       id: a.id,
       timeStamp: a.timestamp,
-      user: a.user?.name ?? "unknown user",
-      profileImage: a.user.profileImage,
+      user: {
+        id: a.user?.id ?? null,
+        name: a.user?.name ?? "unknown user",
+        profileImage: a.user?.profileImage ?? null, 
+      },
       description: a.description,
       projectName: a.project?.name ?? "unknown project",
       projectId: a.projectId,
@@ -272,95 +291,97 @@ export class ClientDashboardServices {
       metadata: a.metadata,
     }));
 
+
     return { result };
   }
 
+
   // Project timeline service 
-async getProjectTimeline(
-  programId?: string,
-  maxOverdueDays?: number,
-  maxSavedDays?: number
-) {
+  async getProjectTimeline(
+    programId?: string,
+    maxOverdueDays?: number,
+    maxSavedDays?: number
+  ) {
 
-  if (!programId) {
-    const firstProgram = await this.prisma.program.findFirst();
-    if (!firstProgram) {
-      return { message: "No programs found" };
-    }
-    programId = firstProgram.id;
-  }
-
-  const projects = await this.prisma.project.findMany({
-    where: { programId },
-    select: {
-      id: true,
-      name: true,
-      startDate: true,
-      deadline: true,
-      projectCompleteDate: true
-    }
-  });
-
-  const ONE_DAY = 1000 * 60 * 60 * 24;
-
-  const ProjectData = projects.map(p => {
-    const start = p.startDate ? new Date(p.startDate).getTime() : null;
-    const deadline = p.deadline ? new Date(p.deadline).getTime() : null;
-    const completed = p.projectCompleteDate
-      ? new Date(p.projectCompleteDate).getTime()
-      : null;
-
-    let completionTime = 0;
-    let savedTime = 0;
-    let overdueTime = 0;
-
-    if (start && deadline) {
-      completionTime = Math.ceil((deadline - start) / ONE_DAY);
-    }
-
-    if (deadline && completed) {
-      if (completed < deadline) {
-        savedTime = Math.ceil((deadline - completed) / ONE_DAY);
-      } else if (completed > deadline) {
-        overdueTime = Math.ceil((completed - deadline) / ONE_DAY);
+    if (!programId) {
+      const firstProgram = await this.prisma.program.findFirst();
+      if (!firstProgram) {
+        return { message: "No programs found" };
       }
+      programId = firstProgram.id;
+    }
+
+    const projects = await this.prisma.project.findMany({
+      where: { programId },
+      select: {
+        id: true,
+        name: true,
+        startDate: true,
+        deadline: true,
+        projectCompleteDate: true
+      }
+    });
+
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+
+    const ProjectData = projects.map(p => {
+      const start = p.startDate ? new Date(p.startDate).getTime() : null;
+      const deadline = p.deadline ? new Date(p.deadline).getTime() : null;
+      const completed = p.projectCompleteDate
+        ? new Date(p.projectCompleteDate).getTime()
+        : null;
+
+      let completionTime = 0;
+      let savedTime = 0;
+      let overdueTime = 0;
+
+      if (start && deadline) {
+        completionTime = Math.ceil((deadline - start) / ONE_DAY);
+      }
+
+      if (deadline && completed) {
+        if (completed < deadline) {
+          savedTime = Math.ceil((deadline - completed) / ONE_DAY);
+        } else if (completed > deadline) {
+          overdueTime = Math.ceil((completed - deadline) / ONE_DAY);
+        }
+      }
+
+      return {
+        id: p.id,
+        name: p.name,
+        startDate: p.startDate,
+        deadline: p.deadline,
+        project_end_Date: p.projectCompleteDate,
+        completionTime,
+        overdueTime,
+        savedTime
+      };
+    });
+
+    //  apply filter
+    let filteredProjects = ProjectData;
+
+    if (maxOverdueDays !== undefined) {
+      filteredProjects = filteredProjects.filter(
+        p => p.overdueTime > 0 && p.overdueTime <= maxOverdueDays
+      );
+    }
+
+    if (maxSavedDays !== undefined) {
+      filteredProjects = filteredProjects.filter(
+        p => p.savedTime > 0 && p.savedTime <= maxSavedDays
+      );
     }
 
     return {
-      id: p.id,
-      name: p.name,
-      startDate: p.startDate,
-      deadline: p.deadline,
-      project_end_Date: p.projectCompleteDate,
-      completionTime,
-      overdueTime,
-      savedTime
+      programId,
+      maxOverdueDays,
+      maxSavedDays,
+      totalProjects: filteredProjects.length,
+      ProjectData: filteredProjects
     };
-  });
-
-  //  apply filter
-  let filteredProjects = ProjectData;
-
-  if (maxOverdueDays !== undefined) {
-    filteredProjects = filteredProjects.filter(
-      p => p.overdueTime > 0 && p.overdueTime <= maxOverdueDays
-    );
   }
-
-  if (maxSavedDays !== undefined) {
-    filteredProjects = filteredProjects.filter(
-      p => p.savedTime > 0 && p.savedTime <= maxSavedDays
-    );
-  }
-
-  return {
-    programId,
-    maxOverdueDays,
-    maxSavedDays,
-    totalProjects: filteredProjects.length,
-    ProjectData: filteredProjects
-  };
-}
 
 
 

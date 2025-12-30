@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ClientService } from '../service/client.service';
 import { ApiBody, ApiConsumes, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -6,9 +6,12 @@ import { diskStorage } from 'multer';
 import * as fs from 'fs';
 import { basename, extname, join } from 'path';
 import { UploadFileDto } from '../dto/upload-file.dto';
+import { RequestWithUser } from 'src/types/RequestWithUser';
+import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
 
 
 @ApiTags('Client Management')
+@UseGuards(JwtAuthGuard)
 @Controller('clients')
 export class ClientController {
   constructor(private readonly clientService: ClientService) { }
@@ -49,8 +52,8 @@ export class ClientController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-   const result= await this.clientService.findOne(id);
-      return {
+    const result = await this.clientService.findOne(id);
+    return {
       message: "single  client retrieve  successfully",
       data: result
     }
@@ -66,43 +69,54 @@ export class ClientController {
     schema: {
       type: 'object',
       properties: {
-        userId: { type: 'string', example: '1d3b9943-4b77-4b54-803e-fc6e15e0b396' },
-        sheetId: { type: 'string', example: 'a6dd3e9c-1fb1-40e1-a9e6-1cb59cdfa99c' },
+        sheetId: { type: 'string' },
         file: { type: 'string', format: 'binary' },
       },
-      required: ['userId', 'sheetId', 'file'],
+      required: ['sheetId', 'file'],
     },
   })
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-
-
-        destination: (req, file, cb) => {
-          const fileType = file.mimetype.split('/')[1];
-          const uploadDir = join(process.cwd(), 'uploads-file', fileType);
-          if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-          cb(null, uploadDir);
-        },
-
-
-        filename: (req, file, cb) => {
-          const timestamp = Date.now();
-          const randomNum = Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const baseName = basename(file.originalname, ext);
-          const uniqueName = `${baseName}-${timestamp}-${randomNum}${ext}`;
-          cb(null, uniqueName);
-        },
-
-      }),
+  @UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+      destination: (req, file, cb) => {
+        const fileType = file.mimetype?.split('/')[1] || 'other';
+        const uploadDir = join(process.cwd(), 'uploads-file', fileType);
+        if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+        cb(null, uploadDir);
+      },
+      filename: (req, file, cb) => {
+        const ext = extname(file.originalname);
+        const base = basename(file.originalname, ext);
+        cb(null, `${base}-${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`);
+      },
     }),
-  )
+  }))
   async uploadFile(
+    @Req() req: RequestWithUser,
     @UploadedFile() file: Express.Multer.File,
     @Body() body: UploadFileDto
   ) {
-    const result = await this.clientService.saveFile(file, body.userId, body.sheetId);
+    const userId = req.user.userId;
+    if (!userId) {
+      throw new UnauthorizedException('User ID not found in token');
+    }
+
+    if (!file) {
+      throw new BadRequestException('File is required');
+    }
+
+    const ipAddress =
+      (req.headers['x-forwarded-for'] as string)?.split(',')[0] ??
+      req.ip ??
+      req.socket.remoteAddress ??
+      null;
+    ;
+
+    const result = await this.clientService.saveFile(
+      file,
+      userId,
+      body.sheetId,
+      ipAddress
+    );
 
     return {
       message: 'File uploaded successfully',
