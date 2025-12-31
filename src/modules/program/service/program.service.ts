@@ -176,18 +176,24 @@ export class ProgramService {
       data: { programName },
     });
   }
+
   async getProgramsByLoggedInUser(userId: string) {
-    // Check if user exists in the database
-    const userExists = await this.prisma.user.findUnique({
-      where: { id: userId },
+    // ✅ Step 1: find the CLIENT using userId
+    const client = await this.prisma.client.findUnique({
+      where: { userId }, // userId comes from JWT
     });
 
-    if (!userExists) {
-      throw new NotFoundException(`User with ID "${userId}" not found`);
+    if (!client) {
+      throw new NotFoundException(
+        `Client profile not found for user ID "${userId}"`,
+      );
     }
 
+    // ✅ Step 2: fetch programs using CLIENT ID
     return this.prisma.program.findMany({
-      where: { userId },
+      where: {
+        userId: client.id, // 🔥 THIS IS THE KEY FIX
+      },
       include: {
         projects: {
           where: { isDeleted: false },
