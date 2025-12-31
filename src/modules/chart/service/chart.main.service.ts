@@ -1,22 +1,24 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { UpdateChartDto } from '../dto/update-chart.dto';
-import { ChartName, ChartStatus, Prisma, barChart } from 'generated/prisma';
-
+import { ChartName, ChartStatus, Prisma } from 'generated/prisma';
 
 @Injectable()
 export class ChartMainService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   //create chart
   async create(createChartDto: CreateChartDto) {
     let subChat = {};
-    const { xAxis, yAxis, zAxis, title, status, category, } = createChartDto;
+    const { xAxis, yAxis, zAxis, title, status, category } = createChartDto;
 
-
-
-
+    if (!createChartDto.programId)
+      throw new NotFoundException('ProgramId is required');
 
     const result = await this.prisma.$transaction(async (txPrisma) => {
       const mainChart = await txPrisma.chartTable.create({
@@ -27,14 +29,21 @@ export class ChartMainService {
           xAxis: JSON.parse(xAxis),
           yAxis: yAxis ? JSON.parse(yAxis) : Prisma.JsonNull,
           zAxis: zAxis ? JSON.parse(zAxis) : Prisma.JsonNull,
+
+          // SABBIR - Relation to program //
+          programId: createChartDto.programId,
+          // SABBIR //
         },
       });
 
-
       switch (category) {
         case ChartName.BAR: {
-
-          const { numberOfDataset, firstFiledDataset, lastFiledDAtaset, showWidgets } = createChartDto
+          const {
+            numberOfDataset,
+            firstFiledDataset,
+            lastFiledDAtaset,
+            showWidgets,
+          } = createChartDto;
 
           subChat = await txPrisma.barChart.create({
             data: {
@@ -43,20 +52,26 @@ export class ChartMainService {
               firstFiledDataset: firstFiledDataset!,
               lastFiledDAtaset: lastFiledDAtaset!,
 
-              showWidgets: showWidgets ? {
-                create: showWidgets.map(widget => ({
-                  legend_name: widget.legend_name ?? 'Default Legend',
-                  color: widget.color ?? '#000000',
-                })),
-              } : undefined,
+              showWidgets: showWidgets
+                ? {
+                    create: showWidgets.map((widget) => ({
+                      legend_name: widget.legend_name ?? 'Default Legend',
+                      color: widget.color ?? '#000000',
+                    })),
+                  }
+                : undefined,
             },
           });
 
           break;
         }
         case ChartName.HORIZONTAL_BAR: {
-
-          const { numberOfDataset, firstFieldDataset, lastFieldDataset, widgets } = createChartDto
+          const {
+            numberOfDataset,
+            firstFieldDataset,
+            lastFieldDataset,
+            widgets,
+          } = createChartDto;
 
           subChat = await txPrisma.horizontalBarChart.create({
             data: {
@@ -67,11 +82,11 @@ export class ChartMainService {
 
               widgets: widgets
                 ? {
-                  create: widgets.map(widget => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#000000',
-                  })),
-                }
+                    create: widgets.map((widget) => ({
+                      legendName: widget.legendName ?? 'Default Legend',
+                      color: widget.color ?? '#000000',
+                    })),
+                  }
                 : undefined,
             },
           });
@@ -79,19 +94,18 @@ export class ChartMainService {
           break;
         }
         case ChartName.PIE: {
-
-          const { numberOfDataset,widgets } = createChartDto
+          const { numberOfDataset, widgets } = createChartDto;
           subChat = await txPrisma.pi.create({
             data: {
               chartTableId: mainChart.id,
               numberOfDataset: numberOfDataset!,
               widgets: widgets
                 ? {
-                  create: widgets.map(widget => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
+                    create: widgets.map((widget) => ({
+                      legendName: widget.legendName ?? 'Default Legend',
+                      color: widget.color ?? '#1cce0cff',
+                    })),
+                  }
                 : undefined,
             },
           });
@@ -99,8 +113,13 @@ export class ChartMainService {
           break;
         }
         case ChartName.HEATMAP: {
-
-          const { numberOfDataset_X,numberOfDataset_Y,firstFieldDataset,lastFieldDataset,widgets } = createChartDto
+          const {
+            numberOfDataset_X,
+            numberOfDataset_Y,
+            firstFieldDataset,
+            lastFieldDataset,
+            widgets,
+          } = createChartDto;
           subChat = await txPrisma.heatMapChart.create({
             data: {
               chartTableId: mainChart.id,
@@ -110,11 +129,11 @@ export class ChartMainService {
               lastFieldDataset: lastFieldDataset!,
               widgets: widgets
                 ? {
-                  create: widgets.map(widget => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    // color: widget.color ?? '#e6ff5b9c',
-                  })),
-                }
+                    create: widgets.map((widget) => ({
+                      legendName: widget.legendName ?? 'Default Legend',
+                      // color: widget.color ?? '#e6ff5b9c',
+                    })),
+                  }
                 : undefined,
             },
           });
@@ -123,14 +142,15 @@ export class ChartMainService {
         }
 
         default: {
-          throw new BadRequestException(`Chart type "${status}" is not supported`);
+          throw new BadRequestException(
+            `Chart type "${status}" is not supported`,
+          );
         }
       }
-      return { ...mainChart }
+      return { ...mainChart };
     });
     return result;
   }
-
 
   //find all active charts
   async findAllActive() {
@@ -164,29 +184,24 @@ export class ChartMainService {
     return this.prisma.chartTable.findUnique({
       where: { id },
       include: {
-
         barChart: {
           include: {
-
             showWidgets: true,
           },
         },
         horizontalBarChart: {
           include: {
-
-             widgets: true,
+            widgets: true,
           },
         },
         pi: {
           include: {
-
-             widgets: true,
+            widgets: true,
           },
         },
         heatmap: {
           include: {
-
-             widgets: true,
+            widgets: true,
           },
         },
 
