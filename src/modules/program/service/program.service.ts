@@ -178,9 +178,9 @@ export class ProgramService {
   }
 
   async getProgramsByLoggedInUser(userId: string) {
-    // ✅ Step 1: find the CLIENT using userId
+    
     const client = await this.prisma.client.findUnique({
-      where: { userId }, // userId comes from JWT
+      where: { userId }, 
     });
 
     if (!client) {
@@ -189,10 +189,10 @@ export class ProgramService {
       );
     }
 
-    // ✅ Step 2: fetch programs using CLIENT ID
+    
     return this.prisma.program.findMany({
       where: {
-        userId: client.id, // 🔥 THIS IS THE KEY FIX
+        userId: client.id, 
       },
       include: {
         projects: {

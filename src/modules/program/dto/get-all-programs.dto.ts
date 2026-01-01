@@ -65,7 +65,7 @@ export class GetAllProgramsDto extends PaginationDto {
     type: [String],
   })
   @IsOptional()
-  @Transform(({ value }) => (value ? value.split(',') : []))
+  @Transform(({ value }) => (value ? value.split(',') : undefined))
   @IsArray()
   @IsString({ each: true })
   tags?: string[];
