@@ -1,8 +1,8 @@
 model InfrastructureNode {
   id String @id @default(uuid())
 
-  taskName String
-  slug     String @unique
+  taskName  String
+  slug      String @unique
 
   nodeType  String?
   programId String? // no relation just take it as ref
@@ -30,8 +30,10 @@ model InfrastructureNode {
   project   Project @relation(fields: [projectId], references: [id])
   parentId  String? // null = top-level node under project
 
-  parent   InfrastructureNode?  @relation("NodeChildren", fields: [parentId], references: [id])
-  children InfrastructureNode[] @relation("NodeChildren")
+  parent      InfrastructureNode?  @relation("NodeChildren", fields: [parentId], references: [id])
+  children    InfrastructureNode[] @relation("NodeChildren")
+  nodeChart   ChartTable?          @relation("NodeChart", fields: [nodeChartId], references: [id]) // a node should contains only one chart to calculate all progress bottom to top
+  nodeChartId String?              @unique
 
   @@index([projectId])
   @@index([parentId])

@@ -90,4 +90,11 @@ export class InfrastructureNodeRepository {
   countChildren(parentId: string) {
     return this.prisma.infrastructureNode.count({ where: { parentId } });
   }
+
+  // charts
+  async findNodeChartById(chartId: string) {
+    return this.prisma.chartTable.findUnique({
+      where: { id: chartId },
+    });
+  }
 }

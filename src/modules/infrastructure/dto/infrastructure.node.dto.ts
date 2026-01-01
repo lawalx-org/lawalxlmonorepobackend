@@ -35,6 +35,13 @@ export class InfrastructureNodeDto {
   parentId?: string | null;
 
   @ApiProperty({
+    example: 'c1d2e3f4-a5b6-7890-abcd-112233445566',
+    description: 'Node ID',
+  })
+  @IsUUID()
+  nodeChartId: string;
+
+  @ApiProperty({
     description: 'Task name of the node',
     example: 'Foundation Work',
   })

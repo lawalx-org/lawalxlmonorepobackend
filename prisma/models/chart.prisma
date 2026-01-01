@@ -34,8 +34,9 @@ model ChartTable {
   heatmap            HeatMapChart?
 
   // SABBIR - Relation to chart (one-to-one optional) //
-  Program   Program? @relation(fields: [programId], references: [id])
-  programId String?
+  Program            Program?            @relation(fields: [programId], references: [id])
+  programId          String?
+  infrastructureNode InfrastructureNode? @relation("NodeChart")
   // SABBIR // 
 }
 

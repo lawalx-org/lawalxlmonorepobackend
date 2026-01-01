@@ -43,22 +43,18 @@ export class InfrastructureNodeService {
    * Create a new infrastructure node
    */
   async createNode(dto: InfrastructureNodeDto) {
-    if (!dto.projectId || !dto.programId || !dto.taskName) {
-      throw new BadRequestException('Invalid node payload');
+    if (!dto.projectId || !dto.programId || !dto.nodeChartId || !dto.taskName) {
+      throw new BadRequestException(
+        'Missing required fields: projectId, programId, nodeChartId or taskName',
+      );
     }
 
+    // Validate program exists
     const program = await this.infrastructureRepo.findProgramById(
       dto.programId,
     );
-    if (!program) throw new NotFoundException('Program not found');
-    // Generate unique slug
-    const baseSlug = this.slugify(dto.taskName);
-    let slug = baseSlug;
-    let counter = 1;
-
-    while (await this.infrastructureRepo.findNodeBySlug(slug)) {
-      slug = `${baseSlug}-${counter}`;
-      counter++;
+    if (!program) {
+      throw new NotFoundException('Program not found');
     }
 
     // Validate project exists
@@ -69,49 +65,69 @@ export class InfrastructureNodeService {
       throw new NotFoundException('Project not found');
     }
 
-    // Validate parent (if exists)
+    // *** Critical: Validate that the chart exists ***
+    const chart = await this.nodeRepo.findNodeChartById(dto.nodeChartId);
+    if (!chart) {
+      throw new NotFoundException(`Chart with id ${dto.nodeChartId} not found`);
+    }
+
+    // Generate unique slug
+    const baseSlug = this.slugify(dto.taskName);
+    let slug = baseSlug;
+    let counter = 1;
+    while (await this.infrastructureRepo.findNodeBySlug(slug)) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+
+    // Validate parent (if provided)
+    let parentNode: any = null;
     if (dto.parentId) {
-      const parent = await this.infrastructureRepo.findNodeById(dto.parentId);
-      if (!parent) {
+      parentNode = await this.infrastructureRepo.findNodeById(dto.parentId);
+      if (!parentNode) {
         throw new NotFoundException('Parent node not found');
       }
-
-      if (parent.projectId !== dto.projectId) {
-        throw new ConflictException('Parent belongs to another project');
+      if (parentNode.projectId !== dto.projectId) {
+        throw new ConflictException(
+          'Parent node belongs to a different project',
+        );
       }
 
-      // Parent becomes non-leaf
-      if (parent.isLeaf) {
-        await this.nodeRepo.updateNode(parent.id, {
+      // Parent is no longer a leaf
+      if (parentNode.isLeaf) {
+        await this.nodeRepo.updateNode(parentNode.id, {
           isLeaf: false,
           progress: null,
         });
       }
     }
 
-    // Create the node
-    const { projectId, parentId, ...rest } = dto;
-
-    const node = await this.nodeRepo.createNode({
-      ...rest,
+    // Create the node — now connecting the chart
+    const createdNode = await this.nodeRepo.createNode({
+      taskName: dto.taskName,
       slug,
-      project: {
-        connect: { id: projectId },
-      },
-      parent: parentId ? { connect: { id: parentId } } : undefined,
-      isLeaf: true,
+      weight: dto.weight ?? 1,
+      priority: dto.priority ?? 'NONE',
       progress: 0,
       computedProgress: 0,
-      weight: dto.weight || 1,
+      isLeaf: true,
       programId: program.id,
-      priority: dto.priority || 'NONE',
+
+      // Relations
+      project: { connect: { id: dto.projectId } },
+      parent: dto.parentId ? { connect: { id: dto.parentId } } : undefined,
+      nodeChart: { connect: { id: dto.nodeChartId } },
     });
 
-    // Propagate progress changes
-    await this.infrastructureService.propagateUp(dto.parentId);
-    await this.infrastructureService.updateProjectProgress(dto.projectId);
+    // Propagate progress up the tree
+    if (dto.parentId) {
+      await this.infrastructureService.propagateUp(dto.parentId);
+    } else {
+      // If it's a root node, we still need to update project progress via roots
+      await this.infrastructureService.updateProjectProgress(dto.projectId);
+    }
 
-    return node;
+    return createdNode;
   }
 
   /**
