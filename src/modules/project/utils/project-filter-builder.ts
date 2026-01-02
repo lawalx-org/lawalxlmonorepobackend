@@ -114,5 +114,18 @@ export function buildProjectFilter(
     };
   }
 
+  // 🔹 Search filter
+  if (query.search) {
+    where.OR = [
+      { name: { contains: query.search, mode: 'insensitive' } },
+      { description: { contains: query.search, mode: 'insensitive' } },
+      {
+        program: {
+          programName: { contains: query.search, mode: 'insensitive' },
+        },
+      },
+    ];
+  }
+
   return where;
 }
