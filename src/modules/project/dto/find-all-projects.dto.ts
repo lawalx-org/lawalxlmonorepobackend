@@ -76,8 +76,7 @@ export class FindAllProjectsDto extends PaginationDto {
   @IsString()
   viewerId?: string;
 
-
-   // ✅ SORTING (single DTO)
+  // ✅ SORTING (single DTO)
   @ApiPropertyOptional({
     enum: ProjectSortBy,
     description: 'Sort by start date or end date',
@@ -94,4 +93,12 @@ export class FindAllProjectsDto extends PaginationDto {
   @IsOptional()
   @IsEnum(SortOrder)
   sortOrder?: SortOrder;
+
+  @ApiPropertyOptional({
+    description:
+      'Search by project name, description, or program name (case-insensitive)',
+  })
+  @IsOptional()
+  @IsString()
+  search?: string;
 }
