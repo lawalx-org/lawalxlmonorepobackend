@@ -67,8 +67,13 @@ export function buildProjectFilter(
     where.priority = query.priority;
   }
 
+  // if (query.managerId) {
+  //   where.managerId = query.managerId; // ✅ works
+  // }
   if (query.managerId) {
-    where.managerId = query.managerId; // ✅ works
+    where.manager = {
+      userId: query.managerId, // 👈 THIS IS THE KEY FIX
+    };
   }
 
   if (query.programId) {
