@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ProjectStatus, SubmittedStatus } from 'generated/prisma';
+import { Priority, ProjectStatus, SubmittedStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -865,39 +865,176 @@ export class ManagerService {
     };
   }
 
-  async getProgramDashboard(managerId: string) {
-    /* ---------------- FETCH PROGRAM ---------------- */
-    const program = await this.prisma.program.findFirst({
-      where: {
-        projects: {
-          some: { managerId },
+  // async getProgramDashboard(managerId: string) {
+  //   /* ---------------- FETCH PROGRAM ---------------- */
+  //   const program = await this.prisma.program.findFirst({
+  //     where: {
+  //       projects: {
+  //         some: { managerId },
+  //       },
+  //     },
+  //     include: {
+  //       tags: true,
+  //       projects: {
+  //         where: { managerId },
+  //         include: {
+  //           manager: {
+  //             include: {
+  //               user: {
+  //                 select: {
+  //                   name: true,
+  //                   email: true,
+  //                   profileImage: true,
+  //                 },
+  //               },
+  //             },
+  //           },
+  //           projectEmployees: {
+  //             include: {
+  //               employee: {
+  //                 include: {
+  //                   user: {
+  //                     select: {
+  //                       name: true,
+  //                       profileImage: true,
+  //                     },
+  //                   },
+  //                 },
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   if (!program) {
+  //     throw new NotFoundException('No active program found for this manager');
+  //   }
+
+  //   /* ---------------- MANAGER INFO ---------------- */
+  //   const managerUser = program.projects[0]?.manager?.user ?? null;
+
+  //   /* ---------------- ALERT LOGIC ---------------- */
+  //   const now = new Date();
+
+  //   const overdueProjects = program.projects.filter(
+  //     (project) =>
+  //       new Date(project.deadline) < now &&
+  //       project.status !== ProjectStatus.COMPLETED,
+  //   );
+
+  //   const alerts = overdueProjects.map((project) => ({
+  //     type: 'CRITICAL',
+  //     title: 'Project Overdue',
+  //     subText: project.name,
+  //     time: 'System Alert',
+  //   }));
+
+  //   /* ---------------- RESPONSE ---------------- */
+  //   return {
+  //     projects: program.projects.map((project) => ({
+  //       id: project.id,
+  //       name: project.name,
+  //       priority: project.priority,
+  //       deadline: project.deadline,
+  //       progress: project.progress ?? 0,
+  //       assignStuff: {
+  //         avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
+  //           name: pe.employee.user?.name || '',
+  //           image: pe.employee.user?.profileImage || null,
+  //         })),
+  //         extraCount: Math.max(0, project.projectEmployees.length - 3),
+  //       },
+  //       latitude: project.latitude,
+  //       logitude: project.longitude,
+  //     })),
+
+  //     sidebar: {
+  //       programManager: managerUser
+  //         ? {
+  //             name: managerUser.name,
+  //             email: managerUser.email,
+  //             image: managerUser.profileImage,
+  //           }
+  //         : {
+  //             name: 'No Manager Assigned',
+  //             email: '',
+  //             image: null,
+  //           },
+
+  //       duration: {
+  //         start: program.datetime,
+  //         end: program.deadline,
+  //         daysRemaining: this.calculateDaysRemaining(program.deadline),
+  //       },
+
+  //       tags: program.tags.map((tag) => tag.name),
+
+  //       alerts: {
+  //         issueCount: alerts.length,
+  //         list: alerts,
+  //       },
+  //     },
+  //   };
+  // }
+
+  async getProgramDashboard(
+  managerId: string,
+  priority?: Priority,
+  search?: string,
+) {
+  /* ---------------- FETCH PROGRAM ---------------- */
+  const program = await this.prisma.program.findFirst({
+    where: {
+      projects: {
+        some: {
+          managerId,
+          isDeleted: false,
+          ...(priority && { priority }),
+          ...(search && {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' } },
+              { description: { contains: search, mode: 'insensitive' } },
+            ],
+          }),
         },
       },
-      include: {
-        tags: true,
-        projects: {
-          where: { managerId },
-          include: {
-            manager: {
-              include: {
-                user: {
-                  select: {
-                    name: true,
-                    email: true,
-                    profileImage: true,
-                  },
+    },
+    include: {
+      tags: true,
+      projects: {
+        where: {
+          managerId,
+          isDeleted: false,
+          ...(priority && { priority }),
+          ...(search && {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' } },
+              { description: { contains: search, mode: 'insensitive' } },
+            ],
+          }),
+        },
+        include: {
+          manager: {
+            include: {
+              user: {
+                select: {
+                  name: true,
+                  email: true,
+                  profileImage: true,
                 },
               },
             },
-            projectEmployees: {
-              include: {
-                employee: {
-                  include: {
-                    user: {
-                      select: {
-                        name: true,
-                        profileImage: true,
-                      },
+          },
+          projectEmployees: {
+            include: {
+              employee: {
+                include: {
+                  user: {
+                    select: {
+                      name: true,
+                      profileImage: true,
                     },
                   },
                 },
@@ -906,78 +1043,80 @@ export class ManagerService {
           },
         },
       },
-    });
+    },
+  });
 
-    if (!program) {
-      throw new NotFoundException('No active program found for this manager');
-    }
-
-    /* ---------------- MANAGER INFO ---------------- */
-    const managerUser = program.projects[0]?.manager?.user ?? null;
-
-    /* ---------------- ALERT LOGIC ---------------- */
-    const now = new Date();
-
-    const overdueProjects = program.projects.filter(
-      (project) =>
-        new Date(project.deadline) < now &&
-        project.status !== ProjectStatus.COMPLETED,
-    );
-
-    const alerts = overdueProjects.map((project) => ({
-      type: 'CRITICAL',
-      title: 'Project Overdue',
-      subText: project.name,
-      time: 'System Alert',
-    }));
-
-    /* ---------------- RESPONSE ---------------- */
-    return {
-      projects: program.projects.map((project) => ({
-        id: project.id,
-        name: project.name,
-        priority: project.priority,
-        deadline: project.deadline,
-        progress: project.progress ?? 0,
-        assignStuff: {
-          avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
-            name: pe.employee.user?.name || '',
-            image: pe.employee.user?.profileImage || null,
-          })),
-          extraCount: Math.max(0, project.projectEmployees.length - 3),
-        },
-        latitude: project.latitude,
-        logitude: project.longitude,
-      })),
-
-      sidebar: {
-        programManager: managerUser
-          ? {
-              name: managerUser.name,
-              email: managerUser.email,
-              image: managerUser.profileImage,
-            }
-          : {
-              name: 'No Manager Assigned',
-              email: '',
-              image: null,
-            },
-
-        duration: {
-          start: program.datetime,
-          end: program.deadline,
-          daysRemaining: this.calculateDaysRemaining(program.deadline),
-        },
-
-        tags: program.tags.map((tag) => tag.name),
-
-        alerts: {
-          issueCount: alerts.length,
-          list: alerts,
-        },
-      },
-    };
+  if (!program) {
+    throw new NotFoundException('No active program found for this manager');
   }
+
+  /* ---------------- MANAGER INFO ---------------- */
+  const managerUser = program.projects[0]?.manager?.user ?? null;
+
+  /* ---------------- ALERT LOGIC ---------------- */
+  const now = new Date();
+
+  const overdueProjects = program.projects.filter(
+    (project) =>
+      new Date(project.deadline) < now &&
+      project.status !== ProjectStatus.COMPLETED,
+  );
+
+  const alerts = overdueProjects.map((project) => ({
+    type: 'CRITICAL',
+    title: 'Project Overdue',
+    subText: project.name,
+    time: 'System Alert',
+  }));
+
+  /* ---------------- RESPONSE ---------------- */
+  return {
+    projects: program.projects.map((project) => ({
+      id: project.id,
+      name: project.name,
+      priority: project.priority,
+      deadline: project.deadline,
+      progress: project.progress ?? 0,
+      assignStuff: {
+        avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
+          name: pe.employee.user?.name || '',
+          image: pe.employee.user?.profileImage || null,
+        })),
+        extraCount: Math.max(0, project.projectEmployees.length - 3),
+      },
+      latitude: project.latitude,
+      logitude: project.longitude,
+    })),
+
+    sidebar: {
+      programManager: managerUser
+        ? {
+            name: managerUser.name,
+            email: managerUser.email,
+            image: managerUser.profileImage,
+          }
+        : {
+            name: 'No Manager Assigned',
+            email: '',
+            image: null,
+          },
+
+      duration: {
+        start: program.datetime,
+        end: program.deadline,
+        daysRemaining: this.calculateDaysRemaining(program.deadline),
+      },
+
+      tags: program.tags.map((tag) => tag.name),
+
+      alerts: {
+        issueCount: alerts.length,
+        list: alerts,
+      },
+    },
+  };
+}
+
 
   /* ---------------- HELPER ---------------- */
   private calculateDaysRemaining(deadline: string): string {
