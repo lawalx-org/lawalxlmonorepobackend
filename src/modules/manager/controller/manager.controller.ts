@@ -20,6 +20,7 @@ import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { SubmittedStatus } from 'generated/prisma';
 import { GetSubmissionStatusQueryDto } from 'src/modules/employee/dto/get-submission-status.dto';
 import { UpdateSubmissionStatusDto } from '../dto/UpdateSubmissionStatusDto';
+import { ProgramDashboardQueryDto } from '../dto/Manager-program-dashboardDto';
 
 @Controller('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -27,7 +28,7 @@ export class ManagerController {
   constructor(
     private readonly chartService: ChartService,
     private readonly managerService: ManagerService,
-  ) { }
+  ) {}
 
   @Get('dashboard')
   @Roles('MANAGER')
@@ -202,17 +203,36 @@ export class ManagerController {
     return this.managerService.getProjectManagerDashboard(managerId);
   }
 
+  // @Get('program-dashboard')
+  // @Roles('MANAGER')
+  // async getProgramDashboard(@Req() req: RequestWithUser) {
+  //   const managerId = req.user.managerId;
+
+  //   if (!managerId) {
+  //     throw new UnauthorizedException('Manager ID not found in token');
+  //   }
+
+  //   // This service call returns the combined data for the UI image provided
+  //   return this.managerService.getProgramDashboard(managerId);
+  // }
+
   @Get('program-dashboard')
   @Roles('MANAGER')
-  async getProgramDashboard(@Req() req: RequestWithUser) {
+  async getProgramDashboard(
+    @Req() req: RequestWithUser,
+    @Query() query: ProgramDashboardQueryDto,
+  ) {
     const managerId = req.user.managerId;
 
     if (!managerId) {
       throw new UnauthorizedException('Manager ID not found in token');
     }
 
-    // This service call returns the combined data for the UI image provided
-    return this.managerService.getProgramDashboard(managerId);
+    return this.managerService.getProgramDashboard(
+      managerId,
+      query.priority,
+      query.search,
+    );
   }
 
   // @Get('all-manager-submission')
@@ -328,31 +348,28 @@ export class ManagerController {
     };
   }
 
+  @Patch(':id/status')
+  @ApiOperation({ summary: 'Update status of a submission by manager' })
+  @ApiBody({ type: UpdateSubmissionStatusDto })
+  async updateStatus(
+    @Param('id') submissionId: string,
+    @Req() req: RequestWithUser,
+    @Body() updateDto: UpdateSubmissionStatusDto,
+  ) {
+    const managerId = req.user.managerId;
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
 
+    const result = await this.managerService.updateSubmissionStatus(
+      submissionId,
+      managerId,
+      updateDto.status,
+    );
 
-@Patch(':id/status')
-@ApiOperation({ summary: 'Update status of a submission by manager' })
-@ApiBody({ type: UpdateSubmissionStatusDto })
-async updateStatus(
-  @Param('id') submissionId: string,
-  @Req() req: RequestWithUser,
-  @Body() updateDto: UpdateSubmissionStatusDto,
-) {
-  const managerId = req.user.managerId;
-  if (!managerId) {
-    throw new UnauthorizedException('Manager ID not found in token');
+    return {
+      message: 'Submission status changed successfully',
+      data: result,
+    };
   }
-
-  const result = await this.managerService.updateSubmissionStatus(
-    submissionId,
-    managerId,
-    updateDto.status,
-  );
-
-  return {
-    message: 'Submission status changed successfully',
-    data: result,
-  };
-
-}
 }
