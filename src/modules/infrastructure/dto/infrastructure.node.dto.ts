@@ -1,163 +1,253 @@
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import {
-  IsUUID,
   IsString,
-  IsInt,
-  IsOptional,
-  IsDateString,
   IsNumber,
-  IsBoolean,
-  Min,
+  IsOptional,
+  IsObject,
+  IsArray,
+  ValidateNested,
 } from 'class-validator';
-import { Priority } from '../contants';
+import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class InfrastructureNodeDto {
   @ApiProperty({
-    description: 'ProgramId this just remember of our program',
-    example: '0699c9bd-dc72-437e-b4cd-f40844ef5579',
+    description: 'The unique identifier for the project',
+    type: String,
   })
-  @IsUUID()
+  @IsString()
+  projectId: string;
+
+  @ApiProperty({
+    description: 'The unique identifier for the program',
+    type: String,
+  })
+  @IsString()
   programId: string;
 
   @ApiProperty({
-    description: 'Project ID this node belongs to',
-    example: '0699c9bd-dc72-437e-b4cd-f40844ef5579',
+    description: 'The chart ID related to the node',
+    type: String,
   })
-  @IsUUID()
-  projectId: string;
-
-  @ApiPropertyOptional({
-    description: 'Parent node ID (null for top-level nodes)',
-    example: 'c1d2e3f4-a5b6-7890-abcd-112233445566',
-  })
-  @IsOptional()
-  @IsUUID()
-  parentId?: string | null;
-
-  @ApiProperty({
-    example: 'c1d2e3f4-a5b6-7890-abcd-112233445566',
-    description: 'Node ID',
-  })
-  @IsUUID()
+  @IsString()
   nodeChartId: string;
 
-  @ApiProperty({
-    description: 'Task name of the node',
-    example: 'Foundation Work',
-  })
+  @ApiProperty({ description: 'The task name for this node', type: String })
   @IsString()
   taskName: string;
 
+  @ApiProperty({
+    description: 'Parent node ID, optional',
+    type: String,
+    required: false,
+  })
   @IsString()
   @IsOptional()
-  slug: string;
+  parentId?: string;
 
   @ApiProperty({
-    description: 'Task duration (days)',
-    example: 10,
-    default: 0,
+    description: 'The weight of the task',
+    type: Number,
+    required: false,
   })
-  @IsInt()
-  @Min(0)
+  @IsNumber()
   @IsOptional()
-  duration: number;
-
-  @ApiProperty({
-    description: 'Start date of the task',
-    example: '2025-01-01T00:00:00.000Z',
-  })
-  @IsDateString()
-  @IsOptional()
-  startDate: Date;
-
-  @ApiProperty({
-    description: 'Finish date of the task',
-    example: '2025-01-10T00:00:00.000Z',
-  })
-  @IsDateString()
-  @IsOptional()
-  finishDate: Date;
+  weight?: number;
 
   @ApiProperty({
     description: 'Priority of the task',
-    example: 'NONE',
+    type: String,
+    required: false,
   })
   @IsString()
   @IsOptional()
-  priority: Priority;
+  priority?: string;
 
   @ApiProperty({
-    description: 'Actual hours spent',
-    example: 12.5,
-    default: 0,
+    description: 'Chart values for leaf nodes',
+    type: Object,
+    required: false,
   })
-  @IsNumber()
+  @IsObject()
   @IsOptional()
-  actualHour: number;
-
-  @ApiProperty({
-    description: 'Planned hours',
-    example: 15,
-    default: 0,
-  })
-  @IsNumber()
-  @IsOptional()
-  plannedHour: number;
-
-  @ApiProperty({
-    description: 'Planned cost',
-    example: 25000,
-    default: 0,
-  })
-  @IsNumber()
-  @IsOptional()
-  plannedCost: number;
-
-  @ApiProperty({
-    description: 'Planned resource cost',
-    example: 12000,
-    default: 0,
-  })
-  @IsNumber()
-  @IsOptional()
-  plannedResourceCost: number;
-
-  @ApiPropertyOptional({
-    description: 'Progress value (only for leaf nodes)',
-    example: 0.6,
-  })
-  @IsOptional()
-  @IsNumber()
-  progress?: number | null;
-
-  @ApiProperty({
-    description: 'Computed progress (auto-calculated)',
-    example: 0.45,
-    default: 0,
-  })
-  @IsNumber()
-  @IsOptional()
-  computedProgress: number;
-
-  @ApiProperty({
-    description: 'Weight of the node in progress calculation',
-    example: 1,
-    default: 1,
-  })
-  @IsNumber()
-  @IsOptional()
-  weight: number;
-
-  @ApiProperty({
-    description: 'Indicates whether the node is a leaf',
-    example: true,
-    default: true,
-  })
-  @IsBoolean()
-  @IsOptional()
-  isLeaf: boolean;
+  chartValues?: Record<string, number>;
 }
 
-export class UpdateInfrastructureNodeDto extends PartialType(
-  InfrastructureNodeDto,
-) {}
+export class UpdateInfrastructureNodeDto {
+  @ApiProperty({
+    description: 'Updated task name, optional',
+    type: String,
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  taskName?: string;
+
+  @ApiProperty({
+    description: 'Updated parent node ID, optional',
+    type: String,
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  parentId?: string;
+
+  @ApiProperty({
+    description: 'Progress of the task, optional',
+    type: Number,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  progress?: number;
+
+  @ApiProperty({
+    description: 'Updated weight of the task, optional',
+    type: Number,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  weight?: number;
+
+  @ApiProperty({
+    description: 'Updated chart values for the node, optional',
+    type: Object,
+    required: false,
+  })
+  @IsObject()
+  @IsOptional()
+  chartValues?: Record<string, number>;
+
+  @ApiProperty({
+    description: 'Duration of the task, optional',
+    type: Number,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  duration?: number;
+
+  @ApiProperty({
+    description: 'Actual hours spent on the task, optional',
+    type: Number,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  actualHour?: number;
+
+  @ApiProperty({
+    description: 'Planned hours for the task, optional',
+    type: Number,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  plannedHour?: number;
+
+  @ApiProperty({
+    description: 'Planned cost for the task, optional',
+    type: Number,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  plannedCost?: number;
+
+  @ApiProperty({
+    description: 'Planned resource cost, optional',
+    type: Number,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  plannedResourceCost?: number;
+}
+
+// Bulk import DTO
+export class NodeImportItem {
+  @ApiProperty({
+    description: 'Node ID to update an existing node',
+    type: String,
+  })
+  @IsString()
+  nodeId: string;
+
+  @ApiProperty({ description: 'Chart values for the node', type: Object })
+  @IsObject()
+  chartValues: Record<string, number>;
+}
+export class BulkNodeImportDto {
+  @ApiProperty({ description: 'The project ID', type: String })
+  @IsString()
+  projectId: string;
+
+  @ApiProperty({
+    description: 'The list of nodes to be imported',
+    type: [NodeImportItem],
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => NodeImportItem)
+  nodes: NodeImportItem[];
+}
+
+// Bulk Create Tree DTO
+
+export class TreeNodeDto {
+  @ApiProperty({ description: 'Task name for the tree node', type: String })
+  @IsString()
+  taskName: string;
+
+  @ApiProperty({
+    description: 'The weight of the task',
+    type: Number,
+    required: false,
+  })
+  @IsNumber()
+  @IsOptional()
+  weight?: number;
+
+  @ApiProperty({
+    description: 'Priority of the task',
+    type: String,
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  priority?: string;
+
+  @ApiProperty({
+    description: 'Children nodes in the tree',
+    type: [TreeNodeDto],
+    required: false,
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TreeNodeDto)
+  @IsOptional()
+  children?: TreeNodeDto[];
+}
+
+export class BulkCreateTreeDto {
+  @ApiProperty({ description: 'The project ID', type: String })
+  @IsString()
+  projectId: string;
+
+  @ApiProperty({ description: 'The program ID', type: String })
+  @IsString()
+  programId: string;
+
+  @ApiProperty({ description: 'The chart ID (blueprint)', type: String })
+  @IsString()
+  chartId: string;
+
+  @ApiProperty({
+    description: 'The nodes to be created in bulk',
+    type: [TreeNodeDto],
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TreeNodeDto)
+  nodes: TreeNodeDto[];
+}
