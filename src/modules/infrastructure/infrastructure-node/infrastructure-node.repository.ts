@@ -65,23 +65,35 @@ export class InfrastructureNodeRepository {
     return this.prisma.infrastructureNode.findMany({
       where: { projectId, parentId: null },
       orderBy: { createdAt: 'asc' },
+      include: {
+        nodeChart: true,
+      },
     });
   }
   updateNode(id: string, data: Prisma.InfrastructureNodeUpdateInput) {
     return this.prisma.infrastructureNode.update({
       where: { id },
       data,
+      include: {
+        nodeChart: true,
+      },
     });
   }
   async createNode(data: Prisma.InfrastructureNodeCreateInput) {
     return await this.prisma.infrastructureNode.create({
       data,
+      include: {
+        nodeChart: true,
+      },
     });
   }
   findChildren(parentId: string) {
     return this.prisma.infrastructureNode.findMany({
       where: { parentId },
       orderBy: { createdAt: 'asc' },
+      include: {
+        nodeChart: true,
+      },
     });
   }
   deleteNode(id: string) {
@@ -92,9 +104,14 @@ export class InfrastructureNodeRepository {
   }
 
   // charts
-  async findNodeChartById(chartId: string) {
+  async findNodeChartById(chartId: string, nodeId?: string) {
     return this.prisma.chartTable.findUnique({
-      where: { id: chartId },
+      where: {
+        id: chartId,
+        infrastructureNode: {
+          nodeChartId: nodeId && undefined,
+        },
+      },
     });
   }
 }

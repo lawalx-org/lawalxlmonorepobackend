@@ -30,9 +30,9 @@ model InfrastructureNode {
   project   Project @relation(fields: [projectId], references: [id])
   parentId  String? // null = top-level node under project
 
-  parent      InfrastructureNode?  @relation("NodeChildren", fields: [parentId], references: [id])
+  parent      InfrastructureNode?  @relation("NodeChildren", fields: [parentId], references: [id], onDelete: Cascade)
   children    InfrastructureNode[] @relation("NodeChildren")
-  nodeChart   ChartTable?          @relation("NodeChart", fields: [nodeChartId], references: [id]) // a node should contains only one chart to calculate all progress bottom to top
+  nodeChart   ChartTable?          @relation("NodeChart", fields: [nodeChartId], references: [id], onDelete: Cascade) // a node should contains only one chart to calculate all progress bottom to top
   nodeChartId String?              @unique
 
   @@index([projectId])

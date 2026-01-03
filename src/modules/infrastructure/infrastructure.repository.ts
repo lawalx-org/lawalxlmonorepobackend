@@ -9,7 +9,12 @@ export class InfrastructureRepository {
     return this.prisma.project.findUnique({ where: { slug } });
   }
   findNodeBySlug(slug: string) {
-    return this.prisma.infrastructureNode.findUnique({ where: { slug } });
+    return this.prisma.infrastructureNode.findUnique({
+      where: { slug },
+      include: {
+        nodeChart: true,
+      },
+    });
   }
 
   findProjectById(id: string) {
@@ -17,7 +22,12 @@ export class InfrastructureRepository {
   }
 
   findNodeById(id: string) {
-    return this.prisma.infrastructureNode.findUnique({ where: { id } });
+    return this.prisma.infrastructureNode.findUnique({
+      where: { id },
+      include: {
+        nodeChart: true,
+      },
+    });
   }
   findProgramById(id: string) {
     return this.prisma.program.findUnique({ where: { id } });

@@ -2,26 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InfrastructureRepository } from './infrastructure.repository';
 import { InfrastructureNodeRepository } from './infrastructure-node/infrastructure-node.repository';
 
-interface TreeNode {
-  id: string;
-  taskName: string;
-  slug: string;
-  progress: number | null;
-  computedProgress: number;
-  weight: number;
-  isLeaf: boolean;
-  children: TreeNode[];
-  duration?: number;
-  startDate?: Date;
-  finishDate?: Date;
-  priority?: number;
-  actualHour?: number;
-  plannedHour?: number;
-  plannedCost?: number;
-  plannedResourceCost?: number;
-  [key: string]: any;
-}
-
 @Injectable()
 export class InfrastructureService {
   constructor(
@@ -104,7 +84,7 @@ export class InfrastructureService {
   /**
    * Build a tree structure from a root node
    */
-  async buildTree(node: any): Promise<TreeNode> {
+  async buildTree(node: any) {
     const children = await this.nodeRepo.findChildren(node.id);
 
     const childTrees = await Promise.all(
@@ -113,21 +93,9 @@ export class InfrastructureService {
 
     return {
       id: node.id,
-      taskName: node.taskName,
       slug: node.slug,
-      progress: node.progress,
-      computedProgress: node.computedProgress,
-      weight: node.weight,
-      isLeaf: node.isLeaf,
-      duration: node.duration,
-      startDate: node.startDate,
-      finishDate: node.finishDate,
-      priority: node.priority,
-      actualHour: node.actualHour,
-      plannedHour: node.plannedHour,
-      plannedCost: node.plannedCost,
-      plannedResourceCost: node.plannedResourceCost,
       children: childTrees,
+      ...node,
     };
   }
 

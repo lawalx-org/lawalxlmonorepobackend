@@ -98,6 +98,11 @@ export class InfrastructureNodeService {
         await this.nodeRepo.updateNode(parentNode.id, {
           isLeaf: false,
           progress: null,
+          nodeChart: {
+            connect: {
+              id: dto.nodeChartId,
+            },
+          },
         });
       }
     }
