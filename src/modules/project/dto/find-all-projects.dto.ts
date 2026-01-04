@@ -4,6 +4,16 @@ import { ProjectStatus, Priority } from 'generated/prisma';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PaginationDto } from 'src/modules/utils/pagination/pagination.dto';
 
+export enum ProjectSortBy {
+  START_DATE = 'startDate',
+  END_DATE = 'endDate',
+}
+
+export enum SortOrder {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
 export class FindAllProjectsDto extends PaginationDto {
   @ApiPropertyOptional({
     enum: ProjectStatus,
@@ -65,4 +75,30 @@ export class FindAllProjectsDto extends PaginationDto {
   @IsOptional()
   @IsString()
   viewerId?: string;
+
+  // ✅ SORTING (single DTO)
+  @ApiPropertyOptional({
+    enum: ProjectSortBy,
+    description: 'Sort by start date or end date',
+  })
+  @IsOptional()
+  @IsEnum(ProjectSortBy)
+  sortBy?: ProjectSortBy;
+
+  @ApiPropertyOptional({
+    enum: SortOrder,
+    description: 'Sort order (asc or desc)',
+    default: SortOrder.DESC,
+  })
+  @IsOptional()
+  @IsEnum(SortOrder)
+  sortOrder?: SortOrder;
+
+  @ApiPropertyOptional({
+    description:
+      'Search by project name, description, or program name (case-insensitive)',
+  })
+  @IsOptional()
+  @IsString()
+  search?: string;
 }

@@ -23,6 +23,7 @@ import { InfrastructureExcelService } from './plugins/InfrastructureExcelService
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 
+@ApiTags("Infrastructure Nodes")
 @Controller('infrastructure-nodes')
 export class InfrastructureNodeController {
   constructor(
@@ -110,7 +111,7 @@ export class InfrastructureNodeController {
    * Export a project and all its nodes to Excel format
    * GET /infrastructure-nodes/project/:projectId/export
    */
-  @ApiTags('Export')
+  // @ApiTags('Export')
   @Get('project/:projectId/export')
   async exportProjectToExcel(
     @Param('projectId') projectId: string,
@@ -135,7 +136,7 @@ export class InfrastructureNodeController {
    * Import Excel file and update node data
    * POST /infrastructure-nodes/project/:projectId/import
    */
-  @ApiTags('Import')
+  // @ApiTags('Import')
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {

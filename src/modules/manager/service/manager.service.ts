@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ProjectStatus, SubmittedStatus } from 'generated/prisma';
+import { Priority, ProjectStatus, SubmittedStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ManagerService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   // async getManagerDashboard(managerId: string) {
   //   const projects = await this.prisma.project.findMany({
@@ -59,9 +59,178 @@ export class ManagerService {
   //   };
   // }
 
+  // /* ---------- Helpers ---------- */
+  // private getMonthRange(date: Date) {
+  //   const start = new Date(date.getFullYear(), date.getMonth(), 1);
+  //   const end = new Date(
+  //     date.getFullYear(),
+  //     date.getMonth() + 1,
+  //     0,
+  //     23,
+  //     59,
+  //     59,
+  //   );
+  //   return { start, end };
+  // }
+
+  // private calculateGrowth(current: number, previous: number): number {
+  //   if (previous === 0) return current > 0 ? 100 : 0;
+  //   return Number((((current - previous) / previous) * 100).toFixed(1));
+  // }
+
+  // /* ---------- Dashboard ---------- */
+  // async getManagerDashboard(managerId: string) {
+  //   const now = new Date();
+
+  //   const currentMonth = this.getMonthRange(now);
+  //   const previousMonth = this.getMonthRange(
+  //     new Date(now.getFullYear(), now.getMonth() - 1, 1),
+  //   );
+
+  //   /* ================= Projects ================= */
+  //   const projects = await this.prisma.project.findMany({
+  //     where: { managerId },
+  //     include: {
+  //       projectEmployees: true,
+  //     },
+  //   });
+
+  //   const employeeIds = projects.flatMap((p) =>
+  //     p.projectEmployees.map((pe) => pe.employeeId),
+  //   );
+
+  //   /* ================= Assigned Projects ================= */
+  //   const totalAssigned = projects.length;
+
+  //   const currentAssigned = await this.prisma.project.count({
+  //     where: {
+  //       managerId,
+  //       createdAt: {
+  //         gte: currentMonth.start,
+  //         lte: currentMonth.end,
+  //       },
+  //     },
+  //   });
+
+  //   const previousAssigned = await this.prisma.project.count({
+  //     where: {
+  //       managerId,
+  //       createdAt: {
+  //         gte: previousMonth.start,
+  //         lte: previousMonth.end,
+  //       },
+  //     },
+  //   });
+
+  //   /* ================= Submitted For Review ================= */
+  //   const currentSubmissions = await this.prisma.submitted.count({
+  //     where: {
+  //       employeeId: { in: employeeIds },
+  //       createdAt: {
+  //         gte: currentMonth.start,
+  //         lte: currentMonth.end,
+  //       },
+  //     },
+  //   });
+
+  //   const previousSubmissions = await this.prisma.submitted.count({
+  //     where: {
+  //       employeeId: { in: employeeIds },
+  //       createdAt: {
+  //         gte: previousMonth.start,
+  //         lte: previousMonth.end,
+  //       },
+  //     },
+  //   });
+
+  //   /* ================= Returned For Edit ================= */
+  //   const currentReturns = await this.prisma.submissionReturn.count({
+  //     where: {
+  //       submitted: {
+  //         employeeId: { in: employeeIds },
+  //         createdAt: {
+  //           gte: currentMonth.start,
+  //           lte: currentMonth.end,
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   const previousReturns = await this.prisma.submissionReturn.count({
+  //     where: {
+  //       submitted: {
+  //         employeeId: { in: employeeIds },
+  //         createdAt: {
+  //           gte: previousMonth.start,
+  //           lte: previousMonth.end,
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   /* ================= Live Projects ================= */
+  //   const currentLiveProjects = await this.prisma.project.count({
+  //     where: {
+  //       managerId,
+  //       status: 'LIVE',
+  //       createdAt: {
+  //         gte: currentMonth.start,
+  //         lte: currentMonth.end,
+  //       },
+  //     },
+  //   });
+
+  //   const previousLiveProjects = await this.prisma.project.count({
+  //     where: {
+  //       managerId,
+  //       status: 'LIVE',
+  //       createdAt: {
+  //         gte: previousMonth.start,
+  //         lte: previousMonth.end,
+  //       },
+  //     },
+  //   });
+
+  //   /* ================= Overdue Projects ================= */
+  //   const overdueProjects = await this.prisma.project.count({
+  //     where: {
+  //       managerId,
+  //       deadline: { lt: new Date() },
+  //       status: { not: 'COMPLETED' },
+  //     },
+  //   });
+
+  //   /* ================= Response ================= */
+  //   return {
+  //     totalAssignedProject: {
+  //       count: totalAssigned,
+  //       growth: this.calculateGrowth(currentAssigned, previousAssigned),
+  //     },
+
+  //     submittedForReview: {
+  //       count: currentSubmissions,
+  //       growth: this.calculateGrowth(currentSubmissions, previousSubmissions),
+  //     },
+
+  //     returnedForEdit: {
+  //       count: currentReturns,
+  //       growth: this.calculateGrowth(currentReturns, previousReturns),
+  //     },
+
+  //     liveProjects: {
+  //       count: currentLiveProjects,
+  //       growth: this.calculateGrowth(currentLiveProjects, previousLiveProjects),
+  //     },
+
+  //     overdueProjects: {
+  //       count: overdueProjects,
+  //     },
+  //   };
+  // }
+
   /* ---------- Helpers ---------- */
   private getMonthRange(date: Date) {
-    const start = new Date(date.getFullYear(), date.getMonth(), 1);
+    const start = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0);
     const end = new Date(
       date.getFullYear(),
       date.getMonth() + 1,
@@ -78,7 +247,7 @@ export class ManagerService {
     return Number((((current - previous) / previous) * 100).toFixed(1));
   }
 
-  /* ---------- Dashboard ---------- */
+  /* ---------- Manager Dashboard ---------- */
   async getManagerDashboard(managerId: string) {
     const now = new Date();
 
@@ -89,15 +258,23 @@ export class ManagerService {
 
     /* ================= Projects ================= */
     const projects = await this.prisma.project.findMany({
-      where: { managerId },
+      where: {
+        managerId,
+        isDeleted: false,
+      },
       include: {
-        projectEmployees: true,
+        projectEmployees: {
+          select: { employeeId: true },
+        },
       },
     });
 
-    const employeeIds = projects.flatMap((p) =>
-      p.projectEmployees.map((pe) => pe.employeeId),
-    );
+    /* ================= Unique Employee IDs ================= */
+    const employeeIds = [
+      ...new Set(
+        projects.flatMap((p) => p.projectEmployees.map((pe) => pe.employeeId)),
+      ),
+    ];
 
     /* ================= Assigned Projects ================= */
     const totalAssigned = projects.length;
@@ -105,6 +282,7 @@ export class ManagerService {
     const currentAssigned = await this.prisma.project.count({
       where: {
         managerId,
+        isDeleted: false,
         createdAt: {
           gte: currentMonth.start,
           lte: currentMonth.end,
@@ -115,6 +293,7 @@ export class ManagerService {
     const previousAssigned = await this.prisma.project.count({
       where: {
         managerId,
+        isDeleted: false,
         createdAt: {
           gte: previousMonth.start,
           lte: previousMonth.end,
@@ -173,6 +352,7 @@ export class ManagerService {
       where: {
         managerId,
         status: 'LIVE',
+        isDeleted: false,
         createdAt: {
           gte: currentMonth.start,
           lte: currentMonth.end,
@@ -184,6 +364,7 @@ export class ManagerService {
       where: {
         managerId,
         status: 'LIVE',
+        isDeleted: false,
         createdAt: {
           gte: previousMonth.start,
           lte: previousMonth.end,
@@ -195,6 +376,7 @@ export class ManagerService {
     const overdueProjects = await this.prisma.project.count({
       where: {
         managerId,
+        isDeleted: false,
         deadline: { lt: new Date() },
         status: { not: 'COMPLETED' },
       },
@@ -683,39 +865,176 @@ export class ManagerService {
     };
   }
 
-  async getProgramDashboard(managerId: string) {
-    /* ---------------- FETCH PROGRAM ---------------- */
-    const program = await this.prisma.program.findFirst({
-      where: {
-        projects: {
-          some: { managerId },
+  // async getProgramDashboard(managerId: string) {
+  //   /* ---------------- FETCH PROGRAM ---------------- */
+  //   const program = await this.prisma.program.findFirst({
+  //     where: {
+  //       projects: {
+  //         some: { managerId },
+  //       },
+  //     },
+  //     include: {
+  //       tags: true,
+  //       projects: {
+  //         where: { managerId },
+  //         include: {
+  //           manager: {
+  //             include: {
+  //               user: {
+  //                 select: {
+  //                   name: true,
+  //                   email: true,
+  //                   profileImage: true,
+  //                 },
+  //               },
+  //             },
+  //           },
+  //           projectEmployees: {
+  //             include: {
+  //               employee: {
+  //                 include: {
+  //                   user: {
+  //                     select: {
+  //                       name: true,
+  //                       profileImage: true,
+  //                     },
+  //                   },
+  //                 },
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   if (!program) {
+  //     throw new NotFoundException('No active program found for this manager');
+  //   }
+
+  //   /* ---------------- MANAGER INFO ---------------- */
+  //   const managerUser = program.projects[0]?.manager?.user ?? null;
+
+  //   /* ---------------- ALERT LOGIC ---------------- */
+  //   const now = new Date();
+
+  //   const overdueProjects = program.projects.filter(
+  //     (project) =>
+  //       new Date(project.deadline) < now &&
+  //       project.status !== ProjectStatus.COMPLETED,
+  //   );
+
+  //   const alerts = overdueProjects.map((project) => ({
+  //     type: 'CRITICAL',
+  //     title: 'Project Overdue',
+  //     subText: project.name,
+  //     time: 'System Alert',
+  //   }));
+
+  //   /* ---------------- RESPONSE ---------------- */
+  //   return {
+  //     projects: program.projects.map((project) => ({
+  //       id: project.id,
+  //       name: project.name,
+  //       priority: project.priority,
+  //       deadline: project.deadline,
+  //       progress: project.progress ?? 0,
+  //       assignStuff: {
+  //         avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
+  //           name: pe.employee.user?.name || '',
+  //           image: pe.employee.user?.profileImage || null,
+  //         })),
+  //         extraCount: Math.max(0, project.projectEmployees.length - 3),
+  //       },
+  //       latitude: project.latitude,
+  //       logitude: project.longitude,
+  //     })),
+
+  //     sidebar: {
+  //       programManager: managerUser
+  //         ? {
+  //             name: managerUser.name,
+  //             email: managerUser.email,
+  //             image: managerUser.profileImage,
+  //           }
+  //         : {
+  //             name: 'No Manager Assigned',
+  //             email: '',
+  //             image: null,
+  //           },
+
+  //       duration: {
+  //         start: program.datetime,
+  //         end: program.deadline,
+  //         daysRemaining: this.calculateDaysRemaining(program.deadline),
+  //       },
+
+  //       tags: program.tags.map((tag) => tag.name),
+
+  //       alerts: {
+  //         issueCount: alerts.length,
+  //         list: alerts,
+  //       },
+  //     },
+  //   };
+  // }
+
+  async getProgramDashboard(
+  managerId: string,
+  priority?: Priority,
+  search?: string,
+) {
+  /* ---------------- FETCH PROGRAM ---------------- */
+  const program = await this.prisma.program.findFirst({
+    where: {
+      projects: {
+        some: {
+          managerId,
+          isDeleted: false,
+          ...(priority && { priority }),
+          ...(search && {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' } },
+              { description: { contains: search, mode: 'insensitive' } },
+            ],
+          }),
         },
       },
-      include: {
-        tags: true,
-        projects: {
-          where: { managerId },
-          include: {
-            manager: {
-              include: {
-                user: {
-                  select: {
-                    name: true,
-                    email: true,
-                    profileImage: true,
-                  },
+    },
+    include: {
+      tags: true,
+      projects: {
+        where: {
+          managerId,
+          isDeleted: false,
+          ...(priority && { priority }),
+          ...(search && {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' } },
+              { description: { contains: search, mode: 'insensitive' } },
+            ],
+          }),
+        },
+        include: {
+          manager: {
+            include: {
+              user: {
+                select: {
+                  name: true,
+                  email: true,
+                  profileImage: true,
                 },
               },
             },
-            projectEmployees: {
-              include: {
-                employee: {
-                  include: {
-                    user: {
-                      select: {
-                        name: true,
-                        profileImage: true,
-                      },
+          },
+          projectEmployees: {
+            include: {
+              employee: {
+                include: {
+                  user: {
+                    select: {
+                      name: true,
+                      profileImage: true,
                     },
                   },
                 },
@@ -724,78 +1043,80 @@ export class ManagerService {
           },
         },
       },
-    });
+    },
+  });
 
-    if (!program) {
-      throw new NotFoundException('No active program found for this manager');
-    }
+  if (!program) {
+    throw new NotFoundException('No active program found for this manager');
+  }
 
-    /* ---------------- MANAGER INFO ---------------- */
-    const managerUser = program.projects[0]?.manager?.user ?? null;
+  /* ---------------- MANAGER INFO ---------------- */
+  const managerUser = program.projects[0]?.manager?.user ?? null;
 
-    /* ---------------- ALERT LOGIC ---------------- */
-    const now = new Date();
+  /* ---------------- ALERT LOGIC ---------------- */
+  const now = new Date();
 
-    const overdueProjects = program.projects.filter(
-      (project) =>
-        new Date(project.deadline) < now &&
-        project.status !== ProjectStatus.COMPLETED,
-    );
+  const overdueProjects = program.projects.filter(
+    (project) =>
+      new Date(project.deadline) < now &&
+      project.status !== ProjectStatus.COMPLETED,
+  );
 
-    const alerts = overdueProjects.map((project) => ({
-      type: 'CRITICAL',
-      title: 'Project Overdue',
-      subText: project.name,
-      time: 'System Alert',
-    }));
+  const alerts = overdueProjects.map((project) => ({
+    type: 'CRITICAL',
+    title: 'Project Overdue',
+    subText: project.name,
+    time: 'System Alert',
+  }));
 
-    /* ---------------- RESPONSE ---------------- */
-    return {
-      projects: program.projects.map((project) => ({
-        id: project.id,
-        name: project.name,
-        priority: project.priority,
-        deadline: project.deadline,
-        progress: project.progress ?? 0,
-        assignStuff: {
-          avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
-            name: pe.employee.user?.name || '',
-            image: pe.employee.user?.profileImage || null,
-          })),
-          extraCount: Math.max(0, project.projectEmployees.length - 3),
-        },
-        latitude: project.latitude,
-        logitude: project.longitude,
-      })),
+  /* ---------------- RESPONSE ---------------- */
+  return {
+    projects: program.projects.map((project) => ({
+      id: project.id,
+      name: project.name,
+      priority: project.priority,
+      deadline: project.deadline,
+      progress: project.progress ?? 0,
+      assignStuff: {
+        avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
+          name: pe.employee.user?.name || '',
+          image: pe.employee.user?.profileImage || null,
+        })),
+        extraCount: Math.max(0, project.projectEmployees.length - 3),
+      },
+      latitude: project.latitude,
+      logitude: project.longitude,
+    })),
 
-      sidebar: {
-        programManager: managerUser
-          ? {
+    sidebar: {
+      programManager: managerUser
+        ? {
             name: managerUser.name,
             email: managerUser.email,
             image: managerUser.profileImage,
           }
-          : {
+        : {
             name: 'No Manager Assigned',
             email: '',
             image: null,
           },
 
-        duration: {
-          start: program.datetime,
-          end: program.deadline,
-          daysRemaining: this.calculateDaysRemaining(program.deadline),
-        },
-
-        tags: program.tags.map((tag) => tag.name),
-
-        alerts: {
-          issueCount: alerts.length,
-          list: alerts,
-        },
+      duration: {
+        start: program.datetime,
+        end: program.deadline,
+        daysRemaining: this.calculateDaysRemaining(program.deadline),
       },
-    };
-  }
+
+      tags: program.tags.map((tag) => tag.name),
+
+      alerts: {
+        issueCount: alerts.length,
+        list: alerts,
+      },
+    },
+  };
+}
+
 
   /* ---------------- HELPER ---------------- */
   private calculateDaysRemaining(deadline: string): string {
@@ -862,7 +1183,6 @@ export class ManagerService {
   //   });
   // }
 
-
   async showSubmissionsData(
     managerId: string,
     status?: SubmittedStatus,
@@ -875,11 +1195,11 @@ export class ManagerService {
         ...(status && { status }),
         ...(fromDate || toDate
           ? {
-            createdAt: {
-              ...(fromDate && { gte: new Date(fromDate) }),
-              ...(toDate && { lte: new Date(toDate) }),
-            },
-          }
+              createdAt: {
+                ...(fromDate && { gte: new Date(fromDate) }),
+                ...(toDate && { lte: new Date(toDate) }),
+              },
+            }
           : {}),
       },
       include: {
@@ -920,21 +1240,19 @@ export class ManagerService {
       employee: sub.employee
         ? sub.employee
         : {
-          id: 'unknown',
-          user: {
             id: 'unknown',
-            name: 'Unknown Employee',
-            email: null,
-            phoneNumber: null,
-            profileImage: null,
-            role: null,
-            userStatus: null,
+            user: {
+              id: 'unknown',
+              name: 'Unknown Employee',
+              email: null,
+              phoneNumber: null,
+              profileImage: null,
+              role: null,
+              userStatus: null,
+            },
           },
-        },
     }));
   }
-
-
 
   async showSubmissionsOverview(managerId: string) {
     const managerProjects = await this.prisma.project.findMany({
@@ -946,7 +1264,7 @@ export class ManagerService {
     if (projectIds.length === 0) {
       const defaultOverview = Object.values(SubmittedStatus).reduce(
         (acc, status) => ({ ...acc, [status]: 0 }),
-        {} as Record<string, number>
+        {} as Record<string, number>,
       );
       return {
         submissions: defaultOverview,
@@ -964,16 +1282,14 @@ export class ManagerService {
       _count: { status: true },
     });
 
-    const submissionOverview: Record<string, number> = Object.values(SubmittedStatus).reduce(
-      (acc, status) => ({ ...acc, [status]: 0 }),
-      {}
-    );
+    const submissionOverview: Record<string, number> = Object.values(
+      SubmittedStatus,
+    ).reduce((acc, status) => ({ ...acc, [status]: 0 }), {});
 
     submissionsByStatus.forEach((item) => {
       const status = item.status as SubmittedStatus;
       submissionOverview[status] = item._count.status;
     });
-
 
     const overdueProjects = await this.prisma.project.findMany({
       where: {
@@ -987,17 +1303,14 @@ export class ManagerService {
     const overdueCount = overdueProjects.length;
     const totalProjects = projectIds.length;
 
-    const projectoverdue = totalProjects > 0 ? (overdueCount / totalProjects) * 100 : 0;
+    const projectoverdue =
+      totalProjects > 0 ? (overdueCount / totalProjects) * 100 : 0;
 
     return {
       submissions: submissionOverview,
       projectoverdue,
     };
   }
-
-
-
-
 
   async getSubmissionActivity(managerId: string) {
     const submissions = await this.prisma.submitted.findMany({
@@ -1025,7 +1338,7 @@ export class ManagerService {
       if (!employeeMap.has(empId)) {
         const defaultStatusSummary = Object.values(SubmittedStatus).reduce(
           (acc, status) => ({ ...acc, [status]: 0 }),
-          {} as Record<string, number>
+          {} as Record<string, number>,
         );
 
         employeeMap.set(empId, {
@@ -1049,55 +1362,45 @@ export class ManagerService {
     return Array.from(employeeMap.values());
   }
 
-async deleteSubmissionForManager(
-  submissionId: string,
-  managerId: string,
-) {
-  const result = await this.prisma.submitted.deleteMany({
-    where: {
-      id: submissionId,
-      project: {
-        managerId: managerId,
+  async deleteSubmissionForManager(submissionId: string, managerId: string) {
+    const result = await this.prisma.submitted.deleteMany({
+      where: {
+        id: submissionId,
+        project: {
+          managerId: managerId,
+        },
       },
-    },
-  });
+    });
 
-  if (result.count === 0) {
-    throw new Error('Submission not found ');
+    if (result.count === 0) {
+      throw new Error('Submission not found ');
+    }
+
+    return { message: 'Submission deleted successfully' };
   }
 
-  return { message: 'Submission deleted successfully' };
-}
+  async updateSubmissionStatus(
+    submissionId: string,
+    managerId: string,
+    status: SubmittedStatus,
+  ) {
+    const result = await this.prisma.submitted.updateMany({
+      where: {
+        id: submissionId,
+        project: { managerId: managerId },
+      },
+      data: { status },
+    });
 
-async updateSubmissionStatus(
-  submissionId: string,
-  managerId: string,
-  status: SubmittedStatus,
-) {
-  const result = await this.prisma.submitted.updateMany({
-    where: {
-      id: submissionId,
-      project: { managerId: managerId },
-    },
-    data: { status },
-  });
+    if (result.count === 0) {
+      throw new NotFoundException('Submission not found ');
+    }
 
-  if (result.count === 0) {
-    throw new NotFoundException(
-      'Submission not found ',
-    );
+    const updatedSubmission = await this.prisma.submitted.findUnique({
+      where: { id: submissionId },
+      include: { project: true, employee: { include: { user: true } } },
+    });
+
+    return updatedSubmission;
   }
-
-  const updatedSubmission = await this.prisma.submitted.findUnique({
-    where: { id: submissionId },
-    include: { project: true, employee: { include: { user: true } } },
-  });
-
-  return updatedSubmission;
-}
-
-
-
-
-
 }

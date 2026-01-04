@@ -263,6 +263,63 @@ export class ProjectService {
     return project;
   }
 
+  // async findAll(query: FindAllProjectsDto) {
+  //   const where = { ...buildProjectFilter(query), isDeleted: false };
+
+  //   const includeProgram = {
+  //     program: {
+  //       select: {
+  //         programName: true,
+  //       },
+  //     },
+  //   };
+
+  //   const formatProjects = (projects: any[]) =>
+  //     projects.map(({ program, ...rest }) => ({
+  //       ...rest,
+  //       programName: program?.programName ?? null,
+  //     }));
+
+  //   // No pagination
+  //   if (query.limit !== 12) {
+  //     const projects = await this.prisma.project.findMany({
+  //       where,
+  //       include: includeProgram,
+  //     });
+
+  //     const formatted = formatProjects(projects);
+
+  //     return {
+  //       data: formatted,
+  //       total: formatted.length,
+  //       page: 1,
+  //       limit: formatted.length,
+  //     };
+  //   }
+
+  //   // Pagination
+  //   const { page = 1 } = query;
+  //   const limit = 12;
+  //   const skip = (page - 1) * limit;
+
+  //   const [projects, total] = await this.prisma.$transaction([
+  //     this.prisma.project.findMany({
+  //       where,
+  //       skip,
+  //       take: limit,
+  //       include: includeProgram,
+  //     }),
+  //     this.prisma.project.count({ where }),
+  //   ]);
+
+  //   return {
+  //     data: formatProjects(projects),
+  //     total,
+  //     page,
+  //     limit,
+  //   };
+  // }
+
   async findAll(query: FindAllProjectsDto) {
     const where = { ...buildProjectFilter(query), isDeleted: false };
 
@@ -280,11 +337,17 @@ export class ProjectService {
         programName: program?.programName ?? null,
       }));
 
-    // No pagination
+    // ✅ FIXED SORTING
+    const orderBy: Prisma.ProjectOrderByWithRelationInput = query.sortBy
+      ? { [query.sortBy]: query.sortOrder ?? Prisma.SortOrder.desc }
+      : { createdAt: Prisma.SortOrder.desc };
+
+    // ❌ No pagination
     if (query.limit !== 12) {
       const projects = await this.prisma.project.findMany({
         where,
         include: includeProgram,
+        orderBy,
       });
 
       const formatted = formatProjects(projects);
@@ -297,7 +360,7 @@ export class ProjectService {
       };
     }
 
-    // Pagination
+    // ✅ Pagination
     const { page = 1 } = query;
     const limit = 12;
     const skip = (page - 1) * limit;
@@ -308,6 +371,7 @@ export class ProjectService {
         skip,
         take: limit,
         include: includeProgram,
+        orderBy,
       }),
       this.prisma.project.count({ where }),
     ]);

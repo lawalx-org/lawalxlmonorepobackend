@@ -36,21 +36,34 @@ export class ProgramController {
     return this.programService.create(createProgramDto, userid!);
   }
 
+  // @Get()
+  // async findAll(@Query() query: GetAllProgramsDto) {
+  //   const data = await this.programService.findAll(query);
+
+  //   return {
+  //     message: 'Programs fetched successfully',
+  //     data,
+  //   };
+  // }
+
   @Get()
   async findAll(@Query() query: GetAllProgramsDto) {
-    const data = await this.programService.findAll(query);
-
-    return {
-      message: 'Programs fetched successfully',
-      data,
-    };
+    try {
+      const data = await this.programService.findAll(query);
+      return {
+        message: 'Programs fetched successfully',
+        data,
+      };
+    } catch (error) {
+      console.error('Error in findAll controller:', error);
+      throw error;
+    }
   }
+
   @UseGuards(JwtAuthGuard)
   @Get('program-filter-by-user')
   async getMyPrograms(@Req() req: RequestWithUser) {
-    return this.programService.getProgramsByLoggedInUser(
-      req.user.userId, 
-    );
+    return this.programService.getProgramsByLoggedInUser(req.user.userId);
   }
 
   @Get(':id')
