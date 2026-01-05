@@ -1421,4 +1421,135 @@ export class ManagerService {
 
     return updatedSubmission;
   }
+  async globalSearch(managerId: string, query: string) {
+    if (!query.trim()) {
+      return this.emptyResponse();
+    }
+
+    const [projects, programs, employees] = await Promise.all([
+      /* ---------------- PROJECT SEARCH ---------------- */
+      this.prisma.project.findMany({
+        where: {
+          managerId,
+          isDeleted: false,
+          OR: [
+            { name: { contains: query, mode: 'insensitive' } },
+            { description: { contains: query, mode: 'insensitive' } },
+          ],
+        },
+        take: 5,
+        select: {
+          id: true,
+          name: true,
+          priority: true,
+          deadline: true,
+          program: {
+            select: {
+              programName: true,
+            },
+          },
+        },
+      }),
+
+      /* ---------------- PROGRAM SEARCH ---------------- */
+      this.prisma.program.findMany({
+        where: {
+          projects: {
+            some: {
+              managerId,
+              isDeleted: false,
+            },
+          },
+          OR: [
+            { programName: { contains: query, mode: 'insensitive' } },
+            { programDescription: { contains: query, mode: 'insensitive' } },
+          ],
+        },
+        take: 5,
+        select: {
+          id: true,
+          programName: true,
+          priority: true,
+          deadline: true,
+        },
+      }),
+
+      /* ---------------- EMPLOYEE SEARCH ---------------- */
+      this.prisma.projectEmployee.findMany({
+        where: {
+          project: {
+            managerId,
+            isDeleted: false,
+          },
+          employee: {
+            user: {
+              OR: [
+                { name: { contains: query, mode: 'insensitive' } },
+                { email: { contains: query, mode: 'insensitive' } },
+              ],
+            },
+          },
+        },
+        distinct: ['employeeId'],
+        take: 5,
+        select: {
+          employee: {
+            select: {
+              id: true,
+              user: {
+                select: {
+                  name: true,
+                  email: true,
+                  profileImage: true,
+                },
+              },
+            },
+          },
+        },
+      }),
+    ]);
+
+    return {
+      success: true,
+      data: {
+        projects: projects.map((p) => ({
+          id: p.id,
+          name: p.name,
+          programName: p.program.programName,
+          priority: p.priority,
+          deadline: p.deadline,
+          type: 'PROJECT',
+        })),
+
+        programs: programs.map((p) => ({
+          id: p.id,
+          name: p.programName,
+          priority: p.priority,
+          deadline: p.deadline,
+          type: 'PROGRAM',
+        })),
+
+        employees: employees
+          .filter((e) => e.employee.user) // ensure user exists
+          .map((e) => ({
+            id: e.employee.id,
+            name: e.employee.user!.name,
+            email: e.employee.user!.email,
+            image: e.employee.user!.profileImage,
+            type: 'EMPLOYEE',
+          })),
+      },
+    };
+  }
+
+  private emptyResponse() {
+    return {
+      success: true,
+      data: {
+        projects: [],
+        programs: [],
+        employees: [],
+      },
+    };
+  }
 }
