@@ -372,4 +372,29 @@ export class ManagerController {
       data: result,
     };
   }
+
+  @Get('global-search')
+  @Roles('MANAGER')
+  async globalSearch(
+    @Req() req: RequestWithUser,
+    @Query('query') query?: string,
+  ) {
+    const managerId = req.user.managerId;
+
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
+
+    const result = await this.managerService.globalSearch(
+      managerId,
+      query ?? '',
+    );
+
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'Global search result fetched successfully',
+      data: result.data,
+    };
+  }
 }
