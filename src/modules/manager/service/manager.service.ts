@@ -865,18 +865,42 @@ export class ManagerService {
     };
   }
 
-  // async getProgramDashboard(managerId: string) {
+  //   async getProgramDashboard(
+  //   managerId: string,
+  //   priority?: Priority,
+  //   search?: string,
+  // ) {
   //   /* ---------------- FETCH PROGRAM ---------------- */
   //   const program = await this.prisma.program.findFirst({
   //     where: {
   //       projects: {
-  //         some: { managerId },
+  //         some: {
+  //           managerId,
+  //           isDeleted: false,
+  //           ...(priority && { priority }),
+  //           ...(search && {
+  //             OR: [
+  //               { name: { contains: search, mode: 'insensitive' } },
+  //               { description: { contains: search, mode: 'insensitive' } },
+  //             ],
+  //           }),
+  //         },
   //       },
   //     },
   //     include: {
   //       tags: true,
   //       projects: {
-  //         where: { managerId },
+  //         where: {
+  //           managerId,
+  //           isDeleted: false,
+  //           ...(priority && { priority }),
+  //           ...(search && {
+  //             OR: [
+  //               { name: { contains: search, mode: 'insensitive' } },
+  //               { description: { contains: search, mode: 'insensitive' } },
+  //             ],
+  //           }),
+  //         },
   //         include: {
   //           manager: {
   //             include: {
@@ -978,63 +1002,56 @@ export class ManagerService {
   //     },
   //   };
   // }
-
   async getProgramDashboard(
-  managerId: string,
-  priority?: Priority,
-  search?: string,
-) {
-  /* ---------------- FETCH PROGRAM ---------------- */
-  const program = await this.prisma.program.findFirst({
-    where: {
-      projects: {
-        some: {
-          managerId,
-          isDeleted: false,
-          ...(priority && { priority }),
-          ...(search && {
-            OR: [
-              { name: { contains: search, mode: 'insensitive' } },
-              { description: { contains: search, mode: 'insensitive' } },
-            ],
-          }),
+    managerId: string,
+    priority?: Priority,
+    search?: string,
+  ) {
+    /* ---------------- FETCH PROGRAM (NO PROJECT FILTER HERE) ---------------- */
+    const program = await this.prisma.program.findFirst({
+      where: {
+        projects: {
+          some: {
+            managerId,
+            isDeleted: false, // just to ensure program belongs to manager
+          },
         },
       },
-    },
-    include: {
-      tags: true,
-      projects: {
-        where: {
-          managerId,
-          isDeleted: false,
-          ...(priority && { priority }),
-          ...(search && {
-            OR: [
-              { name: { contains: search, mode: 'insensitive' } },
-              { description: { contains: search, mode: 'insensitive' } },
-            ],
-          }),
-        },
-        include: {
-          manager: {
-            include: {
-              user: {
-                select: {
-                  name: true,
-                  email: true,
-                  profileImage: true,
+      include: {
+        tags: true,
+        projects: {
+          where: {
+            managerId,
+            isDeleted: false,
+            ...(priority && { priority }),
+            ...(search && {
+              OR: [
+                { name: { contains: search, mode: 'insensitive' } },
+                { description: { contains: search, mode: 'insensitive' } },
+              ],
+            }),
+          },
+          include: {
+            manager: {
+              include: {
+                user: {
+                  select: {
+                    name: true,
+                    email: true,
+                    profileImage: true,
+                  },
                 },
               },
             },
-          },
-          projectEmployees: {
-            include: {
-              employee: {
-                include: {
-                  user: {
-                    select: {
-                      name: true,
-                      profileImage: true,
+            projectEmployees: {
+              include: {
+                employee: {
+                  include: {
+                    user: {
+                      select: {
+                        name: true,
+                        profileImage: true,
+                      },
                     },
                   },
                 },
@@ -1043,80 +1060,81 @@ export class ManagerService {
           },
         },
       },
-    },
-  });
+    });
 
-  if (!program) {
-    throw new NotFoundException('No active program found for this manager');
+    if (!program) {
+      throw new NotFoundException('No active program found for this manager');
+    }
+
+    /* ---------------- MANAGER INFO ---------------- */
+    const managerUser =
+      program.projects[0]?.manager?.user ??
+      program.projects.find((p) => p.manager?.user)?.manager?.user ??
+      null;
+
+    /* ---------------- ALERT LOGIC ---------------- */
+    const now = new Date();
+
+    const overdueProjects = program.projects.filter(
+      (project) =>
+        new Date(project.deadline) < now &&
+        project.status !== ProjectStatus.COMPLETED,
+    );
+
+    const alerts = overdueProjects.map((project) => ({
+      type: 'CRITICAL',
+      title: 'Project Overdue',
+      subText: project.name,
+      time: 'System Alert',
+    }));
+
+    /* ---------------- RESPONSE ---------------- */
+    return {
+      projects: program.projects.map((project) => ({
+        id: project.id,
+        name: project.name,
+        priority: project.priority,
+        deadline: project.deadline,
+        progress: project.progress ?? 0,
+        assignStuff: {
+          avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
+            name: pe.employee.user?.name || '',
+            image: pe.employee.user?.profileImage || null,
+          })),
+          extraCount: Math.max(0, project.projectEmployees.length - 3),
+        },
+        latitude: project.latitude,
+        logitude: project.longitude,
+      })),
+
+      sidebar: {
+        programManager: managerUser
+          ? {
+              name: managerUser.name,
+              email: managerUser.email,
+              image: managerUser.profileImage,
+            }
+          : {
+              name: 'No Manager Assigned',
+              email: '',
+              image: null,
+            },
+
+        duration: {
+          start: program.datetime,
+          end: program.deadline,
+          daysRemaining: this.calculateDaysRemaining(program.deadline),
+        },
+
+        tags: program.tags.map((tag) => tag.name),
+
+        alerts: {
+          issueCount: alerts.length,
+          list: alerts,
+        },
+      },
+    };
   }
-
-  /* ---------------- MANAGER INFO ---------------- */
-  const managerUser = program.projects[0]?.manager?.user ?? null;
-
-  /* ---------------- ALERT LOGIC ---------------- */
-  const now = new Date();
-
-  const overdueProjects = program.projects.filter(
-    (project) =>
-      new Date(project.deadline) < now &&
-      project.status !== ProjectStatus.COMPLETED,
-  );
-
-  const alerts = overdueProjects.map((project) => ({
-    type: 'CRITICAL',
-    title: 'Project Overdue',
-    subText: project.name,
-    time: 'System Alert',
-  }));
-
-  /* ---------------- RESPONSE ---------------- */
-  return {
-    projects: program.projects.map((project) => ({
-      id: project.id,
-      name: project.name,
-      priority: project.priority,
-      deadline: project.deadline,
-      progress: project.progress ?? 0,
-      assignStuff: {
-        avatars: project.projectEmployees.slice(0, 3).map((pe) => ({
-          name: pe.employee.user?.name || '',
-          image: pe.employee.user?.profileImage || null,
-        })),
-        extraCount: Math.max(0, project.projectEmployees.length - 3),
-      },
-      latitude: project.latitude,
-      logitude: project.longitude,
-    })),
-
-    sidebar: {
-      programManager: managerUser
-        ? {
-            name: managerUser.name,
-            email: managerUser.email,
-            image: managerUser.profileImage,
-          }
-        : {
-            name: 'No Manager Assigned',
-            email: '',
-            image: null,
-          },
-
-      duration: {
-        start: program.datetime,
-        end: program.deadline,
-        daysRemaining: this.calculateDaysRemaining(program.deadline),
-      },
-
-      tags: program.tags.map((tag) => tag.name),
-
-      alerts: {
-        issueCount: alerts.length,
-        list: alerts,
-      },
-    },
-  };
-}
-
 
   /* ---------------- HELPER ---------------- */
   private calculateDaysRemaining(deadline: string): string {
@@ -1402,5 +1420,136 @@ export class ManagerService {
     });
 
     return updatedSubmission;
+  }
+  async globalSearch(managerId: string, query: string) {
+    if (!query.trim()) {
+      return this.emptyResponse();
+    }
+
+    const [projects, programs, employees] = await Promise.all([
+      /* ---------------- PROJECT SEARCH ---------------- */
+      this.prisma.project.findMany({
+        where: {
+          managerId,
+          isDeleted: false,
+          OR: [
+            { name: { contains: query, mode: 'insensitive' } },
+            { description: { contains: query, mode: 'insensitive' } },
+          ],
+        },
+        take: 5,
+        select: {
+          id: true,
+          name: true,
+          priority: true,
+          deadline: true,
+          program: {
+            select: {
+              programName: true,
+            },
+          },
+        },
+      }),
+
+      /* ---------------- PROGRAM SEARCH ---------------- */
+      this.prisma.program.findMany({
+        where: {
+          projects: {
+            some: {
+              managerId,
+              isDeleted: false,
+            },
+          },
+          OR: [
+            { programName: { contains: query, mode: 'insensitive' } },
+            { programDescription: { contains: query, mode: 'insensitive' } },
+          ],
+        },
+        take: 5,
+        select: {
+          id: true,
+          programName: true,
+          priority: true,
+          deadline: true,
+        },
+      }),
+
+      /* ---------------- EMPLOYEE SEARCH ---------------- */
+      this.prisma.projectEmployee.findMany({
+        where: {
+          project: {
+            managerId,
+            isDeleted: false,
+          },
+          employee: {
+            user: {
+              OR: [
+                { name: { contains: query, mode: 'insensitive' } },
+                { email: { contains: query, mode: 'insensitive' } },
+              ],
+            },
+          },
+        },
+        distinct: ['employeeId'],
+        take: 5,
+        select: {
+          employee: {
+            select: {
+              id: true,
+              user: {
+                select: {
+                  name: true,
+                  email: true,
+                  profileImage: true,
+                },
+              },
+            },
+          },
+        },
+      }),
+    ]);
+
+    return {
+      success: true,
+      data: {
+        projects: projects.map((p) => ({
+          id: p.id,
+          name: p.name,
+          programName: p.program.programName,
+          priority: p.priority,
+          deadline: p.deadline,
+          type: 'PROJECT',
+        })),
+
+        programs: programs.map((p) => ({
+          id: p.id,
+          name: p.programName,
+          priority: p.priority,
+          deadline: p.deadline,
+          type: 'PROGRAM',
+        })),
+
+        employees: employees
+          .filter((e) => e.employee.user) // ensure user exists
+          .map((e) => ({
+            id: e.employee.id,
+            name: e.employee.user!.name,
+            email: e.employee.user!.email,
+            image: e.employee.user!.profileImage,
+            type: 'EMPLOYEE',
+          })),
+      },
+    };
+  }
+
+  private emptyResponse() {
+    return {
+      success: true,
+      data: {
+        projects: [],
+        programs: [],
+        employees: [],
+      },
+    };
   }
 }
