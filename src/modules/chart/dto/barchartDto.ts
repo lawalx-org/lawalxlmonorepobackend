@@ -16,7 +16,7 @@ export class ShowWidgetDto {
   })
   @IsOptional()
   @IsString()
-  legend_name?: string;
+  legendName?: string;
 
   @ApiPropertyOptional({
     description: 'Color of the dataset in hex format (with #)',
@@ -62,5 +62,5 @@ export class CreateBarChartDto {
   @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => ShowWidgetDto)
-  showWidgets?: ShowWidgetDto[];
+  widgets?: ShowWidgetDto[];
 }

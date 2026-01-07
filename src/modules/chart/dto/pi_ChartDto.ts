@@ -35,6 +35,24 @@ export class Create_Pi_ChartDto {
     @IsOptional()
     @IsInt()
     numberOfDataset?: number;
+
+
+    @ApiPropertyOptional({
+        description: 'Index of the first dataset to display (inclusive)',
+        example: 0,
+    })
+    @IsOptional()
+    @IsInt()
+    firstFieldDataset?: number;
+
+    @ApiPropertyOptional({
+        description: 'Index of the last dataset to display (inclusive)',
+        example: 4,
+    })
+    @IsOptional()
+    @IsInt()
+    lastFieldDataset?: number;
+
     @IsOptional()
     @IsArray()
     @ArrayMinSize(1)

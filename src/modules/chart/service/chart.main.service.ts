@@ -10,14 +10,14 @@ import { ChartName, ChartStatus, Prisma } from 'generated/prisma';
 
 @Injectable()
 export class ChartMainService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   //create chart
   async create(createChartDto: CreateChartDto) {
     let subChat = {};
     const { xAxis, yAxis, zAxis, title, status, category } = createChartDto;
 
-    if (!createChartDto.programId)
+    if (!createChartDto.projectId)
       throw new NotFoundException('ProgramId is required');
 
     const result = await this.prisma.$transaction(async (txPrisma) => {
@@ -31,7 +31,7 @@ export class ChartMainService {
           zAxis: zAxis ? JSON.parse(zAxis) : Prisma.JsonNull,
 
           // SABBIR - Relation to program //
-          programId: createChartDto.programId,
+          projectId: createChartDto.projectId,
           // SABBIR //
         },
       });
@@ -42,7 +42,7 @@ export class ChartMainService {
             numberOfDataset,
             firstFiledDataset,
             lastFiledDAtaset,
-            showWidgets,
+            widgets,
           } = createChartDto;
 
           subChat = await txPrisma.barChart.create({
@@ -52,13 +52,13 @@ export class ChartMainService {
               firstFiledDataset: firstFiledDataset!,
               lastFiledDAtaset: lastFiledDAtaset!,
 
-              showWidgets: showWidgets
+              widgets: widgets
                 ? {
-                    create: showWidgets.map((widget) => ({
-                      legend_name: widget.legend_name ?? 'Default Legend',
-                      color: widget.color ?? '#000000',
-                    })),
-                  }
+                  create: widgets.map((widget) => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    color: widget.color ?? '#000000',
+                  })),
+                }
                 : undefined,
             },
           });
@@ -82,11 +82,11 @@ export class ChartMainService {
 
               widgets: widgets
                 ? {
-                    create: widgets.map((widget) => ({
-                      legendName: widget.legendName ?? 'Default Legend',
-                      color: widget.color ?? '#000000',
-                    })),
-                  }
+                  create: widgets.map((widget) => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    color: widget.color ?? '#000000',
+                  })),
+                }
                 : undefined,
             },
           });
@@ -94,46 +94,21 @@ export class ChartMainService {
           break;
         }
         case ChartName.PIE: {
-          const { numberOfDataset, widgets } = createChartDto;
+          const { numberOfDataset, widgets, firstFieldDataset,
+            lastFieldDataset, } = createChartDto;
           subChat = await txPrisma.pi.create({
             data: {
               chartTableId: mainChart.id,
               numberOfDataset: numberOfDataset!,
-              widgets: widgets
-                ? {
-                    create: widgets.map((widget) => ({
-                      legendName: widget.legendName ?? 'Default Legend',
-                      color: widget.color ?? '#1cce0cff',
-                    })),
-                  }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.HEATMAP: {
-          const {
-            numberOfDataset_X,
-            numberOfDataset_Y,
-            firstFieldDataset,
-            lastFieldDataset,
-            widgets,
-          } = createChartDto;
-          subChat = await txPrisma.heatMapChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset_X: numberOfDataset_X!,
-              numberOfDataset_Y: numberOfDataset_Y!,
               firstFieldDataset: firstFieldDataset!,
               lastFieldDataset: lastFieldDataset!,
               widgets: widgets
                 ? {
-                    create: widgets.map((widget) => ({
-                      legendName: widget.legendName ?? 'Default Legend',
-                      // color: widget.color ?? '#e6ff5b9c',
-                    })),
-                  }
+                  create: widgets.map((widget) => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    color: widget.color ?? '#1cce0cff',
+                  })),
+                }
                 : undefined,
             },
           });
@@ -186,7 +161,7 @@ export class ChartMainService {
       include: {
         barChart: {
           include: {
-            showWidgets: true,
+            widgets: true,
           },
         },
         horizontalBarChart: {
