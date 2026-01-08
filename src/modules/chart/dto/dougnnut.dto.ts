@@ -11,12 +11,11 @@ import { WidgetDto } from './widgets.dto';
 
 
 
-export class HeatMap_ChartDto {
+export class DOUGHNUT_ChartDto {
 
     @IsOptional()
     @IsInt()
     numberOfDataset?: number;
-
 
     @IsOptional()
     @IsInt()
@@ -24,7 +23,7 @@ export class HeatMap_ChartDto {
 
     @IsOptional()
     @IsInt()
-    lastFieldDataset?: number;;
+    lastFieldDataset?: number;
 
     @IsOptional()
     @IsArray()

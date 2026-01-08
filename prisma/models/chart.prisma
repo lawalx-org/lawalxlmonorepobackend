@@ -147,6 +147,8 @@ model HeatMapChart {
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -160,6 +162,8 @@ model AreaChart {
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -173,6 +177,8 @@ model MultiAxisChart {
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -187,6 +193,8 @@ model ColumnChart {
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -202,12 +210,11 @@ model StackedBarChart {
   lastFiledDAtaset  Int
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  widgets  Widget[]
 
   //relations
-
   chartTable   ChartTable                  @relation(fields: [ChartTableId], references: [id])
   ChartTableId String                      @unique
-  showWidgets  Widget[]
 }
 
 //pi chart 
@@ -278,7 +285,7 @@ model SolidGaugeChart {
   startingRange           Int
   endRange                Int
   gaugeValue              Int
-  lastFieldDataset        Int
+  // lastFieldDataset        Int
   chartHight              Int
   startAngle              Int
   endAngle                Int
@@ -359,7 +366,7 @@ model RadarChart {
 model Widget {
   id          String    @id @default(uuid())
   legendName  String
-  color       String
+  color       String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

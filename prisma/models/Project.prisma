@@ -1,4 +1,4 @@
-model Project {
+model   Project {
   id        String @id @default(uuid())
   programId String
   name      String
