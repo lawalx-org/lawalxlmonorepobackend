@@ -16,6 +16,7 @@ import { Funnel_ChartDto } from './funelChart.dto';
 import { WaterFall_ChartDto } from './waterfall.dto';
 import { Radar_ChartDto } from './radarChart.dto';
 import { DOUGHNUT_ChartDto } from './dougnnut.dto';
+import { CandleStick_ChartDto } from './candelsick.dto';
 
 export class CreateChartDto extends IntersectionType(
   CreateBarChartDto,
@@ -32,7 +33,9 @@ export class CreateChartDto extends IntersectionType(
   Funnel_ChartDto,
   WaterFall_ChartDto,
   Radar_ChartDto,
-  DOUGHNUT_ChartDto
+  DOUGHNUT_ChartDto,
+  CandleStick_ChartDto
+  
 
 ) {
   @ApiProperty({

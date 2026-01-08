@@ -8,7 +8,8 @@ import {
     IsInt,
     IsString,
 } from 'class-validator';
-import { WidgetDto } from './hr_bar_chartDto';
+import { WidgetDto } from './widgets.dto';
+
 
 
 

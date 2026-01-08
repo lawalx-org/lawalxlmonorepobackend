@@ -337,84 +337,80 @@ export class ChartMainService {
           });
           break;
         }
+        case ChartName.CANDLESTICK: {
+          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
 
+          subChat = await txPrisma.candlestickChart.create({
+            data: {
+              chartTableId: mainChart.id,
+              numberOfDataset: numberOfDataset!,
+              firstFieldDataset: firstFieldDataset!,
+              lastFieldDataset: lastFieldDataset!,
+              widgets: widgets
+                ? {
+                  create: widgets.map((widget) => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    color: widget.color ?? '#1cce0cff',
+                  })),
+                }
+                : undefined,
+            },
+          });
+          break;
+        }
+        case ChartName.STACK_BAR_HORIZONTAL: {
+          const { numberOfDataset, widgets, firstFiledDataset, lastFiledDAtaset, } = createChartDto;
 
+          subChat = await txPrisma.stackedBarChart.create({
+            data: {
+              ChartTableId: mainChart.id,
+              numberOfDataset: numberOfDataset!,
+              firstFiledDataset: firstFiledDataset!,
+              lastFiledDAtaset: lastFiledDAtaset!,
+              widgets: widgets
+                ? {
+                  create: widgets.map((widget) => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    color: widget.color ?? '#1cce0cff',
+                  })),
+                }
+                : undefined,
+            },
+          });
+          break;
+        }
 
-        // case ChartName.CANDLESTICK: {
-        //   const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
+        case ChartName.GAUGE: {
+          const { widgets, startingRange, endRange, gaugeValue, chartHight, startAngle, endAngle, trackColor, strokeWidth, valueFontSize, shadeIntensity } = createChartDto;
 
-        //   subChat = await txPrisma.candlestickChart.create({
-        //     data: {
-        //       chartTableId: mainChart.id,
-        //       numberOfDataset: numberOfDataset!,
-        //       firstFieldDataset: firstFieldDataset!,
-        //       lastFieldDataset: lastFieldDataset!,
-        //       widgets: widgets
-        //         ? {
-        //           create: widgets.map((widget) => ({
-        //             legendName: widget.legendName ?? 'Default Legend',
-        //             color: widget.color ?? '#1cce0cff',
-        //           })),
-        //         }
-        //         : undefined,
-        //     },
-        //   });
-        //   break;
-        // }
+          subChat = await txPrisma.solidGaugeChart.create({
+            data: {
+              chartTableId: mainChart.id,
+              startingRange: startingRange!,
+              endRange: endRange!,
+              gaugeValue: gaugeValue!,
+              chartHight: chartHight!,
+              startAngle: startAngle!,
+              endAngle: endAngle!,
+              trackColor: trackColor!,
+              strokeWidth: strokeWidth!,
+              valueFontSize: valueFontSize!,
+              shadeIntensity: shadeIntensity!,
+              widgets: widgets
+                ? {
+                  create: widgets.map((widget) => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    color: widget.color ?? '#1cce0cff',
+                  })),
+                }
+                : undefined,
+            },
+          });
 
-        // case ChartName.GAUGE: {
-        //   const {lastFieldDataset, startingRange,endRange,gaugeValue,chartHight,startAngle,endAngle,trackColor,strokeWidth ,valueFontSize,shadeIntensity} = createChartDto;
+          break;
+        }
 
-        //   subChat = await txPrisma.solidGaugeChart.create({
-        //     data: {
-        //       chartTableId: mainChart.id,
-        //       startingRange: startingRange!,
-        //       endRange: endRange!,
-        //       gaugeValue: gaugeValue!,
-        //       chartHight: chartHight!,
-        //       startAngle: startAngle!,
-        //       endAngle: endAngle!,
-        //       trackColor: trackColor!,
-        //       strokeWidth: strokeWidth!,
-        //       valueFontSize: valueFontSize!,
-        //       shadeIntensity: shadeIntensity!,
-        //       lastFieldDataset: lastFieldDataset!,
-        //       widgets: widgets
-        //         ? {
-        //           create: widgets.map((widget) => ({
-        //             legendName: widget.legendName ?? 'Default Legend',
-        //             color: widget.color ?? '#1cce0cff',
-        //           })),
-        //         }
-        //         : undefined,
-        //     },
-        //   });
-
-        //   break;
-        // }
-
-        // case ChartName.STACK_BAR_HORIZONTAL: {
-        //   const { numberOfDataset, widgets, firstFiledDataset,lastFiledDAtaset, } = createChartDto;
-
-        //   subChat = await txPrisma.stackedBarChart.create({
-        //     data: {
-        //       ChartTableId: mainChart.id,
-        //       numberOfDataset: numberOfDataset!,
-        //       firstFiledDataset: firstFiledDataset!,
-        //       lastFiledDAtaset: lastFiledDAtaset!,
-        //       widgets: widgets
-        //         ? {
-        //           create: widgets.map((widget) => ({
-        //             legendName: widget.legendName ?? 'Default Legend',
-        //             color: widget.color ?? '#1cce0cff',
-        //           })),
-        //         }
-        //         : undefined,
-        //     },
-        //   });
-
-        //   break;
-        // }
+      // scatterChart
 
         default: {
           throw new BadRequestException(

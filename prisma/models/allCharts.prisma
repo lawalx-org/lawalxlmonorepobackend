@@ -189,7 +189,6 @@ model SolidGaugeChart {
   startingRange           Int
   endRange                Int
   gaugeValue              Int
-  // lastFieldDataset        Int
   chartHight              Int
   startAngle              Int
   endAngle                Int
