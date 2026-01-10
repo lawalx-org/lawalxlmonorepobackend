@@ -230,10 +230,31 @@ export class ChartService {
   async getChartsByProjectId(projectId: string) {
   return this.prisma.chartTable.findMany({
     where: {
-      sheet: {
-        projectId: projectId,
-      },
+        projectId: projectId
     },
+     include: {
+        barChart: {
+          include: {
+            widgets: true,
+          },
+        },
+        horizontalBarChart: {
+          include: {
+            widgets: true,
+          },
+        },
+        pi: {
+          include: {
+            widgets: true,
+          },
+        },
+        heatmap: {
+          include: {
+            widgets: true,
+          },
+        },
+        sheet: true,
+      },
   });
 
 }

@@ -11,7 +11,7 @@ import { WidgetDto } from './widgets.dto';
 
 
 
-export class HeatMap_ChartDto {
+export class Histogram_ChartDto {
 
     @IsOptional()
     @IsInt()
@@ -24,7 +24,7 @@ export class HeatMap_ChartDto {
 
     @IsOptional()
     @IsInt()
-    lastFieldDataset?: number;;
+    lastFieldDataset?: number;
 
     @IsOptional()
     @IsArray()
