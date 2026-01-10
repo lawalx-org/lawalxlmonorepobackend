@@ -51,6 +51,10 @@ model Project {
   sheets                     Sheet[]
   favorites                  FavoriteProject[]
 
+  //ray
+    charts   ChartTable[]
+    // ray
+
   @@index([programId])
   @@index([slug])
   @@index([managerId])

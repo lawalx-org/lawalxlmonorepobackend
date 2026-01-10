@@ -15,7 +15,7 @@
 model ChartTable {
   id        String      @id @default(uuid())
   title     String
-  status    ChartStatus
+  status    ChartStatus @default(INACTIVE) 
   category  ChartName
   xAxis     Json
   yAxis     Json?
@@ -32,11 +32,31 @@ model ChartTable {
   horizontalBarChart HorizontalBarChart?
   pi                 Pi?
   heatmap            HeatMapChart?
+  areaChart          AreaChart?
+  multiAxisChart     MultiAxisChart?
+  columnChart        ColumnChart?
+  stackedBarChart    StackedBarChart?
+  doughnutChart      DoughnutChart?
+  paretoChart        ParetoChart?
+  histogramChart     HistogramChart?
+  scatterChart       ScatterChart?
+  solidGaugeChart    SolidGaugeChart?
+  funnelChart        FunnelChart?
+  waterFallChart     WaterFallChart?
+  candlestickChart   CandlestickChart?
+  radarChart         RadarChart?
+  
 
   // SABBIR - Relation to chart (one-to-one optional) //
-  Program   Program? @relation(fields: [programId], references: [id])
-  programId String?
+  // Program         Program?         @relation(fields: [programId], references: [id])
+  // programId       String?
   // SABBIR // 
+
+  //ray
+  Project         Project?         @relation(fields: [projectId], references: [id])
+  projectId       String?
+  //ray
+  
 }
 
 enum ChartStatus {
@@ -86,21 +106,9 @@ model barChart {
 
   //relations
 
-  chartTable   ChartTable   @relation(fields: [ChartTableId], references: [id])
-  ChartTableId String       @unique
-  showWidgets  ShowWidget[]
-}
-
-model ShowWidget {
-  id          Int      @id @default(autoincrement())
-  legend_name String
-  color       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  //relations
-  barChart   barChart @relation(fields: [barChartId], references: [id])
-  barChartId String
+  chartTable                 ChartTable                  @relation(fields: [ChartTableId], references: [id])
+  ChartTableId               String                      @unique
+  widgets                Widget[]
 }
 
 // HORIZONTAL_BAR chart 
@@ -115,66 +123,295 @@ model HorizontalBarChart {
   // One-to-one with ChartTable
   chartTable   ChartTable                @relation(fields: [chartTableId], references: [id])
   chartTableId String                    @unique
-  widgets      ShowWidgetHorizontalBar[]
-}
-
-//hr-bar-chart-widget
-model ShowWidgetHorizontalBar {
-  id         Int      @id @default(autoincrement())
-  legendName String
-  color      String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  horizontalBarChart   HorizontalBarChart @relation(fields: [horizontalBarChartId], references: [id])
-  horizontalBarChartId String
+  widgets      Widget[]
 }
 
 //pi chart 
-// pi chart
 model Pi {
-  id              String         @id @default(uuid())
-  numberOfDataset Int
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  widgets         ShowWidgetPi[]
+  id                String         @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int?
+  lastFieldDataset  Int?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  widgets           Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
   chartTableId String     @unique
 }
 
-model ShowWidgetPi {
-  id         Int      @id @default(autoincrement())
-  legendName String
-  color      String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  //relation
-  piChart   Pi     @relation(fields: [piChartId], references: [id])
-  piChartId String
-}
-
+//Heatmap
 model HeatMapChart {
-  id                String @id @default(uuid())
-  numberOfDataset_X Int
-  numberOfDataset_Y Int
+  id                String              @id @default(uuid())
+  numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
-
-  widgets ShowWidgetHeatMap[]
+  widgets           Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
   chartTableId String     @unique
 }
 
-model ShowWidgetHeatMap {
-  id         Int    @id @default(autoincrement())
-  legendName String
+// Area
+model AreaChart {
+  id                String           @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  widgets           Widget[]
 
-  //relation
-  heatmap   HeatMapChart @relation(fields: [heatmapId], references: [id])
-  heatmapId String
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+// multi Axis
+model MultiAxisChart {
+  id                String           @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  widgets           Widget[]
+
+  //relation 
+  chartTable          ChartTable            @relation(fields: [chartTableId], references: [id])
+  chartTableId        String                @unique
+
+}
+
+//Column
+model ColumnChart {
+  id                String             @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  widgets           Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//stacked_bar_chart
+model StackedBarChart {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFiledDataset Int
+  lastFiledDAtaset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  //relations
+
+  chartTable   ChartTable                  @relation(fields: [ChartTableId], references: [id])
+  ChartTableId String                      @unique
+  showWidgets  Widget[]
+}
+
+//pi chart 
+model DoughnutChart {
+  id                String               @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+  widgets           Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//pareto  chart
+model ParetoChart {
+  id                      String                  @id @default(uuid())
+  numberOfDataset         Int
+  Left_firstFieldDataset  Int
+  Left_lastFieldDataset   Int
+  Right_firstFieldDataset Int
+  Right_lastFieldDataset  Int
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  widgets                 Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//Histogram
+model HistogramChart {
+  id                      String                  @id @default(uuid())
+  numberOfDataset         Int
+  firstFieldDataset       Int
+  lastFieldDataset        Int
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  widgets                 Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//Scatter
+model ScatterChart {
+  id                      String                  @id @default(uuid())
+  numberOfDataset         Int
+  firstFieldDataset       Int
+  lastFieldDataset        Int
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  widgets                 Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//Scatter
+model SolidGaugeChart {
+  id                      String                  @id @default(uuid())
+  startingRange           Int
+  endRange                Int
+  gaugeValue              Int
+  lastFieldDataset        Int
+  chartHight              Int
+  startAngle              Int
+  endAngle                Int
+  trackColor              String
+  strokeWidth             Int
+  valueFontSize           Int
+  shadeIntensity          Int
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  widgets                 Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//Funnel
+model FunnelChart {
+  id                      String                  @id @default(uuid())
+  numberOfDataset         Int
+  firstFieldDataset       Int
+  lastFieldDataset        Int
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  widgets                 Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//WaterFall 
+model WaterFallChart {
+  id                      String                  @id @default(uuid())
+  numberOfDataset         Int
+  firstFieldDataset       Int
+  lastFieldDataset        Int
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  widgets                 Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//Candlestick 
+model CandlestickChart {
+  id                      String                  @id @default(uuid())
+  numberOfDataset         Int
+  firstFieldDataset       Int
+  lastFieldDataset        Int
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  widgets                 Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+//Radar 
+model RadarChart {
+  id                      String                  @id @default(uuid())
+  numberOfDataset         Int
+  firstFieldDataset       Int
+  lastFieldDataset        Int
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  widgets                 Widget[]
+
+  //relation 
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
+}
+
+
+model Widget {
+  id          String    @id @default(uuid())
+  legendName  String
+  color       String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations to all chart types (only one will be non-null per widget)
+  barChart           barChart?           @relation(fields: [barChartId], references: [id])
+  barChartId         String?
+
+  horizontalBarChart HorizontalBarChart? @relation(fields: [horizontalBarChartId], references: [id])
+  horizontalBarChartId String?
+
+  piChart            Pi?                 @relation(fields: [piChartId], references: [id])
+  piChartId          String?
+
+  heatmapChart       HeatMapChart?       @relation(fields: [heatMapChartId], references: [id])
+  heatMapChartId     String?
+
+  areaChart          AreaChart?          @relation(fields: [areaChartId], references: [id])
+  areaChartId        String?
+
+  multiAxisChart     MultiAxisChart?     @relation(fields: [multiAxisChartId], references: [id])
+  multiAxisChartId   String?
+
+  columnChart        ColumnChart?        @relation(fields: [columnChartId], references: [id])
+  columnChartId      String?
+
+  stackedBarChart    StackedBarChart?    @relation(fields: [stackedBarChartId], references: [id])
+  stackedBarChartId  String?
+
+  doughnutChart      DoughnutChart?      @relation(fields: [doughnutChartId], references: [id])
+  doughnutChartId    String?
+
+  paretoChart        ParetoChart?        @relation(fields: [paretoChartId], references: [id])
+  paretoChartId      String?
+
+  histogramChart     HistogramChart?     @relation(fields: [histogramChartId], references: [id])
+  histogramChartId   String?
+
+  scatterChart       ScatterChart?       @relation(fields: [scatterChartId], references: [id])
+  scatterChartId     String?
+
+  solidGaugeChart    SolidGaugeChart?    @relation(fields: [solidGaugeChartId], references: [id])
+  solidGaugeChartId  String?
+
+  funnelChart        FunnelChart?        @relation(fields: [funnelChartId], references: [id])
+  funnelChartId      String?
+
+  waterFallChart     WaterFallChart?     @relation(fields: [waterFallChartId], references: [id])
+  waterFallChartId   String?
+
+  candlestickChart   CandlestickChart?   @relation(fields: [candlestickChartId], references: [id])
+  candlestickChartId String?
+
+  radarChart         RadarChart?         @relation(fields: [radarChartId], references: [id])
+  radarChartId       String?
 }

@@ -4,13 +4,13 @@ import { ChartName, ChartStatus } from 'generated/prisma';
 import { CreateBarChartDto } from './barchartDto';
 import { Create_Hr_BarChartDto } from './hr_bar_chartDto';
 import { Create_Pi_ChartDto } from './pi_ChartDto';
-import { HeatMap_ChartDto } from './heatMap_chartDto';
+// import { HeatMap_ChartDto } from './heatMap_chartDto';
 
 export class CreateChartDto extends IntersectionType(
   CreateBarChartDto,
   Create_Hr_BarChartDto,
   Create_Pi_ChartDto,
-  HeatMap_ChartDto,
+  // HeatMap_ChartDto,
 ) {
   @ApiProperty({
     example: 'Weekly Sleep Pattern',
@@ -20,34 +20,34 @@ export class CreateChartDto extends IntersectionType(
   title: string;
 
   @ApiProperty({
-    example: ChartStatus.ACTIVE,
+    example: ChartStatus.INACTIVE,
     enum: ChartStatus,
   })
   @IsEnum(ChartStatus)
   status: ChartStatus;
 
   @ApiProperty({
-    example: ChartName.AREA,
+    example: ChartName.BAR,
     enum: ChartName,
   })
   @IsEnum(ChartName)
   category: ChartName;
 
   @ApiProperty({
-    example: '{"labels":["Mon","Tue","Wed"],"values":[6,7,8]}',
+    example: '{\"labels\":[[\"Sunday\",1,2,3],[\"Monday\",2,3,4],[\"Tuesday\",3,4,5],[\"Wednesday\",4,5,6],[\"Thursday\",5,6,7],[\"Friday\",6,7,8],[\"Saturday\",7,8,9]]}',
   })
   @IsJSON()
   xAxis: string;
 
   @ApiProperty({
-    example: '{"labels":["Mon","Tue","Wed"],"values":[70,80,90]}',
+    example: '{\"labels\":[[\"Sunday\",1,2,3],[\"Monday\",2,3,4],[\"Tuesday\",3,4,5],[\"Wednesday\",4,5,6],[\"Thursday\",5,6,7],[\"Friday\",6,7,8],[\"Saturday\",7,8,9]]}',
   })
   @IsOptional()
   @IsJSON()
   yAxis?: string;
 
   @ApiProperty({
-    example: '{"labels":["Mon","Tue","Wed"],"values":[1,2,3]}',
+    example: '{\"labels\":[[\"Sunday\",1,2,3],[\"Monday\",2,3,4],[\"Tuesday\",3,4,5],[\"Wednesday\",4,5,6],[\"Thursday\",5,6,7],[\"Friday\",6,7,8],[\"Saturday\",7,8,9]]}',
     required: false,
   })
   @IsOptional()
@@ -55,9 +55,9 @@ export class CreateChartDto extends IntersectionType(
   zAxis?: string;
 
   @ApiProperty({
-    example: 'program uuid',
+    example: 'project uuid',
   })
   @IsUUID()
   @IsOptional()
-  programId?: string;
+  projectId?: string;
 }
