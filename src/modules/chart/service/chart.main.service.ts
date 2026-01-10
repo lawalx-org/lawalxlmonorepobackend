@@ -410,6 +410,28 @@ export class ChartMainService {
           break;
         }
 
+         case ChartName.SCATTER: {
+          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
+
+          subChat = await txPrisma.scatterChart.create({
+            data: {
+              chartTableId: mainChart.id,
+              numberOfDataset: numberOfDataset!,
+              firstFieldDataset: firstFieldDataset!,
+              lastFieldDataset: lastFieldDataset!,
+              widgets: widgets
+                ? {
+                  create: widgets.map((widget) => ({
+                    legendName: widget.legendName ?? 'Default Legend',
+                    color: widget.color ?? '#1cce0cff',
+                  })),
+                }
+                : undefined,
+            },
+          });
+          break;
+        }
+
       // scatterChart
 
         default: {
