@@ -24,6 +24,7 @@ import { InfrastructureModule } from './modules/infrastructure/infrastructure.mo
 import { ManagerModule } from './modules/manager/manager.module';
 import { FavoriteModule } from './modules/favouriteProject/favourite.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
