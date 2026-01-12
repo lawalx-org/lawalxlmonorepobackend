@@ -1,4 +1,4 @@
-model Project {
+model   Project {
   id        String @id @default(uuid())
   programId String
   name      String
@@ -50,6 +50,10 @@ model Project {
   reminders                  Reminder[]
   sheets                     Sheet[]
   favorites                  FavoriteProject[]
+
+  //ray
+    charts   ChartTable[]
+    // ray
 
   @@index([programId])
   @@index([slug])

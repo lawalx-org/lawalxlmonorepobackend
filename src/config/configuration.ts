@@ -19,6 +19,7 @@ export default () => ({
   smtp_auth_pass: process.env.SMTP_AUTH_PASS,
   reset_pass_ui_link: process.env.RESET_PASS_UI_LINK,
   client_url: process.env.ClIENT_URL,
+  loginUrl: process.env.LOGIN_URL,
 
   //Mailer config (for nodemailer)
   mail_host: process.env.MAIL_HOST,
@@ -60,4 +61,7 @@ export default () => ({
     username: process.env.REDIS_USERNAME,
     password: process.env.REDIS_PASSWORD,
   },
+
+
+  
 });

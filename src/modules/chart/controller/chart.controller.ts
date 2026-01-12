@@ -44,7 +44,8 @@ export class ChartController {
   }
 
   @Get('project/:projectId')
-  @Roles('EMPLOYEE')
+  // @Roles('EMPLOYEE')
+  @Roles('CLIENT')
   async getChartsByProjectId(@Param('projectId') projectId: string) {
     return this.chartService.getChartsByProjectId(projectId);
   }

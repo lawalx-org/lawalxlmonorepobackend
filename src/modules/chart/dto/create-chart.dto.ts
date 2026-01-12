@@ -5,12 +5,40 @@ import { CreateBarChartDto } from './barchartDto';
 import { Create_Hr_BarChartDto } from './hr_bar_chartDto';
 import { Create_Pi_ChartDto } from './pi_ChartDto';
 import { HeatMap_ChartDto } from './heatMap_chartDto';
+import { Area_ChartDto } from './areaChart.dto';
+import { MultiAxis_ChartDto } from './multiAxisChart.dto';
+import { Column_ChartDto } from './columnChart.dto';
+import { Stacker_Bar_ChartDto } from './stackerbarchart.dto';
+import { Pareto_ChartDto } from './peretoChart.dto';
+import { Histogram_ChartDto } from './histrogram.dto';
+import { SolidGauge_ChartDto } from './solideGauge.dto';
+import { Funnel_ChartDto } from './funelChart.dto';
+import { WaterFall_ChartDto } from './waterfall.dto';
+import { Radar_ChartDto } from './radarChart.dto';
+import { DOUGHNUT_ChartDto } from './dougnnut.dto';
+import { CandleStick_ChartDto } from './candelsick.dto';
+import { Scatter_ChartDto } from './scatter.dto';
 
 export class CreateChartDto extends IntersectionType(
   CreateBarChartDto,
   Create_Hr_BarChartDto,
   Create_Pi_ChartDto,
   HeatMap_ChartDto,
+  Area_ChartDto,
+  MultiAxis_ChartDto,
+  Column_ChartDto,
+  Stacker_Bar_ChartDto,
+  Pareto_ChartDto,
+  Histogram_ChartDto,
+  SolidGauge_ChartDto,
+  Funnel_ChartDto,
+  WaterFall_ChartDto,
+  Radar_ChartDto,
+  DOUGHNUT_ChartDto,
+  CandleStick_ChartDto,
+  Scatter_ChartDto
+  
+
 ) {
   @ApiProperty({
     example: 'Weekly Sleep Pattern',
@@ -20,34 +48,34 @@ export class CreateChartDto extends IntersectionType(
   title: string;
 
   @ApiProperty({
-    example: ChartStatus.ACTIVE,
+    example: ChartStatus.INACTIVE,
     enum: ChartStatus,
   })
   @IsEnum(ChartStatus)
   status: ChartStatus;
 
   @ApiProperty({
-    example: ChartName.AREA,
+    example: ChartName.BAR,
     enum: ChartName,
   })
   @IsEnum(ChartName)
   category: ChartName;
 
   @ApiProperty({
-    example: '{"labels":["Mon","Tue","Wed"],"values":[6,7,8]}',
+    example: '{\"labels\":[[\"Sunday\",1,2,3],[\"Monday\",2,3,4],[\"Tuesday\",3,4,5],[\"Wednesday\",4,5,6],[\"Thursday\",5,6,7],[\"Friday\",6,7,8],[\"Saturday\",7,8,9]]}',
   })
   @IsJSON()
   xAxis: string;
 
   @ApiProperty({
-    example: '{"labels":["Mon","Tue","Wed"],"values":[70,80,90]}',
+    example: '{\"labels\":[[\"Sunday\",1,2,3],[\"Monday\",2,3,4],[\"Tuesday\",3,4,5],[\"Wednesday\",4,5,6],[\"Thursday\",5,6,7],[\"Friday\",6,7,8],[\"Saturday\",7,8,9]]}',
   })
   @IsOptional()
   @IsJSON()
   yAxis?: string;
 
   @ApiProperty({
-    example: '{"labels":["Mon","Tue","Wed"],"values":[1,2,3]}',
+    example: '{\"labels\":[[\"Sunday\",1,2,3],[\"Monday\",2,3,4],[\"Tuesday\",3,4,5],[\"Wednesday\",4,5,6],[\"Thursday\",5,6,7],[\"Friday\",6,7,8],[\"Saturday\",7,8,9]]}',
     required: false,
   })
   @IsOptional()
@@ -55,9 +83,9 @@ export class CreateChartDto extends IntersectionType(
   zAxis?: string;
 
   @ApiProperty({
-    example: 'program uuid',
+    example: 'project uuid',
   })
   @IsUUID()
   @IsOptional()
-  programId?: string;
+  projectId?: string;
 }

@@ -17,7 +17,7 @@ model Program {
   projects Project[]
   tags     Tag[]
   // sabbir //
-  charts   ChartTable[]
+  // charts   ChartTable[]
   // sabbir //
 
   @@map("programs")
