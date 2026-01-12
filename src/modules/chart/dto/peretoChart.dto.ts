@@ -11,20 +11,27 @@ import { WidgetDto } from './widgets.dto';
 
 
 
-export class HeatMap_ChartDto {
+export class Pareto_ChartDto {
 
     @IsOptional()
     @IsInt()
     numberOfDataset?: number;
 
+    @IsOptional()
+    @IsInt()
+    Left_firstFieldDataset?: number;
 
     @IsOptional()
     @IsInt()
-    firstFieldDataset?: number;
+    Left_lastFieldDataset?: number;
 
     @IsOptional()
     @IsInt()
-    lastFieldDataset?: number;;
+    Right_firstFieldDataset?: number;
+
+    @IsOptional()
+    @IsInt()
+    Right_lastFieldDataset?: number;
 
     @IsOptional()
     @IsArray()

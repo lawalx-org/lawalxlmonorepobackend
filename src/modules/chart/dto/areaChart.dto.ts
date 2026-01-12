@@ -11,20 +11,19 @@ import { WidgetDto } from './widgets.dto';
 
 
 
-export class HeatMap_ChartDto {
+export class Area_ChartDto {
 
     @IsOptional()
     @IsInt()
     numberOfDataset?: number;
 
+    @IsOptional()
+    @IsInt()
+    firstFiledDataset?: number;
 
     @IsOptional()
     @IsInt()
-    firstFieldDataset?: number;
-
-    @IsOptional()
-    @IsInt()
-    lastFieldDataset?: number;;
+    lastFiledDAtaset?: number;
 
     @IsOptional()
     @IsArray()

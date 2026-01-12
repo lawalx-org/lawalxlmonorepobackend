@@ -11,7 +11,7 @@ import { WidgetDto } from './widgets.dto';
 
 
 
-export class HeatMap_ChartDto {
+export class WaterFall_ChartDto {
 
     @IsOptional()
     @IsInt()
