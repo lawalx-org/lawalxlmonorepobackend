@@ -16,7 +16,7 @@ async function bootstrap() {
     bodyParser: true,
   });
   app.enableCors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5500','https://lawal-super-admin.netlify.app','https://lawalx-superadmin-frontend.vercel.app','https://*'],
+    origin: true,
     credentials: true,
   });
 
