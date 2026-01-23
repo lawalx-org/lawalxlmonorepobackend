@@ -14,8 +14,9 @@ RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
 WORKDIR /usr/src/app
 USER node
 
-# Copy package files and install dependencies
+# Copy package files and Prisma schema first (needed for postinstall)
 COPY --chown=node:node package*.json ./
+COPY --chown=node:node prisma ./prisma
 RUN npm ci
 
 # Copy entire project
