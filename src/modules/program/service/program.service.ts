@@ -18,34 +18,6 @@ export class ProgramService {
   constructor(private readonly prisma: PrismaService) { }
 
   
-// async create(createProgramDto: CreateProgramDto, userId: string) {
-//   const { managerId, templateId, ...programData } = createProgramDto;
-
-//   const client = await this.prisma.client.findUnique({
-//     where: { id: userId },
-//   });
-
-//   if (!client) {
-//     throw new NotFoundException(`Client profile not found.`);
-//   }
-
-
-//   return this.prisma.program.create({
-//     data: {
-//       ...programData,
-//       progress: 0,
-//       client: {
-//         connect: { id: client.id },
-//       },
-//       manager: {
-//         connect: { id: managerId },
-//       },
-//       template: {
-//         connect: { id: templateId }, // Connect to the Template model
-//       },
-//     },
-//   });
-// }
 async create(createProgramDto: CreateProgramDto, userId: string) {
   const { managerId, templateId, ...programData } = createProgramDto;
 
@@ -56,6 +28,8 @@ async create(createProgramDto: CreateProgramDto, userId: string) {
   if (!client) {
     throw new NotFoundException(`Client profile not found.`);
   }
+
+
   return this.prisma.program.create({
     data: {
       ...programData,
@@ -66,14 +40,40 @@ async create(createProgramDto: CreateProgramDto, userId: string) {
       manager: {
         connect: { id: managerId },
       },
-      ...(templateId && {
-        template: {
-          connect: { id: templateId },
-        },
-      }),
+      template: {
+        connect: { id: templateId }, // Connect to the Template model
+      },
     },
   });
 }
+// async create(createProgramDto: CreateProgramDto, userId: string) {
+//   const { managerId, templateId, ...programData } = createProgramDto;
+
+//   const client = await this.prisma.client.findUnique({
+//     where: { id: userId },
+//   });
+
+//   if (!client) {
+//     throw new NotFoundException(`Client profile not found.`);
+//   }
+//   return this.prisma.program.create({
+//     data: {
+//       ...programData,
+//       progress: 0,
+//       client: {
+//         connect: { id: client.id },
+//       },
+//       manager: {
+//         connect: { id: managerId },
+//       },
+//       ...(templateId && {
+//         template: {
+//           connect: { id: templateId },
+//         },
+//       }),
+//     },
+//   });
+// }
 
   async findAll(query: GetAllProgramsDto): Promise<PaginatedResult<any>> {
     const {

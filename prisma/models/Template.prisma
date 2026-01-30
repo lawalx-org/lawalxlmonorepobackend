@@ -1,7 +1,10 @@
 model Template {
   id       String    @id @default(uuid())
-  name     String?  
+  name     String?
   programs Program[]
+  projects Project[]
+  clientId String
+  client   Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
   @@map("templates")
 }
-

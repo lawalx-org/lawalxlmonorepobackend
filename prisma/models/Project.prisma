@@ -39,6 +39,10 @@ model   Project {
   // Relations
   program Program  @relation(fields: [programId], references: [id], onDelete: Cascade)
   manager Manager? @relation(fields: [managerId], references: [id], onDelete: Cascade)
+   // template
+  templateId         String?   @map("template_id")
+  template           Template? @relation(fields: [templateId], references: [id])
+
 
   projectEmployees           ProjectEmployee[]
   projectViewers             ProjectViewer[]
