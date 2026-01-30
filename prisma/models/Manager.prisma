@@ -14,5 +14,8 @@ model Manager {
   projects                   Project[]
   requestsToAddProjectMember RequestToAddProjectMember[]
 
+  // new ------->
+  programs Program[]
+
   @@map("managers")
 }

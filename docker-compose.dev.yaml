@@ -3,13 +3,14 @@ services:
     image: postgres:15
     container_name: law_db
     ports:
-      - '5432:5432'
+      - '5435:5432' # Maps Host 5434 -> Container 5432
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - law_pgdata_new:/var/lib/postgresql/new
+      # Use /data, not /new, so Postgres initializes the DB properly
+      - law_pgdata_new:/var/lib/postgresql/data 
     networks:
       - law_network
 

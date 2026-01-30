@@ -1,0 +1,7 @@
+model Template {
+  id       String    @id @default(uuid())
+  name     String?  
+  programs Program[]
+  @@map("templates")
+}
+

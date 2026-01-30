@@ -94,3 +94,73 @@ model ProjectViewer {
   @@unique([projectId, viewerId])
   @@map("project_viewers")
 }
+
+
+
+
+// model project {
+
+//   //must need 
+//    id           String   @id @default(uuid())
+//    name         String
+//    DateDate     DateTime
+//    UpdateCycle  UploadCycle
+//    ShareWith    Share
+//    UploadData   UploadDate
+//    status                 ProjectStatus @default(PENDING)
+//    projectSetting   Boolean  @default(false)   // here can set then project
+
+
+//    //optional fields
+//    SelectDays   Days[]?
+//    SelectDate    String[]?
+//    Staffs        String []?
+
+
+//    //Seeating Enable
+//    description    String?
+//    startDate      DateDate?
+//    estimatedCompletedDate DateDate?
+//    projectCompleteDate  DateDate?
+//    ProjectLocation    String?
+//    manager            String?
+//    priority           Priority?  @default(MEDIUM)
+//    Budget             Int?
+//    currentRate        String?
+//    workingDay         Days[]?
+
+
+
+
+
+// }
+
+
+// enum UploadCycle {
+//   Daily
+//   Weekly
+//   By_Weekly
+//   Monthly
+// }
+
+// enum Share {
+//   Only_Me
+//   Invite_Staff
+//   Template_Settings
+// }
+
+// enum UploadDate {
+//   Three
+//   Four
+//   Five
+// }
+
+// enum Days {
+//   Sun
+//   Mon
+//   Tue
+//   Wed 
+//   Thurs
+//   Fri
+//   Sat 
+// }

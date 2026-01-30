@@ -15,27 +15,65 @@ import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program
 
 @Injectable()
 export class ProgramService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
-  async create(createProgramDto: CreateProgramDto, userId: string) {
-    const { ...programData } = createProgramDto;
-    const client = await this.prisma.client.findUnique({
-      where: { id: userId },
-    });
-    if (!client) {
-      throw new NotFoundException(`Client with ID "${userId}" not found`);
-    }
+  
+// async create(createProgramDto: CreateProgramDto, userId: string) {
+//   const { managerId, templateId, ...programData } = createProgramDto;
 
-    return this.prisma.program.create({
-      data: {
-        ...programData,
-        progress: 0,
-        client: {
-          connect: { id: userId },
-        },
-      },
-    });
+//   const client = await this.prisma.client.findUnique({
+//     where: { id: userId },
+//   });
+
+//   if (!client) {
+//     throw new NotFoundException(`Client profile not found.`);
+//   }
+
+
+//   return this.prisma.program.create({
+//     data: {
+//       ...programData,
+//       progress: 0,
+//       client: {
+//         connect: { id: client.id },
+//       },
+//       manager: {
+//         connect: { id: managerId },
+//       },
+//       template: {
+//         connect: { id: templateId }, // Connect to the Template model
+//       },
+//     },
+//   });
+// }
+async create(createProgramDto: CreateProgramDto, userId: string) {
+  const { managerId, templateId, ...programData } = createProgramDto;
+
+  const client = await this.prisma.client.findUnique({
+    where: { id: userId },
+  });
+
+  if (!client) {
+    throw new NotFoundException(`Client profile not found.`);
   }
+  return this.prisma.program.create({
+    data: {
+      ...programData,
+      progress: 0,
+      client: {
+        connect: { id: client.id },
+      },
+      manager: {
+        connect: { id: managerId },
+      },
+      ...(templateId && {
+        template: {
+          connect: { id: templateId },
+        },
+      }),
+    },
+  });
+}
 
   async findAll(query: GetAllProgramsDto): Promise<PaginatedResult<any>> {
     const {
@@ -178,9 +216,9 @@ export class ProgramService {
   }
 
   async getProgramsByLoggedInUser(userId: string) {
-    
+
     const client = await this.prisma.client.findUnique({
-      where: { userId }, 
+      where: { userId },
     });
 
     if (!client) {
@@ -189,10 +227,10 @@ export class ProgramService {
       );
     }
 
-    
+
     return this.prisma.program.findMany({
       where: {
-        userId: client.id, 
+        clientId: client.id,
       },
       include: {
         projects: {
