@@ -3,14 +3,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: softvence/lawalbackendbackend:latest
+    image: sakibsakib/lawalbackendbackend:latest
     profiles:
       - prod
     container_name: lawalbackendbackend3
     restart: always
     env_file:
       - .env
-      - .env.production
     depends_on:
       - db
       - redis
@@ -19,7 +18,7 @@ services:
       - uploads-file:/app/uploads-file
       - uploads-profile-images:/app/uploads-profile-images
     ports:
-      - 2342:2342
+      - 2343:2342
     networks:
       - law_network
 

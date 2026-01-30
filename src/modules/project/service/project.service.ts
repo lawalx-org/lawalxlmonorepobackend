@@ -320,71 +320,7 @@ export class ProjectService {
   //   };
   // }
 
-  async findAll(query: FindAllProjectsDto) {
-    const where = { ...buildProjectFilter(query), isDeleted: false };
-
-    const includeProgram = {
-      program: {
-        select: {
-          programName: true,
-        },
-      },
-    };
-
-    const formatProjects = (projects: any[]) =>
-      projects.map(({ program, ...rest }) => ({
-        ...rest,
-        programName: program?.programName ?? null,
-      }));
-
-    // ✅ FIXED SORTING
-    const orderBy: Prisma.ProjectOrderByWithRelationInput = query.sortBy
-      ? { [query.sortBy]: query.sortOrder ?? Prisma.SortOrder.desc }
-      : { createdAt: Prisma.SortOrder.desc };
-
-    // ❌ No pagination
-    if (query.limit !== 12) {
-      const projects = await this.prisma.project.findMany({
-        where,
-        include: includeProgram,
-        orderBy,
-      });
-
-      const formatted = formatProjects(projects);
-
-      return {
-        data: formatted,
-        total: formatted.length,
-        page: 1,
-        limit: formatted.length,
-      };
-    }
-
-    // ✅ Pagination
-    const { page = 1 } = query;
-    const limit = 12;
-    const skip = (page - 1) * limit;
-
-    const [projects, total] = await this.prisma.$transaction([
-      this.prisma.project.findMany({
-        where,
-        skip,
-        take: limit,
-        include: includeProgram,
-        orderBy,
-      }),
-      this.prisma.project.count({ where }),
-    ]);
-
-    return {
-      data: formatProjects(projects),
-      total,
-      page,
-      limit,
-    };
-  }
-
-  async searchByName(query: SearchProjectByNameDto) {
+   async searchByName(query: SearchProjectByNameDto) {
     const { name, page = 1, limit = 10, employeeId } = query;
     const skip = (page - 1) * limit;
 
@@ -419,10 +355,135 @@ export class ProjectService {
       limit,
     };
   }
+  // async findAll(query: FindAllProjectsDto) {
+  //   const where = { ...buildProjectFilter(query), isDeleted: false };
 
-  async findOne(id: string) {
-    const project = await this.prisma.project.findUnique({
-      where: { id },
+  //   const includeProgram = {
+  //     program: {
+  //       select: {
+  //         programName: true,
+  //       },
+  //     },
+  //   };
+
+  //   const formatProjects = (projects: any[]) =>
+  //     projects.map(({ program, ...rest }) => ({
+  //       ...rest,
+  //       programName: program?.programName ?? null,
+  //     }));
+
+  //   // ✅ FIXED SORTING
+  //   const orderBy: Prisma.ProjectOrderByWithRelationInput = query.sortBy
+  //     ? { [query.sortBy]: query.sortOrder ?? Prisma.SortOrder.desc }
+  //     : { createdAt: Prisma.SortOrder.desc };
+
+  //   // ❌ No pagination
+  //   if (query.limit !== 12) {
+  //     const projects = await this.prisma.project.findMany({
+  //       where,
+  //       include: includeProgram,
+  //       orderBy,
+  //     });
+
+  //     const formatted = formatProjects(projects);
+
+  //     return {
+  //       data: formatted,
+  //       total: formatted.length,
+  //       page: 1,
+  //       limit: formatted.length,
+  //     };
+  //   }
+
+  //   // ✅ Pagination
+  //   const { page = 1 } = query;
+  //   const limit = 12;
+  //   const skip = (page - 1) * limit;
+
+  //   const [projects, total] = await this.prisma.$transaction([
+  //     this.prisma.project.findMany({
+  //       where,
+  //       skip,
+  //       take: limit,
+  //       include: includeProgram,
+  //       orderBy,
+  //     }),
+  //     this.prisma.project.count({ where }),
+  //   ]);
+
+  //   return {
+  //     data: formatProjects(projects),
+  //     total,
+  //     page,
+  //     limit,
+  //   };
+  // }
+
+
+  private readonly fullProjectInclude: Prisma.ProjectInclude = {
+  program: true,
+  manager: true,
+
+  projectEmployees: true,
+  projectViewers: true,
+  tasks: true,
+  activities: true,
+  reviews: true,
+  requestsToAddProjectMember: true,
+  submitted: true,
+  reminders: true,
+  sheets: true,
+  favorites: true,
+
+  charts: true,
+  nodes: true,
+};
+
+  async findAllFull(query: FindAllProjectsDto) {
+  const where: Prisma.ProjectWhereInput = {
+    ...buildProjectFilter(query),
+    isDeleted: false,
+  };
+
+  const orderBy: Prisma.ProjectOrderByWithRelationInput = query.sortBy
+    ? { [query.sortBy]: query.sortOrder ?? Prisma.SortOrder.desc }
+    : { createdAt: Prisma.SortOrder.desc };
+
+  const page = query.page ?? 1;
+  const limit = query.limit ?? 12;
+  const skip = (page - 1) * limit;
+
+  const [projects, total] = await this.prisma.$transaction([
+    this.prisma.project.findMany({
+      where,
+      skip,
+      take: limit,
+      include: this.fullProjectInclude,
+      orderBy,
+    }),
+    this.prisma.project.count({ where }),
+  ]);
+
+  return {
+    data: projects,
+    total,
+    page,
+    limit,
+  };
+}
+
+
+ 
+
+
+
+   async findOne(id: string) {
+    const project = await this.prisma.project.findFirst({
+      where: {
+        id,
+        isDeleted: false,
+      },
+      include: this.fullProjectInclude,
     });
 
     if (!project) {
@@ -431,6 +492,7 @@ export class ProjectService {
 
     return project;
   }
+
 
   //get sheet with project id
   async getSheets(projectId: string) {
