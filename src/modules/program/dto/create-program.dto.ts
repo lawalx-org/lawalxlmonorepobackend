@@ -5,73 +5,61 @@ import {
   IsISO8601,
   IsEnum,
   IsOptional,
-  IsArray,
-  IsUUID,
   IsNumber,
   Min,
   Max,
+  IsUUID,
 } from 'class-validator';
 import { Priority } from 'generated/prisma';
 
+
 export class CreateProgramDto {
-  @ApiProperty({
-    example: 'New Website Development',
-    description: 'The name of the program',
-  })
+  @ApiProperty({ example: 'New Website Development' })
   @IsString()
   @IsNotEmpty()
   programName: string;
 
-  @ApiProperty({
-    example: '2025-10-12T05:19:26.155Z',
-    description: 'The date and time of the program in ISO 8601 format',
-  })
+  @ApiProperty({ example: '2025-10-12T05:19:26.155Z' })
   @IsISO8601()
   @IsNotEmpty()
   datetime: string;
 
-  @ApiProperty({
-    example: 'This program is for developing a new company website.',
-    description: 'A description of the program',
-  })
+  @ApiProperty({ example: 'Detailed description here...' })
   @IsString()
   @IsNotEmpty()
   programDescription: string;
 
-  @ApiProperty({
-    example: 'HIGH',
-    description: 'The priority of the program (HIGH, MEDIUM, LOW, NORMAL)',
-    enum: Priority,
-  })
-  @IsEnum(Priority)
-  @IsNotEmpty()
-  priority: Priority;
+  // @ApiProperty({ enum: Priority, example: Priority.MEDIUM })
+  // @IsEnum(Priority)
+  // @IsNotEmpty()
+  // priority: Priority;
 
-  @ApiProperty({
-    example: '2026-10-12T05:19:26.155Z',
-    description: 'The deadline for the program in ISO 8601 format',
+  // @ApiPropertyOptional({ example: '2026-10-12T05:19:26.155Z' })
+  // @IsISO8601()
+  // @IsOptional() 
+  // deadline?: string;
+
+ @ApiProperty({ 
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'The ID of the template to apply' 
   })
-  @IsISO8601()
+  @IsUUID()
+  @IsOptional()
+  templateId?: string;
+
+  @ApiProperty({ example: '550e8400-e29b-41d4-a716-446655440000' })
+  @IsUUID()
   @IsNotEmpty()
-  deadline: string;
-  @ApiPropertyOptional({
-    example: 23.810332,
-    description: 'Latitude of the program location',
-    minimum: -90,
-    maximum: 90,
-  })
+  managerId: string;
+
+  @ApiPropertyOptional({ example: 23.8103, minimum: -90, maximum: 90 })
   @IsOptional()
   @IsNumber()
   @Min(-90)
   @Max(90)
   latitude?: number;
 
-  @ApiPropertyOptional({
-    example: 90.412518,
-    description: 'Longitude of the program location',
-    minimum: -180,
-    maximum: 180,
-  })
+  @ApiPropertyOptional({ example: 90.4125, minimum: -180, maximum: 180 })
   @IsOptional()
   @IsNumber()
   @Min(-180)

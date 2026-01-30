@@ -1123,7 +1123,7 @@ export class ManagerService {
         duration: {
           start: program.datetime,
           end: program.deadline,
-          daysRemaining: this.calculateDaysRemaining(program.deadline),
+          daysRemaining: this.calculateDaysRemaining(program.deadline as string),
         },
 
         tags: program.tags.map((tag) => tag.name),

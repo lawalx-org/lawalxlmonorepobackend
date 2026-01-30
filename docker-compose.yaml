@@ -6,7 +6,7 @@ services:
     image: sakibsakib/lawalbackendbackend:latest
     profiles:
       - prod
-    container_name: lawalbackendbackend
+    container_name: lawalbackendbackend3
     restart: always
     env_file:
       - .env
