@@ -123,121 +123,121 @@ export class ManagerService {
   //   });
   // }
 
-  async create(createManagerDto: CreateManagerDto) {
-    const {
-      sendWelcomeEmail,
-      notifyProjectManager,
-      projects,
-      email,
-      password,
-      skills,
-      phoneNumber,
-      name,
-      joinedDate,
-      description,
-    } = createManagerDto;
+  // async create(createManagerDto: CreateManagerDto) {
+  //   const {
+  //     sendWelcomeEmail,
+  //     notifyProjectManager,
+  //     projects,
+  //     email,
+  //     password,
+  //     skills,
+  //     phoneNumber,
+  //     name,
+  //     joinedDate,
+  //     description,
+  //   } = createManagerDto;
 
-    // Check existing user
-    const existingUser = await this.prisma.user.findFirst({
-      where: { OR: [{ email }, { phoneNumber }] },
-    });
+  //   // Check existing user
+  //   const existingUser = await this.prisma.user.findFirst({
+  //     where: { OR: [{ email }, { phoneNumber }] },
+  //   });
 
-    if (existingUser) {
-      throw new ConflictException(
-        'User with this email or phone number already exists',
-      );
-    }
+  //   if (existingUser) {
+  //     throw new ConflictException(
+  //       'User with this email or phone number already exists',
+  //     );
+  //   }
 
-    // Validate project IDs
-    if (projects?.length) {
-      const projectCount = await this.prisma.project.count({
-        where: { id: { in: projects } },
-      });
+  //   // Validate project IDs
+  //   if (projects?.length) {
+  //     const projectCount = await this.prisma.project.count({
+  //       where: { id: { in: projects } },
+  //     });
 
-      if (projectCount !== projects.length) {
-        throw new NotFoundException('One or more projects not found.');
-      }
-    }
+  //     if (projectCount !== projects.length) {
+  //       throw new NotFoundException('One or more projects not found.');
+  //     }
+  //   }
 
-    const saltRounds = Number(
-      this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
-    );
+  //   const saltRounds = Number(
+  //     this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
+  //   );
 
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+  //   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const result = await this.prisma.$transaction(async (prisma) => {
-      const user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          phoneNumber,
-          password: hashedPassword,
-          role: Role.MANAGER,
-        },
-      });
+  //   const result = await this.prisma.$transaction(async (prisma) => {
+  //     const user = await prisma.user.create({
+  //       data: {
+  //         name,
+  //         email,
+  //         phoneNumber,
+  //         password: hashedPassword,
+  //         role: Role.MANAGER,
+  //       },
+  //     });
 
-      await prisma.notificationPermissionManager.create({
-        data: { userId: user.id },
-      });
+  //     await prisma.notificationPermissionManager.create({
+  //       data: { userId: user.id },
+  //     });
 
-      await prisma.manager.create({
-        data: {
-          userId: user.id,
-          description,
-          joinedDate,
-          skills: skills || [],
-          projects: projects
-            ? {
-                connect: projects.map((projectId) => ({ id: projectId })),
-              }
-            : undefined,
-        },
-      });
+  //     await prisma.manager.create({
+  //       data: {
+  //         userId: user.id,
+  //         description,
+  //         joinedDate,
+  //         skills: skills || [],
+  //         projects: projects
+  //           ? {
+  //               connect: projects.map((projectId) => ({ id: projectId })),
+  //             }
+  //           : undefined,
+  //       },
+  //     });
 
-      return user;
-    });
+  //     return user;
+  //   });
 
-    if (sendWelcomeEmail) {
-      await this.emailService.sendMail(
-        result.email,
-        'Welcome to the Team!',
-        welcomeEmailTemplate(name, email, joinedDate, password),
-      );
-    }
+  //   if (sendWelcomeEmail) {
+  //     await this.emailService.sendMail(
+  //       result.email,
+  //       'Welcome to the Team!',
+  //       welcomeEmailTemplate(name, email, joinedDate, password),
+  //     );
+  //   }
 
-    if (notifyProjectManager && projects?.length) {
-      const projectManagers = await this.prisma.project.findMany({
-        where: { id: { in: projects } },
-        select: {
-          manager: {
-            select: { userId: true },
-          },
-        },
-      });
+  //   if (notifyProjectManager && projects?.length) {
+  //     const projectManagers = await this.prisma.project.findMany({
+  //       where: { id: { in: projects } },
+  //       select: {
+  //         manager: {
+  //           select: { userId: true },
+  //         },
+  //       },
+  //     });
 
-      const receiverIds = [
-        ...new Set(
-          projectManagers
-            .map((p) => p.manager?.userId)
-            .filter((id) => id !== null && id !== undefined),
-        ),
-      ];
+  //     const receiverIds = [
+  //       ...new Set(
+  //         projectManagers
+  //           .map((p) => p.manager?.userId)
+  //           .filter((id) => id !== null && id !== undefined),
+  //       ),
+  //     ];
 
-      if (receiverIds.length) {
-        await this.notificationService.create(
-          {
-            receiverIds,
-            context: `A new manager ${name} has been assigned to a project you are managing.`,
-            type: NotificationType.NEW_MANAGER_ASSIGNED,
-          },
-          result.id,
-        );
-      }
-    }
+  //     if (receiverIds.length) {
+  //       await this.notificationService.create(
+  //         {
+  //           receiverIds,
+  //           context: `A new manager ${name} has been assigned to a project you are managing.`,
+  //           type: NotificationType.NEW_MANAGER_ASSIGNED,
+  //         },
+  //         result.id,
+  //       );
+  //     }
+  //   }
 
-    const { password: _password, ...userWithoutPassword } = result;
-    return userWithoutPassword;
-  }
+  //   const { password: _password, ...userWithoutPassword } = result;
+  //   return userWithoutPassword;
+  // }
 
   async findOne(id: string) {
     if (!id) throw new NotFoundException('Manager id is required!');

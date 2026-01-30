@@ -18,15 +18,15 @@ import { Role } from 'generated/prisma';
 export class ClientViewerController {
   constructor(private readonly viewerService: ViewerService) {}
 
-  @Post('/create')
-  @Roles(Role.CLIENT)
-  @HttpCode(HttpStatus.CREATED)
-  async createViewer(@Body() createViewerDto: CreateViewerDto) {
-    const viewer = await this.viewerService.create(createViewerDto);
+  // @Post('/create')
+  // @Roles(Role.CLIENT)
+  // @HttpCode(HttpStatus.CREATED)
+  // async createViewer(@Body() createViewerDto: CreateViewerDto) {
+  //   const viewer = await this.viewerService.create(createViewerDto);
 
-    return {
-      message: 'Viewer created successfully',
-      data: viewer,
-    };
-  }
+  //   return {
+  //     message: 'Viewer created successfully',
+  //     data: viewer,
+  //   };
+  // }
 }

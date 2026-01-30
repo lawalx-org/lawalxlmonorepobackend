@@ -1,12 +1,12 @@
 model Employee {
   id          String   @id @default(uuid())
   userId      String?  @unique
-  // clientId    String
+  skills      String[]
+  description String?
+  joinedDate  String
+  status      Level    @default(InActive)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  description String
-  joinedDate  String
-  skills      String[]
 
   // Relations
   user             User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
@@ -15,4 +15,9 @@ model Employee {
   submitted        Submitted[]
 
   @@map("employees")
+}
+
+enum Level {
+  Active
+  InActive
 }

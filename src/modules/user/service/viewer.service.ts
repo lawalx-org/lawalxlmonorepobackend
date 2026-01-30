@@ -20,45 +20,45 @@ export class ViewerService {
     private readonly configService: ConfigService,
   ) {}
 
-  async create(createViewerDto: CreateViewerDto) {
-    const { email, password, phoneNumber, name } = createViewerDto;
+  // async create(createViewerDto: CreateViewerDto) {
+  //   const { email, password, phoneNumber, name } = createViewerDto;
 
-    const existingUser = await this.prisma.user.findFirst({
-      where: { OR: [{ email }, { phoneNumber }] },
-    });
+  //   const existingUser = await this.prisma.user.findFirst({
+  //     where: { OR: [{ email }, { phoneNumber }] },
+  //   });
 
-    if (existingUser) {
-      throw new ConflictException(
-        'User with this email or phone number already exists',
-      );
-    }
+  //   if (existingUser) {
+  //     throw new ConflictException(
+  //       'User with this email or phone number already exists',
+  //     );
+  //   }
 
-    const saltRounds = Number(
-      this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
-    );
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+  //   const saltRounds = Number(
+  //     this.configService.get<string | number>('bcrypt_salt_rounds') ?? 10,
+  //   );
+  //   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    return this.prisma.$transaction(async (prisma) => {
-      const user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          phoneNumber,
-          password: hashedPassword,
-          role: Role.VIEWER,
-        },
-      });
+  //   return this.prisma.$transaction(async (prisma) => {
+  //     const user = await prisma.user.create({
+  //       data: {
+  //         name,
+  //         email,
+  //         phoneNumber,
+  //         password: hashedPassword,
+  //         role: Role.VIEWER,
+  //       },
+  //     });
 
-      await prisma.viewer.create({
-        data: {
-          userId: user.id,
-        },
-      });
+  //     await prisma.viewer.create({
+  //       data: {
+  //         userId: user.id,
+  //       },
+  //     });
 
-      const { password, ...userWithoutPassword } = user;
-      return userWithoutPassword;
-    });
-  }
+  //     const { password, ...userWithoutPassword } = user;
+  //     return userWithoutPassword;
+  //   });
+  // }
 
   async findOne(id: string) {
     const viewer = await this.prisma.viewer.findUnique({
