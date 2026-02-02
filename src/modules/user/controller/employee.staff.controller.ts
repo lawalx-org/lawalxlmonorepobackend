@@ -16,7 +16,7 @@ import { CreateStaffEmployeeDto } from '../dto/create.employee.dto';
 import { StaffEmployeeService } from '../service/employee..services';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('staf employee')
+@ApiTags('Staff employee')
 @Controller('users/employees')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ClientStaffEmployeeController {

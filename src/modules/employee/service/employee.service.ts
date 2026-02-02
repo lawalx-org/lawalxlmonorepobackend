@@ -477,94 +477,95 @@ export class EmployeeService {
     return 'Low';
   }
 
-  async getTopOverdueProjects(employeeId: string) {
-    // Fetch all projects assigned to employee
-    const assignments = await this.prisma.projectEmployee.findMany({
-      where: { employeeId },
-      include: { project: true },
-    });
+  // async getTopOverdueProjects(employeeId: string) {
+  //   // Fetch all projects assigned to employee
+  //   const assignments = await this.prisma.projectEmployee.findMany({
+  //     where: { employeeId },
+  //     include: { project: true },
+  //   });
 
-    const formatted = assignments.map((item) => {
-      const overdueDays = this.calculateOverdueDays(item.project.deadline);
-      return {
-        id: item.project.id,
-        name: item.project.name,
-        status: item.project.status,
-        overdueDays: overdueDays > 0 ? overdueDays : 0,
-        priority: this.getPriorityLabel(item.project.priority),
-        deadline: item.project.deadline,
-      };
-    });
+  //   const formatted = assignments.map((item) => {
+  //     const overdueDays = this.calculateOverdueDays(item.project.deadline);
+  //     return {
+  //       id: item.project.id,
+  //       name: item.project.name,
+  //       status: item.project.status,
+  //       overdueDays: overdueDays > 0 ? overdueDays : 0,
+  //       priority: this.getPriorityLabel(item.project.priority),
+  //       deadline: item.project.deadline,
+  //     };
+  //   });
 
-    // Sort by most overdue
-    const overdueProjects = formatted
-      .filter((p) => p.overdueDays > 0)
-      .sort((a, b) => b.overdueDays - a.overdueDays);
+  //   // Sort by most overdue
+  //   const overdueProjects = formatted
+  //     .filter((p) => p.overdueDays > 0)
+  //     .sort((a, b) => b.overdueDays - a.overdueDays);
 
-    return {
-      totalProjects: formatted.length,
-      overdueCount: overdueProjects.length,
-      projects: formatted,
-      overdueProjects,
-    };
-  }
-  async getSubmissionStatus(managerId: string, month: number, year: number) {
-    // Create month date range
-    const startDate = new Date(year, month - 1, 1);
-    const endDate = new Date(year, month, 0, 23, 59, 59);
+  //   return {
+  //     totalProjects: formatted.length,
+  //     overdueCount: overdueProjects.length,
+  //     projects: formatted,
+  //     overdueProjects,
+  //   };
+  // }
 
-    const submissions = await this.prisma.submitted.findMany({
-      where: {
-        project: {
-          managerId: managerId,
-        },
-        createdAt: {
-          gte: startDate,
-          lte: endDate,
-        },
-      },
-      include: {
-        project: true,
-      },
-    });
+  // async getSubmissionStatus(managerId: string, month: number, year: number) {
+  //   // Create month date range
+  //   const startDate = new Date(year, month - 1, 1);
+  //   const endDate = new Date(year, month, 0, 23, 59, 59);
 
-    const total = submissions.length;
+  //   const submissions = await this.prisma.submitted.findMany({
+  //     where: {
+  //       project: {
+  //         managerId: managerId,
+  //       },
+  //       createdAt: {
+  //         gte: startDate,
+  //         lte: endDate,
+  //       },
+  //     },
+  //     include: {
+  //       project: true,
+  //     },
+  //   });
 
-    let submitted = 0;
-    let live = 0;
-    let returned = 0;
-    let overdue = 0;
+  //   const total = submissions.length;
 
-    const now = new Date();
+  //   let submitted = 0;
+  //   let live = 0;
+  //   let returned = 0;
+  //   let overdue = 0;
 
-    submissions.forEach((item) => {
-      const status = item.status.toUpperCase();
+  //   const now = new Date();
 
-      if (status === 'APPROVED' || status === 'SUBMITTED') submitted++;
-      if (status === 'PENDING') live++;
-      if (status === 'REJECTED') returned++;
+  //   submissions.forEach((item) => {
+  //     const status = item.status.toUpperCase();
 
-      if (new Date(item.project.deadline) < now && status !== 'APPROVED') {
-        overdue++;
-      }
-    });
+  //     if (status === 'APPROVED' || status === 'SUBMITTED') submitted++;
+  //     if (status === 'PENDING') live++;
+  //     if (status === 'REJECTED') returned++;
 
-    return {
-      total,
-      counts: {
-        submitted,
-        live,
-        returned,
-        overdue,
-      },
-      percentages: {
-        submitted: total ? Math.round((submitted / total) * 100) : 0,
-        live: total ? Math.round((live / total) * 100) : 0,
-        returned: total ? Math.round((returned / total) * 100) : 0,
-        overdue: total ? Math.round((overdue / total) * 100) : 0,
-      },
-      month,
-      year,
-    };
-  }
+  //     if (new Date(item.project.deadline) < now && status !== 'APPROVED') {
+  //       overdue++;
+  //     }
+  //   });
+
+  //   return {
+  //     total,
+  //     counts: {
+  //       submitted,
+  //       live,
+  //       returned,
+  //       overdue,
+  //     },
+  //     percentages: {
+  //       submitted: total ? Math.round((submitted / total) * 100) : 0,
+  //       live: total ? Math.round((live / total) * 100) : 0,
+  //       returned: total ? Math.round((returned / total) * 100) : 0,
+  //       overdue: total ? Math.round((overdue / total) * 100) : 0,
+  //     },
+  //     month,
+  //     year,
+  //   };
+  // }
 }

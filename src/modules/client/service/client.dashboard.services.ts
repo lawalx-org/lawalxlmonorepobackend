@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { startOfMonth, subMonths } from "date-fns";
-import { SubmittedStatus } from "generated/prisma";
+import { ProjectStatus, SubmittedStatus } from "generated/prisma";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
@@ -296,92 +296,128 @@ export class ClientDashboardServices {
   }
 
 
-  // Project timeline service 
-  async getProjectTimeline(
-    programId?: string,
-    maxOverdueDays?: number,
-    maxSavedDays?: number
-  ) {
 
-    if (!programId) {
-      const firstProgram = await this.prisma.program.findFirst();
-      if (!firstProgram) {
-        return { message: "No programs found" };
-      }
-      programId = firstProgram.id;
+
+async getProjectTimeline(
+  programId?: string,
+  maxOverdueDays?: number,
+  maxSavedDays?: number,
+  status?: ProjectStatus | ProjectStatus[],
+) {
+  if (!programId) {
+    const firstProgram = await this.prisma.program.findFirst();
+    if (!firstProgram) {
+      return { message: 'No programs found' };
     }
+    programId = firstProgram.id;
+  }
 
-    const projects = await this.prisma.project.findMany({
-      where: { programId },
-      select: {
-        id: true,
-        name: true,
-        startDate: true,
-        deadline: true,
-        projectCompleteDate: true
-      }
-    });
 
-    const ONE_DAY = 1000 * 60 * 60 * 24;
+const allowedStatuses = [ProjectStatus.COMPLETED, ProjectStatus.LIVE] as const;
+const statusArray = status
+  ? (Array.isArray(status) ? status : [status]).filter(
+      (s): s is typeof allowedStatuses[number] =>
+        allowedStatuses.includes(s as typeof allowedStatuses[number])
+    )
+  : [...allowedStatuses];
 
-    const ProjectData = projects.map(p => {
-      const start = p.startDate ? new Date(p.startDate).getTime() : null;
-      const deadline = p.deadline ? new Date(p.deadline).getTime() : null;
-      const completed = p.projectCompleteDate
-        ? new Date(p.projectCompleteDate).getTime()
-        : null;
 
-      let completionTime = 0;
-      let savedTime = 0;
-      let overdueTime = 0;
+  const projects = await this.prisma.project.findMany({
+    where: {
+      programId,
+      status: { in: statusArray },
+    },
+    select: {
+      id: true,
+      name: true,
+      startDate: true,
+      deadline: true,
+      projectCompleteDate: true,
+      status: true,
+    },
+  });
 
-      if (start && deadline) {
-        completionTime = Math.ceil((deadline - start) / ONE_DAY);
-      }
+  const ONE_DAY = 1000 * 60 * 60 * 24;
+  const today = new Date();
 
-      if (deadline && completed) {
-        if (completed < deadline) {
-          savedTime = Math.ceil((deadline - completed) / ONE_DAY);
-        } else if (completed > deadline) {
-          overdueTime = Math.ceil((completed - deadline) / ONE_DAY);
-        }
-      }
-
+  const projectData = projects.map((p) => {
+    if (!p.startDate || !p.deadline) {
       return {
         id: p.id,
         name: p.name,
         startDate: p.startDate,
         deadline: p.deadline,
-        project_end_Date: p.projectCompleteDate,
-        completionTime,
-        overdueTime,
-        savedTime
+        projectEndDate: p.projectCompleteDate,
+        timelineDays: 0,
+        savedDays: 0,
+        overdueDays: 0,
+        trackable: false,
+        status: p.status,
       };
-    });
-
-    //  apply filter
-    let filteredProjects = ProjectData;
-
-    if (maxOverdueDays !== undefined) {
-      filteredProjects = filteredProjects.filter(
-        p => p.overdueTime > 0 && p.overdueTime <= maxOverdueDays
-      );
     }
 
-    if (maxSavedDays !== undefined) {
-      filteredProjects = filteredProjects.filter(
-        p => p.savedTime > 0 && p.savedTime <= maxSavedDays
-      );
+    const start = p.startDate.getTime();
+    const deadline = p.deadline.getTime();
+
+    const endDate =
+      p.status === ProjectStatus.COMPLETED && p.projectCompleteDate
+        ? p.projectCompleteDate
+        : today;
+
+    const end = endDate.getTime();
+
+    const timelineDays = Math.max(0, Math.ceil((end - start) / ONE_DAY));
+
+    let savedDays = 0;
+    let overdueDays = 0;
+
+    if (end < deadline) {
+      savedDays = Math.ceil((deadline - end) / ONE_DAY);
+    } else if (end > deadline) {
+      overdueDays = Math.ceil((end - deadline) / ONE_DAY);
     }
 
     return {
-      programId,
+      id: p.id,
+      name: p.name,
+      startDate: p.startDate,
+      deadline: p.deadline,
+      projectEndDate: p.projectCompleteDate,
+      timelineDays,
+      savedDays,
+      overdueDays,
+      trackable: true,
+      status: p.status,
+    };
+  });
+
+  let filteredProjects = projectData;
+  if (maxOverdueDays !== undefined) {
+    filteredProjects = filteredProjects.filter(
+      (p) => p.overdueDays > 0 && p.overdueDays <= maxOverdueDays,
+    );
+  }
+
+  // Apply maxSavedDays filter
+  if (maxSavedDays !== undefined) {
+    filteredProjects = filteredProjects.filter(
+      (p) => p.savedDays > 0 && p.savedDays <= maxSavedDays,
+    );
+  }
+
+  return {
+    programId,
+    filters: {
+      status: allowedStatuses, // always COMPLETED & LIVE
       maxOverdueDays,
       maxSavedDays,
-      totalProjects: filteredProjects.length,
-      ProjectData: filteredProjects
-    };
-  }
+    },
+    totalProjects: filteredProjects.length,
+    projects: filteredProjects,
+  };
+}
+
+
 
 
 
@@ -537,7 +573,7 @@ export class ClientDashboardServices {
 
     const filtered = projects
       .map(project => {
-        const deadline = new Date(project.deadline);
+        const deadline = new Date(project.deadline as any);
         const date = deadline.getTime() - today.getTime();
         const daysLeft = Math.ceil(date / ONE_DAY);
 
@@ -599,7 +635,7 @@ export class ClientDashboardServices {
 
     const filtered = projects
       .map(project => {
-        const deadline = new Date(project.deadline);
+        const deadline = new Date(project.deadline as any);
         const diffMs = deadline.getTime() - today.getTime();
         const daysLeft = Math.ceil(diffMs / ONE_DAY);
 

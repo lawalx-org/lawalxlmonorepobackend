@@ -74,56 +74,56 @@ export class ChartService {
     };
   }
 
-  async getTopOverdueProjectsChartData(employeeId: string) {
-    const projects = await this.prisma.projectEmployee.findMany({
-      where: {
-        employeeId,
-        project: {
-          deadline: {
-            lt: new Date(),
-          },
-          status: {
-            not: 'COMPLETED',
-          },
-        },
-      },
-      include: {
-        project: true,
-      },
-      orderBy: {
-        project: {
-          deadline: 'asc',
-        },
-      },
-      take: 5,
-    });
+  // async getTopOverdueProjectsChartData(employeeId: string) {
+  //   const projects = await this.prisma.projectEmployee.findMany({
+  //     where: {
+  //       employeeId,
+  //       project: {
+  //         estimatedCompletedDate: {
+  //           lt: new Date(),
+  //         },
+  //         status: {
+  //           not: 'COMPLETED',
+  //         },
+  //       },
+  //     },
+  //     include: {
+  //       project: true,
+  //     },
+  //     orderBy: {
+  //       project: {
+  //         estimatedCompletedDate: 'asc',
+  //       },
+  //     },
+  //     take: 5,
+  //   });
 
-    if (projects.length === 0) {
-      return [];
-    }
+  //   if (projects.length === 0) {
+  //     return [];
+  //   }
 
-    const now = new Date();
-    return projects.map((p) => {
-      const deadline = new Date(p.project.deadline);
-      const diffTime = Math.abs(now.getTime() - deadline.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  //   const now = new Date();
+  //   return projects.map((p) => {
+  //     const deadline = new Date(p.project.estimatedCompletedDate as any);
+  //     const diffTime = Math.abs(now.getTime() - deadline.getTime());
+  //     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      let priority: string;
-      if (diffDays > 30) {
-        priority = 'Critical';
-      } else if (diffDays > 20) {
-        priority = 'Medium';
-      } else {
-        priority = 'Low';
-      }
+  //     let priority: string;
+  //     if (diffDays > 30) {
+  //       priority = 'Critical';
+  //     } else if (diffDays > 20) {
+  //       priority = 'Medium';
+  //     } else {
+  //       priority = 'Low';
+  //     }
 
-      return {
-        projectName: p.project.name,
-        overdueDays: diffDays,
-        priority,
-      };
-    });
-  }
+  //     return {
+  //       projectName: p.project.name,
+  //       overdueDays: diffDays,
+  //       priority,
+  //     };
+  //   });
+  // }
 
   async getManagerSubmissionStatusChartData(managerId: string, period: string) {
     const projects = await this.prisma.project.findMany({
@@ -183,49 +183,49 @@ export class ChartService {
     };
   }
 
-  async getManagerTopOverdueProjectsChartData(managerId: string) {
-    const projects = await this.prisma.project.findMany({
-      where: {
-        managerId,
-        deadline: {
-          lt: new Date(),
-        },
-        status: {
-          not: 'COMPLETED',
-        },
-      },
-      orderBy: {
-        deadline: 'asc',
-      },
-      take: 5,
-    });
+  // async getManagerTopOverdueProjectsChartData(managerId: string) {
+  //   const projects = await this.prisma.project.findMany({
+  //     where: {
+  //       managerId,
+  //       estimatedCompletedDate: {
+  //         lt: new Date(),
+  //       },
+  //       status: {
+  //         not: 'COMPLETED',
+  //       },
+  //     },
+  //     orderBy: {
+  //       estimatedCompletedDate: 'asc',
+  //     },
+  //     take: 5,
+  //   });
 
-    if (projects.length === 0) {
-      return [];
-    }
+  //   if (projects.length === 0) {
+  //     return [];
+  //   }
 
-    const now = new Date();
-    return projects.map((p) => {
-      const deadline = new Date(p.deadline);
-      const diffTime = Math.abs(now.getTime() - deadline.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  //   const now = new Date();
+  //   return projects.map((p) => {
+  //     const deadline = new Date(p.estimatedCompletedDate as any);
+  //     const diffTime = Math.abs(now.getTime() - deadline.getTime());
+  //     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      let priority: string;
-      if (diffDays > 30) {
-        priority = 'Critical';
-      } else if (diffDays > 20) {
-        priority = 'Medium';
-      } else {
-        priority = 'Low';
-      }
+  //     let priority: string;
+  //     if (diffDays > 30) {
+  //       priority = 'Critical';
+  //     } else if (diffDays > 20) {
+  //       priority = 'Medium';
+  //     } else {
+  //       priority = 'Low';
+  //     }
 
-      return {
-        projectName: p.name,
-        overdueDays: diffDays,
-        priority,
-      };
-    });
-  }
+  //     return {
+  //       projectName: p.name,
+  //       overdueDays: diffDays,
+  //       priority,
+  //     };
+  //   });
+  // }
 
   async getChartsByProjectId(projectId: string) {
   return this.prisma.chartTable.findMany({

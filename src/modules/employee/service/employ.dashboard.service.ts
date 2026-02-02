@@ -402,7 +402,7 @@ export class EmployDashboardService {
     });
 
     const formatted = assignments.map((item) => {
-      const overdueDays = this.calculateOverdueDays(item.project.deadline);
+      const overdueDays = this.calculateOverdueDays(item.project.deadline as any);
       return {
         id: item.project.id,
         name: item.project.name,
@@ -448,7 +448,7 @@ export class EmployDashboardService {
   //     if (item.status === 'PENDING') live++;
   //     if (item.status === 'REJECTED') returned++;
 
-  //     if (new Date(item.project.deadline) < now && item.status !== 'APPROVED') {
+  //     if (new Date(item.project.deadline as any) < now && item.status !== 'APPROVED') {
   //       overdue++;
   //     }
   //   });
@@ -471,6 +471,7 @@ export class EmployDashboardService {
   //     }
   //   };
   // }
+
   async getSubmissionStatus(employeeId: string, month: number, year: number) {
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0, 23, 59, 59);
@@ -502,7 +503,7 @@ export class EmployDashboardService {
       if (status === 'PENDING') live++;
       if (status === 'REJECTED') returned++;
 
-      if (new Date(item.project.deadline) < now && status !== 'APPROVED') {
+      if (new Date(item.project.deadline as any) < now && status !== 'APPROVED') {
         overdue++;
       }
     });
@@ -577,7 +578,7 @@ export class EmployDashboardService {
     });
 
     const formatted = projects.map((project) => {
-      const diffMs = new Date(project.deadline).getTime() - today.getTime();
+      const diffMs = new Date(project.deadline as any).getTime() - today.getTime();
       const daysLeft = Math.ceil(diffMs / ONE_DAY);
 
       return {

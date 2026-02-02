@@ -171,21 +171,21 @@ async findAll(@Query() query: PaginationDto, @Req() req) {
   //   return this.userService.convertEmployeeToManager(id, convertDto);
   // }
 
-  @Patch(':userId/projects')
-  @ApiOperation({ summary: 'Update assigned projects and user status' })
-  @ApiResponse({ status: 200, description: 'User projects updated successfully'})
-  @ApiResponse({ status: 404, description: 'User or employee not found' })
-  async updateProjects(
-    @Body() dto: UpdateUserProjectsDto,
-  ) {
+  // @Patch(':userId/projects')
+  // @ApiOperation({ summary: 'Update assigned projects and user status' })
+  // @ApiResponse({ status: 200, description: 'User projects updated successfully'})
+  // @ApiResponse({ status: 404, description: 'User or employee not found' })
+  // async updateProjects(
+  //   @Body() dto: UpdateUserProjectsDto,
+  // ) {
 
-    const updatedEmployee = await this.userService.updateUser_assign_Project_and_update_user_status(dto);
+  //   const updatedEmployee = await this.userService.updateUser_assign_Project_and_update_user_status(dto);
 
-    if (!updatedEmployee) {
-      throw new NotFoundException('user not found or could not be updated');
-    }
+  //   if (!updatedEmployee) {
+  //     throw new NotFoundException('user not found or could not be updated');
+  //   }
 
-    return updatedEmployee;
-  }
+  //   return updatedEmployee;
+  // }
 
 }

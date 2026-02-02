@@ -33,15 +33,15 @@ export class ChartController {
     return this.chartService.getSubmissionStatusChartData(employeeId, period);
   }
 
-  @Get('top-overdue-projects')
-  @Roles('EMPLOYEE')
-  async getTopOverdueProjectsChartData(@Req() req: RequestWithUser) {
-    const employeeId = req.user.employeeId;
-    if (!employeeId) {
-      throw new UnauthorizedException('Employee ID not found in token');
-    }
-    return this.chartService.getTopOverdueProjectsChartData(employeeId);
-  }
+  // @Get('top-overdue-projects')
+  // @Roles('EMPLOYEE')
+  // async getTopOverdueProjectsChartData(@Req() req: RequestWithUser) {
+  //   const employeeId = req.user.employeeId;
+  //   if (!employeeId) {
+  //     throw new UnauthorizedException('Employee ID not found in token');
+  //   }
+  //   return this.chartService.getTopOverdueProjectsChartData(employeeId);
+  // }
 
   @Get('project/:projectId')
   // @Roles('EMPLOYEE')

@@ -278,7 +278,7 @@ async updateUser_assign_Project_and_update_user_status(dto: UpdateUserProjectsDt
       } else if (relationType === 'manager') {
         await tx.project.updateMany({
           where: { managerId: relationId!, id: { in: removeProjectIds } },
-          data: { managerId: null }, // unassign manager
+          data: { managerId: null as any },
         });
       } else if (relationType === 'viewer') {
         await tx.projectViewer.deleteMany({
