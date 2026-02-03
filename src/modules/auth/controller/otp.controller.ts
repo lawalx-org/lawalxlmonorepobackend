@@ -51,7 +51,7 @@ export class OtpController {
         return { message: 'OTP sent successfully to email' };
 
       case 'phone':
-        await this.otpService.sendVerificationCode(user.phoneNumber);
+        await this.otpService.sendVerificationCode(user.phoneNumber as any);
         //todo after completed the woke remove that  result
         return { message: 'OTP sent successfully to phone' };
 

@@ -23,6 +23,7 @@ import { SheetModule } from './modules/sheet/sheet.module';
 import { InfrastructureModule } from './modules/infrastructure/infrastructure.module';
 import { ManagerModule } from './modules/manager/manager.module';
 import { FavoriteModule } from './modules/favouriteProject/favourite.module';
+import { TemplateModule } from './modules/template/template.module';
 
 @Module({
   imports: [
@@ -75,7 +76,8 @@ import { FavoriteModule } from './modules/favouriteProject/favourite.module';
     ChartModule,
     SheetModule,
     InfrastructureModule,
-    FavoriteModule
+    FavoriteModule,
+    TemplateModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, SeedService],

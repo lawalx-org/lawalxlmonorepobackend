@@ -1,12 +1,13 @@
 model Manager {
   id          String   @id @default(uuid())
   userId      String?  @unique
-  // clientId    String
+
   skills      String[]
+  description String?
+  joinedDate  String
+  // status      Level    @default(InActive)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  description String
-  joinedDate  String
 
   // Relations
   user                       User?                       @relation(fields: [userId], references: [id], onDelete: SetNull)

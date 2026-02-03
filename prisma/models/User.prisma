@@ -1,7 +1,7 @@
 model User {
   id              String     @id @default(uuid())
   email           String     @unique
-  phoneNumber     String     @unique
+  phoneNumber     String?     @unique
   password        String
   name            String
   role            Role       @default(VIEWER)
@@ -10,10 +10,13 @@ model User {
   timezone        DateTime?
   verification2FA Boolean    @default(false)
   status          Boolean    @default(false)
-  lastActive      Boolean    @default(false)
+  // lastActive      Boolean    @default(false)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
   userStatus      UserStatus @default(ACTIVE)
+  // status
+  isOnline        Boolean    @default(false)    
+  lastActive      DateTime   @default(now())
 
   // Relations
   client     Client?

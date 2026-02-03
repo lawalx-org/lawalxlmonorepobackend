@@ -57,7 +57,7 @@ export class AuthService {
 
     if (user.verification2FA) {
       const email = maskEmail(user.email);
-      const phone = maskPhone(user.phoneNumber.toString());
+     const phone = maskPhone((user.phoneNumber ?? "").toString());
 
       const specialToken = this.jwtService.sign(jwtPayload, {
         secret: this.configService.get<string>('jwt_access_secret'),
