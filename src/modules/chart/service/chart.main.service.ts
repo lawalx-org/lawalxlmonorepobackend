@@ -7,7 +7,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { UpdateChartDto } from '../dto/update-chart.dto';
 import { ChartName, ChartStatus, Prisma } from 'generated/prisma';
-
+import * as ExcelJS from 'exceljs';
+import { Response } from 'express';
 @Injectable()
 export class ChartMainService {
   constructor(private readonly prisma: PrismaService) { }
@@ -530,4 +531,119 @@ export class ChartMainService {
   remove(id: string) {
     return this.prisma.chartTable.delete({ where: { id } });
   }
+
+
+
+async exportToExcel(id: string, res: Response) {
+  const chart = await this.prisma.chartTable.findUnique({
+    where: { id },
+    include: {
+      pi: { include: { widgets: true } },
+      barChart: { include: { widgets: true } },
+      horizontalBarChart: { include: { widgets: true } },
+      // add other relations as needed
+    },
+  });
+
+  if (!chart) throw new NotFoundException('Chart not found');
+
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Chart Report');
+
+  // --- 1. SET COLUMN WIDTHS ---
+  worksheet.columns = [
+    { header: 'Property', key: 'prop', width: 25 },
+    { header: 'Value', key: 'val', width: 40 },
+    { header: 'Additional Info', key: 'extra', width: 20 },
+  ];
+
+  // --- 2. HEADER STYLING ---
+  const titleRow = worksheet.addRow(['CHART REPORT: ' + chart.title.toUpperCase()]);
+  worksheet.mergeCells('A1:C1');
+  titleRow.font = { name: 'Arial Black', size: 14, color: { argb: 'FFFFFFFF' } };
+  titleRow.alignment = { vertical: 'middle', horizontal: 'center' };
+  titleRow.getCell(1).fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'FF4F81BD' },
+  };
+
+  worksheet.addRow([]); // Spacer
+
+  // --- 3. BASIC INFO SECTION ---
+  const infoData = [
+    ['Category', chart.category],
+    ['Status', chart.status],
+    ['Project ID', chart.projectId],
+    ['Created At', chart.createdAt.toDateString()],
+  ];
+
+  infoData.forEach(data => {
+    const row = worksheet.addRow(data);
+    row.getCell(1).font = { bold: true };
+    row.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F2F2' } };
+  });
+
+  worksheet.addRow([]); // Spacer
+
+  // --- 4. AXIS DATA (The Main Table) ---
+  const tableHeader = worksheet.addRow(['Axis Label', 'Numeric Value', 'Percent']);
+  tableHeader.eachCell((cell) => {
+    cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF212529' } };
+    cell.border = { bottom: { style: 'thin' } };
+  });
+
+  const xAxisData = typeof chart.xAxis === 'string' ? JSON.parse(chart.xAxis) : chart.xAxis;
+  if (xAxisData?.labels) {
+    xAxisData.labels.forEach((item: [string, number]) => {
+      worksheet.addRow([item[0], item[1], '']); 
+    });
+  }
+
+  worksheet.addRow([]); // Spacer
+
+  // --- 5. WIDGETS & COLORS ---
+  const subChart = (chart as any)[chart.category.toLowerCase()] || (chart as any).pi;
+  if (subChart?.widgets) {
+    const widgetHeader = worksheet.addRow(['Legend Name', 'HEX Code', 'Visual Color']);
+    widgetHeader.font = { bold: true };
+
+    subChart.widgets.forEach((w: any) => {
+      const row = worksheet.addRow([w.legendName, w.color, '']);
+      const colorCell = row.getCell(3);
+      
+      // Attempt to fill the cell with the actual color from the database
+      try {
+        const cleanColor = w.color.replace('#', '').substring(0, 6);
+        colorCell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FF' + cleanColor },
+        };
+      } catch (e) {
+        /* skip color if invalid hex */
+      }
+    });
+  }
+
+  // --- 6. FINAL BORDERS ---
+  worksheet.eachRow((row) => {
+    row.eachCell((cell) => {
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      };
+    });
+  });
+
+  // Export
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.setHeader('Content-Disposition', `attachment; filename="${chart.title.replace(/\s+/g, '_')}.xlsx"`);
+
+  await workbook.xlsx.write(res);
+  res.end();
+}
 }

@@ -5,7 +5,7 @@ import {
   BadRequestException,
   ConflictException,
 } from '@nestjs/common';
-import { Prisma } from 'generated/prisma';
+import { Prisma, ProjectStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProjectDto } from '../dto/create-project.dto';
 import { FindAllProjectsDto } from '../dto/find-all-projects.dto';
@@ -264,133 +264,133 @@ export class ProjectService {
   //   };
   // }
 
-async create(createProjectDto: CreateProjectDto) {
-  const {
-    employeeIds,
-    viewerIds,
-    managerId,
-    programId,
-    templateId,
-    name,
-    SelectDays,
-    workingDay,
-    selectDate,
-    UploadData,
-    dateDate,
-    startDate,
-    deadline,
-    budget,
-    currentRate,
-    location,
-    sortName,
-    description,
-    metadata,
-    ...rest
-  } = createProjectDto;
+  async create(createProjectDto: CreateProjectDto) {
+    const {
+      employeeIds,
+      viewerIds,
+      managerId,
+      programId,
+      templateId,
+      name,
+      SelectDays,
+      workingDay,
+      selectDate,
+      UploadData,
+      dateDate,
+      startDate,
+      deadline,
+      budget,
+      currentRate,
+      location,
+      sortName,
+      description,
+      metadata,
+      ...rest
+    } = createProjectDto;
 
-  // ---  Pre-validation ---
-  if (!name) throw new BadRequestException('Project name is required');
+    // ---  Pre-validation ---
+    if (!name) throw new BadRequestException('Project name is required');
 
-  const slug = slugify(createProjectDto.name);
+    const slug = slugify(createProjectDto.name);
 
-  const existingSlug = await this.infrastructureRepo.findByProjectSlug(slug);
-  if (existingSlug) {
-    throw new ConflictException(`Project name results in a duplicate slug: ${slug}`);
-  }
-
-  const program = await this.prisma.program.findUnique({ where: { id: programId } });
-  if (!program) throw new NotFoundException(`Program with ID "${programId}" not found`);
-
-  const project = await this.prisma.$transaction(async (tx) => {
-    const newProject = await tx.project.create({
-      data: {
-        name,
-        slug,
-        description,
-        sortName,
-        location,
-        budget,
-        currentRate,
-        metadata: metadata || {},
-        computedProgress: createProjectDto.computedProgress ?? 0,
-        progress: createProjectDto.progress ?? 0,
-
-        // Handle Arrays []
-        SelectDays: SelectDays || [],
-        workingDay: workingDay || [],
-        selectDate: selectDate || [],
-        
-        // Dates & Enums
-        dateDate: dateDate || new Date(),
-        startDate,
-        deadline,
-        UploadData,
-
-        // Relations
-        program: { connect: { id: programId } },
-        manager: { connect: { id: managerId } },
-        template: templateId ? { connect: { id: templateId } } : undefined,
-
-        //Tables
-        projectEmployees: employeeIds?.length 
-          ? { create: employeeIds.map(id => ({ employeeId: id })) } 
-          : undefined,
-        projectViewers: viewerIds?.length 
-          ? { create: viewerIds.map(id => ({ viewerId: id })) } 
-          : undefined,
-      },
-      include: {
-        manager: { include: { user: true } },
-        program: true,
-        projectEmployees: { 
-          include: { employee: { include: { user: true } } } 
-        },
-      },
-    });
-
-    return newProject;
-  });
-
-  try {
-    if (!project.manager || !project.manager.user) {
-      throw new NotFoundException('Manager or associated user not found for the project.');
+    const existingSlug = await this.infrastructureRepo.findByProjectSlug(slug);
+    if (existingSlug) {
+      throw new ConflictException(`Project name results in a duplicate slug: ${slug}`);
     }
 
-    // Send notification to manager and employees
-    const receiverIds = [
-      project.manager.user.id,
-      ...(project.projectEmployees?.map((e) => {
-        if (!e.employee || !e.employee.user) {
-          throw new NotFoundException(
-            'Employee or associated user not found for project employee record.',
-          );
-        }
-        return e.employee.user.id;
-      }) || []),
-    ];
+    const program = await this.prisma.program.findUnique({ where: { id: programId } });
+    if (!program) throw new NotFoundException(`Program with ID "${programId}" not found`);
 
-    const uniqueReceivers = [...new Set(receiverIds)];
+    const project = await this.prisma.$transaction(async (tx) => {
+      const newProject = await tx.project.create({
+        data: {
+          name,
+          slug,
+          description,
+          sortName,
+          location,
+          budget,
+          currentRate,
+          metadata: metadata || {},
+          computedProgress: createProjectDto.computedProgress ?? 0,
+          progress: createProjectDto.progress ?? 0,
 
-    await this.notificationService.create(
-      {
-        receiverIds: uniqueReceivers,
-        context: `A new project ${project.name} has been created and assigned.`,
-        type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
-      },
-      project.manager.user.id,
-    );
+          // Handle Arrays []
+          SelectDays: SelectDays || [],
+          workingDay: workingDay || [],
+          selectDate: selectDate || [],
 
-    this.logger.log(
-      `Notification sent for project ${project.name} to manager and employees.`,
-    );
-  } catch (err) {
-    this.logger.error(
-      `Failed to send project creation notifications: ${err.message}`,
-    );
+          // Dates & Enums
+          dateDate: dateDate || new Date(),
+          startDate,
+          deadline,
+          UploadData,
+
+          // Relations
+          program: { connect: { id: programId } },
+          manager: { connect: { id: managerId } },
+          template: templateId ? { connect: { id: templateId } } : undefined,
+
+          //Tables
+          projectEmployees: employeeIds?.length
+            ? { create: employeeIds.map(id => ({ employeeId: id })) }
+            : undefined,
+          projectViewers: viewerIds?.length
+            ? { create: viewerIds.map(id => ({ viewerId: id })) }
+            : undefined,
+        },
+        include: {
+          manager: { include: { user: true } },
+          program: true,
+          projectEmployees: {
+            include: { employee: { include: { user: true } } }
+          },
+        },
+      });
+
+      return newProject;
+    });
+
+    try {
+      if (!project.manager || !project.manager.user) {
+        throw new NotFoundException('Manager or associated user not found for the project.');
+      }
+
+      // Send notification to manager and employees
+      const receiverIds = [
+        project.manager.user.id,
+        ...(project.projectEmployees?.map((e) => {
+          if (!e.employee || !e.employee.user) {
+            throw new NotFoundException(
+              'Employee or associated user not found for project employee record.',
+            );
+          }
+          return e.employee.user.id;
+        }) || []),
+      ];
+
+      const uniqueReceivers = [...new Set(receiverIds)];
+
+      await this.notificationService.create(
+        {
+          receiverIds: uniqueReceivers,
+          context: `A new project ${project.name} has been created and assigned.`,
+          type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
+        },
+        project.manager.user.id,
+      );
+
+      this.logger.log(
+        `Notification sent for project ${project.name} to manager and employees.`,
+      );
+    } catch (err) {
+      this.logger.error(
+        `Failed to send project creation notifications: ${err.message}`,
+      );
+    }
+
+    return project;
   }
-
-  return project;
-}
 
 
   private async sendProjectNotifications(project: any) {
@@ -543,28 +543,74 @@ async create(createProjectDto: CreateProjectDto) {
     return sheets;
   }
 
+  // async updateProjectStatus(updateProjectStatusDto: UpdateProjectStatusDto) {
+  //   const { projectId, status } = updateProjectStatusDto;
+
+  //   const project = await this.prisma.project.findUnique({
+  //     where: {
+  //       id: projectId,
+  //     },
+  //     include: {
+  //       manager: {
+  //         include: {
+  //           user: true,
+  //         },
+  //       },
+  //       projectEmployees: {
+  //         include: {
+  //           employee: {
+  //             include: {
+  //               user: true,
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   if (!project) {
+  //     throw new NotFoundException(`Project with ID "${projectId}" not found`);
+  //   }
+
+  //   const updatedProject = await this.prisma.project.update({
+  //     where: { id: projectId },
+  //     data: { status },
+  //   });
+
+  //   if (status === 'LIVE') {
+  //     const managerUserId = project.manager?.user?.id;
+  //     if (!managerUserId) {
+  //       throw new NotFoundException('Manager or associated user not found');
+  //     }
+
+  //     const employeeUserIds = project.projectEmployees
+  //       .map((e) => e.employee?.user?.id)
+  //       .filter((id): id is string => !!id);
+
+  //     const receiverIds = [...new Set([managerUserId, ...employeeUserIds])];
+
+  //     await this.notificationService.create(
+  //       {
+  //         receiverIds,
+  //         context: `Project ${project.name} is now LIVE.`,
+  //         type: NotificationType.PROJECT_STATUS_UPDATE,
+  //       },
+  //       managerUserId,
+  //     );
+  //   }
+
+  //   return updatedProject;
+  // }
+
   async updateProjectStatus(updateProjectStatusDto: UpdateProjectStatusDto) {
     const { projectId, status } = updateProjectStatusDto;
 
+    // Fetch project with manager & employees
     const project = await this.prisma.project.findUnique({
-      where: {
-        id: projectId,
-      },
+      where: { id: projectId },
       include: {
-        manager: {
-          include: {
-            user: true,
-          },
-        },
-        projectEmployees: {
-          include: {
-            employee: {
-              include: {
-                user: true,
-              },
-            },
-          },
-        },
+        manager: { include: { user: true } },
+        projectEmployees: { include: { employee: { include: { user: true } } } },
       },
     });
 
@@ -572,12 +618,20 @@ async create(createProjectDto: CreateProjectDto) {
       throw new NotFoundException(`Project with ID "${projectId}" not found`);
     }
 
-    const updatedProject = await this.prisma.project.update({
-      where: { id: projectId },
-      data: { status },
-    });
+    const updateData: Partial<{
+      status: ProjectStatus;
+      projectCompleteDate: Date | null;
+    }> = { status };
 
+    //  If setting status LIVE, enforce startDate & deadline
     if (status === 'LIVE') {
+      if (!project.startDate || !project.deadline) {
+        throw new BadRequestException(
+          `Cannot mark project as LIVE. Start date and deadline must be set.`
+        );
+      }
+
+      // Send notifications to manager & employees
       const managerUserId = project.manager?.user?.id;
       if (!managerUserId) {
         throw new NotFoundException('Manager or associated user not found');
@@ -592,15 +646,27 @@ async create(createProjectDto: CreateProjectDto) {
       await this.notificationService.create(
         {
           receiverIds,
-          context: `Project ${project.name} is now LIVE.`,
+          context: `Project "${project.name}" is now LIVE.`,
           type: NotificationType.PROJECT_STATUS_UPDATE,
         },
         managerUserId,
       );
     }
 
+    //  If setting status COMPLETED, auto set projectCompleteDate
+    if (status === 'COMPLETED') {
+      updateData.projectCompleteDate = new Date();
+    }
+
+    // Update project in DB
+    const updatedProject = await this.prisma.project.update({
+      where: { id: projectId },
+      data: updateData,
+    });
+
     return updatedProject;
   }
+
 
   async updateProject(id: string, dto: UpdateProjectDto) {
     const project = await this.prisma.project.findUnique({

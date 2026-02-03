@@ -12,202 +12,242 @@ export class ClientDashboardServices {
     const thisMonthStart = startOfMonth(now);
     const lastMonthStart = startOfMonth(subMonths(now, 1));
 
-    // -------- Growth Function ------------
+    // ---------------- Growth Calculator ----------------
     const calcGrowth = (thisMonth: number, lastMonth: number) => {
       if (lastMonth === 0 && thisMonth === 0) return 0;
-      if (lastMonth === 0 && thisMonth > 0) return 100;
-      if (lastMonth > 0 && thisMonth === 0) return -100;
-
-      const growth = ((thisMonth - lastMonth) / lastMonth) * 100;
-      return Number(growth.toFixed(1));
+      if (lastMonth === 0) return 100;
+      return Number((((thisMonth - lastMonth) / lastMonth) * 100).toFixed(1));
     };
 
+    // common filter
+    const baseWhere = { isDeleted: false };
 
-    // ------------------- Programs -----------------------
-    const totalPrograms = await this.prisma.program.count();
+    // ---------------- Programs ----------------
+    const [totalPrograms, programsThisMonth, programsLastMonth, programsAddedItems] =
+      await Promise.all([
+        this.prisma.program.count(),
 
-    const programsAddedItems = await this.prisma.program.findMany({
-      where: { createdAt: { gte: thisMonthStart } },
-      orderBy: { createdAt: "desc" }
-    });
-    const programsThisMonth = programsAddedItems.length;
+        this.prisma.program.count({
+          where: { createdAt: { gte: thisMonthStart } },
+        }),
 
-    const programsLastMonth = await this.prisma.program.count({
-      where: { createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
-    });
+        this.prisma.program.count({
+          where: {
+            createdAt: { gte: lastMonthStart, lt: thisMonthStart },
+          },
+        }),
 
-    const programGrowth = calcGrowth(programsThisMonth, programsLastMonth);
-
-
-
-    // ------------------- Projects -----------------------
-    const totalProjects = await this.prisma.project.count();
-
-    const projectsAddedItems = await this.prisma.project.findMany({
-      where: { createdAt: { gte: thisMonthStart } },
-      orderBy: { createdAt: "desc" }
-    });
-    const projectsThisMonth = projectsAddedItems.length;
-
-    const projectsLastMonth = await this.prisma.project.count({
-      where: { createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
-    });
-
-    const projectGrowth = calcGrowth(projectsThisMonth, projectsLastMonth);
+        this.prisma.program.findMany({
+          where: { createdAt: { gte: thisMonthStart } },
+          orderBy: { createdAt: "desc" },
+          take: 10,
+        }),
+      ]);
 
 
+    // ---------------- Projects ----------------
+    const [totalProjects, projectsThisMonth, projectsLastMonth, projectsAddedItems] =
+      await Promise.all([
+        this.prisma.project.count({ where: baseWhere }),
+        this.prisma.project.count({
+          where: { ...baseWhere, createdAt: { gte: thisMonthStart } },
+        }),
+        this.prisma.project.count({
+          where: {
+            ...baseWhere,
+            createdAt: { gte: lastMonthStart, lt: thisMonthStart },
+          },
+        }),
+        this.prisma.project.findMany({
+          where: { ...baseWhere, createdAt: { gte: thisMonthStart } },
+          orderBy: { createdAt: "desc" },
+          take: 10,
+        }),
+      ]);
 
-    // ------------------- Live Projects -------------------
-    const totalLive = await this.prisma.project.count({
-      where: { status: "LIVE" },
-    });
+    // ---------------- Live Projects ----------------
+    const [totalLive, liveThisMonth, liveLastMonth, liveAddedItems, liveUsersThisMonth] =
+      await Promise.all([
+        this.prisma.project.count({
+          where: { ...baseWhere, status: "LIVE" },
+        }),
+        this.prisma.project.count({
+          where: {
+            ...baseWhere,
+            status: "LIVE",
+            createdAt: { gte: thisMonthStart },
+          },
+        }),
+        this.prisma.project.count({
+          where: {
+            ...baseWhere,
+            status: "LIVE",
+            createdAt: { gte: lastMonthStart, lt: thisMonthStart },
+          },
+        }),
+        this.prisma.project.findMany({
+          where: {
+            ...baseWhere,
+            status: "LIVE",
+            createdAt: { gte: thisMonthStart },
+          },
+          orderBy: { createdAt: "desc" },
+          take: 10,
+        }),
+        this.prisma.projectEmployee.count({
+          where: {
+            assignedAt: { gte: thisMonthStart },
+            project: { status: "LIVE", isDeleted: false },
+          },
+        }),
+      ]);
 
-    const liveAddedItems = await this.prisma.project.findMany({
-      where: { status: "LIVE", createdAt: { gte: thisMonthStart } },
-      orderBy: { createdAt: "desc" }
-    });
-    const liveThisMonth = liveAddedItems.length;
+    // ---------------- Draft Projects ----------------
+    const [totalDraft, draftThisMonth, draftLastMonth, draftAddedItems, draftUsersThisMonth] =
+      await Promise.all([
+        this.prisma.project.count({
+          where: { ...baseWhere, status: "DRAFT" },
+        }),
+        this.prisma.project.count({
+          where: {
+            ...baseWhere,
+            status: "DRAFT",
+            createdAt: { gte: thisMonthStart },
+          },
+        }),
+        this.prisma.project.count({
+          where: {
+            ...baseWhere,
+            status: "DRAFT",
+            createdAt: { gte: lastMonthStart, lt: thisMonthStart },
+          },
+        }),
+        this.prisma.project.findMany({
+          where: {
+            ...baseWhere,
+            status: "DRAFT",
+            createdAt: { gte: thisMonthStart },
+          },
+          orderBy: { createdAt: "desc" },
+          take: 10,
+        }),
+        this.prisma.projectEmployee.count({
+          where: {
+            assignedAt: { gte: thisMonthStart },
+            project: { status: "DRAFT", isDeleted: false },
+          },
+        }),
+      ]);
 
-    const liveLastMonth = await this.prisma.project.count({
-      where: {
-        status: "LIVE",
-        createdAt: { gte: lastMonthStart, lt: thisMonthStart }
-      },
-    });
+    // ---------------- Pending Review ----------------
+    const [
+      totalPendingReview,
+      pendingThisMonth,
+      pendingLastMonth,
+      pendingAddedItems,
+      pendingUsersThisMonth,
+    ] = await Promise.all([
+      this.prisma.submitted.count({
+        where: { status: "PENDING" },
+      }),
+      this.prisma.submitted.count({
+        where: {
+          status: "PENDING",
+          createdAt: { gte: thisMonthStart },
+        },
+      }),
+      this.prisma.submitted.count({
+        where: {
+          status: "PENDING",
+          createdAt: { gte: lastMonthStart, lt: thisMonthStart },
+        },
+      }),
+      this.prisma.submitted.findMany({
+        where: {
+          status: "PENDING",
+          createdAt: { gte: thisMonthStart },
+        },
+        orderBy: { createdAt: "desc" },
+        take: 10,
+      }),
+      this.prisma.submitted.count({
+        where: {
+          status: "PENDING",
+          createdAt: { gte: thisMonthStart },
+          employeeId: { not: null },
+        },
+      }),
+    ]);
 
-    const liveUsersThisMonth = await this.prisma.projectEmployee.count({
-      where: {
-        assignedAt: { gte: thisMonthStart },
-        project: { status: "LIVE" }
-      }
-    });
+    // ---------------- Overdue Projects ----------------
+    const [totalOverdue, overdueAddedItems, submitOverdueUsersThisMonth] =
+      await Promise.all([
+        this.prisma.project.count({
+          where: { ...baseWhere, status: "OVERDUE" },
+        }),
+        this.prisma.project.findMany({
+          where: { ...baseWhere, status: "OVERDUE" },
+          orderBy: { createdAt: "desc" },
+          take: 10,
+        }),
+        this.prisma.projectEmployee.count({
+          where: {
+            assignedAt: { gte: thisMonthStart },
+            project: { status: "OVERDUE", isDeleted: false },
+          },
+        }),
+      ]);
 
-    const liveGrowth = calcGrowth(liveThisMonth, liveLastMonth);
+    const overduePercentage =
+      totalProjects === 0
+        ? 0
+        : Number(((totalOverdue / totalProjects) * 100).toFixed(1));
 
-
-
-    // ------------------- Draft Projects ------------------
-    const totalDraft = await this.prisma.project.count({
-      where: { status: "DRAFT" },
-    });
-
-    const draftAddedItems = await this.prisma.project.findMany({
-      where: { status: "DRAFT", createdAt: { gte: thisMonthStart } },
-      orderBy: { createdAt: "desc" }
-    });
-    const draftThisMonth = draftAddedItems.length;
-
-    const draftLastMonth = await this.prisma.project.count({
-      where: { status: "DRAFT", createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
-    });
-
-    const draftUsersThisMonth = await this.prisma.projectEmployee.count({
-      where: {
-        assignedAt: { gte: thisMonthStart },
-        project: { status: "DRAFT" }
-      }
-    });
-
-    const draftGrowth = calcGrowth(draftThisMonth, draftLastMonth);
-
-
-
-    // ------------------- Pending Review ------------------
-    const totalPendingReview = await this.prisma.submitted.count({
-      where: { status: "PENDING" }
-    });
-
-    const pendingAddedItems = await this.prisma.submitted.findMany({
-      where: { status: "PENDING", createdAt: { gte: thisMonthStart } },
-      orderBy: { createdAt: "desc" }
-    });
-    const pendingThisMonth = pendingAddedItems.length;
-
-    const pendingLastMonth = await this.prisma.submitted.count({
-      where: { status: "PENDING", createdAt: { gte: lastMonthStart, lt: thisMonthStart } },
-    });
-
-    const pendingUsersThisMonth = await this.prisma.submitted.count({
-      where: {
-        status: "PENDING",
-        createdAt: { gte: thisMonthStart },
-        employeeId: { not: null }
-      }
-    });
-
-    const pendingGrowth = calcGrowth(pendingThisMonth, pendingLastMonth);
-
-
-
-    // ------------------- Submit Overdue -------------------
-    const totalOverdue = await this.prisma.project.count({
-      where: { status: "OVERDUE" }
-    });
-
-    const overdueAddedItems = await this.prisma.project.findMany({
-      // where: { status: "OVERDUE", createdAt: { gte: thisMonthStart } },
-      where: { status: "OVERDUE", },
-      orderBy: { createdAt: "desc" }
-    });
-
-    const submitOverdueUsersThisMonth = await this.prisma.projectEmployee.count({
-      where: {
-        assignedAt: { gte: thisMonthStart },
-        project: { status: "OVERDUE" }
-      }
-    });
-
-    const overduePercentage = totalProjects === 0
-      ? 0
-      : Number(((totalOverdue / totalProjects) * 100).toFixed(1));
-
-
-
-    // ------------------- Return With Added Items ------------------
+    // ---------------- Final Response ----------------
     return {
       programs: {
         total: totalPrograms,
-        lastMonth: programsLastMonth,
         thisMonth: programsThisMonth,
+        lastMonth: programsLastMonth,
         addedCount: programsThisMonth,
         addedItems: programsAddedItems,
-        growth: programGrowth,
+        growth: calcGrowth(programsThisMonth, programsLastMonth),
       },
 
       projects: {
         total: totalProjects,
-        lastMonth: projectsLastMonth,
         thisMonth: projectsThisMonth,
+        lastMonth: projectsLastMonth,
         addedCount: projectsThisMonth,
         addedItems: projectsAddedItems,
-        growth: projectGrowth,
+        growth: calcGrowth(projectsThisMonth, projectsLastMonth),
       },
 
       liveProjects: {
         total: totalLive,
-        lastMonth: liveLastMonth,
         thisMonth: liveThisMonth,
+        lastMonth: liveLastMonth,
         addedCount: liveUsersThisMonth,
         addedItems: liveAddedItems,
-        growth: liveGrowth,
+        growth: calcGrowth(liveThisMonth, liveLastMonth),
       },
 
       draftProjects: {
         total: totalDraft,
-        lastMonth: draftLastMonth,
         thisMonth: draftThisMonth,
+        lastMonth: draftLastMonth,
         addedCount: draftUsersThisMonth,
         addedItems: draftAddedItems,
-        growth: draftGrowth,
+        growth: calcGrowth(draftThisMonth, draftLastMonth),
       },
 
       pendingReview: {
         total: totalPendingReview,
-        lastMonth: pendingLastMonth,
         thisMonth: pendingThisMonth,
+        lastMonth: pendingLastMonth,
         addedCount: pendingUsersThisMonth,
         addedItems: pendingAddedItems,
-        growth: pendingGrowth,
+        growth: calcGrowth(pendingThisMonth, pendingLastMonth),
       },
 
       submitOverdue: {
@@ -216,9 +256,10 @@ export class ClientDashboardServices {
         projectOverduePercentage: overduePercentage,
         addedCount: submitOverdueUsersThisMonth,
         addedItems: overdueAddedItems,
-      }
+      },
     };
   }
+
 
 
   //employees activity
@@ -281,7 +322,7 @@ export class ClientDashboardServices {
       user: {
         id: a.user?.id ?? null,
         name: a.user?.name ?? "unknown user",
-        profileImage: a.user?.profileImage ?? null, 
+        profileImage: a.user?.profileImage ?? null,
       },
       description: a.description,
       projectName: a.project?.name ?? "unknown project",
@@ -298,124 +339,96 @@ export class ClientDashboardServices {
 
 
 
-async getProjectTimeline(
-  programId?: string,
-  maxOverdueDays?: number,
-  maxSavedDays?: number,
-  status?: ProjectStatus | ProjectStatus[],
-) {
-  if (!programId) {
-    const firstProgram = await this.prisma.program.findFirst();
-    if (!firstProgram) {
-      return { message: 'No programs found' };
+  async getProjectTimeline(
+    programId?: string,
+    maxOverdueDays?: number,
+    maxSavedDays?: number,
+    status?: ProjectStatus | ProjectStatus[],
+  ) {
+    if (!programId) {
+      const firstProgram = await this.prisma.program.findFirst();
+      if (!firstProgram) return { message: 'No programs found' };
+      programId = firstProgram.id;
     }
-    programId = firstProgram.id;
-  }
 
+    const allowedStatuses = [ProjectStatus.COMPLETED, ProjectStatus.LIVE] as const;
+    const statusArray = status
+      ? (Array.isArray(status) ? status : [status]).filter(
+        (s): s is typeof allowedStatuses[number] =>
+          allowedStatuses.includes(s as typeof allowedStatuses[number])
+      )
+      : [...allowedStatuses];
 
-const allowedStatuses = [ProjectStatus.COMPLETED, ProjectStatus.LIVE] as const;
-const statusArray = status
-  ? (Array.isArray(status) ? status : [status]).filter(
-      (s): s is typeof allowedStatuses[number] =>
-        allowedStatuses.includes(s as typeof allowedStatuses[number])
-    )
-  : [...allowedStatuses];
+    const projects = await this.prisma.project.findMany({
+      where: {
+        programId,
+        status: { in: statusArray },
+        isDeleted: false,
+      },
+      select: {
+        id: true,
+        name: true,
+        startDate: true,
+        deadline: true,
+        projectCompleteDate: true,
+        status: true,
+      },
+    });
 
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+    const today = new Date();
 
-  const projects = await this.prisma.project.findMany({
-    where: {
-      programId,
-      status: { in: statusArray },
-    },
-    select: {
-      id: true,
-      name: true,
-      startDate: true,
-      deadline: true,
-      projectCompleteDate: true,
-      status: true,
-    },
-  });
+    const projectData = projects.map((p) => {
+      const trackable = Boolean(p.startDate && p.deadline);
+      const start = p.startDate?.getTime() ?? 0;
+      const deadline = p.deadline?.getTime() ?? 0;
+      const endDate = p.projectCompleteDate ?? today;
+      const end = endDate.getTime();
 
-  const ONE_DAY = 1000 * 60 * 60 * 24;
-  const today = new Date();
+      const timelineDays = trackable ? Math.max(0, Math.ceil((end - start) / ONE_DAY)) : 0;
 
-  const projectData = projects.map((p) => {
-    if (!p.startDate || !p.deadline) {
+      let savedDays = 0;
+      let overdueDays = 0;
+      if (trackable) {
+        if (end < deadline) savedDays = Math.ceil((deadline - end) / ONE_DAY);
+        else if (end > deadline) overdueDays = Math.ceil((end - deadline) / ONE_DAY);
+      }
+
       return {
         id: p.id,
         name: p.name,
         startDate: p.startDate,
         deadline: p.deadline,
         projectEndDate: p.projectCompleteDate,
-        timelineDays: 0,
-        savedDays: 0,
-        overdueDays: 0,
-        trackable: false,
+        timelineDays,
+        savedDays,
+        overdueDays,
+        trackable,
         status: p.status,
       };
+    });
+
+    let filteredProjects = projectData;
+    if (maxOverdueDays !== undefined) {
+      filteredProjects = filteredProjects.filter(
+        (p) => p.overdueDays > 0 && p.overdueDays <= maxOverdueDays,
+      );
     }
 
-    const start = p.startDate.getTime();
-    const deadline = p.deadline.getTime();
-
-    const endDate =
-      p.status === ProjectStatus.COMPLETED && p.projectCompleteDate
-        ? p.projectCompleteDate
-        : today;
-
-    const end = endDate.getTime();
-
-    const timelineDays = Math.max(0, Math.ceil((end - start) / ONE_DAY));
-
-    let savedDays = 0;
-    let overdueDays = 0;
-
-    if (end < deadline) {
-      savedDays = Math.ceil((deadline - end) / ONE_DAY);
-    } else if (end > deadline) {
-      overdueDays = Math.ceil((end - deadline) / ONE_DAY);
+    if (maxSavedDays !== undefined) {
+      filteredProjects = filteredProjects.filter(
+        (p) => p.savedDays > 0 && p.savedDays <= maxSavedDays,
+      );
     }
 
     return {
-      id: p.id,
-      name: p.name,
-      startDate: p.startDate,
-      deadline: p.deadline,
-      projectEndDate: p.projectCompleteDate,
-      timelineDays,
-      savedDays,
-      overdueDays,
-      trackable: true,
-      status: p.status,
+      programId,
+      filters: { status: statusArray, maxOverdueDays, maxSavedDays },
+      totalProjects: filteredProjects.length,
+      projects: filteredProjects,
     };
-  });
-
-  let filteredProjects = projectData;
-  if (maxOverdueDays !== undefined) {
-    filteredProjects = filteredProjects.filter(
-      (p) => p.overdueDays > 0 && p.overdueDays <= maxOverdueDays,
-    );
   }
 
-  // Apply maxSavedDays filter
-  if (maxSavedDays !== undefined) {
-    filteredProjects = filteredProjects.filter(
-      (p) => p.savedDays > 0 && p.savedDays <= maxSavedDays,
-    );
-  }
-
-  return {
-    programId,
-    filters: {
-      status: allowedStatuses, // always COMPLETED & LIVE
-      maxOverdueDays,
-      maxSavedDays,
-    },
-    totalProjects: filteredProjects.length,
-    projects: filteredProjects,
-  };
-}
 
 
 
@@ -499,39 +512,49 @@ const statusArray = status
 
   //project overdue 
   async getDashboardProjectsOverdue() {
+    const today = new Date();
     const projects = await this.prisma.project.findMany({
-      where: { status: "OVERDUE" },
+      where: {
+        status: "OVERDUE",
+        isDeleted: false,
+      },
       select: {
         id: true,
         name: true,
         startDate: true,
         deadline: true,
         projectCompleteDate: true,
-      }
+        status: true,
+      },
     });
 
+    // Map projects to calculate overdue days
     const result = projects.map((project) => {
       let overdueDays = 0;
 
-      // Calculate only if completed and  deadline is available
-      if (project.deadline && project.projectCompleteDate) {
+      if (project.deadline) {
         const deadline = new Date(project.deadline);
-        const completed = new Date(project.projectCompleteDate);
+        const endDate = project.projectCompleteDate
+          ? new Date(project.projectCompleteDate)
+          : today;
 
-        if (completed > deadline) {
-          const diffMs = completed.getTime() - deadline.getTime();
-          overdueDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        if (endDate > deadline) {
+          overdueDays = Math.floor(
+            (endDate.getTime() - deadline.getTime()) / (1000 * 60 * 60 * 24)
+          );
         }
       }
 
       return {
         ...project,
-        overdue: `${overdueDays}`
+        overdueDays,
+        trackable: Boolean(project.startDate && project.deadline),
       };
     });
 
     return {
-      projects: result
+      totalProjects: result.length,
+      projects: result,
     };
   }
 
@@ -598,6 +621,7 @@ const statusArray = status
     };
   }
 
+
   async upcomingDeadlineProjects() {
     const today = new Date();
     const ONE_DAY = 1000 * 60 * 60 * 24;
@@ -605,27 +629,20 @@ const statusArray = status
     const projects = await this.prisma.project.findMany({
       where: {
         status: "LIVE",
+        isDeleted: false,
+        deadline: { not: null },
       },
       select: {
         id: true,
         name: true,
         deadline: true,
-        program: {
-          select: {
-            programName: true,
-          }
-        },
+        program: { select: { programName: true } },
         projectEmployees: {
           select: {
             employee: {
               select: {
                 id: true,
-                user: {
-                  select: {
-                    name: true,
-                    profileImage: true
-                  }
-                }
+                user: { select: { name: true, profileImage: true } }
               }
             }
           }
@@ -635,9 +652,10 @@ const statusArray = status
 
     const filtered = projects
       .map(project => {
-        const deadline = new Date(project.deadline as any);
-        const diffMs = deadline.getTime() - today.getTime();
-        const daysLeft = Math.ceil(diffMs / ONE_DAY);
+        if (!project.deadline) return null; 
+
+        const deadline = new Date(project.deadline);
+        const daysLeft = Math.ceil((deadline.getTime() - today.getTime()) / ONE_DAY);
 
         return {
           programName: project.program?.programName ?? "No Program",
@@ -652,13 +670,15 @@ const statusArray = status
           }))
         };
       })
-      .filter(p => p.daysLeft <= 8 && p.daysLeft >= 0);
+      .filter((p): p is NonNullable<typeof p> => p !== null && p.daysLeft >= 0 && p.daysLeft <= 8)
+      .sort((a, b) => a.daysLeft - b.daysLeft); 
 
     return {
       total: filtered.length,
       projects: filtered
     };
   }
+
 
   async showAllSubmission(params: {
     startDate?: string;

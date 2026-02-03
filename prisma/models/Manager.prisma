@@ -5,7 +5,7 @@ model Manager {
   skills      String[]
   description String?
   joinedDate  String
-  status      Level    @default(InActive)
+  // status      Level    @default(InActive)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

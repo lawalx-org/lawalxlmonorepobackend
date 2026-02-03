@@ -4,7 +4,7 @@ model Employee {
   skills      String[]
   description String?
   joinedDate  String
-  status      Level    @default(InActive)
+  // status      Level    @default(InActive)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -17,7 +17,7 @@ model Employee {
   @@map("employees")
 }
 
-enum Level {
-  Active
-  InActive
-}
+// enum Level {
+//   Active
+//   InActive
+// }
