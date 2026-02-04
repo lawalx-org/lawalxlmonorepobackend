@@ -579,4 +579,21 @@ export class ChartMainService {
     return samelevelnode;
   }
 
+
+
+  async valuechageCalculations (parentId:string) {
+        
+        const storevalue = []
+        const flag = false;
+
+        while(!flag){
+
+           const reuslt = await this.prisma.chartTable.findMany({
+             where: {parentId}
+           })
+
+           
+        }
+  }
+
 }
