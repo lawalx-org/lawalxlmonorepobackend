@@ -190,9 +190,9 @@ import {
 import { Type } from 'class-transformer';
 import { Days, Priority, Share, UploadCycle, UploadDate } from 'generated/prisma';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { CreateReminderProjectDto } from 'src/modules/notification/dto/create-reminder.dto';
+import { CreateReminderDto } from 'src/modules/notification/dto/create-reminder.dto';
 
-export class CreateProjectDto {
+export class CreateProjectDto extends CreateReminderDto {
   @ApiProperty({
     description: 'The name of the project',
     example: 'Project Alpha',
@@ -225,13 +225,14 @@ export class CreateProjectDto {
   @IsNotEmpty()
   programId: string;
 
-  @ApiProperty({
+
+ @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'The ID of the template to apply'
+    description: 'The ID of the template to apply (optional)'
   })
   @IsUUID()
-  @IsString()
-  templateId: string;
+  @IsOptional()
+  templateId?: string;
 
   @ApiPropertyOptional({
     description: 'Project description',
@@ -250,9 +251,9 @@ export class CreateProjectDto {
   @IsOptional()
   priority?: Priority;
 
-  @IsEnum(UploadCycle)
-  @IsOptional()
-  UploadCycle?: UploadCycle;
+  // @IsEnum(UploadCycle)
+  // @IsOptional()
+  // UploadCycle?: UploadCycle;
 
   @ApiPropertyOptional({
     description: 'Privacy/Sharing settings',
@@ -399,10 +400,15 @@ export class CreateProjectDto {
   @IsOptional()
   location?: string
 
-    //   deadline,
-    //   budget,
-    //   startDate,
-    //   currentRate,
+  //   deadline,
+  //   budget,
+  //   startDate,
+  //   currentRate,
+
+  // @ApiPropertyOptional({ example: 'message' })
+  // @IsString()
+  // @IsOptional()
+  // reminderMessage?: string;
 
 
 }

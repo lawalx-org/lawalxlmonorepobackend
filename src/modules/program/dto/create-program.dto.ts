@@ -36,16 +36,15 @@ export class CreateProgramDto {
 
   @ApiPropertyOptional({ example: '2026-10-12T05:19:26.155Z' })
   @IsISO8601()
-  @IsOptional() 
+  @IsOptional()
   deadline?: string;
-
- @ApiProperty({ 
+  @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
-    description: 'The ID of the template to apply' 
+    description: 'The ID of the template to apply (optional)'
   })
   @IsUUID()
-  @IsString()
-  templateId: string;
+  @IsOptional() 
+  templateId?: string; 
 
   @ApiProperty({ example: '550e8400-e29b-41d4-a716-446655440000' })
   @IsUUID()

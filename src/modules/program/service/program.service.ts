@@ -17,7 +17,7 @@ import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program
 export class ProgramService {
   constructor(private readonly prisma: PrismaService) { }
 
-  
+
 async create(createProgramDto: CreateProgramDto, userId: string) {
   const { managerId, templateId, ...programData } = createProgramDto;
 
@@ -29,7 +29,6 @@ async create(createProgramDto: CreateProgramDto, userId: string) {
     throw new NotFoundException(`Client profile not found.`);
   }
 
-
   return this.prisma.program.create({
     data: {
       ...programData,
@@ -40,40 +39,15 @@ async create(createProgramDto: CreateProgramDto, userId: string) {
       manager: {
         connect: { id: managerId },
       },
-      template: {
-        connect: { id: templateId }, // Connect to the Template model
-      },
+      ...(templateId && {
+        template: {
+          connect: { id: templateId },
+        },
+      }),
     },
   });
 }
-// async create(createProgramDto: CreateProgramDto, userId: string) {
-//   const { managerId, templateId, ...programData } = createProgramDto;
 
-//   const client = await this.prisma.client.findUnique({
-//     where: { id: userId },
-//   });
-
-//   if (!client) {
-//     throw new NotFoundException(`Client profile not found.`);
-//   }
-//   return this.prisma.program.create({
-//     data: {
-//       ...programData,
-//       progress: 0,
-//       client: {
-//         connect: { id: client.id },
-//       },
-//       manager: {
-//         connect: { id: managerId },
-//       },
-//       ...(templateId && {
-//         template: {
-//           connect: { id: templateId },
-//         },
-//       }),
-//     },
-//   });
-// }
 
   async findAll(query: GetAllProgramsDto): Promise<PaginatedResult<any>> {
     const {
@@ -241,4 +215,37 @@ async create(createProgramDto: CreateProgramDto, userId: string) {
       orderBy: { createdAt: 'desc' },
     });
   }
+
+
+
+async syncTags(programId: string, tagNames: string[]) {
+  await this.findOne(programId);
+
+  return this.prisma.$transaction(async (tx) => {
+    await tx.tag.deleteMany({
+      where: {
+        programId,
+        name: { notIn: tagNames },
+      },
+    });
+
+    const existingTags = await tx.tag.findMany({
+      where: { programId },
+      select: { name: true },
+    });
+    const existingNames = existingTags.map(t => t.name);
+    const newNames = tagNames.filter(name => !existingNames.includes(name));
+    
+    if (newNames.length > 0) {
+      await tx.tag.createMany({
+        data: newNames.map(name => ({
+          name,
+          programId,
+        })),
+      });
+    }
+
+    return tx.tag.findMany({ where: { programId } });
+  });
+}
 }
