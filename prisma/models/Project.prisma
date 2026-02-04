@@ -2,7 +2,7 @@ model   Project {
   id        String @id @default(uuid())
   programId String
   name      String
-
+  rootchartId  String?
   // sabbir infrastructure start from here...
   slug             String?              @unique
   computedProgress Float                @default(0)

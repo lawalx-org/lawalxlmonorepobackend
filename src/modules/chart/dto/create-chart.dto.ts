@@ -1,4 +1,4 @@
-import { IsString, IsEnum, IsOptional, IsJSON, IsUUID } from 'class-validator';
+import { IsString, IsEnum, IsOptional, IsJSON, IsUUID, IsBoolean } from 'class-validator';
 import { ApiProperty, IntersectionType } from '@nestjs/swagger';
 import { ChartName, ChartStatus } from 'generated/prisma';
 import { CreateBarChartDto } from './barchartDto';
@@ -88,4 +88,18 @@ export class CreateChartDto extends IntersectionType(
   @IsUUID()
   @IsOptional()
   projectId?: string;
+
+  @ApiProperty({
+    example: 'parentId uuid',
+  })
+  @IsUUID()
+  @IsOptional()
+  parentId?: string;
+
+  @ApiProperty({
+    example:true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  rootchart?: boolean;
 }

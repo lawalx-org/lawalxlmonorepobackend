@@ -15,15 +15,27 @@ export class ChartMainService {
   //create chart
   async create(createChartDto: CreateChartDto) {
     let subChat = {};
-    const { xAxis, yAxis, zAxis, title, status, category } = createChartDto;
+    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId } = createChartDto;
 
     if (!createChartDto.projectId)
       throw new NotFoundException('ProgramId is required');
 
     const result = await this.prisma.$transaction(async (txPrisma) => {
+
+      if (parentId) {
+        const parentExists = await txPrisma.chartTable.findUnique({
+          where: { id: parentId },
+          select: { id: true },
+        });
+
+        if (!parentExists) {
+          throw new NotFoundException('Parent chart does not exist');
+        }
+      }
       const mainChart = await txPrisma.chartTable.create({
         data: {
           title,
+          parentId: parentId ?? null,
           status,
           category,
           xAxis: JSON.parse(xAxis),
@@ -35,6 +47,27 @@ export class ChartMainService {
           // SABBIR //
         },
       });
+
+
+      if (rootchart) {
+        const project = await txPrisma.project.findUnique({
+          where: { id: projectId! },
+          select: { id: true },
+        });
+
+        if (!project) {
+          throw new NotFoundException('Project not found');
+        }
+        await txPrisma.project.update({
+          where: {
+            id: projectId!,
+          },
+          data: {
+            rootchartId: mainChart.id,
+          },
+        });
+      }
+
 
       switch (category) {
         case ChartName.BAR: {
@@ -410,7 +443,7 @@ export class ChartMainService {
           break;
         }
 
-         case ChartName.SCATTER: {
+        case ChartName.SCATTER: {
           const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
 
           subChat = await txPrisma.scatterChart.create({
@@ -432,7 +465,7 @@ export class ChartMainService {
           break;
         }
 
-      // scatterChart
+        // scatterChart
 
         default: {
           throw new BadRequestException(
@@ -530,4 +563,20 @@ export class ChartMainService {
   remove(id: string) {
     return this.prisma.chartTable.delete({ where: { id } });
   }
+
+
+
+    async findsomelavelenode(parentId:string) {
+    const samelevelnode = await this.prisma.chartTable.findMany({
+      where: { parentId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!samelevelnode ) {
+      throw new NotFoundException('No chart is found');
+    }
+
+    return samelevelnode;
+  }
+
 }

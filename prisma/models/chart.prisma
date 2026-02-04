@@ -1,5 +1,8 @@
 model ChartTable {
   id        String      @id @default(uuid())
+  parentId String?
+  parent   ChartTable? @relation("ChartHierarchy", fields: [parentId], references: [id])
+  children ChartTable[] @relation("ChartHierarchy")
   title     String
   status    ChartStatus @default(INACTIVE) 
   category  ChartName

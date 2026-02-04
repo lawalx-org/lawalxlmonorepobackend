@@ -47,6 +47,15 @@ export class ChartMainController {
     return this.chartService.findOne(id);
   }
 
+  @Get('samelevelnode/:id')
+  async samelevenode(@Param('id') id: string) {
+    const result = await this.chartService.findsomelavelenode(id);
+    return {
+      message: 'All charts active fetched successfully',
+      data: result,
+    };
+  }
+
 
 
 }
