@@ -1,20 +1,20 @@
-import { 
-  Controller, 
-  Get, 
-  Post, 
-  Body, 
-  Param, 
-  UseGuards, 
-  Res, 
-  HttpStatus, 
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  Res,
+  HttpStatus,
   Patch
 } from '@nestjs/common';
 import { Response } from 'express';
-import { 
-  ApiTags, 
-  ApiOperation, 
-  ApiParam, 
-  ApiResponse 
+import {
+  ApiTags,
+  ApiOperation,
+  ApiParam,
+  ApiResponse
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { ChartMainService } from '../service/chart.main.service';
@@ -27,7 +27,7 @@ import { UpdateSingleChartDto } from '../dto/update.data.dto';
 @Controller('chart')
 @UseGuards(AuthGuard('jwt'))
 export class ChartMainController {
-  constructor(private readonly chartService: ChartMainService) {}
+  constructor(private readonly chartService: ChartMainService) { }
 
   @Post()
   @Roles(Role.CLIENT)
@@ -77,8 +77,8 @@ export class ChartMainController {
   }
 
   @Patch('updateChartValue/:id')
-  async value(@Param('id') id: string , @Body() updateChartDto: UpdateSingleChartDto  ) {
-    const result = await this.chartService.valuechageCalculations(id , updateChartDto );
+  async value(@Param('id') id: string, @Body() updateChartDto: UpdateSingleChartDto) {
+    const result = await this.chartService.valuechageCalculations(id, updateChartDto);
     return {
       message: 'All charts active fetched successfully',
       data: result,
@@ -86,8 +86,12 @@ export class ChartMainController {
   }
 
 
- 
-
+  @Get('all-chart-history/:projectId')
+  @Roles('CLIENT')
+  async getchartHistoty(@Param('projectId') chartId: string) {
+    const data = await this.chartService.showHistory(chartId)
+    return data
+  }
 
 
 }
