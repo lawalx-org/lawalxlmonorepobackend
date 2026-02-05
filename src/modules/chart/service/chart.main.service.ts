@@ -7,8 +7,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { UpdateChartDto } from '../dto/update-chart.dto';
 import { ChartName, ChartStatus, Prisma } from 'generated/prisma';
-import * as ExcelJS from 'exceljs';
-import { Response } from 'express';
+import { UpdateSingleChartDto } from '../dto/update.data.dto';
+
 @Injectable()
 export class ChartMainService {
   constructor(private readonly prisma: PrismaService) { }
@@ -16,15 +16,27 @@ export class ChartMainService {
   //create chart
   async create(createChartDto: CreateChartDto) {
     let subChat = {};
-    const { xAxis, yAxis, zAxis, title, status, category } = createChartDto;
+    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId, roottitle } = createChartDto;
 
     if (!createChartDto.projectId)
       throw new NotFoundException('ProgramId is required');
 
     const result = await this.prisma.$transaction(async (txPrisma) => {
+
+      if (parentId) {
+        const parentExists = await txPrisma.chartTable.findUnique({
+          where: { id: parentId },
+          select: { id: true },
+        });
+
+        if (!parentExists) {
+          throw new NotFoundException('Parent chart does not exist');
+        }
+      }
       const mainChart = await txPrisma.chartTable.create({
         data: {
           title,
+          parentId: parentId ?? null,
           status,
           category,
           xAxis: JSON.parse(xAxis),
@@ -36,6 +48,27 @@ export class ChartMainService {
           // SABBIR //
         },
       });
+
+
+      if (rootchart && roottitle) {
+        const project = await txPrisma.project.findUnique({
+          where: { id: projectId! },
+          select: { id: true },
+        });
+
+        if (!project) {
+          throw new NotFoundException('Project not found');
+        }
+        await txPrisma.rootChart.create({
+
+          data: {
+            value: mainChart.id,
+            title: roottitle ?? null,
+            projectId
+          },
+        });
+      }
+
 
       switch (category) {
         case ChartName.BAR: {
@@ -411,7 +444,7 @@ export class ChartMainService {
           break;
         }
 
-         case ChartName.SCATTER: {
+        case ChartName.SCATTER: {
           const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
 
           subChat = await txPrisma.scatterChart.create({
@@ -433,7 +466,7 @@ export class ChartMainService {
           break;
         }
 
-      // scatterChart
+        // scatterChart
 
         default: {
           throw new BadRequestException(
@@ -534,116 +567,143 @@ export class ChartMainService {
 
 
 
-async exportToExcel(id: string, res: Response) {
-  const chart = await this.prisma.chartTable.findUnique({
-    where: { id },
-    include: {
-      pi: { include: { widgets: true } },
-      barChart: { include: { widgets: true } },
-      horizontalBarChart: { include: { widgets: true } },
-      // add other relations as needed
-    },
-  });
-
-  if (!chart) throw new NotFoundException('Chart not found');
-
-  const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet('Chart Report');
-
-  // --- 1. SET COLUMN WIDTHS ---
-  worksheet.columns = [
-    { header: 'Property', key: 'prop', width: 25 },
-    { header: 'Value', key: 'val', width: 40 },
-    { header: 'Additional Info', key: 'extra', width: 20 },
-  ];
-
-  // --- 2. HEADER STYLING ---
-  const titleRow = worksheet.addRow(['CHART REPORT: ' + chart.title.toUpperCase()]);
-  worksheet.mergeCells('A1:C1');
-  titleRow.font = { name: 'Arial Black', size: 14, color: { argb: 'FFFFFFFF' } };
-  titleRow.alignment = { vertical: 'middle', horizontal: 'center' };
-  titleRow.getCell(1).fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'FF4F81BD' },
-  };
-
-  worksheet.addRow([]); // Spacer
-
-  // --- 3. BASIC INFO SECTION ---
-  const infoData = [
-    ['Category', chart.category],
-    ['Status', chart.status],
-    ['Project ID', chart.projectId],
-    ['Created At', chart.createdAt.toDateString()],
-  ];
-
-  infoData.forEach(data => {
-    const row = worksheet.addRow(data);
-    row.getCell(1).font = { bold: true };
-    row.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F2F2' } };
-  });
-
-  worksheet.addRow([]); // Spacer
-
-  // --- 4. AXIS DATA (The Main Table) ---
-  const tableHeader = worksheet.addRow(['Axis Label', 'Numeric Value', 'Percent']);
-  tableHeader.eachCell((cell) => {
-    cell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
-    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF212529' } };
-    cell.border = { bottom: { style: 'thin' } };
-  });
-
-  const xAxisData = typeof chart.xAxis === 'string' ? JSON.parse(chart.xAxis) : chart.xAxis;
-  if (xAxisData?.labels) {
-    xAxisData.labels.forEach((item: [string, number]) => {
-      worksheet.addRow([item[0], item[1], '']); 
+  async findsomelavelenode(parentId: string) {
+    const samelevelnode = await this.prisma.chartTable.findMany({
+      where: { parentId },
+      orderBy: { createdAt: 'desc' },
     });
+
+    if (!samelevelnode) {
+      throw new NotFoundException('No chart is found');
+    }
+
+    return samelevelnode;
   }
 
-  worksheet.addRow([]); // Spacer
 
-  // --- 5. WIDGETS & COLORS ---
-  const subChart = (chart as any)[chart.category.toLowerCase()] || (chart as any).pi;
-  if (subChart?.widgets) {
-    const widgetHeader = worksheet.addRow(['Legend Name', 'HEX Code', 'Visual Color']);
-    widgetHeader.font = { bold: true };
 
-    subChart.widgets.forEach((w: any) => {
-      const row = worksheet.addRow([w.legendName, w.color, '']);
-      const colorCell = row.getCell(3);
+  async valuechageCalculations(id: string ,updatedata: UpdateSingleChartDto) {
+
+    let flag = false;
       
-      // Attempt to fill the cell with the actual color from the database
-      try {
-        const cleanColor = w.color.replace('#', '').substring(0, 6);
-        colorCell.fill = {
-          type: 'pattern',
-          pattern: 'solid',
-          fgColor: { argb: 'FF' + cleanColor },
-        };
-      } catch (e) {
-        /* skip color if invalid hex */
+     const changePossible = await this.prisma.chartTable.findMany({
+          where: { parentId: id }
+        })
+
+      if (changePossible.length > 0) {
+        throw new Error("This is not a child subtier; it already has child records.")
       }
-    });
+
+      
+      const  history = await this.prisma.chartTable.findUnique({
+       where: {id}
+     })
+
+        if (history?.xAxis) {
+              await this.prisma.chartHistory.create({
+          data: {
+            value: history?.xAxis,
+            chartId: id,
+          }
+        })
+     }
+
+    const updateResult = await this.prisma.chartTable.update({
+      where: { id },
+      data:{
+          xAxis:JSON.parse( updatedata.xAxis)
+      }
+    })
+
+    if(!updateResult?.parentId){
+        return updateResult
+    }
+    
+    let nodeId = updateResult?.parentId
+
+    while (!flag) {
+     
+      const reuslt = await this.prisma.chartTable.findMany({
+        where: { parentId: nodeId }
+      })
+
+      const tables = reuslt
+      .map(item => item.xAxis)
+      .filter(Boolean)
+
+      if (!tables.length) {
+        console.log("No tables found")
+        break
+      }
+     const data =await mergeAndSum(tables)
+     
+     const  history = await this.prisma.chartTable.findUnique({
+       where: {id: nodeId as string}
+     })
+
+        if (history?.xAxis) {
+              await this.prisma.chartHistory.create({
+          data: {
+            value: history?.xAxis,
+            chartId: nodeId,
+          }
+        })
+     }
+       
+       await this.prisma.chartTable.update({
+          where : {id : nodeId as string},
+          data: {
+            xAxis: data
+          }
+       })
+       
+      const findingParent = await this.prisma.chartTable.findUnique({
+        where: { id: reuslt[0].parentId ?? undefined }
+      });
+      
+      if (!findingParent?.parentId) {
+        flag = true
+      } else{
+          nodeId = findingParent?.parentId
+      }
+
+     
+       
+    
+
+    }
+    return  updateResult ;
   }
 
-  // --- 6. FINAL BORDERS ---
-  worksheet.eachRow((row) => {
-    row.eachCell((cell) => {
-      cell.border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' },
-      };
-    });
-  });
+  
 
-  // Export
-  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-  res.setHeader('Content-Disposition', `attachment; filename="${chart.title.replace(/\s+/g, '_')}.xlsx"`);
-
-  await workbook.xlsx.write(res);
-  res.end();
 }
+
+
+async function mergeAndSum(multipleTables) {
+  if (!multipleTables.length) return [];
+
+  const header = multipleTables[0][0];
+  const resultMap = {};
+
+  for (const table of multipleTables) {
+    for (let i = 1; i < table.length; i++) {
+      const row = table[i];
+      const key = row[0];
+
+      if (!resultMap[key]) {
+        resultMap[key] = Array(row.length).fill(0);
+        resultMap[key][0] = key;
+      }
+
+      for (let j = 1; j < row.length; j++) {
+        resultMap[key][j] += row[j];
+      }
+    }
+  }
+
+  return [
+    header,
+    ...Object.values(resultMap)
+  ];
 }

@@ -267,7 +267,7 @@ export class ProjectService {
   // }
 
 
- 
+
   // async create(createProjectDto: CreateProjectDto) {
   //   const {
   //     employeeIds,
@@ -398,152 +398,152 @@ export class ProjectService {
 
 
 
-  
+
   async create(createProjectDto: CreateProjectDto) {
-  const {
-    employeeIds,
-    viewerIds,
-    managerId,
-    programId,
-    templateId,
-    name,
-    description,
-    uploadCycle,      
-    message,          
-    repeatOnDays,    
-    repeatOnDates,
-    remindBefore,  
-    SelectDays,
-    workingDay,
-    selectDate,
-    UploadData,
-    dateDate,
-    startDate,
-    deadline,
-    budget,
-    currentRate,
-    location,
-    sortName,
-    metadata,
-    
-    ...rest
-  } = createProjectDto;
+    const {
+      employeeIds,
+      viewerIds,
+      managerId,
+      programId,
+      templateId,
+      name,
+      description,
+      uploadCycle,
+      message,
+      repeatOnDays,
+      repeatOnDates,
+      remindBefore,
+      SelectDays,
+      workingDay,
+      selectDate,
+      UploadData,
+      dateDate,
+      startDate,
+      deadline,
+      budget,
+      currentRate,
+      location,
+      sortName,
+      metadata,
 
-  // --- 1. Pre-validation ---
-  if (!name) throw new BadRequestException('Project name is required');
+      ...rest
+    } = createProjectDto;
 
-  const slug = slugify(name);
-  const existingSlug = await this.infrastructureRepo.findByProjectSlug(slug);
-  if (existingSlug) {
-    throw new ConflictException(`Project name results in a duplicate slug: ${slug}`);
-  }
+    // --- 1. Pre-validation ---
+    if (!name) throw new BadRequestException('Project name is required');
 
-  const program = await this.prisma.program.findUnique({ where: { id: programId } });
-  if (!program) throw new NotFoundException(`Program with ID "${programId}" not found`);
-  const project = await this.prisma.$transaction(async (tx) => {
-    const newProject = await tx.project.create({
-      data: {
-        name,
-        slug,
-        description,
-        sortName,
-        location,
-        budget,
-        currentRate,
-        uploadCycle,
-        metadata: metadata || {},
-        computedProgress: createProjectDto.computedProgress ?? 0,
-        progress: createProjectDto.progress ?? 0,
-
-        SelectDays: SelectDays || [],
-        workingDay: workingDay || [],
-        selectDate: selectDate || [],
-
-        dateDate: dateDate || new Date(),
-        startDate,
-        deadline,
-        UploadData,
-
-        program: { connect: { id: programId } },
-        manager: { connect: { id: managerId } },
-       template: templateId ? { connect: { id: templateId } } : undefined,
-
-        projectEmployees: employeeIds?.length
-          ? { create: employeeIds.map(id => ({ employeeId: id })) }
-          : undefined,
-        projectViewers: viewerIds?.length
-          ? { create: viewerIds.map(id => ({ viewerId: id })) }
-          : undefined,
-      },
-      include: {
-        manager: { include: { user: true } },
-        program: true,
-        projectEmployees: {
-          include: { employee: { include: { user: true } } }
-        },
-      },
-    });
-
-    
-    if (uploadCycle) {
-      const firstTrigger = this.schedulerService.calculateNextTriggerAt(
-        uploadCycle,
-        new Date(),
-        repeatOnDays,
-        repeatOnDates,
-        remindBefore
-      );
-
-      await tx.reminder.create({
-        data: {
-          message: message || `Reminder: Upload required for project ${name}`,
-          repeatEvery: uploadCycle,
-          nextTriggerAt: firstTrigger, 
-          repeatOnDays: repeatOnDays || [],
-          repeatOnDates: repeatOnDates || [],
-          remindBefore,
-          projectId: newProject.id,
-          isActive: true,
-        },
-      });
-      
-      this.logger.log(`Automatic reminder scheduled for project ${name} at ${firstTrigger}`);
+    const slug = slugify(name);
+    const existingSlug = await this.infrastructureRepo.findByProjectSlug(slug);
+    if (existingSlug) {
+      throw new ConflictException(`Project name results in a duplicate slug: ${slug}`);
     }
 
-    return newProject;
-  });
+    const program = await this.prisma.program.findUnique({ where: { id: programId } });
+    if (!program) throw new NotFoundException(`Program with ID "${programId}" not found`);
+    const project = await this.prisma.$transaction(async (tx) => {
+      const newProject = await tx.project.create({
+        data: {
+          name,
+          slug,
+          description,
+          sortName,
+          location,
+          budget,
+          currentRate,
+          uploadCycle,
+          metadata: metadata || {},
+          computedProgress: createProjectDto.computedProgress ?? 0,
+          progress: createProjectDto.progress ?? 0,
 
-  this.sendCreationNotifications(project).catch(err => 
-    this.logger.error(`Notification failed: ${err.message}`)
-  );
+          SelectDays: SelectDays || [],
+          workingDay: workingDay || [],
+          selectDate: selectDate || [],
 
-  return project;
-}
+          dateDate: dateDate || new Date(),
+          startDate,
+          deadline,
+          UploadData,
+
+          program: { connect: { id: programId } },
+          manager: { connect: { id: managerId } },
+          template: templateId ? { connect: { id: templateId } } : undefined,
+
+          projectEmployees: employeeIds?.length
+            ? { create: employeeIds.map(id => ({ employeeId: id })) }
+            : undefined,
+          projectViewers: viewerIds?.length
+            ? { create: viewerIds.map(id => ({ viewerId: id })) }
+            : undefined,
+        },
+        include: {
+          manager: { include: { user: true } },
+          program: true,
+          projectEmployees: {
+            include: { employee: { include: { user: true } } }
+          },
+        },
+      });
 
 
-private async sendCreationNotifications(project: any) {
-  try {
-    if (!project.manager?.user) return;
+      if (uploadCycle) {
+        const firstTrigger = this.schedulerService.calculateNextTriggerAt(
+          uploadCycle,
+          new Date(),
+          repeatOnDays,
+          repeatOnDates,
+          remindBefore
+        );
 
-    const receiverIds = [
-      project.manager.user.id,
-      ...(project.projectEmployees?.map(e => e.employee?.user?.id).filter(Boolean) || []),
-    ];
+        await tx.reminder.create({
+          data: {
+            message: message || `Reminder: Upload required for project ${name}`,
+            repeatEvery: uploadCycle,
+            nextTriggerAt: firstTrigger,
+            repeatOnDays: repeatOnDays || [],
+            repeatOnDates: repeatOnDates || [],
+            remindBefore,
+            projectId: newProject.id,
+            isActive: true,
+          },
+        });
 
-    const uniqueReceivers = [...new Set(receiverIds)];
+        this.logger.log(`Automatic reminder scheduled for project ${name} at ${firstTrigger}`);
+      }
 
-    await this.notificationService.create(
-      {
-        receiverIds: uniqueReceivers,
-        context: `A new project ${project.name} has been created and assigned.`,
-        type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
-      },
-      project.manager.user.id,
+      return newProject;
+    });
+
+    this.sendCreationNotifications(project).catch(err =>
+      this.logger.error(`Notification failed: ${err.message}`)
     );
-  } catch (err) {
-    this.logger.error(`Failed to send notifications: ${err.message}`);
+
+    return project;
   }
-}
+
+
+  private async sendCreationNotifications(project: any) {
+    try {
+      if (!project.manager?.user) return;
+
+      const receiverIds = [
+        project.manager.user.id,
+        ...(project.projectEmployees?.map(e => e.employee?.user?.id).filter(Boolean) || []),
+      ];
+
+      const uniqueReceivers = [...new Set(receiverIds)];
+
+      await this.notificationService.create(
+        {
+          receiverIds: uniqueReceivers,
+          context: `A new project ${project.name} has been created and assigned.`,
+          type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
+        },
+        project.manager.user.id,
+      );
+    } catch (err) {
+      this.logger.error(`Failed to send notifications: ${err.message}`);
+    }
+  }
   private async sendProjectNotifications(project: any) {
     const managerUserId = project.manager?.user?.id;
     if (!managerUserId) return;
@@ -628,12 +628,16 @@ private async sendCreationNotifications(project: any) {
                 name: true,
                 email: true,
                 profileImage: true,
+                role: true,
+                isOnline: true,
+                lastActive: true,
               },
             },
           },
         },
       },
     },
+    
     projectViewers: {
       include: {
         viewer: {
@@ -642,7 +646,11 @@ private async sendCreationNotifications(project: any) {
               select: {
                 id: true,
                 name: true,
+                email: true,
                 profileImage: true,
+                role: true,
+                isOnline: true,
+                lastActive: true,
               },
             },
           },
@@ -652,6 +660,7 @@ private async sendCreationNotifications(project: any) {
     reminders: true,
     tasks: true,
     activities: true,
+    rootCharts: true,
   };
 
   async findAllFull(query: FindAllProjectsDto) {
@@ -687,7 +696,7 @@ private async sendCreationNotifications(project: any) {
     };
   }
 
-  
+
 
 
 
@@ -701,6 +710,7 @@ private async sendCreationNotifications(project: any) {
         isDeleted: false,
       },
       include: this.fullProjectInclude,
+
     });
 
     if (!project) {
