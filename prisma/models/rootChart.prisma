@@ -1,0 +1,9 @@
+model RootChart {
+  id        String  @id @default(ulid())
+  value     String
+  title     String
+
+  // Optional relation to Project
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}

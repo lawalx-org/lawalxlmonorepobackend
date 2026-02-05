@@ -2,7 +2,8 @@ model   Project {
   id        String @id @default(uuid())
   programId String
   name      String
-  rootchartId  String?
+   rootCharts RootChart[] 
+
   // sabbir infrastructure start from here...
   slug             String?              @unique
   computedProgress Float                @default(0)
@@ -94,3 +95,7 @@ model ProjectViewer {
   @@unique([projectId, viewerId])
   @@map("project_viewers")
 }
+
+
+
+

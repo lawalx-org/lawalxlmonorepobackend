@@ -15,7 +15,7 @@ export class ChartMainService {
   //create chart
   async create(createChartDto: CreateChartDto) {
     let subChat = {};
-    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId } = createChartDto;
+    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId, roottitle } = createChartDto;
 
     if (!createChartDto.projectId)
       throw new NotFoundException('ProgramId is required');
@@ -49,7 +49,7 @@ export class ChartMainService {
       });
 
 
-      if (rootchart) {
+      if (rootchart && roottitle) {
         const project = await txPrisma.project.findUnique({
           where: { id: projectId! },
           select: { id: true },
@@ -58,12 +58,11 @@ export class ChartMainService {
         if (!project) {
           throw new NotFoundException('Project not found');
         }
-        await txPrisma.project.update({
-          where: {
-            id: projectId!,
-          },
-          data: {
-            rootchartId: mainChart.id,
+        await txPrisma.rootChart.create({
+         
+         data: {
+            value: mainChart.id,
+            title:  roottitle ?? null  
           },
         });
       }
@@ -581,19 +580,63 @@ export class ChartMainService {
 
 
 
-  async valuechageCalculations (parentId:string) {
+  async valuechageCalculations (id:string) {
         
         const storevalue = []
-        const flag = false;
+        let flag = false;
+
+        const updateResult = await this.prisma.chartTable.findFirst({
+          where:{id}
+        })
+
+        let nodeId = updateResult?.parentId
 
         while(!flag){
 
            const reuslt = await this.prisma.chartTable.findMany({
-             where: {parentId}
+             where: {parentId:nodeId}
            })
+
+           const findingParent = await this.prisma.chartTable.findUnique({
+               where:{id:reuslt[0].id}
+           })
+
+           if(!findingParent?.parentId){
+                flag = true
+           }
+           nodeId = findingParent?.parentId
 
            
         }
   }
 
+}
+
+
+ function mergeAndSum(multipleTables) {
+  if (!multipleTables.length) return [];
+
+  const header = multipleTables[0][0];
+  const resultMap = {};
+
+  for (const table of multipleTables) {
+    for (let i = 1; i < table.length; i++) {
+      const row = table[i];
+      const key = row[0];
+
+      if (!resultMap[key]) {
+        resultMap[key] = Array(row.length).fill(0);
+        resultMap[key][0] = key;
+      }
+
+      for (let j = 1; j < row.length; j++) {
+        resultMap[key][j] += row[j];
+      }
+    }
+  }
+
+  return [
+    header,
+    ...Object.values(resultMap)
+  ];
 }

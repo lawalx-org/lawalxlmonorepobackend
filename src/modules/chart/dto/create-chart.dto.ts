@@ -102,4 +102,10 @@ export class CreateChartDto extends IntersectionType(
   @IsBoolean()
   @IsOptional()
   rootchart?: boolean;
+
+  @ApiProperty({
+    example: 'parentId uuid',
+  })
+  @IsOptional()
+   roottitle?: string
 }
