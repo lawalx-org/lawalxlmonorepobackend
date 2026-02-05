@@ -6,7 +6,8 @@ import {
   Param, 
   UseGuards, 
   Res, 
-  HttpStatus 
+  HttpStatus, 
+  Patch
 } from '@nestjs/common';
 import { Response } from 'express';
 import { 
@@ -20,6 +21,7 @@ import { ChartMainService } from '../service/chart.main.service';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { Role } from 'generated/prisma';
+import { UpdateSingleChartDto } from '../dto/update.data.dto';
 
 @ApiTags('chart')
 @Controller('chart')
@@ -65,28 +67,27 @@ export class ChartMainController {
     return this.chartService.findOne(id);
   }
 
-  // --- EXCEL EXPORT ROUTE ---
-  @Get(':id/export-excel')
-  @Roles(Role.CLIENT) // Optional: restrict who can export
-  @ApiOperation({ 
-    summary: 'Export chart data to Excel', 
-    description: 'Generates an .xlsx file containing the chart axes, metadata, and widget information.' 
-  })
-  @ApiParam({ name: 'id', description: 'The unique ID of the ChartTable record' })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'The Excel file has been successfully generated.',
-    content: {
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {
-        schema: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
-    },
-  })
-  async exportExcel(@Param('id') id: string, @Res() res: Response) {
-    // This calls the method we created in the service earlier
-    return await this.chartService.exportToExcel(id, res);
+  @Get('findChildrenValue/:id')
+  async samelevenode(@Param('id') id: string) {
+    const result = await this.chartService.findsomelavelenode(id);
+    return {
+      message: 'All charts active fetched successfully',
+      data: result,
+    };
   }
+
+  @Patch('updateChartValue/:id')
+  async value(@Param('id') id: string , @Body() updateChartDto: UpdateSingleChartDto  ) {
+    const result = await this.chartService.valuechageCalculations(id , updateChartDto );
+    return {
+      message: 'All charts active fetched successfully',
+      data: result,
+    };
+  }
+
+
+ 
+
+
+
 }

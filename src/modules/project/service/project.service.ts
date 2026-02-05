@@ -637,6 +637,7 @@ export class ProjectService {
         },
       },
     },
+    
     projectViewers: {
       include: {
         viewer: {
@@ -659,6 +660,7 @@ export class ProjectService {
     reminders: true,
     tasks: true,
     activities: true,
+    rootCharts: true,
   };
 
   async findAllFull(query: FindAllProjectsDto) {
@@ -708,6 +710,7 @@ export class ProjectService {
         isDeleted: false,
       },
       include: this.fullProjectInclude,
+
     });
 
     if (!project) {

@@ -12,7 +12,7 @@ model Project {
   projectEmployees ProjectEmployee[]
   projectViewers   ProjectViewer[]
   progress         Int?
-  uploadCycle     UploadCycle?
+  uploadCycle      UploadCycle?
 
   //if need data
   slug                String?       @unique
@@ -56,6 +56,7 @@ model Project {
   reminders                  Reminder[]
   sheets                     Sheet[]
   favorites                  FavoriteProject[]
+  rootCharts                 RootChart[]
 
   //ray
   charts ChartTable[]
