@@ -675,6 +675,17 @@ export class ChartMainService {
     return  updateResult ;
   }
 
+async showHistory(chartId: string) {
+  const history = await this.prisma.chartHistory.findMany({
+    where: {
+      chartId: chartId 
+    },
+    orderBy: {
+      createdAt: 'asc'
+    }
+  });
+  return history;
+}
   
 
 }
@@ -706,4 +717,6 @@ async function mergeAndSum(multipleTables) {
     header,
     ...Object.values(resultMap)
   ];
+
+
 }

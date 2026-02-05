@@ -49,4 +49,6 @@ export class ChartController {
   async getChartsByProjectId(@Param('projectId') projectId: string) {
     return this.chartService.getChartsByProjectId(projectId);
   }
+
+
 }
