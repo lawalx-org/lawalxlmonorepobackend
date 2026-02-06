@@ -428,6 +428,7 @@ export class ProjectService {
       location,
       sortName,
       metadata,
+      status,
 
       ...rest
     } = createProjectDto;
@@ -466,6 +467,7 @@ export class ProjectService {
           startDate,
           deadline,
           UploadData,
+          status: status || 'PENDING',
 
           program: { connect: { id: programId } },
           manager: { connect: { id: managerId } },
