@@ -188,7 +188,7 @@ import {
   Max,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Days, Priority, Share, UploadCycle } from 'generated/prisma';
+import { Days, Priority, ProjectStatus, Share, UploadCycle } from 'generated/prisma';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CreateReminderDto } from 'src/modules/notification/dto/create-reminder.dto';
 
@@ -406,6 +406,15 @@ export class CreateProjectDto extends CreateReminderDto {
   // @IsString()
   // @IsOptional()
   // reminderMessage?: string;
+
+  @ApiPropertyOptional({
+  description: 'The initial status of the project',
+  enum: ProjectStatus,
+  default: ProjectStatus.PENDING,
+})
+@IsEnum(ProjectStatus)
+@IsOptional()
+status?: ProjectStatus;
 
 
 }
