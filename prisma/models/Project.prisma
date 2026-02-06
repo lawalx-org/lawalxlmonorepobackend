@@ -29,7 +29,7 @@ model Project {
   currentRate String?
   startDate   DateTime?
   SelectDays  Days[]
-  UploadData  UploadDate?
+  UploadData  String?
   selectDate  DateTime[]
   location    String?
   deadline    DateTime?
@@ -122,11 +122,11 @@ enum Days {
   Sat
 }
 
-enum UploadDate {
-  Three
-  Four
-  Five
-}
+// enum UploadDate {
+//   Three
+//   Four
+//   Five
+// }
 
 /// privious 
 // model   Project {

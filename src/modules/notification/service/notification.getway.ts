@@ -262,4 +262,14 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
       }
     }
   }
+
+  async sendToUsers(userIds: string[], event: string, payload: any) {
+    const socketIds = await Promise.all(
+      userIds.map(id => this.redisService.hGet('userSocketMap', id))
+    );
+
+    socketIds.forEach(socketId => {
+      if (socketId) this.server.to(socketId).emit(event, payload);
+    });
+  }
 }

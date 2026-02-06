@@ -188,7 +188,7 @@ import {
   Max,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Days, Priority, Share, UploadCycle, UploadDate } from 'generated/prisma';
+import { Days, Priority, Share, UploadCycle } from 'generated/prisma';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CreateReminderDto } from 'src/modules/notification/dto/create-reminder.dto';
 
@@ -226,7 +226,7 @@ export class CreateProjectDto extends CreateReminderDto {
   programId: string;
 
 
- @ApiPropertyOptional({
+  @ApiPropertyOptional({
     example: '550e8400-e29b-41d4-a716-446655440000',
     description: 'The ID of the template to apply (optional)'
   })
@@ -356,20 +356,17 @@ export class CreateProjectDto extends CreateReminderDto {
   @ApiPropertyOptional({
     description: 'Privacy/Sharing settings',
     enum: Days,
-    default: Days.Sun,
+    default: [Days.Sun]
   })
   @IsEnum(Days, { each: true })
   @IsOptional()
   SelectDays?: Days[];
 
-  @ApiPropertyOptional({
-    description: 'Privacy/Sharing settings',
-    enum: UploadDate,
-    default: UploadDate.Three,
-  })
-  @IsEnum(UploadDate)
+  // ✅ Use this
   @IsOptional()
-  UploadData?: UploadDate;
+  @IsString()
+  @ApiPropertyOptional()
+  UploadData?: string;
 
 
   @ApiPropertyOptional({
@@ -386,7 +383,7 @@ export class CreateProjectDto extends CreateReminderDto {
   @ApiPropertyOptional({
     description: 'Privacy/Sharing settings',
     enum: Days,
-    default: Days.Sun,
+    default: [Days.Sun]
   })
   @IsEnum(Days, { each: true })
   @IsOptional()

@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { Role } from "generated/prisma";
 import { welcomeEmailTemplate } from "src/modules/utils/template/welcometempleted";
 import { NotificationType } from 'src/modules/notification/dto/create-notification.dto';
+import { UpdateStaffEmployeeDto } from "../dto/update.employee.dto";
 
 @Injectable()
 export class StaffEmployeeService {
@@ -16,7 +17,7 @@ export class StaffEmployeeService {
     private readonly configService: ConfigService,
     private readonly emailService: EmailService,
     private readonly notificationService: NotificationService
-  ) {}
+  ) { }
 
   async create(createEmployeeDto: CreateStaffEmployeeDto) {
     const {
@@ -34,8 +35,8 @@ export class StaffEmployeeService {
 
     const [existingUser, projectCount] = await Promise.all([
       this.prisma.user.findUnique({ where: { email }, select: { id: true } }),
-      projects?.length 
-        ? this.prisma.project.count({ where: { id: { in: projects } } }) 
+      projects?.length
+        ? this.prisma.project.count({ where: { id: { in: projects } } })
         : Promise.resolve(0)
     ]);
 
@@ -74,7 +75,7 @@ export class StaffEmployeeService {
             } : undefined,
           },
         });
-      } 
+      }
       else if (selectedRole === RestrictedRole.MANAGER) {
         await tx.manager.create({
           data: {
@@ -84,7 +85,7 @@ export class StaffEmployeeService {
             } : undefined,
           },
         });
-      } 
+      }
       else if (selectedRole === RestrictedRole.VIEWER) {
         await tx.viewer.create({
           data: {
@@ -129,6 +130,75 @@ export class StaffEmployeeService {
     } catch (error) {
       console.error('Background side-effect failed:', error);
     }
+  }
+
+  async update(id: string, updateDto: UpdateStaffEmployeeDto) {
+    const {
+      projects,
+      skills,
+      role: selectedRole,
+      password: plainTextPassword,
+      ...directFields
+    } = updateDto;
+
+
+    const existingUser = await this.prisma.user.findUnique({
+      where: { id },
+      include: { employee: true, manager: true, viewer: true }
+    });
+
+    if (!existingUser) throw new NotFoundException('User not found');
+
+
+    let hashedPassword;
+    if (plainTextPassword) {
+      const saltRounds = Number(this.configService.get('bcrypt_salt_rounds') ?? 10);
+      hashedPassword = await bcrypt.hash(plainTextPassword, saltRounds);
+    }
+
+    return await this.prisma.$transaction(async (tx) => {
+
+      const updatedUser = await tx.user.update({
+        where: { id },
+        data: {
+          ...directFields,
+          ...(hashedPassword && { password: hashedPassword }),
+          role: selectedRole as unknown as Role,
+        },
+      });
+
+      const commonData = {
+        description: directFields.description,
+        joinedDate: directFields.joinedDate,
+        skills: skills,
+      };
+
+      if (selectedRole === RestrictedRole.EMPLOYEE) {
+        await tx.employee.update({
+          where: { userId: id },
+          data: {
+            ...commonData,
+            projectEmployees: projects ? {
+              deleteMany: {},
+              create: projects.map(projectId => ({ project: { connect: { id: projectId } } }))
+            } : undefined,
+          },
+        });
+      }
+      else if (selectedRole === RestrictedRole.MANAGER) {
+        await tx.manager.update({
+          where: { userId: id },
+          data: {
+            ...commonData,
+            projects: projects ? {
+              set: projects.map(projectId => ({ id: projectId }))
+            } : undefined,
+          },
+        });
+      }
+      const { password, ...result } = updatedUser;
+      return result;
+    });
   }
 
   private async notifyManagers(newUser: any, projectIds: string[]) {

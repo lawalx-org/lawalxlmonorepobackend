@@ -19,6 +19,7 @@ import { NotificationType } from 'src/modules/notification/dto/create-notificati
 import { slugify } from 'src/modules/infrastructure/functions';
 import { InfrastructureRepository } from 'src/modules/infrastructure/infrastructure.repository';
 import { SchedulerService } from 'src/modules/notification/service/scheduler.service';
+import { Gateway } from 'src/modules/notification/service/notification.getway';
 
 @Injectable()
 export class ProjectService {
@@ -28,7 +29,9 @@ export class ProjectService {
     private readonly reminderService: ReminderService,
     private readonly notificationService: NotificationService,
     private readonly infrastructureRepo: InfrastructureRepository,
-    private readonly schedulerService: SchedulerService
+    private readonly schedulerService: SchedulerService,
+    private readonly gateway: Gateway
+
   ) { }
 
 
@@ -522,28 +525,26 @@ export class ProjectService {
 
 
   private async sendCreationNotifications(project: any) {
-    try {
-      if (!project.manager?.user) return;
+    const receiverIds = [
+      project.manager?.user?.id,
+      ...project.projectEmployees.map(e => e.employee?.user?.id)
+    ].filter(Boolean);
 
-      const receiverIds = [
-        project.manager.user.id,
-        ...(project.projectEmployees?.map(e => e.employee?.user?.id).filter(Boolean) || []),
-      ];
+    const uniqueReceivers = [...new Set(receiverIds)] as string[];
+    const savedNotification = await this.notificationService.create({
+      receiverIds: uniqueReceivers,
+      context: `New project "${project.name}" assigned.`,
+      type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
+    }, project.manager.user.id);
 
-      const uniqueReceivers = [...new Set(receiverIds)];
-
-      await this.notificationService.create(
-        {
-          receiverIds: uniqueReceivers,
-          context: `A new project ${project.name} has been created and assigned.`,
-          type: NotificationType.NEW_EMPLOYEE_ASSIGNED,
-        },
-        project.manager.user.id,
-      );
-    } catch (err) {
-      this.logger.error(`Failed to send notifications: ${err.message}`);
-    }
+    await this.gateway.sendToUsers(uniqueReceivers, 'notification_received', {
+      id: savedNotification.id,
+      message: `You have been assigned to project: ${project.name}`,
+      metadata: { projectId: project.id },
+      createdAt: new Date()
+    });
   }
+
   private async sendProjectNotifications(project: any) {
     const managerUserId = project.manager?.user?.id;
     if (!managerUserId) return;
