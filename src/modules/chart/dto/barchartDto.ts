@@ -63,4 +63,12 @@ export class CreateBarChartDto {
   @ValidateNested({ each: true })
   @Type(() => ShowWidgetDto)
   widgets?: ShowWidgetDto[];
+
+
+   @ApiPropertyOptional({
+    description: 'if filter is used say that legent name ',
+  })
+  @IsOptional()
+  @IsInt()
+  filter_By?: String; 
 }

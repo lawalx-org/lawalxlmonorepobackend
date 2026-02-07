@@ -32,7 +32,7 @@ model Client {
   referredPersons ReferredPerson[]
   tickets         Ticket[]
   programs        Program[]
-  templates        Template[]   
+ 
 
   @@map("clients")
 }

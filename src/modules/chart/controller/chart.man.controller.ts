@@ -22,6 +22,8 @@ import { Roles } from 'src/common/jwt/roles.decorator';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { Role } from 'generated/prisma';
 import { UpdateSingleChartDto } from '../dto/update.data.dto';
+import { CloneSingleChartDto } from '../dto/clone.dto';
+
 
 @ApiTags('chart')
 @Controller('chart')
@@ -91,6 +93,18 @@ export class ChartMainController {
   async getchartHistoty(@Param('projectId') chartId: string) {
     const data = await this.chartService.showHistory(chartId)
     return data
+  }
+
+
+  @Get()
+  @Roles('SUPERADMIN', 'ADMIN')
+  @ApiOperation({ summary: 'Create a new chart' })
+  async StoreTempleted(@Body() cloneChart: CloneSingleChartDto ) {
+    const result = await this.chartService.Storetempleted(cloneChart);
+    return {
+      message: 'Chart templeted stored successfully',
+      data: result,
+    };
   }
 
 

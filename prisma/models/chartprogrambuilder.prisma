@@ -1,0 +1,41 @@
+model ChartTableProgramBuilder {
+    id       String      @id @default(uuid())
+    title    String
+    status   ChartStatus @default(INACTIVE)
+    category ChartName
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relation to barChart (one-to-one optional)
+    barChart           barChartprogrambuilder?
+    horizontalBarChart HorizontalBarChartprogrambuilder?
+    pieChart           Piprogrambuilder?
+    heatmapChart       HeatMapChartprogrambuilder?
+    areaChart          AreaChartprogrambuilder?
+    multiAxisChart     MultiAxisChartprogrambuilder?
+    columnChart        ColumnChartprogrambuilder?
+    stackedBarChart    StackedBarChartprogrambuilder?
+    doughnutChart      DoughnutChartprogrambuilder?
+    paretoChart        ParetoChartprogrambuilder?
+    histogramChart     HistogramChartprogrambuilder?
+    scatterChart       ScatterChartprogrambuilder?
+    solidGaugeChart    SolidGaugeChartprogrambuilder?
+    funnelChart        FunnelChartprogrambuilder?
+    waterFallChart     WaterFallChartprogrambuilder?
+    candlestickChart   CandlestickChartprogrambuilder?
+    radarChart         RadarChartprogrambuilder?
+    Project            Project?                          @relation(fields: [projectId], references: [id])
+    projectId          String?
+    history            ChartHistoryprogrambuilder[]
+}
+
+model ChartHistoryprogrambuilder {
+    id        String   @id @default(uuid())
+    value     Json
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    chart   ChartTableProgramBuilder? @relation(fields: [chartId], references: [id])
+    chartId String?
+}

@@ -1,59 +1,118 @@
 model Widget {
-  id          String    @id @default(uuid())
-  legendName  String
-  color       String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id         String   @id @default(uuid())
+  legendName String
+  color      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   // Relations to all chart types (only one will be non-null per widget)
-  barChart           barChart?           @relation(fields: [barChartId], references: [id])
-  barChartId         String?
+  barChart   barChart? @relation(fields: [barChartId], references: [id])
+  barChartId String?
 
-  horizontalBarChart HorizontalBarChart? @relation(fields: [horizontalBarChartId], references: [id])
+  horizontalBarChart   HorizontalBarChart? @relation(fields: [horizontalBarChartId], references: [id])
   horizontalBarChartId String?
 
-  piChart            Pi?                 @relation(fields: [piChartId], references: [id])
-  piChartId          String?
+  piChart   Pi?     @relation(fields: [piChartId], references: [id])
+  piChartId String?
 
-  heatmapChart       HeatMapChart?       @relation(fields: [heatMapChartId], references: [id])
-  heatMapChartId     String?
+  heatmapChart   HeatMapChart? @relation(fields: [heatMapChartId], references: [id])
+  heatMapChartId String?
 
-  areaChart          AreaChart?          @relation(fields: [areaChartId], references: [id])
-  areaChartId        String?
+  areaChart   AreaChart? @relation(fields: [areaChartId], references: [id])
+  areaChartId String?
 
-  multiAxisChart     MultiAxisChart?     @relation(fields: [multiAxisChartId], references: [id])
-  multiAxisChartId   String?
+  multiAxisChart   MultiAxisChart? @relation(fields: [multiAxisChartId], references: [id])
+  multiAxisChartId String?
 
-  columnChart        ColumnChart?        @relation(fields: [columnChartId], references: [id])
-  columnChartId      String?
+  columnChart   ColumnChart? @relation(fields: [columnChartId], references: [id])
+  columnChartId String?
 
-  stackedBarChart    StackedBarChart?    @relation(fields: [stackedBarChartId], references: [id])
-  stackedBarChartId  String?
+  stackedBarChart   StackedBarChart? @relation(fields: [stackedBarChartId], references: [id])
+  stackedBarChartId String?
 
-  doughnutChart      DoughnutChart?      @relation(fields: [doughnutChartId], references: [id])
-  doughnutChartId    String?
+  doughnutChart   DoughnutChart? @relation(fields: [doughnutChartId], references: [id])
+  doughnutChartId String?
 
-  paretoChart        ParetoChart?        @relation(fields: [paretoChartId], references: [id])
-  paretoChartId      String?
+  paretoChart   ParetoChart? @relation(fields: [paretoChartId], references: [id])
+  paretoChartId String?
 
-  histogramChart     HistogramChart?     @relation(fields: [histogramChartId], references: [id])
-  histogramChartId   String?
+  histogramChart   HistogramChart? @relation(fields: [histogramChartId], references: [id])
+  histogramChartId String?
 
-  scatterChart       ScatterChart?       @relation(fields: [scatterChartId], references: [id])
-  scatterChartId     String?
+  scatterChart   ScatterChart? @relation(fields: [scatterChartId], references: [id])
+  scatterChartId String?
 
-  solidGaugeChart    SolidGaugeChart?    @relation(fields: [solidGaugeChartId], references: [id])
-  solidGaugeChartId  String?
+  solidGaugeChart   SolidGaugeChart? @relation(fields: [solidGaugeChartId], references: [id])
+  solidGaugeChartId String?
 
-  funnelChart        FunnelChart?        @relation(fields: [funnelChartId], references: [id])
-  funnelChartId      String?
+  funnelChart   FunnelChart? @relation(fields: [funnelChartId], references: [id])
+  funnelChartId String?
 
-  waterFallChart     WaterFallChart?     @relation(fields: [waterFallChartId], references: [id])
-  waterFallChartId   String?
+  waterFallChart   WaterFallChart? @relation(fields: [waterFallChartId], references: [id])
+  waterFallChartId String?
 
-  candlestickChart   CandlestickChart?   @relation(fields: [candlestickChartId], references: [id])
+  candlestickChart   CandlestickChart? @relation(fields: [candlestickChartId], references: [id])
   candlestickChartId String?
 
-  radarChart         RadarChart?         @relation(fields: [radarChartId], references: [id])
-  radarChartId       String?
+  radarChart   RadarChart? @relation(fields: [radarChartId], references: [id])
+  radarChartId String?
+}
+
+model WidgetProgramBuilder {
+  id         String   @id @default(uuid())
+  legendName String
+  color      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  barChart   barChartprogrambuilder? @relation(fields: [barChartId], references: [id])
+  barChartId String?
+
+  horizontalBarChart   HorizontalBarChartprogrambuilder? @relation(fields: [horizontalBarChartId], references: [id])
+  horizontalBarChartId String?
+
+  pieChart   Piprogrambuilder? @relation(fields: [pieChartId], references: [id])
+  pieChartId String?
+
+  heatmapChart   HeatMapChartprogrambuilder? @relation(fields: [heatmapChartId], references: [id])
+  heatmapChartId String?
+
+  areaChart   AreaChartprogrambuilder? @relation(fields: [areaChartId], references: [id])
+  areaChartId String?
+
+  multiAxisChart   MultiAxisChartprogrambuilder? @relation(fields: [multiAxisChartId], references: [id])
+  multiAxisChartId String?
+
+  columnChart   ColumnChartprogrambuilder? @relation(fields: [columnChartId], references: [id])
+  columnChartId String?
+
+  stackedBarChart   StackedBarChartprogrambuilder? @relation(fields: [stackedBarChartId], references: [id])
+  stackedBarChartId String?
+
+  doughnutChart   DoughnutChartprogrambuilder? @relation(fields: [doughnutChartId], references: [id])
+  doughnutChartId String?
+
+  paretoChart   ParetoChartprogrambuilder? @relation(fields: [paretoChartId], references: [id])
+  paretoChartId String?
+
+  histogramChart   HistogramChartprogrambuilder? @relation(fields: [histogramChartId], references: [id])
+  histogramChartId String?
+
+  scatterChart   ScatterChartprogrambuilder? @relation(fields: [scatterChartId], references: [id])
+  scatterChartId String?
+
+  solidGaugeChart   SolidGaugeChartprogrambuilder? @relation(fields: [solidGaugeChartId], references: [id])
+  solidGaugeChartId String?
+
+  funnelChart   FunnelChartprogrambuilder? @relation(fields: [funnelChartId], references: [id])
+  funnelChartId String?
+
+  waterFallChart   WaterFallChartprogrambuilder? @relation(fields: [waterFallChartId], references: [id])
+  waterFallChartId String?
+
+  candlestickChart   CandlestickChartprogrambuilder? @relation(fields: [candlestickChartId], references: [id])
+  candlestickChartId String?
+
+  radarChart   RadarChartprogrambuilder? @relation(fields: [radarChartId], references: [id])
+  radarChartId String?
 }

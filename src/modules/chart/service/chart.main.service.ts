@@ -8,6 +8,7 @@ import { CreateChartDto } from '../dto/create-chart.dto';
 import { UpdateChartDto } from '../dto/update-chart.dto';
 import { ChartName, ChartStatus, Prisma } from 'generated/prisma';
 import { UpdateSingleChartDto } from '../dto/update.data.dto';
+import {  CloneSingleChartDto } from '../dto/clone.dto';
 
 @Injectable()
 export class ChartMainService {
@@ -686,6 +687,125 @@ async showHistory(chartId: string) {
   });
   return history;
 }
+
+
+
+async cloneProjectRootTrees(
+  sourceProjectId: string,
+  targetProjectId: string,
+) {
+  return this.prisma.$transaction(async (tx) => {
+
+    // 1️⃣ Load root charts
+    const project = await tx.project.findUnique({
+      where: { id: sourceProjectId },
+      include: { rootCharts: true },
+    });
+
+    if (!project || project.rootCharts.length === 0) {
+      throw new BadRequestException('No root charts found');
+    }
+
+    const rootIds = project.rootCharts.map(r => r.value);
+
+    // 2️⃣ Load all charts of project
+    const allCharts = await tx.chartTable.findMany({
+      where: { projectId: sourceProjectId },
+    });
+
+    if (!allCharts.length) {
+      throw new BadRequestException('No charts found');
+    }
+
+    // 3️⃣ Build adjacency map
+    const childrenMap = new Map<string, string[]>();
+
+    for (const chart of allCharts) {
+      if (!chart.parentId) continue;
+
+      if (!childrenMap.has(chart.parentId)) {
+        childrenMap.set(chart.parentId, []);
+      }
+
+      childrenMap.get(chart.parentId)!.push(chart.id);
+    }
+
+    // 4️⃣ Collect only charts reachable from roots
+    const collected = new Map<string, typeof allCharts[0]>();
+
+    const dfs = (id: string) => {
+      const chart = allCharts.find(c => c.id === id);
+      if (!chart || collected.has(id)) return;
+
+      collected.set(id, chart);
+
+      const children = childrenMap.get(id) || [];
+      for (const childId of children) {
+        dfs(childId);
+      }
+    };
+
+    for (const rootId of rootIds) {
+      dfs(rootId);
+    }
+
+    const chartsToClone = Array.from(collected.values());
+
+    // 5️⃣ Clone charts (without parentId)
+    const idMap = new Map<string, string>();
+
+    for (const chart of chartsToClone) {
+      const { id, parentId, createdAt, updatedAt, ...data } = chart;
+
+      const newChart = await tx.chartTable.create({
+        data: {
+          ...data,
+          parentId: null,
+          projectId: targetProjectId,
+        },
+      });
+
+      idMap.set(id, newChart.id);
+    }
+
+    // 6️⃣ Restore hierarchy
+    for (const chart of chartsToClone) {
+      if (!chart.parentId) continue;
+
+      await tx.chartTable.update({
+        where: { id: idMap.get(chart.id)! },
+        data: {
+          parentId: idMap.get(chart.parentId)!,
+        },
+      });
+    }
+
+    // 7️⃣ Create new RootChart rows
+    const newRootChartIds: string[] = [];
+
+    for (const root of project.rootCharts) {
+      const newRootId = idMap.get(root.value);
+      if (!newRootId) continue;
+
+      await tx.rootChart.create({
+        data: {
+          title: root.title,
+          value: newRootId,
+          projectId: targetProjectId,
+        },
+      });
+
+      newRootChartIds.push(newRootId);
+    }
+
+    return {
+      message: 'Root trees cloned successfully',
+      rootChartIds: newRootChartIds,
+    };
+  });
+}
+
+
   
 
 }

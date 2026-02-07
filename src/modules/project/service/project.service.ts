@@ -471,7 +471,7 @@ export class ProjectService {
 
           program: { connect: { id: programId } },
           manager: { connect: { id: managerId } },
-          template: templateId ? { connect: { id: templateId } } : undefined,
+         
 
           projectEmployees: employeeIds?.length
             ? { create: employeeIds.map(id => ({ employeeId: id })) }

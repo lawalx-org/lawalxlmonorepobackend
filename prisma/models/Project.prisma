@@ -42,11 +42,6 @@ model Project {
   isDeleted Boolean   @default(false)
   deletedAt DateTime?
 
-  // Relations
-  // template
-  templateId String?   @map("template_id")
-  template   Template? @relation(fields: [templateId], references: [id])
-
   nodes                      InfrastructureNode[]
   tasks                      Task[]
   activities                 Activity[]
@@ -59,8 +54,9 @@ model Project {
   rootCharts                 RootChart[]
 
   //ray
-  charts ChartTable[]
+  charts                    ChartTable[]
   // ray
+  chartTableProgramBuilders ChartTableProgramBuilder[]
 
   @@index([programId])
   @@index([slug])
