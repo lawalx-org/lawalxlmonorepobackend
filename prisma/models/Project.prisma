@@ -56,7 +56,7 @@ model Project {
   //ray
   charts                    ChartTable[]
   // ray
-  chartTableProgramBuilders ChartTableProgramBuilder[]
+ 
 
   @@index([programId])
   @@index([slug])

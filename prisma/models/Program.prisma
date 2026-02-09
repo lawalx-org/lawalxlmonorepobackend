@@ -49,6 +49,7 @@ model Program {
   client             Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
   projects           Project[]
   tags               Tag[]
+  chartTableProgramBuilders ChartTableProgramBuilder[]
 
   @@map("programs")
 }

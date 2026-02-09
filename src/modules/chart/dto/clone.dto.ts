@@ -1,4 +1,4 @@
-import { IsUUID } from 'class-validator';
+import { IsUUID, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CloneSingleChartDto {
@@ -8,4 +8,18 @@ export class CloneSingleChartDto {
   })
   @IsUUID('4')
   id: string;
+
+  @ApiProperty({
+    description: 'Name of the template',
+    example: 'Executive Dashboard',
+  })
+  @IsString()
+  name: string;
+
+  @ApiProperty({
+    description: 'ID of the owner',
+    example: 'user-123',
+  })
+  @IsString()
+  ownerid: string;
 }
