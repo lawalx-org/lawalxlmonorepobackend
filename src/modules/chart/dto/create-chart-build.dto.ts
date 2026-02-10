@@ -4,7 +4,7 @@ import { ChartName, ChartStatus } from 'generated/prisma';
 import { Type } from 'class-transformer';
 import { CreateBarChartDto } from './barchartDto';
 import { Create_Hr_BarChartDto } from './hr_bar_chartDto';
-import { Create_Pi_ChartDto } from './pi_ChartDto';
+// import { Create_Pi_ChartDto } from './pi_ChartDto';
 import { HeatMap_ChartDto } from './heatMap_chartDto';
 import { Area_ChartDto } from './areaChart.dto';
 import { MultiAxis_ChartDto } from './multiAxisChart.dto';
@@ -33,7 +33,7 @@ export class CreateValuediteactDto {
 export class CreateChartBuildDto extends IntersectionType(
     CreateBarChartDto,
     Create_Hr_BarChartDto,
-    Create_Pi_ChartDto,
+    // Create_Pi_ChartDto,
     HeatMap_ChartDto,
     Area_ChartDto,
     MultiAxis_ChartDto,
@@ -84,7 +84,7 @@ export class CreateChartBuildDto extends IntersectionType(
         example: "uuid"
     })
     @IsUUID()
-    programid : string
+    programid: string
 
     @ApiProperty({ type: [CreateValuediteactDto] })
     @IsArray()

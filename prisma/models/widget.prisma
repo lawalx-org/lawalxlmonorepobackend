@@ -4,6 +4,8 @@ model Widget {
   color      String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  value      Float    @default(0)
+  index      Int      @default(0)
 
   // Relations to all chart types (only one will be non-null per widget)
   barChart   barChart? @relation(fields: [barChartId], references: [id])

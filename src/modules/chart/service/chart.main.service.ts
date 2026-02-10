@@ -1,1618 +1,330 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateChartDto } from '../dto/create-chart.dto';
-import { UpdateChartDto } from '../dto/update-chart.dto';
-import { ChartName, ChartStatus, Prisma } from 'generated/prisma';
-import { UpdateSingleChartDto } from '../dto/update.data.dto';
-import { CloneSingleChartDto } from '../dto/clone.dto';
-import { ApplyTemplateDto } from '../dto/apply-template.dto';
-import { CreateChartBuildDto } from '../dto/create-chart-build.dto';
+import { ChartName, Prisma } from 'generated/prisma';
+import { CreateChartDto, WidgetDto } from '../dto';
+import { Parser } from 'json2csv';
+
+import * as csv from 'csv-parser';
+import { Readable } from 'stream';
+
+interface FlattenedChartData {
+  id: string;
+  parentId: string;
+  level: string;
+  title: string;
+  category: string;
+  val1: number;
+  val2: number;
+  val3: number;
+  status: string;
+}
 
 @Injectable()
 export class ChartMainService {
   constructor(private readonly prisma: PrismaService) { }
 
-  //create chart
   async create(createChartDto: CreateChartDto) {
-    let subChat = {};
-    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId, roottitle } = createChartDto;
+    const { xAxis, yAxis, title, status, category, parentId, projectId, piConfig } = createChartDto;
 
-    // if (!createChartDto.projectId)
-    //   throw new NotFoundException('projectId is required');
-
-    const result = await this.prisma.$transaction(async (txPrisma) => {
-
+    return await this.prisma.$transaction(async (tx) => {
       if (parentId) {
-        const parentExists = await txPrisma.chartTable.findUnique({
-          where: { id: parentId },
-          select: { id: true },
-        });
-
-        if (!parentExists) {
-          throw new NotFoundException('Parent chart does not exist');
-        }
+        const parent = await tx.chartTable.findUnique({ where: { id: parentId } });
+        if (!parent) throw new NotFoundException('Parent chart does not exist');
       }
-      const mainChart = await txPrisma.chartTable.create({
+
+      const mainChart = await tx.chartTable.create({
         data: {
           title,
           parentId: parentId ?? null,
           status,
           category,
-          xAxis: JSON.parse(xAxis),
-          yAxis: yAxis ? JSON.parse(yAxis) : Prisma.JsonNull,
-          zAxis: zAxis ? JSON.parse(zAxis) : Prisma.JsonNull,
-
-          // SABBIR - Relation to program //
-          projectId: createChartDto.projectId,
-          // SABBIR //
+          xAxis: typeof xAxis === 'string' ? JSON.parse(xAxis) : xAxis,
+          yAxis: yAxis ? (typeof yAxis === 'string' ? JSON.parse(yAxis) : yAxis) : Prisma.JsonNull,
+          projectId,
         },
       });
 
-
-      if (rootchart && roottitle) {
-        const project = await txPrisma.project.findUnique({
-          where: { id: projectId! },
-          select: { id: true },
-        });
-
-        if (!project) {
-          throw new NotFoundException('Project not found');
-        }
-        await txPrisma.rootChart.create({
-
+      if (category === ChartName.PIE && piConfig) {
+        await tx.pi.create({
           data: {
-            value: mainChart.id,
-            title: roottitle ?? null,
-            projectId
+            chartTableId: mainChart.id,
+            numberOfDataset: piConfig.numberOfDataset || 0,
+            widgets: piConfig.widgets?.length ? {
+              create: piConfig.widgets.map((w: WidgetDto, i: number) => ({
+                legendName: w.legendName ?? 'Default',
+                color: w.color ?? '#3B82F6',
+                index: w.index !== undefined ? w.index : i,
+                value: w.value ?? 0,
+              })),
+            } : undefined,
           },
         });
-      }
 
-
-      switch (category) {
-        case ChartName.BAR: {
-          const {
-            numberOfDataset,
-            firstFiledDataset,
-            lastFiledDAtaset,
-            widgets,
-          } = createChartDto;
-
-          subChat = await txPrisma.barChart.create({
-            data: {
-              ChartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFiledDataset: firstFiledDataset!,
-              lastFiledDAtaset: lastFiledDAtaset!,
-
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#000000',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.HORIZONTAL_BAR: {
-          const {
-            numberOfDataset,
-            firstFieldDataset,
-            lastFieldDataset,
-            widgets,
-          } = createChartDto;
-
-          subChat = await txPrisma.horizontalBarChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#000000',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.PIE: {
-          const { numberOfDataset, widgets, firstFieldDataset,
-            lastFieldDataset, } = createChartDto;
-          subChat = await txPrisma.pi.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-
-        case ChartName.HEATMAP: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.heatMapChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    // color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.AREA: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.areaChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.LINE: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.multiAxisChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-
-        case ChartName.COLUMN: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.columnChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.HISTOGRAM: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.histogramChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.PARETO: {
-          const { numberOfDataset, widgets, Left_firstFieldDataset, Left_lastFieldDataset, Right_firstFieldDataset, Right_lastFieldDataset } = createChartDto;
-
-          subChat = await txPrisma.paretoChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              Left_firstFieldDataset: Left_firstFieldDataset!,
-              Left_lastFieldDataset: Left_lastFieldDataset!,
-              Right_firstFieldDataset: Right_firstFieldDataset!,
-              Right_lastFieldDataset: Right_lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-
-        case ChartName.FUNNEL: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.funnelChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-        case ChartName.WATERFALL: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.waterFallChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-        case ChartName.RADAR: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.radarChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-
-        case ChartName.DOUGHNUT: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.doughnutChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-        case ChartName.CANDLESTICK: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.candlestickChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-        case ChartName.STACK_BAR_HORIZONTAL: {
-          const { numberOfDataset, widgets, firstFiledDataset, lastFiledDAtaset, } = createChartDto;
-
-          subChat = await txPrisma.stackedBarChart.create({
-            data: {
-              ChartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFiledDataset: firstFiledDataset!,
-              lastFiledDAtaset: lastFiledDAtaset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-
-        case ChartName.GAUGE: {
-          const { widgets, startingRange, endRange, gaugeValue, chartHight, startAngle, endAngle, trackColor, strokeWidth, valueFontSize, shadeIntensity } = createChartDto;
-
-          subChat = await txPrisma.solidGaugeChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              startingRange: startingRange!,
-              endRange: endRange!,
-              gaugeValue: gaugeValue!,
-              chartHight: chartHight!,
-              startAngle: startAngle!,
-              endAngle: endAngle!,
-              trackColor: trackColor!,
-              strokeWidth: strokeWidth!,
-              valueFontSize: valueFontSize!,
-              shadeIntensity: shadeIntensity!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-
-        case ChartName.SCATTER: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.scatterChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-
-        // scatterChart
-
-        default: {
-          throw new BadRequestException(
-            `Chart type "${status}" is not supported`,
-          );
+        if (parentId) {
+          await this.syncHierarchyUpwards(parentId, tx);
         }
       }
-      return { ...mainChart };
+
+      return mainChart;
     });
-    return result;
   }
 
+  private async syncHierarchyUpwards(nodeId: string, tx: Prisma.TransactionClient) {
+    const node = await tx.chartTable.findUnique({
+      where: { id: nodeId },
+      include: { children: true, pi: { include: { widgets: true } } }
+    });
 
-  async createatfirstime(createChartDto: CreateChartDto) {
-    let subChat = {};
-    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId, roottitle } = createChartDto;
+    if (!node) return;
 
-    if (!createChartDto.projectId)
-      throw new NotFoundException('projectId is required');
+    const isAggregator = node.children.length > 0;
 
-    const result = await this.prisma.$transaction(async (txPrisma) => {
-
-      if (parentId) {
-        const parentExists = await txPrisma.chartTable.findUnique({
-          where: { id: parentId },
-          select: { id: true },
-        });
-
-        if (!parentExists) {
-          throw new NotFoundException('Parent chart does not exist');
-        }
-      }
-      const mainChart = await txPrisma.chartTable.create({
-        data: {
-          title,
-          parentId: parentId ?? null,
-          status,
-          category,
-          xAxis: JSON.parse(xAxis),
-          yAxis: yAxis ? JSON.parse(yAxis) : Prisma.JsonNull,
-          zAxis: zAxis ? JSON.parse(zAxis) : Prisma.JsonNull,
-
-          // SABBIR - Relation to program //
-          projectId: createChartDto.projectId,
-          // SABBIR //
-        },
+    if (isAggregator) {
+      const children = await tx.chartTable.findMany({
+        where: { parentId: nodeId },
+        select: { xAxis: true }
       });
 
+      const childrenLabels = children
+        .map((c) => (c.xAxis as any)?.labels)
+        .filter(Boolean);
 
-      if (rootchart && roottitle) {
-        const project = await txPrisma.project.findUnique({
-          where: { id: projectId! },
-          select: { id: true },
+      if (childrenLabels.length > 0) {
+        const summedLabels = this.mergeAndSumLabels(childrenLabels);
+
+        const updated = await tx.chartTable.update({
+          where: { id: nodeId },
+          data: { xAxis: { labels: summedLabels } },
+          include: { pi: { include: { widgets: true } } }
         });
 
-        if (!project) {
-          throw new NotFoundException('Project not found');
+        if (updated.pi?.widgets) {
+          const values = summedLabels[0].slice(1);
+          for (const widget of updated.pi.widgets) {
+            await tx.widget.update({
+              where: { id: widget.id },
+              data: { value: Number(values[widget.index]) || 0 }
+            });
+          }
         }
-        await txPrisma.rootChart.create({
+      }
+    }
 
-          data: {
-            value: mainChart.id,
-            title: roottitle ?? null,
-            projectId
-          },
+    if (node.parentId) {
+      await this.syncHierarchyUpwards(node.parentId, tx);
+    }
+  }
+
+  private mergeAndSumLabels(allLabels: any[][]) {
+    const resultMap: Record<string, number[]> = {};
+    for (const labels of allLabels) {
+      for (const row of labels) {
+        const [key, ...values] = row;
+        if (!resultMap[key]) {
+          resultMap[key] = new Array(values.length).fill(0);
+        }
+        values.forEach((val, index) => {
+          resultMap[key][index] += (Number(val) || 0);
         });
       }
-
-
-      switch (category) {
-        case ChartName.BAR: {
-          const {
-            numberOfDataset,
-            firstFiledDataset,
-            lastFiledDAtaset,
-            widgets,
-          } = createChartDto;
-
-          subChat = await txPrisma.barChart.create({
-            data: {
-              ChartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFiledDataset: firstFiledDataset!,
-              lastFiledDAtaset: lastFiledDAtaset!,
-
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#000000',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.HORIZONTAL_BAR: {
-          const {
-            numberOfDataset,
-            firstFieldDataset,
-            lastFieldDataset,
-            widgets,
-          } = createChartDto;
-
-          subChat = await txPrisma.horizontalBarChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#000000',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.PIE: {
-          const { numberOfDataset, widgets, firstFieldDataset,
-            lastFieldDataset, } = createChartDto;
-          subChat = await txPrisma.pi.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-
-        case ChartName.HEATMAP: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.heatMapChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    // color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.AREA: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.areaChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.LINE: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.multiAxisChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-
-        case ChartName.COLUMN: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.columnChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.HISTOGRAM: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.histogramChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-        case ChartName.PARETO: {
-          const { numberOfDataset, widgets, Left_firstFieldDataset, Left_lastFieldDataset, Right_firstFieldDataset, Right_lastFieldDataset } = createChartDto;
-
-          subChat = await txPrisma.paretoChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              Left_firstFieldDataset: Left_firstFieldDataset!,
-              Left_lastFieldDataset: Left_lastFieldDataset!,
-              Right_firstFieldDataset: Right_firstFieldDataset!,
-              Right_lastFieldDataset: Right_lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-
-        case ChartName.FUNNEL: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.funnelChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-        case ChartName.WATERFALL: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.waterFallChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-        case ChartName.RADAR: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.radarChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-
-        case ChartName.DOUGHNUT: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.doughnutChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-        case ChartName.CANDLESTICK: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.candlestickChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-        case ChartName.STACK_BAR_HORIZONTAL: {
-          const { numberOfDataset, widgets, firstFiledDataset, lastFiledDAtaset, } = createChartDto;
-
-          subChat = await txPrisma.stackedBarChart.create({
-            data: {
-              ChartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFiledDataset: firstFiledDataset!,
-              lastFiledDAtaset: lastFiledDAtaset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-
-        case ChartName.GAUGE: {
-          const { widgets, startingRange, endRange, gaugeValue, chartHight, startAngle, endAngle, trackColor, strokeWidth, valueFontSize, shadeIntensity } = createChartDto;
-
-          subChat = await txPrisma.solidGaugeChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              startingRange: startingRange!,
-              endRange: endRange!,
-              gaugeValue: gaugeValue!,
-              chartHight: chartHight!,
-              startAngle: startAngle!,
-              endAngle: endAngle!,
-              trackColor: trackColor!,
-              strokeWidth: strokeWidth!,
-              valueFontSize: valueFontSize!,
-              shadeIntensity: shadeIntensity!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-
-          break;
-        }
-
-        case ChartName.SCATTER: {
-          const { numberOfDataset, widgets, firstFieldDataset, lastFieldDataset, } = createChartDto;
-
-          subChat = await txPrisma.scatterChart.create({
-            data: {
-              chartTableId: mainChart.id,
-              numberOfDataset: numberOfDataset!,
-              firstFieldDataset: firstFieldDataset!,
-              lastFieldDataset: lastFieldDataset!,
-              widgets: widgets
-                ? {
-                  create: widgets.map((widget) => ({
-                    legendName: widget.legendName ?? 'Default Legend',
-                    color: widget.color ?? '#1cce0cff',
-                  })),
-                }
-                : undefined,
-            },
-          });
-          break;
-        }
-
-        // scatterChart
-
-        default: {
-          throw new BadRequestException(
-            `Chart type "${status}" is not supported`,
-          );
-        }
-      }
-      return { ...mainChart };
-    });
-    return result;
-  }
-
-  //find all active charts
-  async findAllActive() {
-    const activeCharts = await this.prisma.chartTable.findMany({
-      where: { status: ChartStatus.ACTIVE },
-      orderBy: { createdAt: 'desc' },
-    });
-
-    if (!activeCharts || activeCharts.length === 0) {
-      throw new NotFoundException('No active charts found');
     }
-
-    return activeCharts;
+    return Object.entries(resultMap).map(([key, values]) => [key, ...values]);
   }
 
-  //find all inactive charts
-  async findAllInactive() {
-    const inactiveCharts = await this.prisma.chartTable.findMany({
-      where: { status: ChartStatus.INACTIVE },
-      orderBy: { createdAt: 'desc' },
-    });
-
-    if (!inactiveCharts || inactiveCharts.length === 0) {
-      throw new NotFoundException('No inactive charts found');
-    }
-
-    return inactiveCharts;
-  }
-
-  async findOne(id: string) {
+  async getChartWithCalculation(id: string) {
     const chart = await this.prisma.chartTable.findUnique({
       where: { id },
       include: {
-        heatmap: { include: { widgets: true } },
-        pi: { include: { widgets: true } },
-        sheet: true,
-      },
+        children: { select: { id: true, title: true, xAxis: true } },
+        pi: { include: { widgets: { orderBy: { index: 'asc' } } } }
+      }
     });
 
-    if (!chart) return null;
-
-    const { heatmap, pi, sheet, ...main } = chart;
+    if (!chart) throw new NotFoundException('Chart not found');
 
     return {
-      ...main,
-      ...(heatmap ?? {}),
-      ...(pi ?? {}),
-      ...(sheet ?? {}),
+      ...chart,
+      nodeType: chart.children.length > 0 ? (chart.parentId ? 'SUB_PARENT' : 'ROOT_PARENT') : 'LEAF',
+      isAggregated: chart.children.length > 0
     };
   }
 
-  async getSpecificChart(type: ChartName, id: string) {
-    let result;
-    switch (type) {
-      case ChartName.BAR:
-        result = await this.prisma.barChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.HORIZONTAL_BAR:
-        result = await this.prisma.horizontalBarChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.PIE:
-        result = await this.prisma.pi.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.HEATMAP:
-        result = await this.prisma.heatMapChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.AREA:
-        result = await this.prisma.areaChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.LINE:
-        result = await this.prisma.multiAxisChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.COLUMN:
-        result = await this.prisma.columnChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.HISTOGRAM:
-        result = await this.prisma.histogramChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.PARETO:
-        result = await this.prisma.paretoChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.FUNNEL:
-        result = await this.prisma.funnelChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.WATERFALL:
-        result = await this.prisma.waterFallChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.RADAR:
-        result = await this.prisma.radarChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.DOUGHNUT:
-        result = await this.prisma.doughnutChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.CANDLESTICK:
-        result = await this.prisma.candlestickChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.STACK_BAR_HORIZONTAL:
-        result = await this.prisma.stackedBarChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.GAUGE:
-        result = await this.prisma.solidGaugeChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      case ChartName.SCATTER:
-        result = await this.prisma.scatterChart.findUnique({
-          where: { id },
-          include: { widgets: true },
-        });
-        break;
-      default:
-        throw new BadRequestException(`Chart type "${type}" is not supported`);
-    }
-
-    if (!result) {
-      throw new NotFoundException(`Chart with ID ${id} and type ${type} not found`);
-    }
-
-    return result;
+  async exportChartToCsv(mainParentId: string): Promise<string> {
+    const allData = await this.getFlattenedData(mainParentId);
+    const fields = [
+      { label: 'ID', value: 'id' },
+      { label: 'Indented Title', value: 'title' },
+      { label: 'Type', value: 'level' },
+      { label: 'FY 2020', value: 'val1' },
+      { label: 'FY 2021', value: 'val2' },
+      { label: 'FY 2022', value: 'val3' },
+      { label: 'Status', value: 'status' }
+    ];
+    return new Parser({ fields }).parse(allData);
   }
 
-
-  //update chart
-  update(id: string, updateChartDto: UpdateChartDto) {
-    const { xAxis, yAxis, zAxis, ...rest } = updateChartDto;
-
-    const data: Prisma.ChartTableUpdateInput = { ...rest };
-
-    if (xAxis) {
-      data.xAxis = JSON.parse(xAxis);
-    }
-    if (yAxis) {
-      data.yAxis = JSON.parse(yAxis);
-    }
-
-    if (updateChartDto.hasOwnProperty('zAxis')) {
-      data.zAxis = zAxis ? JSON.parse(zAxis) : Prisma.JsonNull;
-    }
-
-    return this.prisma.chartTable.update({
+  private async getFlattenedData(
+    id: string,
+    level = 0,
+    flatList: FlattenedChartData[] = []
+  ): Promise<FlattenedChartData[]> {
+    const chart = await this.prisma.chartTable.findUnique({
       where: { id },
-      data,
-    });
-  }
-
-  //delete chart
-  remove(id: string) {
-    return this.prisma.chartTable.delete({ where: { id } });
-  }
-
-
-
-  async findsomelavelenode(parentId: string) {
-    const samelevelnode = await this.prisma.chartTable.findMany({
-      where: { parentId },
-      orderBy: { createdAt: 'desc' },
+      include: { children: { select: { id: true } } }
     });
 
-    if (!samelevelnode) {
-      throw new NotFoundException('No chart is found');
+    if (!chart) return flatList;
+
+    const labels = (chart.xAxis as any)?.labels?.[0] || [];
+    const values = labels.slice(1);
+
+    const indentation = level > 0 ? '    '.repeat(level) + '↳ ' : '';
+
+    flatList.push({
+      id: chart.id,
+      parentId: chart.parentId || 'ROOT',
+      level: chart.children.length > 0 ? (chart.parentId ? 'SUB_PARENT' : 'ROOT') : 'LEAF',
+      title: `${indentation}${chart.title}`,
+      category: chart.category,
+      val1: Number(values[0]) || 0,
+      val2: Number(values[1]) || 0,
+      val3: Number(values[2]) || 0,
+      status: chart.status
+    });
+
+    const children = await this.prisma.chartTable.findMany({
+      where: { parentId: id },
+      select: { id: true },
+      orderBy: { createdAt: 'asc' }
+    });
+
+    for (const child of children) {
+      await this.getFlattenedData(child.id, level + 1, flatList);
     }
 
-    return samelevelnode;
+    return flatList;
   }
 
 
 
-  async valuechageCalculations(id: string, updatedata: UpdateSingleChartDto) {
-
-    let flag = false;
-
-    const changePossible = await this.prisma.chartTable.findMany({
-      where: { parentId: id }
-    })
-
-    if (changePossible.length > 0) {
-      throw new Error("This is not a child subtier; it already has child records.")
-    }
 
 
-    const history = await this.prisma.chartTable.findUnique({
-      where: { id }
-    })
 
-    if (history?.xAxis) {
-      await this.prisma.chartHistory.create({
-        data: {
-          value: history?.xAxis,
-          chartId: id,
-        }
-      })
-    }
+  // async updateFromCsv(fileBuffer: Buffer): Promise<any[]> {
+  //   const results: any[] = [];
 
-    const updateResult = await this.prisma.chartTable.update({
-      where: { id },
-      data: {
-        xAxis: JSON.parse(updatedata.xAxis)
-      }
-    })
+  //   // ১. UTF-8 BOM স্ট্রিপ করার জন্য স্ট্রিং এ কনভার্ট করা নিরাপদ
+  //   const csvString = fileBuffer.toString('utf8').replace(/^\uFEFF/, '');
+  //   const stream = Readable.from(csvString);
 
-    if (!updateResult?.parentId) {
-      return updateResult
-    }
+  //   return new Promise((resolve, reject) => {
+  //     stream
+  //       .pipe(csv({
+  //         mapHeaders: ({ header }) => header.trim(), // কলামের নামের স্পেস ক্লিন করবে
+  //         mapValues: ({ value }) => value.trim()      // ডেটার স্পেস ক্লিন করবে
+  //       }))
+  //       .on('data', (data) => results.push(data))
+  //       .on('end', async () => {
+  //         try {
+  //           const updatedCharts: any[] = [];
 
-    let nodeId = updateResult?.parentId
+  //           console.log(`Total rows found in CSV: ${results.length}`);
 
-    while (!flag) {
+  //           for (const row of results) {
+  //             // ২. ডাইনামিক কি (Key) ডিটেকশন (ID কলামটি খুঁজে বের করা)
+  //             const chartId = row['ID'] || row['id'] || row['Chart ID'] || row['ChartId'] || Object.values(row)[0];
 
-      const reuslt = await this.prisma.chartTable.findMany({
-        where: { parentId: nodeId }
-      })
+  //             if (!chartId || chartId === '') {
+  //               console.warn('Skipping row: Missing ID', row);
+  //               continue;
+  //             }
 
-      const tables = reuslt
-        .map(item => item.xAxis)
-        .filter(Boolean)
+  //             // ৩. স্যালারি ভ্যালু এক্সট্রাক্ট করা (কলাম নাম যাই হোক)
+  //             // আপনার CSV হেডার অনুযায়ী এগুলো পরিবর্তন করুন
+  //             const val1 = Number(row['FY 2020'] || row['fy 2020'] || 0);
+  //             const val2 = Number(row['FY 2021'] || row['fy 2021'] || 0);
+  //             const val3 = Number(row['FY 2022'] || row['fy 2022'] || 0);
 
-      if (!tables.length) {
-        console.log("No tables found")
-        break
-      }
-      const data = await mergeAndSum(tables)
+  //             try {
+  //               // ৪. ডাটাবেজে আপডেট
+  //               const updatedNode = await this.prisma.chartTable.update({
+  //                 where: { id: String(chartId) },
+  //                 data: {
+  //                   xAxis: {
+  //                     labels: [
+  //                       ["Total Salary", val1, val2, val3]
+  //                     ]
+  //                   }
+  //                 },
+  //                 select: { id: true, parentId: true }
+  //               });
 
-      const history = await this.prisma.chartTable.findUnique({
-        where: { id: nodeId as string }
-      })
+  //               // ৫. অটো-সিঙ্ক ট্রিগার (বটম-আপ)
+  //               if (updatedNode.parentId) {
+  //                 await this.syncHierarchyUpwards(updatedNode.parentId, this.prisma);
+  //               }
 
-      if (history?.xAxis) {
-        await this.prisma.chartHistory.create({
-          data: {
-            value: history?.xAxis,
-            chartId: nodeId,
+  //               updatedCharts.push(updatedNode);
+  //               console.log(`Updated successfully: ${chartId}`);
+  //             } catch (dbError) {
+  //               console.error(`Database error for ID ${chartId}:`, dbError.message);
+  //               // আইডি না মিললে লুপ থামবে না, পরেরটা ট্রাই করবে
+  //               continue;
+  //             }
+  //           }
+
+  //           console.log(`Total successful updates: ${updatedCharts.length}`);
+  //           resolve(updatedCharts);
+  //         } catch (error) {
+  //           console.error('Processing error:', error);
+  //           reject(error);
+  //         }
+  //       });
+  //   });
+  // }
+
+  async updateFromCsv(fileBuffer: Buffer, sheetId: string): Promise<any[]> {
+    const results: any[] = [];
+    const csvString = fileBuffer.toString('utf8').replace(/^\uFEFF/, '');
+    const stream = Readable.from(csvString);
+
+    return new Promise((resolve, reject) => {
+      stream
+        .pipe(csv({ mapHeaders: ({ header }) => header.trim() }))
+        .on('data', (data) => results.push(data))
+        .on('end', async () => {
+          try {
+            const updatedCharts: any[] = [];
+            for (const row of results) {
+              const chartId = row['ID'] || row['id'];
+
+              if (!chartId) {
+                console.error('Row skipped: ID column is missing in CSV!', row);
+                continue;
+              }
+
+              const updatedNode = await this.prisma.chartTable.update({
+                where: { id: chartId.trim() },
+                data: {
+                  xAxis: {
+                    labels: [
+                      ["Total Salary", Number(row['FY 2020']), Number(row['FY 2021']), Number(row['FY 2022'])]
+                    ]
+                  }
+                },
+                select: { id: true, parentId: true }
+              });
+
+              if (updatedNode.parentId) {
+                await this.syncHierarchyUpwards(updatedNode.parentId, this.prisma);
+              }
+              updatedCharts.push(updatedNode);
+            }
+            resolve(updatedCharts);
+          } catch (error) {
+            reject(error);
           }
-        })
-      }
-
-      await this.prisma.chartTable.update({
-        where: { id: nodeId as string },
-        data: {
-          xAxis: data
-        }
-      })
-
-      const findingParent = await this.prisma.chartTable.findUnique({
-        where: { id: reuslt[0].parentId ?? undefined }
-      });
-
-      if (!findingParent?.parentId) {
-        flag = true
-      } else {
-        nodeId = findingParent?.parentId
-      }
-
-
-
-
-
-    }
-    return updateResult;
-  }
-
-  async showHistory(chartId: string) {
-    const history = await this.prisma.chartHistory.findMany({
-      where: {
-        chartId: chartId
-      },
-      orderBy: {
-        createdAt: 'asc'
-      }
-    });
-    return history;
-  }
-
-
-
-
-  async Storetempleted(cloneSingleChartDto: CloneSingleChartDto) {
-    const projectId = cloneSingleChartDto.id;
-
-    const project = await this.prisma.project.findUnique({
-      where: { id: projectId },
-      include: {
-        rootCharts: true,
-      },
-    });
-
-    if (!project || project.rootCharts.length === 0) {
-      throw new NotFoundException('No root charts found');
-    }
-    console.log("hite where ---------------------------------------------")
-    const createdChartIds: string[] = [];
-
-    for (const root of project.rootCharts) {
-      const originalChart = await this.prisma.chartTable.findUnique({
-        where: { id: root.value },
-        include: {
-          barChart: { include: { widgets: true } },
-          horizontalBarChart: { include: { widgets: true } },
-          pi: { include: { widgets: true } },
-          heatmap: { include: { widgets: true } },
-          areaChart: { include: { widgets: true } },
-          multiAxisChart: { include: { widgets: true } },
-          columnChart: { include: { widgets: true } },
-          histogramChart: { include: { widgets: true } },
-          paretoChart: { include: { widgets: true } },
-          funnelChart: { include: { widgets: true } },
-          waterFallChart: { include: { widgets: true } },
-          radarChart: { include: { widgets: true } },
-          doughnutChart: { include: { widgets: true } },
-          candlestickChart: { include: { widgets: true } },
-          stackedBarChart: { include: { widgets: true } },
-          solidGaugeChart: { include: { widgets: true } },
-          scatterChart: { include: { widgets: true } },
-        },
-      });
-
-      if (!originalChart) continue;
-
-      const createDto: CreateChartDto = {
-        title: originalChart.title,
-        status: originalChart.status,
-        category: originalChart.category,
-        xAxis: JSON.stringify(originalChart.xAxis),
-        yAxis: originalChart.yAxis
-          ? JSON.stringify(originalChart.yAxis)
-          : undefined,
-        zAxis: originalChart.zAxis
-          ? JSON.stringify(originalChart.zAxis)
-          : undefined,
-      };
-
-
-      const chartMap = [
-        originalChart.barChart,
-        originalChart.horizontalBarChart,
-        originalChart.pi,
-        originalChart.heatmap,
-        originalChart.areaChart,
-        originalChart.multiAxisChart,
-        originalChart.columnChart,
-        originalChart.histogramChart,
-        originalChart.paretoChart,
-        originalChart.funnelChart,
-        originalChart.waterFallChart,
-        originalChart.radarChart,
-        originalChart.doughnutChart,
-        originalChart.candlestickChart,
-        originalChart.stackedBarChart,
-        originalChart.solidGaugeChart,
-        originalChart.scatterChart,
-      ].find(Boolean);
-
-      if (chartMap) {
-        const map = chartMap as any;
-        Object.assign(createDto, {
-          numberOfDataset: map.numberOfDataset,
-          firstFieldDataset: map.firstFieldDataset,
-          lastFieldDataset: map.lastFieldDataset,
-          firstFiledDataset: map.firstFiledDataset,
-          lastFiledDAtaset: map.lastFiledDAtaset,
-          filter_By: map.filter_By,
-
-          // Pareto fields
-          Left_firstFieldDataset: map.Left_firstFieldDataset,
-          Left_lastFieldDataset: map.Left_lastFieldDataset,
-          Right_firstFieldDataset: map.Right_firstFieldDataset,
-          Right_lastFieldDataset: map.Right_lastFieldDataset,
-
-          // Solid Gauge fields
-          startingRange: map.startingRange,
-          endRange: map.endRange,
-          gaugeValue: map.gaugeValue,
-          chartHight: map.chartHight,
-          startAngle: map.startAngle,
-          endAngle: map.endAngle,
-          trackColor: map.trackColor,
-          strokeWidth: map.strokeWidth,
-          valueFontSize: map.valueFontSize,
-          shadeIntensity: map.shadeIntensity,
-
-          widgets: map.widgets?.map((w: any) => ({
-            legendName: w.legendName,
-            color: w.color,
-          })),
         });
-      }
-
-
-      const newChart = await this.create(createDto);
-      createdChartIds.push(newChart.id);
-    }
-
-
-    await this.prisma.template.create({
-      data: {
-        name: cloneSingleChartDto.name,
-        ownerid: cloneSingleChartDto.ownerid,
-        chartList: createdChartIds,
-      },
     });
-
-    return createdChartIds;
   }
-
-  async applyTemplate(applyTemplateDto: ApplyTemplateDto) {
-    const { projectId, chartIds } = applyTemplateDto;
-
-    const createdChartIds: string[] = [];
-
-    for (const id of chartIds) {
-      const originalChart = await this.prisma.chartTable.findUnique({
-        where: { id },
-        include: {
-          barChart: { include: { widgets: true } },
-          horizontalBarChart: { include: { widgets: true } },
-          pi: { include: { widgets: true } },
-          heatmap: { include: { widgets: true } },
-          areaChart: { include: { widgets: true } },
-          multiAxisChart: { include: { widgets: true } },
-          columnChart: { include: { widgets: true } },
-          histogramChart: { include: { widgets: true } },
-          paretoChart: { include: { widgets: true } },
-          funnelChart: { include: { widgets: true } },
-          waterFallChart: { include: { widgets: true } },
-          radarChart: { include: { widgets: true } },
-          doughnutChart: { include: { widgets: true } },
-          candlestickChart: { include: { widgets: true } },
-          stackedBarChart: { include: { widgets: true } },
-          solidGaugeChart: { include: { widgets: true } },
-          scatterChart: { include: { widgets: true } },
-        },
-      });
-
-      if (!originalChart) continue;
-
-
-      const rootChartInfo = await this.prisma.rootChart.findFirst({
-        where: { value: id }
-      });
-
-      const createDto: CreateChartDto = {
-        title: originalChart.title,
-        status: originalChart.status,
-        category: originalChart.category,
-        projectId,
-        rootchart: true,
-        roottitle: rootChartInfo?.title ?? originalChart.title,
-
-        xAxis: JSON.stringify(originalChart.xAxis),
-        yAxis: originalChart.yAxis
-          ? JSON.stringify(originalChart.yAxis)
-          : undefined,
-        zAxis: originalChart.zAxis
-          ? JSON.stringify(originalChart.zAxis)
-          : undefined,
-      };
-
-      const chartMap = [
-        originalChart.barChart,
-        originalChart.horizontalBarChart,
-        originalChart.pi,
-        originalChart.heatmap,
-        originalChart.areaChart,
-        originalChart.multiAxisChart,
-        originalChart.columnChart,
-        originalChart.histogramChart,
-        originalChart.paretoChart,
-        originalChart.funnelChart,
-        originalChart.waterFallChart,
-        originalChart.radarChart,
-        originalChart.doughnutChart,
-        originalChart.candlestickChart,
-        originalChart.stackedBarChart,
-        originalChart.solidGaugeChart,
-        originalChart.scatterChart,
-      ].find(Boolean);
-
-      if (chartMap) {
-        const map = chartMap as any;
-        Object.assign(createDto, {
-          numberOfDataset: map.numberOfDataset,
-          firstFieldDataset: map.firstFieldDataset,
-          lastFieldDataset: map.lastFieldDataset,
-          firstFiledDataset: map.firstFiledDataset,
-          lastFiledDAtaset: map.lastFiledDAtaset,
-          filter_By: map.filter_By,
-          Left_firstFieldDataset: map.Left_firstFieldDataset,
-          Left_lastFieldDataset: map.Left_lastFieldDataset,
-          Right_firstFieldDataset: map.Right_firstFieldDataset,
-          Right_lastFieldDataset: map.Right_lastFieldDataset,
-          startingRange: map.startingRange,
-          endRange: map.endRange,
-          gaugeValue: map.gaugeValue,
-          chartHight: map.chartHight,
-          startAngle: map.startAngle,
-          endAngle: map.endAngle,
-          trackColor: map.trackColor,
-          strokeWidth: map.strokeWidth,
-          valueFontSize: map.valueFontSize,
-          shadeIntensity: map.shadeIntensity,
-          widgets: map.widgets?.map((w: any) => ({
-            legendName: w.legendName,
-            color: w.color,
-          })),
-        });
-      }
-
-      const newChart = await this.create(createDto);
-      createdChartIds.push(newChart.id);
-    }
-
-    return createdChartIds;
-  }
-
-
- async rootChart(projectId: string) {
-  if (!projectId) {
-    throw new BadRequestException('Project ID is required');
-  }
-
-  return this.prisma.chartTable.findMany({
-    where: {
-      projectId,
-      parentId: null,
-    },
-    orderBy: {
-      createdAt: 'asc',
-    },
-    include: {
-      barChart: {
-        include: { widgets: true },
-      },
-      horizontalBarChart: {
-        include: { widgets: true },
-      },
-      pi: {
-        include: { widgets: true },
-      },
-      heatmap: {
-        include: { widgets: true },
-      },
-      areaChart: {
-        include: { widgets: true },
-      },
-      multiAxisChart: {
-        include: { widgets: true },
-      },
-      columnChart: {
-        include: { widgets: true },
-      },
-      stackedBarChart: {
-        include: { widgets: true },
-      },
-      doughnutChart: {
-        include: { widgets: true },
-      },
-      paretoChart: {
-        include: { widgets: true },
-      },
-      histogramChart: {
-        include: { widgets: true },
-      },
-      scatterChart: {
-        include: { widgets: true },
-      },
-      solidGaugeChart: {
-        include: { widgets: true },
-      },
-      funnelChart: {
-        include: { widgets: true },
-      },
-      waterFallChart: {
-        include: { widgets: true },
-      },
-      candlestickChart: {
-        include: { widgets: true },
-      },
-      radarChart: {
-        include: { widgets: true },
-      },
-    },
-  });
 }
-
-
-
-
-
-
-
-}
-
-
-async function mergeAndSum(multipleTables) {
-  if (!multipleTables.length) return [];
-
-  const header = multipleTables[0][0];
-  const resultMap = {};
-
-  for (const table of multipleTables) {
-    for (let i = 1; i < table.length; i++) {
-      const row = table[i];
-      const key = row[0];
-
-      if (!resultMap[key]) {
-        resultMap[key] = Array(row.length).fill(0);
-        resultMap[key][0] = key;
-      }
-
-      for (let j = 1; j < row.length; j++) {
-        resultMap[key][j] += row[j];
-      }
-    }
-  }
-
-  return [
-    header,
-    ...Object.values(resultMap)
-  ];
-
-
-}
-
-

@@ -12,6 +12,10 @@ model ChartTable {
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
 
+  // add this -> 
+  aggregatedData Json?
+  nodeType  NodeType @default(LEAF)
+
   // Relation to Sheet (one-to-one optional)
   sheet   Sheet?  @relation("ChartToSheet", fields: [sheetId], references: [id])
   sheetId String? @unique
@@ -58,4 +62,10 @@ model ChartHistory {
 
   chart   ChartTable? @relation(fields: [chartId], references: [id])
   chartId String?  
+}
+
+
+enum NodeType {
+  PARENT
+  LEAF
 }
