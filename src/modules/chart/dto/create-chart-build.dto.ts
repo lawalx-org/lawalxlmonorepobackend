@@ -28,6 +28,12 @@ export class CreateValuediteactDto {
     @ApiProperty({ example: 'Row name' })
     @IsString()
     rowname: string;
+
+    @ApiProperty({
+        example: 'chartIdname'
+    })
+    @IsString()
+      charttableId : string
 }
 
 export class CreateChartBuildDto extends IntersectionType(

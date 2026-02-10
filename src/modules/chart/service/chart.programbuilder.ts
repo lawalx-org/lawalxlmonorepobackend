@@ -13,7 +13,7 @@ export class ChartProgramBuilderService {
 
     async create(createChartBuildDto: CreateChartBuildDto) {
         let subChat = {};
-        const { title, status, category, programid, projectnumber, valueDiteacts } = createChartBuildDto;
+        const { title, status, category, programid, projectnumber, valueDiteacts,   } = createChartBuildDto;
 
         const result = await this.prisma.$transaction(async (txPrisma) => {
 
@@ -28,6 +28,9 @@ export class ChartProgramBuilderService {
                         create: valueDiteacts?.map((v) => ({
                             projectId: v.projectId,
                             rowname: v.rowname,
+                            charttableId: v.charttableId
+                            
+                            
                         })),
                     },
                 },
@@ -438,38 +441,118 @@ export class ChartProgramBuilderService {
         });
         return result;
     }
+
     async findAllByProgram(programId: string) {
         const program = await this.prisma.program.findUnique({
             where: { id: programId },
-            select: { id: true },
         });
 
         if (!program) {
             throw new NotFoundException(`Program with ID ${programId} not found`);
         }
 
-        return this.prisma.chartTableProgramBuilder.findMany({
+        const charts = await this.prisma.chartTableProgramBuilder.findMany({
             where: { programid: programId },
             include: {
-                barChart: { include: { widgets: true } },
-                horizontalBarChart: { include: { widgets: true } },
-                pieChart: { include: { widgets: true } },
-                heatmapChart: { include: { widgets: true } },
-                areaChart: { include: { widgets: true } },
-                multiAxisChart: { include: { widgets: true } },
-                columnChart: { include: { widgets: true } },
-                stackedBarChart: { include: { widgets: true } },
-                doughnutChart: { include: { widgets: true } },
-                paretoChart: { include: { widgets: true } },
-                histogramChart: { include: { widgets: true } },
-                scatterChart: { include: { widgets: true } },
-                solidGaugeChart: { include: { widgets: true } },
-                funnelChart: { include: { widgets: true } },
-                waterFallChart: { include: { widgets: true } },
-                candlestickChart: { include: { widgets: true } },
-                radarChart: { include: { widgets: true } },
+                barChart: true,
+                horizontalBarChart: true,
+                pieChart: true,
+                heatmapChart: true,
+                areaChart: true,
+                multiAxisChart: true,
+                columnChart: true,
+                stackedBarChart: true,
+                doughnutChart: true,
+                paretoChart: true,
+                histogramChart: true,
+                scatterChart: true,
+                solidGaugeChart: true,
+                funnelChart: true,
+                waterFallChart: true,
+                candlestickChart: true,
+                radarChart: true,
                 valueDiteacts: true,
+                history: true,
             },
         });
+
+        return {
+            programId,
+            charts: charts.map(chart => {
+                const chartData =
+                    chart.barChart ||
+                    chart.horizontalBarChart ||
+                    chart.pieChart ||
+                    chart.heatmapChart ||
+                    chart.areaChart ||
+                    chart.multiAxisChart ||
+                    chart.columnChart ||
+                    chart.stackedBarChart ||
+                    chart.doughnutChart ||
+                    chart.paretoChart ||
+                    chart.histogramChart ||
+                    chart.scatterChart ||
+                    chart.solidGaugeChart ||
+                    chart.funnelChart ||
+                    chart.waterFallChart ||
+                    chart.candlestickChart ||
+                    chart.radarChart;
+
+                return {
+                    id: chart.id,
+                    title: chart.title,
+                    category: chart.category,
+                    status: chart.status,
+                    chartData,
+                    valueDetection: detectChartValues(
+                        chartData,
+                        chart.valueDiteacts,
+                    ),
+                    history: chart.history,
+                };
+            }),
+        };
     }
 }
+
+
+export function detectChartValues(
+    chartData: any,
+    valueDiteacts: { rowname: string }[],
+) {
+    if (!chartData || !Array.isArray(valueDiteacts)) return [];
+
+    const axisRows: any[][] = [];
+
+    const collect = (axis: any) => {
+        if (Array.isArray(axis)) {
+            axis.forEach(row => {
+                if (Array.isArray(row)) axisRows.push(row);
+            });
+        }
+    };
+
+    // collect all possible axes safely
+    collect(chartData.xAxis);
+    collect(chartData.yAxis);
+    collect(chartData.zAxis);
+
+    const resultMap = new Map<string, any[]>();
+
+    for (const vd of valueDiteacts) {
+        for (const row of axisRows) {
+            if (row.includes(vd.rowname)) {
+                if (!resultMap.has(vd.rowname)) {
+                    resultMap.set(vd.rowname, []);
+                }
+                resultMap.get(vd.rowname)!.push(row);
+            }
+        }
+    }
+
+    return Array.from(resultMap.entries()).map(([rowname, matches]) => ({
+        rowname,
+        matches,
+    }));
+}
+

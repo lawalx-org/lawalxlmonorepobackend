@@ -47,6 +47,7 @@ model Valuediteact {
     id        String @id @default(uuid())
     projectId String
     chartId   String
+    charttableId String 
     rowname   String
 
     chart ChartTableProgramBuilder @relation(fields: [chartId], references: [id], onDelete: Cascade)

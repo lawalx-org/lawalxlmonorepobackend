@@ -1146,17 +1146,79 @@ export class ChartMainService {
 
 
   async findsomelavelenode(parentId: string) {
-    const samelevelnode = await this.prisma.chartTable.findMany({
-      where: { parentId },
-      orderBy: { createdAt: 'desc' },
-    });
-
-    if (!samelevelnode) {
-      throw new NotFoundException('No chart is found');
-    }
-
-    return samelevelnode;
+  if (!parentId) {
+    throw new BadRequestException('Parent ID is required');
   }
+
+  const sameLevelNodes = await this.prisma.chartTable.findMany({
+    where: {
+      parentId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    include: {
+      barChart: {
+        include: { widgets: true },
+      },
+      horizontalBarChart: {
+        include: { widgets: true },
+      },
+      pi: {
+        include: { widgets: true },
+      },
+      heatmap: {
+        include: { widgets: true },
+      },
+      areaChart: {
+        include: { widgets: true },
+      },
+      multiAxisChart: {
+        include: { widgets: true },
+      },
+      columnChart: {
+        include: { widgets: true },
+      },
+      stackedBarChart: {
+        include: { widgets: true },
+      },
+      doughnutChart: {
+        include: { widgets: true },
+      },
+      paretoChart: {
+        include: { widgets: true },
+      },
+      histogramChart: {
+        include: { widgets: true },
+      },
+      scatterChart: {
+        include: { widgets: true },
+      },
+      solidGaugeChart: {
+        include: { widgets: true },
+      },
+      funnelChart: {
+        include: { widgets: true },
+      },
+      waterFallChart: {
+        include: { widgets: true },
+      },
+      candlestickChart: {
+        include: { widgets: true },
+      },
+      radarChart: {
+        include: { widgets: true },
+      },
+    },
+  });
+
+  if (!sameLevelNodes.length) {
+    throw new NotFoundException('No chart is found');
+  }
+
+  return sameLevelNodes;
+}
+
 
 
 
@@ -1281,7 +1343,7 @@ export class ChartMainService {
     if (!project || project.rootCharts.length === 0) {
       throw new NotFoundException('No root charts found');
     }
-    console.log("hite where ---------------------------------------------")
+    
     const createdChartIds: string[] = [];
 
     for (const root of project.rootCharts) {
@@ -1575,6 +1637,8 @@ export class ChartMainService {
     },
   });
 }
+
+
 
 
 
