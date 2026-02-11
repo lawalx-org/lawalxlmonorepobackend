@@ -22,7 +22,7 @@ import { ChartProgramBuilderService } from '../service/chart.programbuilder';
 import { Roles } from 'src/common/jwt/roles.decorator';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { Role, ChartName } from 'generated/prisma';
-import { UpdateSingleChartDto } from '../dto/update.data.dto';
+import { UpdateMultipleChartsDto, UpdateSingleChartDto } from '../dto/update.data.dto';
 import { CloneSingleChartDto } from '../dto/clone.dto';
 import { ApplyTemplateDto } from '../dto/apply-template.dto';
 import { CreateChartBuildDto } from '../dto/create-chart-build.dto';
@@ -91,11 +91,23 @@ export class ChartMainController {
   }
 
   @Patch('updateChartValue/:id')
-  async value(@Param('id') id: string, @Body() updateChartDto: UpdateSingleChartDto) {
-    const result = await this.chartService.valuechageCalculations(id, updateChartDto);
+  async value( @Body() updateChartDto: UpdateSingleChartDto) {
+    const result = await this.chartService.valuechageCalculations(updateChartDto.id, updateChartDto);
     return {
       message: 'All charts active fetched successfully',
       data: result,
+    };
+  }
+
+
+   @Patch('bulk/value-change')
+  async bulkValueChange(
+    @Body() body: UpdateMultipleChartsDto,
+  ) {
+    return {
+      success: true,
+      message: 'Charts updated successfully',
+      data: await this.chartService.bulkValueChangeCalculations(body),
     };
   }
 
@@ -159,6 +171,16 @@ export class ChartMainController {
       success: true,
       message: 'Root charts fetched successfully',
       data: await this.chartService.rootChart(projectId),
+    };
+  }
+
+
+    @Get('onlylevechildren/:projectId')
+  async getOnlyLevelChildren(@Param('projectId') projectId: string) {
+    return {
+      success: true,
+      message: 'Only level children fetched successfully',
+      data: await this.chartService.getOnlyLevelChildren(projectId),
     };
   }
 

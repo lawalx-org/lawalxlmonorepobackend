@@ -7,10 +7,11 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateChartDto } from '../dto/create-chart.dto';
 import { UpdateChartDto } from '../dto/update-chart.dto';
 import { ChartName, ChartStatus, Prisma } from 'generated/prisma';
-import { UpdateSingleChartDto } from '../dto/update.data.dto';
+import { UpdateMultipleChartsDto, UpdateSingleChartDto } from '../dto/update.data.dto';
 import { CloneSingleChartDto } from '../dto/clone.dto';
 import { ApplyTemplateDto } from '../dto/apply-template.dto';
 import { CreateChartBuildDto } from '../dto/create-chart-build.dto';
+import { mergeAndSum } from '../utils/merge-and-sum';
 
 @Injectable()
 export class ChartMainService {
@@ -1315,6 +1316,31 @@ export class ChartMainService {
     return updateResult;
   }
 
+
+
+
+
+async bulkValueChangeCalculations(
+  payload: UpdateMultipleChartsDto,
+) {
+  const results: any[] = [];
+
+  for (const chart of payload.charts) {
+    const { id, ...updateData } = chart;
+
+    
+    const result = await this.valuechageCalculations(
+      id,
+      { id, ...updateData },
+    );
+
+    results.push(result);
+  }
+
+  return results;
+}
+
+
   async showHistory(chartId: string) {
     const history = await this.prisma.chartHistory.findMany({
       where: {
@@ -1640,43 +1666,75 @@ export class ChartMainService {
 
 
 
-
-
-
-
-
-
-}
-
-
-async function mergeAndSum(multipleTables) {
-  if (!multipleTables.length) return [];
-
-  const header = multipleTables[0][0];
-  const resultMap = {};
-
-  for (const table of multipleTables) {
-    for (let i = 1; i < table.length; i++) {
-      const row = table[i];
-      const key = row[0];
-
-      if (!resultMap[key]) {
-        resultMap[key] = Array(row.length).fill(0);
-        resultMap[key][0] = key;
-      }
-
-      for (let j = 1; j < row.length; j++) {
-        resultMap[key][j] += row[j];
-      }
-    }
+  async getOnlyLevelChildren(projectId: string) {
+    return this.prisma.chartTable.findMany({
+      where: {
+        projectId,
+        children: {
+          none: {},
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+      include: {
+        barChart: {
+          include: { widgets: true },
+        },
+        horizontalBarChart: {
+          include: { widgets: true },
+        },
+        pi: {
+          include: { widgets: true },
+        },
+        heatmap: {
+          include: { widgets: true },
+        },
+        areaChart: {
+          include: { widgets: true },
+        },
+        multiAxisChart: {
+          include: { widgets: true },
+        },
+        columnChart: {
+          include: { widgets: true },
+        },
+        stackedBarChart: {
+          include: { widgets: true },
+        },
+        doughnutChart: {
+          include: { widgets: true },
+        },
+        paretoChart: {
+          include: { widgets: true },
+        },
+        histogramChart: {
+          include: { widgets: true },
+        },
+        scatterChart: {
+          include: { widgets: true },
+        },
+        solidGaugeChart: {
+          include: { widgets: true },
+        },
+        funnelChart: {
+          include: { widgets: true },
+        },
+        waterFallChart: {
+          include: { widgets: true },
+        },
+        candlestickChart: {
+          include: { widgets: true },
+        },
+        radarChart: {
+          include: { widgets: true },
+        },
+      },
+    });
   }
 
-  return [
-    header,
-    ...Object.values(resultMap)
-  ];
-
-
 }
+
+
 
 
