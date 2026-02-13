@@ -7,7 +7,8 @@ import {
   UseGuards,
   Res,
   HttpStatus,
-  Patch
+  Patch,
+  Delete
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
@@ -91,7 +92,7 @@ export class ChartMainController {
   }
 
   @Patch('updateChartValue/:id')
-  async value( @Body() updateChartDto: UpdateSingleChartDto) {
+  async value(@Body() updateChartDto: UpdateSingleChartDto) {
     const result = await this.chartService.valuechageCalculations(updateChartDto.id, updateChartDto);
     return {
       message: 'All charts active fetched successfully',
@@ -100,7 +101,7 @@ export class ChartMainController {
   }
 
 
-   @Patch('bulk/value-change')
+  @Patch('bulk/value-change')
   async bulkValueChange(
     @Body() body: UpdateMultipleChartsDto,
   ) {
@@ -162,8 +163,8 @@ export class ChartMainController {
       data: result,
     };
   }
- 
-   @Get('root/:projectId')
+
+  @Get('root/:projectId')
   async getRootCharts(
     @Param('projectId') projectId: string,
   ) {
@@ -175,7 +176,7 @@ export class ChartMainController {
   }
 
 
-    @Get('onlylevechildren/:projectId')
+  @Get('onlylevechildren/:projectId')
   async getOnlyLevelChildren(@Param('projectId') projectId: string) {
     return {
       success: true,
@@ -183,6 +184,14 @@ export class ChartMainController {
       data: await this.chartService.getOnlyLevelChildren(projectId),
     };
   }
+
+
+
+  @Delete('charttable/:id')
+  async deleteChart(@Param('id') id: string) {
+    return this.chartService.safeDeleteChart(id);
+  }
+
 
 }
 

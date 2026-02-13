@@ -1,16 +1,17 @@
 model ChartTable {
-  id        String       @id @default(uuid())
-  title     String
-  parentId  String?
-  parent    ChartTable?  @relation("ChartHierarchy", fields: [parentId], references: [id])
-  children  ChartTable[] @relation("ChartHierarchy")
-  status    ChartStatus  @default(INACTIVE)
-  category  ChartName
-  xAxis     Json
-  yAxis     Json?
-  zAxis     Json?
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  id         String       @unique()
+  title      String
+  grouptitle String       @unique()
+  parentId   String?
+  parent     ChartTable?  @relation("ChartHierarchy", fields: [parentId], references: [id])
+  children   ChartTable[] @relation("ChartHierarchy")
+  status     ChartStatus  @default(INACTIVE)
+  category   ChartName
+  xAxis      Json
+  yAxis      Json?
+  zAxis      Json?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 
   // Relation to Sheet (one-to-one optional)
   sheet   Sheet?  @relation("ChartToSheet", fields: [sheetId], references: [id])
@@ -46,8 +47,7 @@ model ChartTable {
   //ray
 
   //history
-  history   ChartHistory[]
- 
+  history ChartHistory[]
 }
 
 model ChartHistory {
@@ -57,5 +57,10 @@ model ChartHistory {
   updatedAt DateTime @updatedAt
 
   chart   ChartTable? @relation(fields: [chartId], references: [id])
-  chartId String?  
+  chartId String?
+}
+
+model Chartnumber {
+  id     Int @id @default(autoincrement())
+  number Int
 }

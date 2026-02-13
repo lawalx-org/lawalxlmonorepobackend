@@ -20,13 +20,25 @@ export class ChartMainService {
   //create chart
   async create(createChartDto: CreateChartDto) {
     let subChat = {};
-    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId, roottitle } = createChartDto;
+    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId, roottitle, grouptitle } = createChartDto;
 
     // if (!createChartDto.projectId)
     //   throw new NotFoundException('projectId is required');
 
+
+
     const result = await this.prisma.$transaction(async (txPrisma) => {
 
+      const existingGroupTitle = await txPrisma.chartTable.findUnique({
+        where: { grouptitle },
+        select: { id: true },
+      });
+
+      if (existingGroupTitle) {
+        throw new BadRequestException(
+          `Group title "${grouptitle}" already exists`,
+        );
+      }
       if (parentId) {
         const parentExists = await txPrisma.chartTable.findUnique({
           where: { id: parentId },
@@ -37,9 +49,16 @@ export class ChartMainService {
           throw new NotFoundException('Parent chart does not exist');
         }
       }
+
+      function generateShortId() {
+        return Math.random().toString(36).substring(2, 8).toUpperCase();
+      }
+
       const mainChart = await txPrisma.chartTable.create({
         data: {
+          id: generateShortId(),
           title,
+          grouptitle,
           parentId: parentId ?? null,
           status,
           category,
@@ -486,12 +505,24 @@ export class ChartMainService {
 
   async createatfirstime(createChartDto: CreateChartDto) {
     let subChat = {};
-    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId, roottitle } = createChartDto;
+    const { xAxis, yAxis, zAxis, title, status, category, parentId, rootchart, projectId, roottitle, grouptitle } = createChartDto;
 
     if (!createChartDto.projectId)
       throw new NotFoundException('projectId is required');
 
     const result = await this.prisma.$transaction(async (txPrisma) => {
+
+      const existingGroupTitle = await txPrisma.chartTable.findUnique({
+        where: { grouptitle },
+        select: { id: true },
+      });
+
+      if (existingGroupTitle) {
+        throw new BadRequestException(
+          `Group title "${grouptitle}" already exists`,
+        );
+      }
+
 
       if (parentId) {
         const parentExists = await txPrisma.chartTable.findUnique({
@@ -503,9 +534,16 @@ export class ChartMainService {
           throw new NotFoundException('Parent chart does not exist');
         }
       }
+
+      function generateShortId() {
+        return Math.random().toString(36).substring(2, 8).toUpperCase();
+      }
+
       const mainChart = await txPrisma.chartTable.create({
         data: {
+          id: generateShortId(),
           title,
+          grouptitle,
           parentId: parentId ?? null,
           status,
           category,
@@ -1147,78 +1185,78 @@ export class ChartMainService {
 
 
   async findsomelavelenode(parentId: string) {
-  if (!parentId) {
-    throw new BadRequestException('Parent ID is required');
+    if (!parentId) {
+      throw new BadRequestException('Parent ID is required');
+    }
+
+    const sameLevelNodes = await this.prisma.chartTable.findMany({
+      where: {
+        parentId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      include: {
+        barChart: {
+          include: { widgets: true },
+        },
+        horizontalBarChart: {
+          include: { widgets: true },
+        },
+        pi: {
+          include: { widgets: true },
+        },
+        heatmap: {
+          include: { widgets: true },
+        },
+        areaChart: {
+          include: { widgets: true },
+        },
+        multiAxisChart: {
+          include: { widgets: true },
+        },
+        columnChart: {
+          include: { widgets: true },
+        },
+        stackedBarChart: {
+          include: { widgets: true },
+        },
+        doughnutChart: {
+          include: { widgets: true },
+        },
+        paretoChart: {
+          include: { widgets: true },
+        },
+        histogramChart: {
+          include: { widgets: true },
+        },
+        scatterChart: {
+          include: { widgets: true },
+        },
+        solidGaugeChart: {
+          include: { widgets: true },
+        },
+        funnelChart: {
+          include: { widgets: true },
+        },
+        waterFallChart: {
+          include: { widgets: true },
+        },
+        candlestickChart: {
+          include: { widgets: true },
+        },
+        radarChart: {
+          include: { widgets: true },
+        },
+      },
+    });
+
+    if (!sameLevelNodes.length) {
+      throw new NotFoundException('No chart is found');
+    }
+
+    return sameLevelNodes;
   }
-
-  const sameLevelNodes = await this.prisma.chartTable.findMany({
-    where: {
-      parentId,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-    include: {
-      barChart: {
-        include: { widgets: true },
-      },
-      horizontalBarChart: {
-        include: { widgets: true },
-      },
-      pi: {
-        include: { widgets: true },
-      },
-      heatmap: {
-        include: { widgets: true },
-      },
-      areaChart: {
-        include: { widgets: true },
-      },
-      multiAxisChart: {
-        include: { widgets: true },
-      },
-      columnChart: {
-        include: { widgets: true },
-      },
-      stackedBarChart: {
-        include: { widgets: true },
-      },
-      doughnutChart: {
-        include: { widgets: true },
-      },
-      paretoChart: {
-        include: { widgets: true },
-      },
-      histogramChart: {
-        include: { widgets: true },
-      },
-      scatterChart: {
-        include: { widgets: true },
-      },
-      solidGaugeChart: {
-        include: { widgets: true },
-      },
-      funnelChart: {
-        include: { widgets: true },
-      },
-      waterFallChart: {
-        include: { widgets: true },
-      },
-      candlestickChart: {
-        include: { widgets: true },
-      },
-      radarChart: {
-        include: { widgets: true },
-      },
-    },
-  });
-
-  if (!sameLevelNodes.length) {
-    throw new NotFoundException('No chart is found');
-  }
-
-  return sameLevelNodes;
-}
 
 
 
@@ -1320,25 +1358,25 @@ export class ChartMainService {
 
 
 
-async bulkValueChangeCalculations(
-  payload: UpdateMultipleChartsDto,
-) {
-  const results: any[] = [];
+  async bulkValueChangeCalculations(
+    payload: UpdateMultipleChartsDto,
+  ) {
+    const results: any[] = [];
 
-  for (const chart of payload.charts) {
-    const { id, ...updateData } = chart;
+    for (const chart of payload.charts) {
+      const { id, ...updateData } = chart;
 
-    
-    const result = await this.valuechageCalculations(
-      id,
-      { id, ...updateData },
-    );
 
-    results.push(result);
+      const result = await this.valuechageCalculations(
+        id,
+        { id, ...updateData },
+      );
+
+      results.push(result);
+    }
+
+    return results;
   }
-
-  return results;
-}
 
 
   async showHistory(chartId: string) {
@@ -1369,7 +1407,7 @@ async bulkValueChangeCalculations(
     if (!project || project.rootCharts.length === 0) {
       throw new NotFoundException('No root charts found');
     }
-    
+
     const createdChartIds: string[] = [];
 
     for (const root of project.rootCharts) {
@@ -1400,6 +1438,7 @@ async bulkValueChangeCalculations(
 
       const createDto: CreateChartDto = {
         title: originalChart.title,
+        grouptitle: cloneSingleChartDto.grouptitle,
         status: originalChart.status,
         category: originalChart.category,
         xAxis: JSON.stringify(originalChart.xAxis),
@@ -1522,6 +1561,7 @@ async bulkValueChangeCalculations(
 
       const createDto: CreateChartDto = {
         title: originalChart.title,
+        grouptitle: originalChart.grouptitle,
         status: originalChart.status,
         category: originalChart.category,
         projectId,
@@ -1595,84 +1635,15 @@ async bulkValueChangeCalculations(
   }
 
 
- async rootChart(projectId: string) {
-  if (!projectId) {
-    throw new BadRequestException('Project ID is required');
-  }
+  async rootChart(projectId: string) {
+    if (!projectId) {
+      throw new BadRequestException('Project ID is required');
+    }
 
-  return this.prisma.chartTable.findMany({
-    where: {
-      projectId,
-      parentId: null,
-    },
-    orderBy: {
-      createdAt: 'asc',
-    },
-    include: {
-      barChart: {
-        include: { widgets: true },
-      },
-      horizontalBarChart: {
-        include: { widgets: true },
-      },
-      pi: {
-        include: { widgets: true },
-      },
-      heatmap: {
-        include: { widgets: true },
-      },
-      areaChart: {
-        include: { widgets: true },
-      },
-      multiAxisChart: {
-        include: { widgets: true },
-      },
-      columnChart: {
-        include: { widgets: true },
-      },
-      stackedBarChart: {
-        include: { widgets: true },
-      },
-      doughnutChart: {
-        include: { widgets: true },
-      },
-      paretoChart: {
-        include: { widgets: true },
-      },
-      histogramChart: {
-        include: { widgets: true },
-      },
-      scatterChart: {
-        include: { widgets: true },
-      },
-      solidGaugeChart: {
-        include: { widgets: true },
-      },
-      funnelChart: {
-        include: { widgets: true },
-      },
-      waterFallChart: {
-        include: { widgets: true },
-      },
-      candlestickChart: {
-        include: { widgets: true },
-      },
-      radarChart: {
-        include: { widgets: true },
-      },
-    },
-  });
-}
-
-
-
-  async getOnlyLevelChildren(projectId: string) {
     return this.prisma.chartTable.findMany({
       where: {
         projectId,
-        children: {
-          none: {},
-        },
+        parentId: null,
       },
       orderBy: {
         createdAt: 'asc',
@@ -1732,6 +1703,196 @@ async bulkValueChangeCalculations(
       },
     });
   }
+
+
+
+  // async getOnlyLevelChildren(projectId: string) {
+  //   return this.prisma.chartTable.findMany({
+  //     where: {
+  //       projectId,
+  //       children: {
+  //         none: {},
+  //       },
+  //     },
+  //     orderBy: {
+  //       createdAt: 'asc',
+  //     },
+  //     include: {
+  //       barChart: {
+  //         include: { widgets: true },
+  //       },
+  //       horizontalBarChart: {
+  //         include: { widgets: true },
+  //       },
+  //       pi: {
+  //         include: { widgets: true },
+  //       },
+  //       heatmap: {
+  //         include: { widgets: true },
+  //       },
+  //       areaChart: {
+  //         include: { widgets: true },
+  //       },
+  //       multiAxisChart: {
+  //         include: { widgets: true },
+  //       },
+  //       columnChart: {
+  //         include: { widgets: true },
+  //       },
+  //       stackedBarChart: {
+  //         include: { widgets: true },
+  //       },
+  //       doughnutChart: {
+  //         include: { widgets: true },
+  //       },
+  //       paretoChart: {
+  //         include: { widgets: true },
+  //       },
+  //       histogramChart: {
+  //         include: { widgets: true },
+  //       },
+  //       scatterChart: {
+  //         include: { widgets: true },
+  //       },
+  //       solidGaugeChart: {
+  //         include: { widgets: true },
+  //       },
+  //       funnelChart: {
+  //         include: { widgets: true },
+  //       },
+  //       waterFallChart: {
+  //         include: { widgets: true },
+  //       },
+  //       candlestickChart: {
+  //         include: { widgets: true },
+  //       },
+  //       radarChart: {
+  //         include: { widgets: true },
+  //       },
+  //     },
+  //   });
+  // }
+
+
+  async getOnlyLevelChildren(projectId: string) {
+    const charts = await this.prisma.chartTable.findMany({
+      where: {
+        projectId,
+        children: {
+          none: {},
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+      include: {
+        barChart: { include: { widgets: true } },
+        horizontalBarChart: { include: { widgets: true } },
+        pi: { include: { widgets: true } },
+        heatmap: { include: { widgets: true } },
+        areaChart: { include: { widgets: true } },
+        multiAxisChart: { include: { widgets: true } },
+        columnChart: { include: { widgets: true } },
+        stackedBarChart: { include: { widgets: true } },
+        doughnutChart: { include: { widgets: true } },
+        paretoChart: { include: { widgets: true } },
+        histogramChart: { include: { widgets: true } },
+        scatterChart: { include: { widgets: true } },
+        solidGaugeChart: { include: { widgets: true } },
+        funnelChart: { include: { widgets: true } },
+        waterFallChart: { include: { widgets: true } },
+        candlestickChart: { include: { widgets: true } },
+        radarChart: { include: { widgets: true } },
+      },
+    });
+
+
+    const grouped = charts.reduce((acc, chart) => {
+      if (!acc[chart.grouptitle]) {
+        acc[chart.grouptitle] = [];
+      }
+      acc[chart.grouptitle].push(chart);
+      return acc;
+    }, {} as Record<string, typeof charts>);
+
+
+    return Object.entries(grouped).map(([grouptitle, charts]) => ({
+      grouptitle,
+      charts,
+    }));
+  }
+
+
+
+
+
+  async safeDeleteChart(id: string) {
+    return this.prisma.$transaction(async (tx) => {
+
+      const chart = await tx.chartTable.findUnique({
+        where: { id },
+        include: {
+          children: true,
+          history: true,
+        },
+      });
+
+      if (!chart) {
+        throw new NotFoundException('Chart not found');
+      }
+
+      // 1️⃣ Check if used in RootChart
+      const usedInRoot = await tx.rootChart.findFirst({
+        where: { value: id },
+      });
+
+      if (usedInRoot) {
+        throw new BadRequestException(
+          'Chart is used in RootChart. Cannot delete.',
+        );
+      }
+
+      // 2️⃣ Check if it has children
+      if (chart.children.length > 0) {
+        throw new BadRequestException(
+          'Chart has child charts. Cannot delete.',
+        );
+      }
+
+      // 3️⃣ Check if it has history
+      if (chart.history.length > 0) {
+        throw new BadRequestException(
+          'Chart has history records. Cannot delete.',
+        );
+      }
+
+      // 4️⃣ Delete related subchart manually (important)
+      await tx.barChart.deleteMany({ where: { ChartTableId: id } });
+      await tx.horizontalBarChart.deleteMany({ where: { chartTableId: id } });
+      await tx.pi.deleteMany({ where: { chartTableId: id } });
+      await tx.heatMapChart.deleteMany({ where: { chartTableId: id } });
+      await tx.areaChart.deleteMany({ where: { chartTableId: id } });
+      await tx.multiAxisChart.deleteMany({ where: { chartTableId: id } });
+      await tx.columnChart.deleteMany({ where: { chartTableId: id } });
+      await tx.stackedBarChart.deleteMany({ where: { ChartTableId: id } });
+      await tx.doughnutChart.deleteMany({ where: { chartTableId: id } });
+      await tx.paretoChart.deleteMany({ where: { chartTableId: id } });
+      await tx.histogramChart.deleteMany({ where: { chartTableId: id } });
+      await tx.scatterChart.deleteMany({ where: { chartTableId: id } });
+      await tx.solidGaugeChart.deleteMany({ where: { chartTableId: id } });
+      await tx.funnelChart.deleteMany({ where: { chartTableId: id } });
+      await tx.waterFallChart.deleteMany({ where: { chartTableId: id } });
+      await tx.candlestickChart.deleteMany({ where: { chartTableId: id } });
+      await tx.radarChart.deleteMany({ where: { chartTableId: id } });
+
+      // 5️⃣ Finally delete main chart
+      return tx.chartTable.delete({
+        where: { id },
+      });
+    });
+  }
+
+
 
 }
 

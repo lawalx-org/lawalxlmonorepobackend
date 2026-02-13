@@ -22,4 +22,11 @@ export class CloneSingleChartDto {
   })
   @IsString()
   ownerid: string;
+
+  @ApiProperty({
+    description: 'Group title of the chart',
+    example: 'Executive Dashboard',
+  })
+  @IsString()
+  grouptitle: string;
 }
