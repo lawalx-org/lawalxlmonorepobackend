@@ -552,7 +552,7 @@ export class ChartProgramBuilderService {
                     const label = String(row[0]).trim();
                     const target = String(vd.rowname).trim();
 
-                    if (label === target) {
+                    if (label.toLowerCase() === target.toLowerCase()) {
                         results.push({
                             rowname: vd.rowname,
                             matchedRow: row,
@@ -563,19 +563,17 @@ export class ChartProgramBuilderService {
             }
         }
 
-        const groupedResults = new Map<string, any[]>();
+        const matching: any[][] = [];
+        const seen = new Set<string>();
+
         for (const res of results) {
-            if (!groupedResults.has(res.rowname)) {
-                groupedResults.set(res.rowname, []);
+            const rowStr = JSON.stringify(res.matchedRow);
+            if (!seen.has(rowStr)) {
+                matching.push(res.matchedRow);
+                seen.add(rowStr);
             }
-            groupedResults.get(res.rowname)!.push(res.matchedRow);
         }
 
-        return Array.from(groupedResults.entries()).map(([rowname, matches]) => ({
-            rowname,
-            matches,
-        }));
+        return { matching };
     }
 }
-
-
