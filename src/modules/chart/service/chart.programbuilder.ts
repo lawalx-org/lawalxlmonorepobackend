@@ -475,17 +475,9 @@ export class ChartProgramBuilderService {
                 history: true,
             },
         });
-
-        // Pre-fetch all referenced ChartTable data
-        const allChartTableIds = [...new Set(charts.flatMap(c => c.valueDiteacts.map(vd => vd.charttableId)))];
-        const chartTables = await this.prisma.chartTable.findMany({
-            where: { id: { in: allChartTableIds } }
-        });
-        const chartTableMap = new Map(chartTables.map(ct => [ct.id, ct]));
-
         return {
             programId,
-            charts: charts.map(chart => {
+            charts: await Promise.all(charts.map(async chart => {
                 const chartData =
                     chart.barChart ||
                     chart.horizontalBarChart ||
@@ -511,54 +503,79 @@ export class ChartProgramBuilderService {
                     category: chart.category,
                     status: chart.status,
                     chartData,
-                    valueDetection: detectChartValues(
-                        chart.valueDiteacts,
-                        chartTableMap,
+                    valueDetection: await this.detectChartValues(
+                        chart.valueDiteacts
                     ),
                     history: chart.history,
                 };
-            }),
+            })),
         };
     }
-}
 
+    async detectChartValues(
+        valueDiteacts: { rowname: string, charttableId: string }[]
+    ) {
+        if (!Array.isArray(valueDiteacts)) return [];
 
-export function detectChartValues(
-    valueDiteacts: { rowname: string, charttableId: string }[],
-    chartTableMap: Map<string, any>
-) {
-    if (!Array.isArray(valueDiteacts)) return [];
+        const results: any[] = [];
 
-    const resultMap = new Map<string, any[]>();
+        for (const vd of valueDiteacts) {
+            // Find the actual chart table record for the data (labels)
+            console.log('Looking for chart table with ID:', vd.charttableId);
+            const ct = await this.prisma.chartTable.findUnique({
+                where: { id: vd.charttableId }
+            });
+            console.log(ct)
+            if (!ct) continue;
 
-    for (const vd of valueDiteacts) {
-        const ct = chartTableMap.get(vd.charttableId);
-        if (!ct) continue;
-
-        // collect all possible axes safely from the actual ChartTable
-        const axes: any[] = [
-            ...(Array.isArray(ct.xAxis) ? ct.xAxis : []),
-            ...(Array.isArray(ct.yAxis) ? ct.yAxis : []),
-            ...(Array.isArray(ct.zAxis) ? ct.zAxis : []),
-        ];
-
-        for (const row of axes) {
-            if (Array.isArray(row) && row.some(item => String(item) === vd.rowname)) {
-                if (!resultMap.has(vd.rowname)) {
-                    resultMap.set(vd.rowname, []);
+            const extractRows = (axis: any): any[][] => {
+                if (!axis) return [];
+                let data = axis;
+                if (typeof data === 'string') {
+                    try { data = JSON.parse(data); } catch (e) { return []; }
                 }
-                // Avoid duplicate rows for the same rowname if they appear in different axes but are identical
-                const existingMatches = resultMap.get(vd.rowname)!;
-                if (!existingMatches.some(existingRow => JSON.stringify(existingRow) === JSON.stringify(row))) {
-                    existingMatches.push(row);
+                if (data && typeof data === 'object' && Array.isArray(data.labels)) {
+                    return data.labels;
+                }
+                if (Array.isArray(data)) return data;
+                return [];
+            };
+
+            const allPossibleRows: any[][] = [
+                ...extractRows(ct.xAxis),
+                ...extractRows(ct.yAxis),
+                ...extractRows(ct.zAxis),
+            ];
+
+            for (const row of allPossibleRows) {
+                if (Array.isArray(row) && row.length > 0) {
+                    const label = String(row[0]).trim();
+                    const target = String(vd.rowname).trim();
+
+                    if (label === target) {
+                        results.push({
+                            rowname: vd.rowname,
+                            matchedRow: row,
+                            charttableId: vd.charttableId,
+                        });
+                    }
                 }
             }
         }
-    }
 
-    return Array.from(resultMap.entries()).map(([rowname, matches]) => ({
-        rowname,
-        matches,
-    }));
+        const groupedResults = new Map<string, any[]>();
+        for (const res of results) {
+            if (!groupedResults.has(res.rowname)) {
+                groupedResults.set(res.rowname, []);
+            }
+            groupedResults.get(res.rowname)!.push(res.matchedRow);
+        }
+
+        return Array.from(groupedResults.entries()).map(([rowname, matches]) => ({
+            rowname,
+            matches,
+        }));
+    }
 }
+
 
