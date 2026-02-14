@@ -29,16 +29,7 @@ export class ChartMainService {
 
     const result = await this.prisma.$transaction(async (txPrisma) => {
 
-      const existingGroupTitle = await txPrisma.chartTable.findUnique({
-        where: { grouptitle },
-        select: { id: true },
-      });
-
-      if (existingGroupTitle) {
-        throw new BadRequestException(
-          `Group title "${grouptitle}" already exists`,
-        );
-      }
+  
       if (parentId) {
         const parentExists = await txPrisma.chartTable.findUnique({
           where: { id: parentId },
@@ -512,16 +503,7 @@ export class ChartMainService {
 
     const result = await this.prisma.$transaction(async (txPrisma) => {
 
-      const existingGroupTitle = await txPrisma.chartTable.findUnique({
-        where: { grouptitle },
-        select: { id: true },
-      });
-
-      if (existingGroupTitle) {
-        throw new BadRequestException(
-          `Group title "${grouptitle}" already exists`,
-        );
-      }
+     
 
 
       if (parentId) {
@@ -557,7 +539,7 @@ export class ChartMainService {
         },
       });
 
-
+      console.log("-------------------------------one-------------------------------------------")
       if (rootchart && roottitle) {
         const project = await txPrisma.project.findUnique({
           where: { id: projectId! },

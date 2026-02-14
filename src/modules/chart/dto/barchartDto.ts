@@ -65,10 +65,10 @@ export class CreateBarChartDto {
   widgets?: ShowWidgetDto[];
 
 
-   @ApiPropertyOptional({
+  @ApiPropertyOptional({
     description: 'if filter is used say that legent name ',
   })
   @IsOptional()
-  @IsInt()
-  filter_By?: String; 
+  @IsString()
+  filter_By?: string;
 }

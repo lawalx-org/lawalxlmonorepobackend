@@ -8,7 +8,7 @@ export class UpdateSingleChartDto {
     description: 'Chart ID',
     example: 'c6b4e52f-88f6-4f7d-9e47-5a0c90b2d9ab',
   })
-  @IsUUID()
+  @IsString()
   id: string;
 
   @ApiProperty({

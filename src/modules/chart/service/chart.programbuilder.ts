@@ -13,7 +13,7 @@ export class ChartProgramBuilderService {
 
     async create(createChartBuildDto: CreateChartBuildDto) {
         let subChat = {};
-        const { title, status, category, programid, projectnumber, valueDiteacts,   } = createChartBuildDto;
+        const { title, status, category, programid, projectnumber, valueDiteacts, } = createChartBuildDto;
 
         const result = await this.prisma.$transaction(async (txPrisma) => {
 
@@ -29,8 +29,8 @@ export class ChartProgramBuilderService {
                             projectId: v.projectId,
                             rowname: v.rowname,
                             charttableId: v.charttableId
-                            
-                            
+
+
                         })),
                     },
                 },
@@ -476,6 +476,13 @@ export class ChartProgramBuilderService {
             },
         });
 
+        // Pre-fetch all referenced ChartTable data
+        const allChartTableIds = [...new Set(charts.flatMap(c => c.valueDiteacts.map(vd => vd.charttableId)))];
+        const chartTables = await this.prisma.chartTable.findMany({
+            where: { id: { in: allChartTableIds } }
+        });
+        const chartTableMap = new Map(chartTables.map(ct => [ct.id, ct]));
+
         return {
             programId,
             charts: charts.map(chart => {
@@ -505,8 +512,8 @@ export class ChartProgramBuilderService {
                     status: chart.status,
                     chartData,
                     valueDetection: detectChartValues(
-                        chartData,
                         chart.valueDiteacts,
+                        chartTableMap,
                     ),
                     history: chart.history,
                 };
@@ -517,35 +524,34 @@ export class ChartProgramBuilderService {
 
 
 export function detectChartValues(
-    chartData: any,
-    valueDiteacts: { rowname: string }[],
+    valueDiteacts: { rowname: string, charttableId: string }[],
+    chartTableMap: Map<string, any>
 ) {
-    if (!chartData || !Array.isArray(valueDiteacts)) return [];
-
-    const axisRows: any[][] = [];
-
-    const collect = (axis: any) => {
-        if (Array.isArray(axis)) {
-            axis.forEach(row => {
-                if (Array.isArray(row)) axisRows.push(row);
-            });
-        }
-    };
-
-    // collect all possible axes safely
-    collect(chartData.xAxis);
-    collect(chartData.yAxis);
-    collect(chartData.zAxis);
+    if (!Array.isArray(valueDiteacts)) return [];
 
     const resultMap = new Map<string, any[]>();
 
     for (const vd of valueDiteacts) {
-        for (const row of axisRows) {
-            if (row.includes(vd.rowname)) {
+        const ct = chartTableMap.get(vd.charttableId);
+        if (!ct) continue;
+
+        // collect all possible axes safely from the actual ChartTable
+        const axes: any[] = [
+            ...(Array.isArray(ct.xAxis) ? ct.xAxis : []),
+            ...(Array.isArray(ct.yAxis) ? ct.yAxis : []),
+            ...(Array.isArray(ct.zAxis) ? ct.zAxis : []),
+        ];
+
+        for (const row of axes) {
+            if (Array.isArray(row) && row.some(item => String(item) === vd.rowname)) {
                 if (!resultMap.has(vd.rowname)) {
                     resultMap.set(vd.rowname, []);
                 }
-                resultMap.get(vd.rowname)!.push(row);
+                // Avoid duplicate rows for the same rowname if they appear in different axes but are identical
+                const existingMatches = resultMap.get(vd.rowname)!;
+                if (!existingMatches.some(existingRow => JSON.stringify(existingRow) === JSON.stringify(row))) {
+                    existingMatches.push(row);
+                }
             }
         }
     }

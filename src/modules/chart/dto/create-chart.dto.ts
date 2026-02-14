@@ -92,7 +92,7 @@ export class CreateChartDto extends IntersectionType(
   @ApiProperty({
     example: 'parentId uuid',
   })
-  @IsUUID()
+  @IsString()
   @IsOptional()
   parentId?: string;
 
