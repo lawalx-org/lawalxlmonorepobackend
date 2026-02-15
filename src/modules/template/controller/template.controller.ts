@@ -1,57 +1,44 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
-  Req,
-  UnauthorizedException,
-  UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { TemplateService } from '../service/template.service';
-import { RolesGuard } from 'src/common/jwt/roles.guard';
-import { JwtAuthGuard } from 'src/common/jwt/jwt.guard';
-import { Roles } from 'src/common/jwt/roles.decorator';
-import { RequestWithUser } from 'src/types/RequestWithUser';
+import { ApiTags, ApiParam } from '@nestjs/swagger';
 import { CreateTemplateDto } from '../dto/create-template.dto';
+import { TemplateService } from '../service/template.service';
 
-@ApiTags('template')
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles('CLIENT')
-@Controller('template')
+@ApiTags('Templates')
+@Controller('templates')
 export class TemplateController {
-  constructor(private readonly service: TemplateService) {}
+  constructor(private readonly templateService: TemplateService) {}
 
-  @Post('create-template')
-  @ApiOperation({ summary: 'Create a new template' })
-  @ApiResponse({ status: 201, description: 'Template created successfully' })
-  async create(
+  @Post(':clientId')
+  @ApiParam({ name: 'clientId', example: 'client-uuid-123' })
+  createTemplate(
+    @Param('clientId') clientId: string,
     @Body() dto: CreateTemplateDto,
-    @Req() req: RequestWithUser,
   ) {
-    const clientId = req.user.clientId;
-    if (!clientId) {
-      throw new UnauthorizedException('Client ID not found in token');
+    return this.templateService.createTemplate(clientId, dto);
+  }
+
+  @Get(':clientId')
+  @ApiParam({ name: 'clientId', example: 'client-uuid-123' })
+  getTemplates(@Param('clientId') clientId: string) {
+    return this.templateService.getTemplates(clientId);
+  }
+
+  @Get('single/:id')
+  @ApiParam({ name: 'id', example: 'template-uuid-456' })
+  getTemplateById(@Param('id') id: string) {
+    return this.templateService.getTemplateById(id);
+  }
+
+    @Delete(':id')
+    @ApiParam({ name: 'id', example: 'template-uuid-789' })
+    delete(@Param('id') id: string) {
+      return this.templateService.delete(id);
     }
-
-    return this.service.createTemplate(clientId, dto);
-  }
-
-  @Get()
-  @ApiOperation({ summary: 'Get all templates for logged-in client' })
-  async getAll(@Req() req: RequestWithUser) {
-    const clientId = req.user.clientId;
-    if (!clientId) {
-      throw new UnauthorizedException('Client ID not found in token');
-    }
-
-    return this.service.getTemplates(clientId);
-  }
-
-  @Get(':id')
-  @ApiOperation({ summary: 'Get template by ID' })
-  async getById(@Param('id') id: string) {
-    return this.service.getTemplateById(id);
-  }
 }

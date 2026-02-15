@@ -37,7 +37,7 @@ export class CreateChartDto extends IntersectionType(
   DOUGHNUT_ChartDto,
   CandleStick_ChartDto,
   Scatter_ChartDto
-  
+
 
 ) {
   @ApiProperty({
@@ -92,12 +92,12 @@ export class CreateChartDto extends IntersectionType(
   @ApiProperty({
     example: 'parentId uuid',
   })
-  @IsUUID()
+  @IsString()
   @IsOptional()
   parentId?: string;
 
   @ApiProperty({
-    example:true,
+    example: true,
   })
   @IsBoolean()
   @IsOptional()
@@ -107,7 +107,13 @@ export class CreateChartDto extends IntersectionType(
     example: 'parentId uuid',
   })
   @IsOptional()
-   roottitle?: string
+  roottitle?: string
+
+  @ApiProperty({
+    example: 'group title',
+  })
+  @IsString()
+  grouptitle: string
 }
 
 
