@@ -471,7 +471,7 @@ export class ProjectService {
 
           program: { connect: { id: programId } },
           manager: { connect: { id: managerId } },
-         
+
 
           projectEmployees: employeeIds?.length
             ? { create: employeeIds.map(id => ({ employeeId: id })) }
@@ -640,7 +640,7 @@ export class ProjectService {
         },
       },
     },
-    
+
     projectViewers: {
       include: {
         viewer: {
@@ -868,41 +868,110 @@ export class ProjectService {
   }
 
 
+  // async updateProject(id: string, dto: UpdateProjectDto) {
+  //   const project = await this.prisma.project.findUnique({
+  //     where: { id },
+  //     include: {
+  //       manager: true,
+  //     },
+  //   });
+  //   console.log('project: ', project);
+
+  //   if (!project) {
+  //     throw new NotFoundException(`Project with ID "${id}" not found`);
+  //   }
+
+  //   const removeIds = dto.removeEmployeeIds || [];
+  //   const addIds = dto.addEmployeeIds || [];
+
+  //   const updatedProject = await this.prisma.$transaction(async (prisma) => {
+  //     // Remove non-relation fields
+  //     const projectData: any = { ...dto };
+  //     delete projectData.addEmployeeIds;
+  //     delete projectData.removeEmployeeIds;
+
+  //     //  Check if managerId exists
+  //     if (dto.managerId) {
+  //       const managerExists =
+  //         (await this.prisma.manager.findUnique({
+  //           where: { id: dto.managerId },
+  //         })) ||
+  //         (await this.prisma.user.findUnique({
+  //           where: {
+  //             id: dto.managerId,
+  //           },
+  //         }));
+
+  //       console.log('managerExists: ', managerExists);
+
+  //       if (!managerExists) {
+  //         throw new NotFoundException(
+  //           `Manager with ID "${dto.managerId}" does not exist`,
+  //         );
+  //       }
+  //     }
+
+  //     // Update project main fields
+  //     const updated = await prisma.project.update({
+  //       where: { id },
+  //       data: projectData,
+  //     });
+
+  //     if (removeIds.length > 0) {
+  //       await prisma.projectEmployee.deleteMany({
+  //         where: {
+  //           projectId: id,
+  //           employeeId: { in: removeIds },
+  //         },
+  //       });
+  //     }
+  //     if (addIds.length > 0) {
+  //       await prisma.projectEmployee.createMany({
+  //         data: addIds.map((employeeId) => ({
+  //           projectId: id,
+  //           employeeId,
+  //         })),
+  //         skipDuplicates: true,
+  //       });
+  //     }
+
+  //     return updated;
+  //   });
+
+  //   return updatedProject;
+  // }
+
+
   async updateProject(id: string, dto: UpdateProjectDto) {
-    const project = await this.prisma.project.findUnique({
-      where: { id },
-      include: {
-        manager: true,
-      },
-    });
-    console.log('project: ', project);
+    return await this.prisma.$transaction(async (prisma) => {
 
-    if (!project) {
-      throw new NotFoundException(`Project with ID "${id}" not found`);
-    }
+      // 1️⃣ Check project exists
+      const project = await prisma.project.findUnique({
+        where: { id },
+        include: { manager: true },
+      });
 
-    const removeIds = dto.removeEmployeeIds || [];
-    const addIds = dto.addEmployeeIds || [];
+      if (!project) {
+        throw new NotFoundException(`Project with ID "${id}" not found`);
+      }
 
-    const updatedProject = await this.prisma.$transaction(async (prisma) => {
-      // Remove non-relation fields
+      const removeIds = dto.removeEmployeeIds || [];
+      const addIds = dto.addEmployeeIds || [];
+
+      // 2️⃣ Prepare project update data
       const projectData: any = { ...dto };
       delete projectData.addEmployeeIds;
       delete projectData.removeEmployeeIds;
 
-      //  Check if managerId exists
+      // 3️⃣ Validate manager
       if (dto.managerId) {
         const managerExists =
-          (await this.prisma.manager.findUnique({
+          (await prisma.manager.findUnique({
             where: { id: dto.managerId },
           })) ||
-          (await this.prisma.user.findUnique({
-            where: {
-              id: dto.managerId,
-            },
+          (await prisma.user.findUnique({
+            where: { id: dto.managerId },
           }));
-
-        console.log('managerExists: ', managerExists);
 
         if (!managerExists) {
           throw new NotFoundException(
@@ -911,12 +980,30 @@ export class ProjectService {
         }
       }
 
-      // Update project main fields
-      const updated = await prisma.project.update({
+      // 4️⃣ Validate employees BEFORE modifying relations
+      if (addIds.length > 0) {
+        const employees = await prisma.employee.findMany({
+          where: { id: { in: addIds } },
+          select: { id: true },
+        });
+
+        const existingIds = employees.map(e => e.id);
+        const missingIds = addIds.filter(id => !existingIds.includes(id));
+
+        if (missingIds.length > 0) {
+          throw new BadRequestException(
+            `Employees not found: ${missingIds.join(', ')}`
+          );
+        }
+      }
+
+      // 5️⃣ Update project main fields
+      const updatedProject = await prisma.project.update({
         where: { id },
         data: projectData,
       });
 
+      // 6️⃣ Remove employees
       if (removeIds.length > 0) {
         await prisma.projectEmployee.deleteMany({
           where: {
@@ -925,9 +1012,11 @@ export class ProjectService {
           },
         });
       }
+
+      // 7️⃣ Add employees (safe now)
       if (addIds.length > 0) {
         await prisma.projectEmployee.createMany({
-          data: addIds.map((employeeId) => ({
+          data: addIds.map(employeeId => ({
             projectId: id,
             employeeId,
           })),
@@ -935,11 +1024,29 @@ export class ProjectService {
         });
       }
 
-      return updated;
-    });
+      // 8️⃣ Return updated project with employees
+      return prisma.project.findUnique({
+        where: { id },
+        include: {
+          manager: true,
+          projectEmployees: {
+            include: {
+              employee: true,
+            },
+          },
+          projectViewers: {
+            include: {
+              viewer: true,
+            },
+          },
+        },
+      });
 
-    return updatedProject;
+    });
   }
+
+
+
 
   async deleteProject(id: string) {
     const project = await this.prisma.project.findUnique({
