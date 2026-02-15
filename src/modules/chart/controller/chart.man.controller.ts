@@ -187,6 +187,17 @@ export class ChartMainController {
 
 
 
+  @Get('all-charts/:projectId')
+  @ApiOperation({ summary: 'Get all charts by project ID' })
+  async findAllByProject(@Param('projectId') projectId: string) {
+    const result = await this.chartService.findAllByProject(projectId);
+    return {
+      message: 'All charts fetched successfully',
+      data: result,
+    };
+  }
+
+
   @Delete('charttable/:id')
   async deleteChart(@Param('id') id: string) {
     return this.chartService.safeDeleteChart(id);
