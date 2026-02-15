@@ -23,6 +23,7 @@ import { SheetModule } from './modules/sheet/sheet.module';
 import { InfrastructureModule } from './modules/infrastructure/infrastructure.module';
 import { ManagerModule } from './modules/manager/manager.module';
 import { FavoriteModule } from './modules/favouriteProject/favourite.module';
+import { TemplateModule } from './modules/template/template.module';
 
 
 @Module({
@@ -37,10 +38,21 @@ import { FavoriteModule } from './modules/favouriteProject/favourite.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
         const redisConfig = configService.get('redis');
+        const username = redisConfig.username;
+        const password = redisConfig.password;
+
         return {
           connection: {
             host: redisConfig.host,
             port: redisConfig.port,
+            ...(username &&
+              password && {
+                username,
+                password,
+                tls: {
+                  rejectUnauthorized: false,
+                },
+              }),
           },
         };
       },
@@ -65,7 +77,8 @@ import { FavoriteModule } from './modules/favouriteProject/favourite.module';
     ChartModule,
     SheetModule,
     InfrastructureModule,
-    FavoriteModule
+    FavoriteModule,
+    TemplateModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, SeedService],

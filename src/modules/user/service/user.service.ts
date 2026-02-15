@@ -278,7 +278,7 @@ async updateUser_assign_Project_and_update_user_status(dto: UpdateUserProjectsDt
       } else if (relationType === 'manager') {
         await tx.project.updateMany({
           where: { managerId: relationId!, id: { in: removeProjectIds } },
-          data: { managerId: null }, // unassign manager
+          data: { managerId: null as any },
         });
       } else if (relationType === 'viewer') {
         await tx.projectViewer.deleteMany({
@@ -330,5 +330,27 @@ async updateUser_assign_Project_and_update_user_status(dto: UpdateUserProjectsDt
     });
   });
 }
+
+async removeBulk(ids: string[]) {
+    if (!ids || ids.length === 0) {
+      throw new BadRequestException('No user IDs provided for deletion');
+    }
+    
+    return await this.prisma.$transaction(async (tx) => {
+
+      const deleted = await tx.user.deleteMany({
+        where: {
+          id: {
+            in: ids,
+          },
+        },
+      });
+
+      return {
+        message: 'Bulk deletion successful',
+        deletedCount: deleted.count,
+      };
+    });
+  }
 
 }

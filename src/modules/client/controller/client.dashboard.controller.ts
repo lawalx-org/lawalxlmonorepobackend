@@ -153,20 +153,6 @@ export class ClientDashboardController {
         }
     };
 
-    //------------project activity ------------//
-
-    // @Get('project-activity')
-    // async project_activity(@Req() req: RequestWithUser) {
-    //     const clientId = req.user.clientId;
-    //     if (!clientId) {
-    //         throw new UnauthorizedException('clientId ID not found in token');
-    //     }
-    //     const result = await this.clientDashboardServices.getProjectsActivity();
-    //     return {
-    //         message: "projects activity fetch successfully",
-    //         data: result
-    //     }
-    // };
 
 
     //---------------upcomming dateline ------------------//
@@ -185,19 +171,6 @@ export class ClientDashboardController {
         };
     }
 
-    // @Get()
-    // async showAllSubmission(@Req() req: RequestWithUser) {
-    //     const clientId = req.user.clientId;
-    //     if (!clientId) {
-    //         throw new UnauthorizedException("clientId ID not found in token");
-    //     }
-
-    //     const result = await this.clientDashboardServices.showAllSubmission();
-    //     return {
-    //         message: "submission fetch successfully",
-    //         data: result
-    //     }
-    // }
     @Get("all-submissions")
     @ApiQuery({
         name: 'startDate',
@@ -235,18 +208,18 @@ export class ClientDashboardController {
         });
     }
 
-    // @Patch(':id/submission-status')
-    // @ApiOperation({ summary: 'Update submission status' })
-    // @ApiParam({
-    //     name: 'id',
-    //     example: 'b3c8e9c2-7f2e-4a3c-9d1a-123456789abc',
-    // })
-    // updateStatus(
-    //     @Param('id') id: string,
-    //     @Body() dto: UpdateSubmittedStatusDto,
-    // ) {
-    //     return this.clientDashboardServices.updateStatus(id, dto.status);
-    // }
+    @Patch(':id/submission-status')
+    @ApiOperation({ summary: 'Update submission status' })
+    @ApiParam({
+        name: 'id',
+        example: 'b3c8e9c2-7f2e-4a3c-9d1a-123456789abc',
+    })
+    updateStatus(
+        @Param('id') id: string,
+        @Body() dto: UpdateSubmittedStatusDto,
+    ) {
+        return this.clientDashboardServices.updateStatus(id, dto.status);
+    }
 
 
 }

@@ -1,0 +1,264 @@
+// barChart
+model barChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFiledDataset Int
+  lastFiledDAtaset  Int
+  filter_By         String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [ChartTableId], references: [id])
+  ChartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// HORIZONTAL_BAR chart 
+model HorizontalBarChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// pie chart 
+model Piprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int?
+  lastFieldDataset  Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Heatmap
+model HeatMapChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Area
+model AreaChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Multi Axis
+model MultiAxisChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Column
+model ColumnChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Stacked Bar
+model StackedBarChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFiledDataset Int
+  lastFiledDAtaset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [ChartTableId], references: [id])
+  ChartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Doughnut
+model DoughnutChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Pareto
+model ParetoChartprogrambuilder {
+  id                      String   @id @default(uuid())
+  numberOfDataset         Int
+  Left_firstFieldDataset  Int
+  Left_lastFieldDataset   Int
+  Right_firstFieldDataset Int
+  Right_lastFieldDataset  Int
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Histogram
+model HistogramChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Scatter
+model ScatterChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Solid Gauge
+model SolidGaugeChartprogrambuilder {
+  id             String   @id @default(uuid())
+  startingRange  Int
+  endRange       Int
+  gaugeValue     Int
+  chartHight     Int
+  startAngle     Int
+  endAngle       Int
+  trackColor     String
+  strokeWidth    Int
+  valueFontSize  Int
+  shadeIntensity Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Funnel
+model FunnelChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// WaterFall
+model WaterFallChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Candlestick
+model CandlestickChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}
+
+// Radar
+model RadarChartprogrambuilder {
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  chartTable   ChartTableProgramBuilder @relation(fields: [chartTableId], references: [id])
+  chartTableId String                   @unique
+
+  widgets WidgetProgramBuilder[]
+}

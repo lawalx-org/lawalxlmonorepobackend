@@ -8,6 +8,7 @@ import {
   Req,
   Query,
   Patch,
+  Put,
 } from '@nestjs/common';
 import { ProgramService } from '../service/program.service';
 import { CreateProgramDto } from '../dto/create-program.dto';
@@ -19,10 +20,11 @@ import { GetAllProgramsDto } from '../dto/get-all-programs.dto';
 import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program.dto';
 import { UpdateProgramNameDto } from '../dto/update-program.dto';
 import { Request } from 'express';
+import { SyncTagsDto } from '../dto/tag-program.dto';
 
 @Controller('program')
 export class ProgramController {
-  constructor(private readonly programService: ProgramService) {}
+  constructor(private readonly programService: ProgramService) { }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('CLIENT')
@@ -36,15 +38,6 @@ export class ProgramController {
     return this.programService.create(createProgramDto, userid!);
   }
 
-  // @Get()
-  // async findAll(@Query() query: GetAllProgramsDto) {
-  //   const data = await this.programService.findAll(query);
-
-  //   return {
-  //     message: 'Programs fetched successfully',
-  //     data,
-  //   };
-  // }
 
   @Get()
   async findAll(@Query() query: GetAllProgramsDto) {
@@ -101,6 +94,20 @@ export class ProgramController {
     );
     return {
       message: 'Program name updated successfully',
+      data,
+    };
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('CLIENT')
+  @Put(':id/tags')
+  async syncTags(
+    @Param('id') id: string,
+    @Body() body: SyncTagsDto,
+  ) {
+    const data = await this.programService.syncTags(id, body.tags);
+    return {
+      message: 'Tags synchronized successfully',
       data,
     };
   }

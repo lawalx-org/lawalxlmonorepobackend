@@ -18,15 +18,15 @@ import { Role } from 'generated/prisma';
 export class ClientEmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
-  @Post('/create-employee')
-  @Roles(Role.CLIENT)
-  @HttpCode(HttpStatus.CREATED)
-  async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto) {
-    const employee = await this.employeeService.create(createEmployeeDto);
+  // @Post('/create-employee')
+  // @Roles(Role.CLIENT)
+  // @HttpCode(HttpStatus.CREATED)
+  // async createEmployee(@Body() createEmployeeDto: CreateEmployeeDto) {
+  //   const employee = await this.employeeService.create(createEmployeeDto);
 
-    return {
-      message: ' Employee created successfully',
-      data: employee,
-    };
-  }
+  //   return {
+  //     message: ' Employee created successfully',
+  //     data: employee,
+  //   };
+  // }
 }

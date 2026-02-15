@@ -1,13 +1,17 @@
 model ChartTable {
-  id        String      @id @default(uuid())
-  title     String
-  status    ChartStatus @default(INACTIVE) 
-  category  ChartName
-  xAxis     Json
-  yAxis     Json?
-  zAxis     Json?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id         String       @unique()
+  title      String
+  grouptitle String
+  parentId   String?
+  parent     ChartTable?  @relation("ChartHierarchy", fields: [parentId], references: [id])
+  children   ChartTable[] @relation("ChartHierarchy")
+  status     ChartStatus  @default(INACTIVE)
+  category   ChartName
+  xAxis      Json
+  yAxis      Json?
+  zAxis      Json?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 
   // Relation to Sheet (one-to-one optional)
   sheet   Sheet?  @relation("ChartToSheet", fields: [sheetId], references: [id])
@@ -31,7 +35,6 @@ model ChartTable {
   waterFallChart     WaterFallChart?
   candlestickChart   CandlestickChart?
   radarChart         RadarChart?
-  
 
   // SABBIR - Relation to chart (one-to-one optional) //
   // Program         Program?         @relation(fields: [programId], references: [id])
@@ -39,10 +42,25 @@ model ChartTable {
   // SABBIR // 
 
   //ray
-  Project         Project?         @relation(fields: [projectId], references: [id])
-  projectId       String?
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
   //ray
-  
+
+  //history
+  history ChartHistory[]
 }
 
+model ChartHistory {
+  id        String   @id @default(uuid())
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  chart   ChartTable? @relation(fields: [chartId], references: [id])
+  chartId String?
+}
+
+model Chartnumber {
+  id     Int @id @default(autoincrement())
+  number Int
+}

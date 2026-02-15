@@ -18,15 +18,15 @@ import { RolesGuard } from 'src/common/jwt/roles.guard';
 export class ClientManagerController {
   constructor(private readonly managerService: ManagerService) {}
 
-  @Post('/create')
-  @Roles(Role.CLIENT)
-  @HttpCode(HttpStatus.CREATED)
-  async createManager(@Body() createManagerDto: CreateManagerDto) {
-    const manager = await this.managerService.create(createManagerDto);
+  // @Post('/create')
+  // @Roles(Role.CLIENT)
+  // @HttpCode(HttpStatus.CREATED)
+  // async createManager(@Body() createManagerDto: CreateManagerDto) {
+  //   const manager = await this.managerService.create(createManagerDto);
 
-    return {
-      message: 'Manager created successfully',
-      data: manager,
-    };
-  }
+  //   return {
+  //     message: 'Manager created successfully',
+  //     data: manager,
+  //   };
+  // }
 }

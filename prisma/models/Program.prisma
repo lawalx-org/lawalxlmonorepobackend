@@ -1,24 +1,55 @@
+// model Program {
+//   id                 String   @id @default(uuid())
+//   programName        String
+//   datetime           String         //-------start date
+//   programDescription String
+//   priority           Priority @default(MEDIUM)
+//   deadline           String?        // ------> end date 
+//   progress           Int?
+//   latitude           Decimal? @db.Decimal(10, 7)
+//   longitude          Decimal? @db.Decimal(10, 7)
+//   createdAt          DateTime @default(now())
+//   updatedAt          DateTime @updatedAt
+
+//   // new fields
+
+//   managerId String?
+//   clientId  String
+//   template  String
+//   manager   Manager?   @relation(fields: [managerId], references: [id], onDelete: Cascade)
+//   client    Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+//   projects  Project[]
+//   tags      Tag[]
+//   // sabbir //
+//   // charts   ChartTable[]
+//   // sabbir //
+
+//   @@map("programs")
+// }
+
+
 model Program {
   id                 String   @id @default(uuid())
-  userId             String
   programName        String
-  datetime           String
+  datetime           String   
   programDescription String
-  priority           Priority
-  deadline           String
+  priority           Priority @default(MEDIUM)
+  deadline           String?  
   progress           Int?
   latitude           Decimal? @db.Decimal(10, 7)
   longitude          Decimal? @db.Decimal(10, 7)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
-  // Relations
-  client   Client       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  projects Project[]
-  tags     Tag[]
-  // sabbir //
-  // charts   ChartTable[]
-  // sabbir //
+
+
+  managerId          String?
+  clientId           String
+  manager            Manager?  @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  client             Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  projects           Project[]
+  tags               Tag[]
+  chartTableProgramBuilders ChartTableProgramBuilder[]
 
   @@map("programs")
 }

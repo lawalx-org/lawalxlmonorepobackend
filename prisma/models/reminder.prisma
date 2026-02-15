@@ -1,22 +1,54 @@
+// model Reminder {
+//   id            String          @id @default(uuid())
+//   message       String
+//   nextTriggerAt DateTime?
+//   repeatEvery   RepeatInterval?
+//   isActive      Boolean         @default(true)
+//   projectId     String
+//   project       Project         @relation(fields: [projectId], references: [id])
+//   createdAt     DateTime        @default(now())
+//   updatedAt     DateTime        @updatedAt
+//   repeatOnDays  DayOfWeek[]
+//   repeatOnDates Int[]
+//   remindBefore  Int?
+// }
+
+// enum RepeatInterval {
+//   WEEKLY
+//   BI_WEEKLY
+//   MONTHLY
+// }
+
+// enum DayOfWeek {
+//   SUNDAY
+//   MONDAY
+//   TUESDAY
+//   WEDNESDAY
+//   THURSDAY
+//   FRIDAY
+//   SATURDAY
+// }
 model Reminder {
-  id            String          @id @default(uuid())
+  id            String       @id @default(uuid())
   message       String
   nextTriggerAt DateTime?
-  repeatEvery   RepeatInterval?
-  isActive      Boolean         @default(true)
-  projectId     String
-  project       Project         @relation(fields: [projectId], references: [id])
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  repeatEvery   UploadCycle?
+  isActive      Boolean      @default(true)
+
+  // Schedule Logic
   repeatOnDays  DayOfWeek[]
   repeatOnDates Int[]
   remindBefore  Int?
-}
 
-enum RepeatInterval {
-  WEEKLY
-  BI_WEEKLY
-  MONTHLY
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+  @@index([nextTriggerAt])
 }
 
 enum DayOfWeek {

@@ -96,17 +96,17 @@ export class ManagerController {
     );
   }
 
-  @Get('charts/top-overdue-projects')
-  @Roles('MANAGER')
-  async getTopOverdueProjectsChartData(@Req() req: RequestWithUser) {
-    const managerId = req.user.managerId;
-    if (!managerId) {
-      throw new UnauthorizedException('Manager ID not found in token');
-    }
-    return await this.chartService.getManagerTopOverdueProjectsChartData(
-      managerId,
-    );
-  }
+  // @Get('charts/top-overdue-projects')
+  // @Roles('MANAGER')
+  // async getTopOverdueProjectsChartData(@Req() req: RequestWithUser) {
+  //   const managerId = req.user.managerId;
+  //   if (!managerId) {
+  //     throw new UnauthorizedException('Manager ID not found in token');
+  //   }
+  //   return await this.chartService.getManagerTopOverdueProjectsChartData(
+  //     managerId,
+  //   );
+  // }
   @Get('projects/top-overdue')
   @Roles('MANAGER')
   async getTopOverdue(@Req() req: RequestWithUser) {
@@ -235,38 +235,38 @@ export class ManagerController {
     );
   }
 
-  // @Get('all-manager-submission')
-  // @Roles('MANAGER')
-  // @ApiOperation({ summary: 'Get all submissions for manager projects' })
-  // @ApiQuery({ name: 'status', required: false, enum: SubmittedStatus })
-  // @ApiQuery({ name: 'fromDate', required: false, example: '2025-01-01' })
-  // @ApiQuery({ name: 'toDate', required: false, example: '2025-01-31' })
-  // async managerSubmissions(
-  //   @Req() req: RequestWithUser,
-  //   @Query('status') status?: SubmittedStatus,
-  //   @Query('fromDate') fromDate?: string,
-  //   @Query('toDate') toDate?: string,
-  // ) {
-  //   const managerId = req.user.managerId;
+  @Get('all-manager-submission')
+  @Roles('MANAGER')
+  @ApiOperation({ summary: 'Get all submissions for manager projects' })
+  @ApiQuery({ name: 'status', required: false, enum: SubmittedStatus })
+  @ApiQuery({ name: 'fromDate', required: false, example: '2025-01-01' })
+  @ApiQuery({ name: 'toDate', required: false, example: '2025-01-31' })
+  async managerSubmissions(
+    @Req() req: RequestWithUser,
+    @Query('status') status?: SubmittedStatus,
+    @Query('fromDate') fromDate?: string,
+    @Query('toDate') toDate?: string,
+  ) {
+    const managerId = req.user.managerId;
 
-  //   if (!managerId) {
-  //     throw new UnauthorizedException('Manager ID not found in token');
-  //   }
+    if (!managerId) {
+      throw new UnauthorizedException('Manager ID not found in token');
+    }
 
-  //   const result = await this.managerService.getManagerSubmissions(
-  //     managerId,
-  //     status,
-  //     fromDate,
-  //     toDate,
-  //   );
+    const result = await this.managerService.getManagerSubmissions(
+      managerId,
+      status,
+      fromDate,
+      toDate,
+    );
 
-  //   return {
-  //     statusCode: 200,
-  //     success: true,
-  //     message: 'All submissions fetched successfully',
-  //     data: result,
-  //   };
-  // }
+    return {
+      statusCode: 200,
+      success: true,
+      message: 'All submissions fetched successfully',
+      data: result,
+    };
+  }
 
   @Get('submissions')
   @Roles('MANAGER')

@@ -15,27 +15,39 @@ import { FindAllProjectsInProgramDto } from '../dto/find-all-projects-in-program
 
 @Injectable()
 export class ProgramService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
-  async create(createProgramDto: CreateProgramDto, userId: string) {
-    const { ...programData } = createProgramDto;
-    const client = await this.prisma.client.findUnique({
-      where: { id: userId },
-    });
-    if (!client) {
-      throw new NotFoundException(`Client with ID "${userId}" not found`);
-    }
 
-    return this.prisma.program.create({
-      data: {
-        ...programData,
-        progress: 0,
-        client: {
-          connect: { id: userId },
-        },
-      },
-    });
+async create(createProgramDto: CreateProgramDto, userId: string) {
+  const { managerId, templateId, ...programData } = createProgramDto;
+
+  const client = await this.prisma.client.findUnique({
+    where: { id: userId },
+  });
+
+  if (!client) {
+    throw new NotFoundException(`Client profile not found.`);
   }
+
+  return this.prisma.program.create({
+    data: {
+      ...programData,
+      progress: 0,
+      client: {
+        connect: { id: client.id },
+      },
+      manager: {
+        connect: { id: managerId },
+      },
+      ...(templateId && {
+        template: {
+          connect: { id: templateId },
+        },
+      }),
+    },
+  });
+}
+
 
   async findAll(query: GetAllProgramsDto): Promise<PaginatedResult<any>> {
     const {
@@ -178,9 +190,9 @@ export class ProgramService {
   }
 
   async getProgramsByLoggedInUser(userId: string) {
-    
+
     const client = await this.prisma.client.findUnique({
-      where: { userId }, 
+      where: { userId },
     });
 
     if (!client) {
@@ -189,10 +201,10 @@ export class ProgramService {
       );
     }
 
-    
+
     return this.prisma.program.findMany({
       where: {
-        userId: client.id, 
+        clientId: client.id,
       },
       include: {
         projects: {
@@ -203,4 +215,37 @@ export class ProgramService {
       orderBy: { createdAt: 'desc' },
     });
   }
+
+
+
+async syncTags(programId: string, tagNames: string[]) {
+  await this.findOne(programId);
+
+  return this.prisma.$transaction(async (tx) => {
+    await tx.tag.deleteMany({
+      where: {
+        programId,
+        name: { notIn: tagNames },
+      },
+    });
+
+    const existingTags = await tx.tag.findMany({
+      where: { programId },
+      select: { name: true },
+    });
+    const existingNames = existingTags.map(t => t.name);
+    const newNames = tagNames.filter(name => !existingNames.includes(name));
+    
+    if (newNames.length > 0) {
+      await tx.tag.createMany({
+        data: newNames.map(name => ({
+          name,
+          programId,
+        })),
+      });
+    }
+
+    return tx.tag.findMany({ where: { programId } });
+  });
+}
 }

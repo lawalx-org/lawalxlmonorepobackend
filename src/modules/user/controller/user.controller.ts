@@ -29,6 +29,7 @@ import { multerOptions } from 'src/modules/utils/config/multer.config';
 import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { ReplaceUserProjectDto } from '../dto/userUpdateAssignProject.Dto';
 import { UpdateUserProjectsDto } from '../dto/updateuserproject.Dto';
+import { DeleteUsersDto } from '../dto/bulk.dto';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -40,15 +41,15 @@ export class UserController {
     private readonly viewerService: ViewerService,
   ) { }
 
-@Get()
-@Roles(Role.CLIENT)
-async findAll(@Query() query: PaginationDto, @Req() req) {
-  const result = await this.userService.findAll({
-    page: query.page ?? 1,
-    limit: query.limit ?? 10,
-  });
-  return { message: 'Users fetched successfully', data: result };
-}
+  @Get()
+  @Roles(Role.CLIENT)
+  async findAll(@Query() query: PaginationDto, @Req() req) {
+    const result = await this.userService.findAll({
+      page: query.page ?? 1,
+      limit: query.limit ?? 10,
+    });
+    return { message: 'Users fetched successfully', data: result };
+  }
 
 
   @Get('profile')
@@ -173,7 +174,7 @@ async findAll(@Query() query: PaginationDto, @Req() req) {
 
   @Patch(':userId/projects')
   @ApiOperation({ summary: 'Update assigned projects and user status' })
-  @ApiResponse({ status: 200, description: 'User projects updated successfully'})
+  @ApiResponse({ status: 200, description: 'User projects updated successfully' })
   @ApiResponse({ status: 404, description: 'User or employee not found' })
   async updateProjects(
     @Body() dto: UpdateUserProjectsDto,
@@ -188,4 +189,16 @@ async findAll(@Query() query: PaginationDto, @Req() req) {
     return updatedEmployee;
   }
 
+
+
+  @Delete('bulk')
+  @ApiOperation({ summary: 'Delete multiple users at once' })
+  @ApiResponse({ status: 200, description: 'Users successfully deleted.' })
+  @ApiResponse({ status: 400, description: 'Invalid input or empty ID array.' })
+  async bulkDelete(@Body() deleteUsersDto: DeleteUsersDto) {
+    return await this.userService.removeBulk(deleteUsersDto.ids);
+  }
 }
+
+
+

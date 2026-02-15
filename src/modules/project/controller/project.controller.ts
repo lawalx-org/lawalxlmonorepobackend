@@ -48,7 +48,7 @@ export class ProjectController {
   @ApiOperation({ summary: 'Get all projects' })
   @ApiResponse({ status: 200, description: 'Projects retrieved successfully' })
   async findAll(@Query() query: FindAllProjectsDto) {
-    const allProjects = await this.projectService.findAll(query);
+    const allProjects = await this.projectService.findAllFull(query);
     return {
       message: 'Projects retrieved successfully',
       projects: allProjects,

@@ -1,18 +1,18 @@
-
 //barChart
 model barChart {
   id                String   @id @default(uuid())
   numberOfDataset   Int
   firstFiledDataset Int
   lastFiledDAtaset  Int
+  filter_By         String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
   //relations
 
-  chartTable                 ChartTable                  @relation(fields: [ChartTableId], references: [id])
-  ChartTableId               String                      @unique
-  widgets                Widget[]
+  chartTable   ChartTable @relation(fields: [ChartTableId], references: [id])
+  ChartTableId String     @unique
+  widgets      Widget[]
 }
 
 // HORIZONTAL_BAR chart 
@@ -25,19 +25,19 @@ model HorizontalBarChart {
   updatedAt         DateTime @updatedAt
 
   // One-to-one with ChartTable
-  chartTable   ChartTable                @relation(fields: [chartTableId], references: [id])
-  chartTableId String                    @unique
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
   widgets      Widget[]
 }
 
 //pi chart 
 model Pi {
-  id                String         @id @default(uuid())
+  id                String   @id @default(uuid())
   numberOfDataset   Int
   firstFieldDataset Int?
   lastFieldDataset  Int?
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -47,12 +47,12 @@ model Pi {
 
 //Heatmap
 model HeatMapChart {
-  id                String              @id @default(uuid())
+  id                String   @id @default(uuid())
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -62,12 +62,12 @@ model HeatMapChart {
 
 // Area
 model AreaChart {
-  id                String           @id @default(uuid())
+  id                String   @id @default(uuid())
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -77,28 +77,27 @@ model AreaChart {
 
 // multi Axis
 model MultiAxisChart {
-  id                String           @id @default(uuid())
+  id                String   @id @default(uuid())
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   widgets           Widget[]
 
   //relation 
-  chartTable          ChartTable            @relation(fields: [chartTableId], references: [id])
-  chartTableId        String                @unique
-
+  chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
+  chartTableId String     @unique
 }
 
 //Column
 model ColumnChart {
-  id                String             @id @default(uuid())
+  id                String   @id @default(uuid())
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -114,21 +113,21 @@ model StackedBarChart {
   lastFiledDAtaset  Int
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-  widgets  Widget[]
+  widgets           Widget[]
 
   //relations
-  chartTable   ChartTable                  @relation(fields: [ChartTableId], references: [id])
-  ChartTableId String                      @unique
+  chartTable   ChartTable @relation(fields: [ChartTableId], references: [id])
+  ChartTableId String     @unique
 }
 
 //pi chart 
 model DoughnutChart {
-  id                String               @id @default(uuid())
+  id                String   @id @default(uuid())
   numberOfDataset   Int
   firstFieldDataset Int
   lastFieldDataset  Int
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   widgets           Widget[]
 
   //relation 
@@ -138,14 +137,14 @@ model DoughnutChart {
 
 //pareto  chart
 model ParetoChart {
-  id                      String                  @id @default(uuid())
+  id                      String   @id @default(uuid())
   numberOfDataset         Int
   Left_firstFieldDataset  Int
   Left_lastFieldDataset   Int
   Right_firstFieldDataset Int
   Right_lastFieldDataset  Int
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
   widgets                 Widget[]
 
   //relation 
@@ -155,13 +154,13 @@ model ParetoChart {
 
 //Histogram
 model HistogramChart {
-  id                      String                  @id @default(uuid())
-  numberOfDataset         Int
-  firstFieldDataset       Int
-  lastFieldDataset        Int
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
-  widgets                 Widget[]
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  widgets           Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
@@ -170,13 +169,13 @@ model HistogramChart {
 
 //Scatter
 model ScatterChart {
-  id                      String                  @id @default(uuid())
-  numberOfDataset         Int
-  firstFieldDataset       Int
-  lastFieldDataset        Int
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
-  widgets                 Widget[]
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  widgets           Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
@@ -185,20 +184,20 @@ model ScatterChart {
 
 //Scatter
 model SolidGaugeChart {
-  id                      String                  @id @default(uuid())
-  startingRange           Int
-  endRange                Int
-  gaugeValue              Int
-  chartHight              Int
-  startAngle              Int
-  endAngle                Int
-  trackColor              String
-  strokeWidth             Int
-  valueFontSize           Int
-  shadeIntensity          Int
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
-  widgets                 Widget[]
+  id             String   @id @default(uuid())
+  startingRange  Int
+  endRange       Int
+  gaugeValue     Int
+  chartHight     Int
+  startAngle     Int
+  endAngle       Int
+  trackColor     String
+  strokeWidth    Int
+  valueFontSize  Int
+  shadeIntensity Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  widgets        Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
@@ -207,13 +206,13 @@ model SolidGaugeChart {
 
 //Funnel
 model FunnelChart {
-  id                      String                  @id @default(uuid())
-  numberOfDataset         Int
-  firstFieldDataset       Int
-  lastFieldDataset        Int
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
-  widgets                 Widget[]
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  widgets           Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
@@ -222,13 +221,13 @@ model FunnelChart {
 
 //WaterFall 
 model WaterFallChart {
-  id                      String                  @id @default(uuid())
-  numberOfDataset         Int
-  firstFieldDataset       Int
-  lastFieldDataset        Int
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
-  widgets                 Widget[]
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  widgets           Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
@@ -237,13 +236,13 @@ model WaterFallChart {
 
 //Candlestick 
 model CandlestickChart {
-  id                      String                  @id @default(uuid())
-  numberOfDataset         Int
-  firstFieldDataset       Int
-  lastFieldDataset        Int
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
-  widgets                 Widget[]
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  widgets           Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
@@ -252,17 +251,15 @@ model CandlestickChart {
 
 //Radar 
 model RadarChart {
-  id                      String                  @id @default(uuid())
-  numberOfDataset         Int
-  firstFieldDataset       Int
-  lastFieldDataset        Int
-  createdAt               DateTime                @default(now())
-  updatedAt               DateTime                @updatedAt
-  widgets                 Widget[]
+  id                String   @id @default(uuid())
+  numberOfDataset   Int
+  firstFieldDataset Int
+  lastFieldDataset  Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  widgets           Widget[]
 
   //relation 
   chartTable   ChartTable @relation(fields: [chartTableId], references: [id])
   chartTableId String     @unique
 }
-
-

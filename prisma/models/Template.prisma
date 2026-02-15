@@ -1,0 +1,17 @@
+model Template {
+  id       String    @id @default(uuid())
+  name     String
+  ownerid  String
+  chartList String[]
+
+  @@map("templates")
+}
+
+model programmbuilderTemplate {
+  id       String    @id @default(uuid())
+  name     String
+  ownerid  String
+  charid   String
+  @@map("programmbuildertemplates")
+}
+
