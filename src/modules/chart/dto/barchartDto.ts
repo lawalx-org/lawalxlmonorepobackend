@@ -42,7 +42,7 @@ export class CreateBarChartDto {
   })
   @IsOptional()
   @IsInt()
-  firstFiledDataset?: number;
+  firstFieldDataset?: number;
 
   @ApiPropertyOptional({
     description: 'Index of the last dataset to display (inclusive)',
@@ -50,7 +50,7 @@ export class CreateBarChartDto {
   })
   @IsOptional()
   @IsInt()
-  lastFiledDAtaset?: number;
+  lastFieldDataset?: number;
 
   @ApiPropertyOptional({
     type: [ShowWidgetDto],
