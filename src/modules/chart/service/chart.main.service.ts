@@ -89,7 +89,7 @@ export class ChartMainService {
           const {
             numberOfDataset,
             firstFiledDataset,
-            lastFiledDAtaset,
+            lastFieldDataset: lastFiledDAtaset,
             widgets,
           } = createChartDto;
 
@@ -407,7 +407,7 @@ export class ChartMainService {
           break;
         }
         case ChartName.STACK_BAR_HORIZONTAL: {
-          const { numberOfDataset, widgets, firstFiledDataset, lastFiledDAtaset, } = createChartDto;
+          const { numberOfDataset, widgets, firstFiledDataset, lastFieldDataset: lastFiledDAtaset, } = createChartDto;
 
           subChat = await txPrisma.stackedBarChart.create({
             data: {
@@ -565,7 +565,7 @@ export class ChartMainService {
           const {
             numberOfDataset,
             firstFiledDataset,
-            lastFiledDAtaset,
+            lastFieldDataset: lastFiledDAtaset,
             widgets,
           } = createChartDto;
 
@@ -883,7 +883,7 @@ export class ChartMainService {
           break;
         }
         case ChartName.STACK_BAR_HORIZONTAL: {
-          const { numberOfDataset, widgets, firstFiledDataset, lastFiledDAtaset, } = createChartDto;
+          const { numberOfDataset, widgets, firstFiledDataset, lastFieldDataset: lastFiledDAtaset, } = createChartDto;
 
           subChat = await txPrisma.stackedBarChart.create({
             data: {
@@ -1255,7 +1255,7 @@ export class ChartMainService {
         parentId,
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
       include: {
         barChart: {

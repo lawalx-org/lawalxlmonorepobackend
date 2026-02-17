@@ -253,8 +253,6 @@ export class ManagerService {
       },
     });
 
-   
-
     if (!manager) {
       throw new NotFoundException(`Manager with ID "${id}" not found`);
     }

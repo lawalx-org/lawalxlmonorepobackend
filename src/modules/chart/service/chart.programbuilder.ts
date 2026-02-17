@@ -41,7 +41,7 @@ export class ChartProgramBuilderService {
                     const {
                         numberOfDataset,
                         firstFiledDataset,
-                        lastFiledDAtaset,
+                        lastFieldDataset: lastFiledDAtaset,
                         widgets,
                     } = createChartBuildDto;
 
@@ -358,7 +358,7 @@ export class ChartProgramBuilderService {
                     break;
                 }
                 case ChartName.STACK_BAR_HORIZONTAL: {
-                    const { numberOfDataset, widgets, firstFiledDataset, lastFiledDAtaset, } = createChartBuildDto;
+                    const { numberOfDataset, widgets, firstFiledDataset, lastFieldDataset: lastFiledDAtaset, } = createChartBuildDto;
 
                     subChat = await txPrisma.stackedBarChartprogrambuilder.create({
                         data: {
